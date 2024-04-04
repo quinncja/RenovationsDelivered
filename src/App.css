@@ -70,5 +70,34 @@
 }
 
 .logo {
-  filter: invert(100)
+  filter: invert(100);
+}
+.nav-logo {
+  height: 50px;
+  object-fit: contain;
+}
+
+h1 {
+  color: var(--white);
+}
+
+.nav-container {
+  background-color: var(--dark);
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--border-color);
+  padding: 10px;
+  align-items: center;
+}
+
+.btn-wrapper {
+  height: 30px;
+}
+
+.btn-wrapper button {
+  background-color: var(--mid) !important;
+  padding-inline: 10px !important;
+  border: var(--border) !important;
+  margin-bottom: 0 !important;
+  height: 30px;
 }
