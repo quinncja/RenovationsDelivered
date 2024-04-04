@@ -1,3 +1,17 @@
+:root {
+  --primary: #f7941d;
+  --primary-highlight: #f7a848;
+  --background: #1d1d1d;
+  --dark: #2d2d2d;
+  --mid: #383838;
+  --mid-highlight: #414141;
+  --border-color: #656565;
+  --border: 2px solid var(--border-color);
+  --white: #d7d7d7;
+
+  background-color: var(--background);
+}
+
 .App {
   text-align: center;
 }
@@ -10,5 +24,51 @@
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
-  color: white;
+}
+
+.btn {
+  border: none;
+  outline: none;
+  cursor: pointer !important;
+  padding: 8px 16px;
+  border-radius: 5px;
+  color: var(--white);
+}
+
+.btn:focus {
+  outline: none;
+}
+
+.btn-primary {
+  background-color: var(--primary);
+}
+
+.btn-primary:hover {
+  background-color: var(--primary-highlight);
+}
+
+.btn-secondary {
+  background-color: var(--mid);
+  border: var(--border);
+}
+
+.btn-secondary:hover {
+  background-color: var(--mid-highlight);
+}
+
+.home {
+  margin-top: 50px;
+}
+
+.home .logo {
+  width: 30%;
+  margin-bottom: 30px;
+}
+
+.home button {
+  margin-top: 15px;
+}
+
+.logo {
+  filter: invert(100)
 }
