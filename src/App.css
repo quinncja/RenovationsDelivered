@@ -73,6 +73,7 @@
 .nav-logo {
   height: 50px;
   object-fit: contain;
+  max-width: 80%;
 }
 
 h1 {
