@@ -64,6 +64,7 @@
   height: 39px;
   object-fit: contain;
   margin-bottom: 30px;
+  max-width: 80%;
 }
 
 .home button {
@@ -73,7 +74,6 @@
 .nav-logo {
   height: 50px;
   object-fit: contain;
-  max-width: 80%;
 }
 
 h1 {
