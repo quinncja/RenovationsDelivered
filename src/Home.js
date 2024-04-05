@@ -51,8 +51,10 @@ function Home() {
   ];
 
   useEffect(() => {
-    if(Userfront.user) navigate("/dashboard")
-  }, [])
+    if(Userfront.user.userUuid) {
+      navigate("/dashboard")
+    }
+  }, [navigate])
 
   return (
     <div className="home">
