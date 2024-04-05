@@ -7,6 +7,7 @@ function App() {
   const navigate = useNavigate();
 
   useEffect(() => {
+    console.log(Userfront.user)
     if(!Userfront.user.userUuid) {
       navigate("/")
     }
