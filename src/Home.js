@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Userfront, { SignupForm, LoginForm } from "@userfront/toolkit/react";
 import logo from "./images/Full-Logo-White.png";
 Userfront.init("xbpwwqmn");
 
 function Home() {
+  const navigate = useNavigate();
   const [formState, setForm] = useState(1);
   const forms = [
     {
@@ -47,6 +49,10 @@ function Home() {
       text: "Or, sign up",
     },
   ];
+
+  useEffect(() => {
+    if(Userfront.user) navigate("/dashboard")
+  }, [])
 
   return (
     <div className="home">
