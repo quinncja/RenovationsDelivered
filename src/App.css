@@ -61,7 +61,8 @@
 }
 
 .home .logo {
-  width: 30%;
+  height: 39px;
+  object-fit: contain;
   margin-bottom: 30px;
 }
 
@@ -69,9 +70,6 @@
   margin-top: 15px;
 }
 
-.logo {
-  filter: invert(100);
-}
 .nav-logo {
   height: 50px;
   object-fit: contain;

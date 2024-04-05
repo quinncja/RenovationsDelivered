@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Userfront, { SignupForm, LoginForm } from "@userfront/toolkit/react";
-import logo from "./images/rd-invert.png";
+import logo from "./images/Full-Logo-White.png";
 Userfront.init("xbpwwqmn");
 
 function Home() {

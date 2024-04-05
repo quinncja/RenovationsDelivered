@@ -1,4 +1,4 @@
-import logo from "./images/r-invert.png";
+import logo from "./images/R-Only-White.png";
 import Userfront, { LogoutButton } from "@userfront/toolkit/react";
 Userfront.init("xbpwwqmn");
 
