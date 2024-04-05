@@ -10,7 +10,7 @@ function App() {
 
   useEffect(() => {
     console.log(loc)
-    if(!Userfront.user.userUuid && loc != "/") {
+    if(!Userfront.user.userUuid && (loc != "/" || "login")) {
       navigate("/")
     }
   }, [navigate])
