@@ -9,7 +9,6 @@ function App() {
   let loc = location.pathname.substring(1);
 
   useEffect(() => {
-    console.log(loc)
     if(!Userfront.user.userUuid && (loc !== "" && loc !== "login")) {
       navigate("/")
     }
