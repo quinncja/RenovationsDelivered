@@ -29,9 +29,9 @@ function App() {
       try {
         const settings = await fetchUserData();
         onLoad(
-          settings.itemArray,
-          settings.itemModifiers,
-          settings.pageModifiers,
+          settings.itemArray || {},
+          settings.itemModifiers || {},
+          settings.pageModifiers || {},
         );
         setLabel(settings.label || "none");
         setAppearance(settings.appearance || "dark");
