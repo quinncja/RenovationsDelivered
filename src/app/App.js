@@ -8,10 +8,11 @@ import { AnimatePresence } from "framer-motion";
 import { fetchUserData } from "utils/api";
 import { useDashboardContext } from "context/DashboardContext";
 import { useUserContext } from "context/UserContext";
+import NewWidgetPopup from "components/WidgetAdder/NewWidgetPopup";
 
 function App() {
   const navigate = useNavigate();
-  const { setSmartSort, onLoad } = useDashboardContext();
+  const { setSmartSort, onLoad, newWidgetOpen, setNewWidgetOpen} = useDashboardContext();
   const { setAppearance, setColorScheme, setLabel } = useUserContext();
   const [open, setOpen] = useState(false);
   const location = useLocation();
@@ -29,8 +30,8 @@ function App() {
       try {
         const settings = await fetchUserData();
         onLoad(
-          settings.itemArray || {},
-          settings.itemModifiers || {},
+          settings.itemArray || [],
+          settings.itemModifiers || [],
           settings.pageModifiers || {},
         );
         setLabel(settings.label || "none");
@@ -57,6 +58,9 @@ function App() {
       <Outlet />
       <AnimatePresence>
         {open && <Settings closeSelf={closeSettings} />}
+        {newWidgetOpen && (
+            <NewWidgetPopup closeSelf={() => setNewWidgetOpen(false)} />
+          )}
       </AnimatePresence>
     </div>
   );

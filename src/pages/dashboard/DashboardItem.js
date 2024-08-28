@@ -11,7 +11,7 @@ import { CSS } from "@dnd-kit/utilities";
 import DraggingItem from "./DraggingItem.js";
 
 const DashboardItem = memo(
-  forwardRef((props) => {
+  forwardRef((props, ref) => {
     const { getChartObj, pageModifiers } = useDashboardContext();
     const { dragging, current, deleteSelf, setOpen, id, type, children } =
       props;
@@ -125,7 +125,7 @@ const DashboardItem = memo(
               className="x-button widget-item"
               onClick={(e) => {
                 e.stopPropagation();
-                deleteSelf();
+                deleteSelf(id);
               }}
             >
               {close()}

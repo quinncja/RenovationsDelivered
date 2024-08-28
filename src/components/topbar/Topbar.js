@@ -6,17 +6,17 @@ import { useState } from "react";
 import { itemFadeIn, topbarVariants } from "utils/animations";
 import UndoButton from "components/UndoButton";
 import NewWidgetButton from "components/WidgetAdder/NewWidgetButton";
-import NewWidgetPopup from "components/WidgetAdder/NewWidgetPopup";
 import { newWidgetButtonVariants } from "utils/animations";
 import { useSystemMessage } from "../../context/SystemMessageContext";
 import RedoButton from "components/RedoButton";
 import Modifiers from "components/modifiers/Modifiers";
+import { useDashboardContext } from "context/DashboardContext";
 
 function Topbar() {
   const { appearance } = useUserContext();
   const { systemMessage } = useSystemMessage();
+  const {setNewWidgetOpen} = useDashboardContext();
   const [expanded, setExpanded] = useState(false);
-  const [newWidgetOpen, setNewWidgetOpen] = useState(false);
   const toggleExpanded = () => {
     setExpanded(!expanded);
   };
@@ -56,9 +56,6 @@ function Topbar() {
               </div>
             )}
           </AnimatePresence>
-          {newWidgetOpen && (
-            <NewWidgetPopup closeSelf={() => setNewWidgetOpen(false)} />
-          )}
         </motion.div>
         <Modifiers />
       </div>

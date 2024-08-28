@@ -41,6 +41,8 @@ export const DashboardProvider = ({ children }) => {
   const [loaded, setLoaded] = useState(false);
   const { setMessage } = useSystemMessage();
 
+  const [newWidgetOpen, setNewWidgetOpen] = useState(false);
+
   useEffect(() => {
     if (smartSort === "true") smartSortFunc();
     // eslint-disable-next-line
@@ -101,8 +103,8 @@ export const DashboardProvider = ({ children }) => {
   // // // // // // // //
 
   const addItem = async (newItem, newIndex, flag) => {
-    console.log("adding item");
     setItems((prevItems) => {
+      console.log(prevItems)
       const newItems = prevItems ? [...prevItems] : [];
 
       if (newIndex >= 0 && newIndex < newItems.length) {
@@ -128,9 +130,7 @@ export const DashboardProvider = ({ children }) => {
     }
   };
 
-  const removeItem = async (old, flag) => {
-    const { id } = old;
-
+  const removeItem = async (id) => {
     const newItems = [...items];
     const iIndex = newItems.findIndex((item) => item.id === id);
     const oldItem = { ...newItems[iIndex] };
@@ -139,15 +139,12 @@ export const DashboardProvider = ({ children }) => {
       newItems.splice(iIndex, 1);
     }
 
-    if (!flag) {
-      const historyObj = {
-        text: "Delete Widget",
-        unAction: () => removeItem(oldItem, true),
-        action: () => addItem(oldItem, iIndex),
-      };
-      pushHistory(historyObj);
-    }
-
+    const historyObj = {
+      text: "Delete Widget",
+      unAction: () => removeItem(oldItem, true),
+      action: () => addItem(oldItem, iIndex),
+    };
+    pushHistory(historyObj);
     setItems(newItems);
   };
 
@@ -401,6 +398,8 @@ export const DashboardProvider = ({ children }) => {
         snapshots,
         setSnapshots,
         chartRefs,
+        newWidgetOpen, 
+        setNewWidgetOpen
       }}
     >
       {children}

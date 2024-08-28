@@ -1,6 +1,5 @@
-import React, { useState, useCallback, useEffect } from "react";
+import React, { useState, useCallback } from "react";
 import { useDashboardContext } from "context/DashboardContext";
-import { loadingSvg } from "business/svg";
 import {
   DndContext,
   useSensor,
@@ -28,6 +27,7 @@ function Dashboard() {
     reorderById,
     captureItemState,
     compareItemStates,
+    setNewWidgetOpen
   } = useDashboardContext();
   const [open, setOpen] = useState(null);
   const sensors = useSensors(
@@ -68,7 +68,7 @@ function Dashboard() {
     }, 105);
   }
 
-  if (items !== 1)
+  if (items && items.length > 0)
     return (
       <>
         <DndContext
@@ -118,7 +118,11 @@ function Dashboard() {
         </DndContext>
       </>
     );
-  return <div className="loading-wrapper"> {loadingSvg()} </div>;
+  return <div className="loading-wrapper no-item-text"> 
+    <h2>Your dashboard is empty. </h2>
+    <br/>
+    <h3 onClick={() => setNewWidgetOpen(true)}> Click here to add a widget </h3>
+   </div>;
 }
 
 export default Dashboard;

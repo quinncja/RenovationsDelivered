@@ -490,6 +490,10 @@ h1 {
   z-index: 12;
 }
 
+.new-widget-overlay{
+  align-items: center;
+}
+
 .dropdown-overlay {
   position: absolute;
   width: 100vw;
@@ -1317,4 +1321,20 @@ h1 {
 .ytd-single > h2 {
   text-align: center;
   margin: 0;
+}
+
+.no-item-text{
+  color: var(--less-white);
+  display: flex;
+  flex-direction: column;
+  transition: all .3s ease-in-out;
+}
+.no-item-text h3{
+  margin-top: 0;
+}
+
+.no-item-text h3:hover{
+  text-decoration: underline;
+  cursor: pointer;
+
 }

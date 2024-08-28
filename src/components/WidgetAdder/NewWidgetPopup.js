@@ -108,7 +108,7 @@ function NewWidgetPopup({ closeSelf }) {
       animate="visible"
       exit="exit"
       variants={overlayVariants(color, 0)}
-      className="open-widget-overlay"
+      className="open-widget-overlay new-widget-overlay"
       onClick={closeSelf}
     >
       <motion.div
