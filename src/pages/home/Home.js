@@ -1,22 +1,26 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import Userfront, { LoginForm } from "@userfront/toolkit/react";
-import logo from "./images/Full-Logo-White.png";
+import { LoginForm } from "@userfront/toolkit/react";
+import logo from "images/Full-Logo-White.png";
+import Userfront from "@userfront/core";
 Userfront.init("xbpwwqmn");
 
 function Home() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if(Userfront.user.userUuid) {
-      navigate("/dashboard")
+    console.log(Userfront.user.userUuid);
+    if (Userfront.user.userUuid) {
+      navigate("/dashboard");
     }
-  }, [navigate])
+    // eslint-disable-next-line
+  }, []);
 
   return (
     <div className="home">
       <img src={logo} className="logo" alt="Renovations Delivered" />
-      <LoginForm
+      {!Userfront.user.userUuid && (
+        <LoginForm
           theme={{
             colors: {
               light: "#ffffff",
@@ -31,6 +35,7 @@ function Home() {
             extras: { hideSecuredMessage: true },
           }}
         />
+      )}
     </div>
   );
 }
