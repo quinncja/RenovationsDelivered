@@ -15,10 +15,10 @@ export function dollarFormatter(input) {
 
 export function formatNumberShort(number) {
   if (Math.abs(number) >= 1_000 && Math.abs(number) < 1_000_000) {
-    return (number / 1_000).toFixed(1).replace(/\.0$/, '') + 'K';
+    return (number / 1_000).toFixed(1).replace(/\.0$/, "") + "K";
   }
   if (Math.abs(number) >= 1_000_000 && Math.abs(number) < 1_000_000_000) {
-    return (number / 1_000_000).toFixed(1).replace(/\.0$/, '') + 'M';
+    return (number / 1_000_000).toFixed(1).replace(/\.0$/, "") + "M";
   }
   return number.toString();
 }
@@ -32,7 +32,6 @@ export function stringFormatter(input) {
 
   return formattedWords.join(" ");
 }
-
 
 export function formatSubtitle({ project, year, phase }) {
   let parts = [];
@@ -49,18 +48,17 @@ export function formatSubtitle({ project, year, phase }) {
   return parts.join(" - ");
 }
 
-
 export const formatYear = (year) => {
-  return(year.slice(-2))
-}
+  return year.slice(-2);
+};
 
 export const formatPhase = (phase) => {
-  return(phase.replace('P', '').padStart(2, '0'))
-}
+  return phase.replace("P", "").padStart(2, "0");
+};
 
 export const phaseToMonth = (phase, optional) => {
-  if (typeof phase !== 'string' || phase.length < 5) {
-    throw new Error('Invalid phase format');
+  if (typeof phase !== "string" || phase.length < 5) {
+    throw new Error("Invalid phase format");
   }
 
   const front = phase.substring(0, 2);
@@ -77,25 +75,25 @@ export const phaseToMonth = (phase, optional) => {
     "07": "July",
     "08": "August",
     "09": "September",
-    "10": "October",
-    "11": "November",
-    "12": "December",
-    "13": "Extra Work",
-    "14": "Extra Work",
-    "15": "Extra Work",
-    "16": "Extra Work",
+    10: "October",
+    11: "November",
+    12: "December",
+    13: "Extra Work",
+    14: "Extra Work",
+    15: "Extra Work",
+    16: "Extra Work",
   };
 
   let month = phaseMap[front] || "Unknown Phase";
-  if(optional) month = month.slice(0,3)
+  if (optional) month = month.slice(0, 3);
 
   return `${month} '${back}`;
 };
 
 export const modifierFormatter = (mods) => {
-  const newMods = {...mods}
-  if (mods?.job?.length !== 6) return mods
+  const newMods = { ...mods };
+  if (mods?.job?.length !== 6) return mods;
   newMods.job = mods.job.substring(0, 4);
   newMods.phase = mods.job.substring(4);
   return newMods;
-}
+};

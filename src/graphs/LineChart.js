@@ -4,14 +4,14 @@ import { useUserContext } from "context/UserContext";
 import { useEffect } from "react";
 import { phaseToMonth } from "utils/formatters";
 
-function LineChart({ data, open, handleClick, showLabel, chartObj}) {
+function LineChart({ data, open, handleClick, showLabel, chartObj }) {
   const { colorScheme } = useUserContext();
-  const { setLegends} = useDashboardContext();
+  const { setLegends } = useDashboardContext();
 
   useEffect(() => {
-    if (open && chartObj.chartProps.legendsFunc) 
+    if (open && chartObj.chartProps.legendsFunc)
       setLegends(chartObj.chartProps.legendsFunc(data));
-    else setLegends(undefined)
+    else setLegends(undefined);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open]);
 
@@ -38,14 +38,10 @@ function LineChart({ data, open, handleClick, showLabel, chartObj}) {
     },
   };
 
-  let margin = { top: 5, right: 70, bottom: 120, left: 40 }
-  const axisLeft = open && showLabel ? chartObj.chartProps.axisLeft : false
+  let margin = { top: 5, right: 70, bottom: 120, left: 40 };
+  const axisLeft = open && showLabel ? chartObj.chartProps.axisLeft : false;
 
-  if(!data) return(
-    <div style={{margin: "auto"}}>
-      No Data
-    </div>
-  )
+  if (!data) return <div style={{ margin: "auto" }}>No Data</div>;
   return (
     <Line
       {...chartObj.chartProps}
@@ -71,12 +67,12 @@ function LineChart({ data, open, handleClick, showLabel, chartObj}) {
         truncateTickAt: 0,
         tickRotation: -45,
         tickValues:
-        data[0]?.data.length === 2
-          ? data[0].data.map(d => d.x)
-          : data[0]?.data
-              .filter((_, index) => index % 2 === 0) 
-              .map(d => d.x),
-        format: v => phaseToMonth(v, true)
+          data[0]?.data.length === 2
+            ? data[0].data.map((d) => d.x)
+            : data[0]?.data
+                .filter((_, index) => index % 2 === 0)
+                .map((d) => d.x),
+        format: (v) => phaseToMonth(v, true),
       }}
       enableGridX={showLabel}
       enableGridY={showLabel}

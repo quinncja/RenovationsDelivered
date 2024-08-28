@@ -9,7 +9,6 @@ function Home() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    console.log(Userfront.user.userUuid);
     if (Userfront.user.userUuid) {
       navigate("/dashboard");
     }

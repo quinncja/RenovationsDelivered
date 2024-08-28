@@ -6,13 +6,13 @@ import { processTableData } from "utils/api";
 
 function LineTable({ data, activeColumn }) {
   const [hasOverflow, setHasOverflow] = useState(true);
-  const [tableData, setTableData] = useState(null)
+  const [tableData, setTableData] = useState(null);
   const tableRef = useRef(null);
   const headerRefs = useRef({});
   const colHeaders = data[0].data.map((item) => item.x);
-  
+
   useEffect(() => {
-    if(!tableData) return;
+    if (!tableData) return;
 
     const table = tableRef.current;
 
@@ -52,23 +52,23 @@ function LineTable({ data, activeColumn }) {
 
   useEffect(() => {
     const fetchTableData = async () => {
-      try{
-        const processedData = await processTableData(data, "revenue")
-        setTableData(processedData)
-      } catch (error){
-        console.log(error)
+      try {
+        const processedData = await processTableData(data, "revenue");
+        setTableData(processedData);
+      } catch (error) {
+        console.log(error);
       }
-    }
+    };
     const timer = setTimeout(() => {
       fetchTableData();
     }, 500);
 
     return () => clearTimeout(timer);
-  }, [data])
+  }, [data]);
 
   return (
-      <AnimatePresence>
-      {tableData ?
+    <AnimatePresence>
+      {tableData ? (
         <motion.div
           variants={itemFadeIn}
           className={`table-wrapper ${hasOverflow && "with-shadow"}`}
@@ -79,10 +79,15 @@ function LineTable({ data, activeColumn }) {
                 <tr>
                   <th></th>
                   {colHeaders.map((colHeader) => (
-                    <th key={colHeader}
-                      ref={(el) => (headerRefs.current[colHeader] = el)}  
-                      className={colHeader === activeColumn ? "active-column" : ""}
-                    >{phaseToMonth(colHeader)}</th>
+                    <th
+                      key={colHeader}
+                      ref={(el) => (headerRefs.current[colHeader] = el)}
+                      className={
+                        colHeader === activeColumn ? "active-column" : ""
+                      }
+                    >
+                      {phaseToMonth(colHeader)}
+                    </th>
                   ))}
                 </tr>
               </thead>
@@ -91,12 +96,14 @@ function LineTable({ data, activeColumn }) {
                   <tr key={dataset.id}>
                     <td>{dataset.id}</td>
                     {dataset.data.map((item) => (
-                      <td key={item.x} 
-                      className={`${item.x === activeColumn ? "active-column" : ""}
+                      <td
+                        key={item.x}
+                        className={`${item.x === activeColumn ? "active-column" : ""}
                       ${item.p && (item.y > 0 ? "positive-val" : "negative-val")}
                       `}
-                  
-                      >{item.f ? `${item.y}%` : dollarFormatter(item.y)}</td>
+                      >
+                        {item.f ? `${item.y}%` : dollarFormatter(item.y)}
+                      </td>
                     ))}
                   </tr>
                 ))}
@@ -104,17 +111,16 @@ function LineTable({ data, activeColumn }) {
             </table>
           </div>
         </motion.div>
-        :
-        <> 
-        <br/>
-        <br/>
-        <br/>
-        <br/>
-        <div className="line-table-loading-widget"/>
+      ) : (
+        <>
+          <br />
+          <br />
+          <br />
+          <br />
+          <div className="line-table-loading-widget" />
         </>
-      }
-      </AnimatePresence>
-      
+      )}
+    </AnimatePresence>
   );
 }
 

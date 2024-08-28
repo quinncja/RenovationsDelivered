@@ -21,8 +21,15 @@ import { AnimatePresence } from "framer-motion";
 import DashboardItem from "./DashboardItem";
 
 function Dashboard() {
-  const { active, setActive, items, removeItem, reorderById, captureItemState, compareItemStates } =
-    useDashboardContext();
+  const {
+    active,
+    setActive,
+    items,
+    removeItem,
+    reorderById,
+    captureItemState,
+    compareItemStates,
+  } = useDashboardContext();
   const [open, setOpen] = useState(null);
   const sensors = useSensors(
     useSensor(PointerSensor),
@@ -31,9 +38,9 @@ function Dashboard() {
     }),
   );
 
-  useEffect(() => { 
-    console.log(active)
-  }, [active])
+  useEffect(() => {
+    console.log(active);
+  }, [active]);
   const openSelf = (data) => {
     setOpen(data);
   };
@@ -43,7 +50,7 @@ function Dashboard() {
   };
 
   function handleDragOver({ active, over }) {
-    if(!over) return;
+    if (!over) return;
     if (active && !active.data.current.new) {
       reorderById(active.id, over.id);
     }
@@ -62,7 +69,7 @@ function Dashboard() {
     compareItemStates();
     setTimeout(() => {
       setActive(null);
-    }, 105)
+    }, 105);
   }
 
   if (items !== 1)
@@ -100,13 +107,17 @@ function Dashboard() {
             </SortableContext>
           </Droppable>
           <AnimatePresence>
-          {open && <OpenItem item={open} closeSelf={closeSelf} />}
-        </AnimatePresence>
-          <DragOverlay dropAnimation={{
-                duration: 300,
-                easing: 'cubic-bezier(0.18, 0.67, 0.6, 1.22)',
-              }}>
-            {active && active.data && active.data.current.renderDragOverlay?.(active)}
+            {open && <OpenItem item={open} closeSelf={closeSelf} />}
+          </AnimatePresence>
+          <DragOverlay
+            dropAnimation={{
+              duration: 300,
+              easing: "cubic-bezier(0.18, 0.67, 0.6, 1.22)",
+            }}
+          >
+            {active &&
+              active.data &&
+              active.data.current.renderDragOverlay?.(active)}
           </DragOverlay>
         </DndContext>
       </>

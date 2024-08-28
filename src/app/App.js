@@ -11,7 +11,7 @@ import { useUserContext } from "context/UserContext";
 
 function App() {
   const navigate = useNavigate();
-  const { setSmartSort, onLoad} = useDashboardContext();
+  const { setSmartSort, onLoad } = useDashboardContext();
   const { setAppearance, setColorScheme, setLabel } = useUserContext();
   const [open, setOpen] = useState(false);
   const location = useLocation();
@@ -28,8 +28,12 @@ function App() {
     const loadUser = async () => {
       try {
         const settings = await fetchUserData();
-        onLoad(settings.itemArray, settings.itemModifiers, settings.pageModifiers)
-        setLabel(settings.label || 'none')
+        onLoad(
+          settings.itemArray,
+          settings.itemModifiers,
+          settings.pageModifiers,
+        );
+        setLabel(settings.label || "none");
         setAppearance(settings.appearance || "dark");
         setColorScheme(settings.colorScheme || "nivo");
         setSmartSort(settings.smartSort || "false");

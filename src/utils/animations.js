@@ -116,7 +116,7 @@ export const newWidgetPopupVariants = {
       duration: 0.3,
     },
   },
-}
+};
 
 export const toggleVariants = {
   dark: {
@@ -145,7 +145,7 @@ export const labelVariants = {
   },
   always: {
     x: "calc(205% + 3px)",
-  }
+  },
 };
 
 export const dropdownVariants = {
@@ -178,14 +178,14 @@ export const topbarVariants = {
     width: "65px",
     height: "59px",
     transition: { duration: 0.3, ease: "easeInOut" },
-  }
-}
+  },
+};
 
 export const undoVariants = {
-  hidden: { 
-    opacity: 0, 
+  hidden: {
+    opacity: 0,
     scale: 0,
-    transformOrigin: "center" 
+    transformOrigin: "center",
   },
   visible: {
     opacity: 1,
@@ -206,14 +206,13 @@ export const undoVariants = {
       ease: "easeInOut",
     },
   },
-}
-
+};
 
 export const newWidgetButtonVariants = {
-  hidden: { 
-    opacity: 0, 
+  hidden: {
+    opacity: 0,
     scale: 0,
-    transformOrigin: "center" 
+    transformOrigin: "center",
   },
   visible: {
     opacity: 1,
@@ -234,35 +233,14 @@ export const newWidgetButtonVariants = {
       ease: "easeInOut",
     },
   },
-}
-
-
-export const undoSVGVariants = {
-    hidden: {rotate: 0 },
-    visible: {
-      rotate: -360,
-      transition: {
-        duration: .7,
-        ease: "easeOut",
-      },
-    },
-    exit: {
-      opacity: 0,
-      rotate: 0,
-      transition: {
-        duration: 0.7,
-        ease: "easeInOut",
-      },
-    },
 };
 
-
-export const redoSVGVariants = {
-  hidden: {rotate: 0 },
+export const undoSVGVariants = {
+  hidden: { rotate: 0 },
   visible: {
-    rotate: 360,
+    rotate: -360,
     transition: {
-      duration: .7,
+      duration: 0.7,
       ease: "easeOut",
     },
   },
@@ -276,6 +254,24 @@ export const redoSVGVariants = {
   },
 };
 
+export const redoSVGVariants = {
+  hidden: { rotate: 0 },
+  visible: {
+    rotate: 360,
+    transition: {
+      duration: 0.7,
+      ease: "easeOut",
+    },
+  },
+  exit: {
+    opacity: 0,
+    rotate: 0,
+    transition: {
+      duration: 0.7,
+      ease: "easeInOut",
+    },
+  },
+};
 
 export const widgetItemsFadeIn = {
   hidden: { opacity: 0 },
@@ -283,7 +279,7 @@ export const widgetItemsFadeIn = {
     opacity: 1,
     transition: {
       duration: 0.4,
-      delay: .05,
+      delay: 0.05,
       ease: "easeInOut",
     },
   },

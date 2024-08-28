@@ -12,47 +12,61 @@ import { SingleMargin } from "./Margin/SingleMargin";
 export const chartObjects = [
   {
     type: "Vender Breakdown",
-    getter: (mods) => fetchChartData({...mods, type: "vender"}),
-    tooltip: (datum, sum) => <PieChartToolTip datum={datum} sum={sum}/>,
+    getter: (mods) => fetchChartData({ ...mods, type: "vender" }),
+    tooltip: (datum, sum) => <PieChartToolTip datum={datum} sum={sum} />,
     label: (datum) => getVenderLabel(datum),
     chartType: "Pie",
     modifierOptions: ["year", "job", "phase"],
-    cleaner: (data) => {return data}
+    cleaner: (data) => {
+      return data;
+    },
   },
   {
     type: "COGs Breakdown",
-    getter: (mods) => fetchChartData({...mods, type: "cogs"}),
-    tooltip: (datum, sum) => <PieChartToolTip datum={datum} sum={sum}/>,
-    label: (datum) => {return datum.id},
+    getter: (mods) => fetchChartData({ ...mods, type: "cogs" }),
+    tooltip: (datum, sum) => <PieChartToolTip datum={datum} sum={sum} />,
+    label: (datum) => {
+      return datum.id;
+    },
     chartType: "Pie",
     modifierOptions: ["year", "job", "phase"],
-    cleaner: (data) => {return data}
+    cleaner: (data) => {
+      return data;
+    },
   },
   {
     type: "Sub Breakdown",
-    getter: (mods) => fetchChartData({...mods, type: "sub"}),
-    tooltip: (datum, sum) => <PieChartToolTip datum={datum} sum={sum}/>,
-    label: (datum) => {return datum.id},
+    getter: (mods) => fetchChartData({ ...mods, type: "sub" }),
+    tooltip: (datum, sum) => <PieChartToolTip datum={datum} sum={sum} />,
+    label: (datum) => {
+      return datum.id;
+    },
     chartType: "Pie",
     modifierOptions: ["year", "job", "phase"],
-    cleaner: (data) => {return data}
+    cleaner: (data) => {
+      return data;
+    },
   },
   {
     type: "Cost Analysis",
     chartType: "Line",
-    getter: (mods) => fetchChartData({...mods, type: "revenue"}),
+    getter: (mods) => fetchChartData({ ...mods, type: "revenue" }),
     cleaner: (data) => RevenueCleaner(data),
-    tooltip: (slice) => <RevenueTooltip slice={slice}/>,
-    checkIfSingle: (data) => (data && data[0] && data[0].data.length === 1) ? true : false,
+    tooltip: (slice) => <RevenueTooltip slice={slice} />,
+    checkIfSingle: (data) =>
+      data && data[0] && data[0].data.length === 1 ? true : false,
     single: {
       chartType: "Bar",
-      cleaner: (data) => data.map(item => {
-        const flattenedData = item.data.map(dataItem => `${dataItem.y}`).join(", ");
-        return {
+      cleaner: (data) =>
+        data.map((item) => {
+          const flattenedData = item.data
+            .map((dataItem) => `${dataItem.y}`)
+            .join(", ");
+          return {
             id: item.id,
-            [`${item.id} -`]: flattenedData
-        };
-      }),
+            [`${item.id} -`]: flattenedData,
+          };
+        }),
     },
     chartProps: revChartProps,
     modifierOptions: ["year", "job", "phase"],
@@ -60,14 +74,18 @@ export const chartObjects = [
   {
     type: "Margin",
     chartType: "Line",
-    getter: (mods) => fetchChartData({...mods, type: "margin"}),
-    cleaner: (data) => {return data},
-    tooltip: (slice) => <MarginToolTip slice={slice}/>,
-    checkIfSingle: (data) => (data[0].data.length === 1) ? true : false,
+    getter: (mods) => fetchChartData({ ...mods, type: "margin" }),
+    cleaner: (data) => {
+      return data;
+    },
+    tooltip: (slice) => <MarginToolTip slice={slice} />,
+    checkIfSingle: (data) => (data[0].data.length === 1 ? true : false),
     single: {
       chartType: "Text",
-      display: (data) => <SingleMargin data={data}/>,
-      cleaner: (data) => {return data},
+      display: (data) => <SingleMargin data={data} />,
+      cleaner: (data) => {
+        return data;
+      },
     },
     chartProps: marginChartProps,
     modifierOptions: ["year", "job", "phase"],
@@ -81,11 +99,13 @@ export const chartObjects = [
   {
     type: "Financial Overview",
     chartType: "Text",
-    getter: (mods) => fetchChartData({...mods, type: "ytd"}),
+    getter: (mods) => fetchChartData({ ...mods, type: "ytd" }),
     display: (data) => ytdDisplay(data),
-    cleaner: (data) => {return data},
-    modifierOptions: ["year", "job", "phase"]
-  }
+    cleaner: (data) => {
+      return data;
+    },
+    modifierOptions: ["year", "job", "phase"],
+  },
 ];
 
 export const groupedByChartType = chartObjects.reduce((acc, obj) => {

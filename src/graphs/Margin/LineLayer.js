@@ -6,7 +6,7 @@ export default function LineLayer(lineChartProps) {
 
   const maskId = useMemo(
     () => `lineMask-${Math.random().toString(36).slice(2, 15)}`,
-    []
+    [],
   );
 
   return (
@@ -16,7 +16,7 @@ export default function LineLayer(lineChartProps) {
           <path
             key={id}
             d={lineGenerator(
-              d.map((dt) => ({ x: xScale(dt.x), y: yScale(dt.y) }))
+              d.map((dt) => ({ x: xScale(dt.x), y: yScale(dt.y) })),
             )}
             fill="none"
             strokeWidth={lineWidth}

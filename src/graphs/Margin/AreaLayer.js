@@ -5,7 +5,7 @@ export default function AreaLayer(lineChartProps) {
     lineChartProps;
   const maskId = useMemo(
     () => `areaMask-${Math.random().toString(36).slice(2, 15)}`,
-    []
+    [],
   );
 
   return (
@@ -15,7 +15,7 @@ export default function AreaLayer(lineChartProps) {
           <path
             key={id}
             d={areaGenerator(
-              d.map((dt) => ({ x: xScale(dt.x), y: yScale(dt.y) }))
+              d.map((dt) => ({ x: xScale(dt.x), y: yScale(dt.y) })),
             )}
             fill="#fff"
           />

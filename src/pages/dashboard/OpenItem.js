@@ -11,14 +11,15 @@ import { useDashboardContext } from "context/DashboardContext";
 
 function OpenItem({ item, closeSelf }) {
   const { data, chartType, type, modifiers, id } = item;
-  const [ activeColumn, setActiveColumn] = useState();
+  const [activeColumn, setActiveColumn] = useState();
   const { getChartObj } = useDashboardContext();
   const color = useCSSVariable("--overlay");
   const chartObj = getChartObj(type);
 
-  const showSingle = (data && chartObj.checkIfSingle && chartObj.checkIfSingle(data))
-  const chartToShow = showSingle ? chartObj.single : chartObj
-  const dataToShow = showSingle ? chartObj.single.cleaner(data) : data
+  const showSingle =
+    data && chartObj.checkIfSingle && chartObj.checkIfSingle(data);
+  const chartToShow = showSingle ? chartObj.single : chartObj;
+  const dataToShow = showSingle ? chartObj.single.cleaner(data) : data;
 
   function handleClose() {
     closeSelf();
@@ -27,11 +28,21 @@ function OpenItem({ item, closeSelf }) {
   function body() {
     return (
       <>
-        <div className={`open-chart-row ${chartType === "Line" && "shift-right"}`}>
-          <ChartDisplay chartObj={chartToShow} handleClick={setActiveColumn} data={dataToShow} id={id} open={true} />
+        <div
+          className={`open-chart-row ${chartType === "Line" && "shift-right"}`}
+        >
+          <ChartDisplay
+            chartObj={chartToShow}
+            handleClick={setActiveColumn}
+            data={dataToShow}
+            id={id}
+            open={true}
+          />
           {chartToShow.chartType !== "Text" && <LegendDisplay />}
         </div>
-        {chartType === "Line" && <LineTable data={data} activeColumn={activeColumn} />}
+        {chartType === "Line" && (
+          <LineTable data={data} activeColumn={activeColumn} />
+        )}
       </>
     );
   }
@@ -45,27 +56,25 @@ function OpenItem({ item, closeSelf }) {
       className="open-widget-overlay"
       onClick={handleClose}
     >
-      <motion.div
-        layout
-        style={{width: "100%"}}
-      >
-        <motion.div 
-        className="widget-background dashboard-widget-open"         
-        layoutId={`dashboard-item-${id}`}
-        onClick={(e) => e.stopPropagation()}> 
-        <div className="widget-top">
-          <div className="drag-handle-wrapper" />
+      <motion.div layout style={{ width: "100%" }}>
+        <motion.div
+          className="widget-background dashboard-widget-open"
+          layoutId={`dashboard-item-${id}`}
+          onClick={(e) => e.stopPropagation()}
+        >
+          <div className="widget-top">
+            <div className="drag-handle-wrapper" />
             <motion.div
               className="widget-title"
               layoutId={`dashboard-item-title-${id}`}
             >
               {type}
             </motion.div>
-          <button className="x-button widget-item" onClick={handleClose}>
-            {close()}
-          </button>
-        </div>
-        {body()}
+            <button className="x-button widget-item" onClick={handleClose}>
+              {close()}
+            </button>
+          </div>
+          {body()}
         </motion.div>
       </motion.div>
     </motion.div>

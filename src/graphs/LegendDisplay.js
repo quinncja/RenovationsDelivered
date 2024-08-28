@@ -35,28 +35,29 @@ function LegendDisplay() {
     ],
   };
 
-  
   return (
     <AnimatePresence>
-      {legends ? 
-      <motion.div variants={itemFadeIn} className="legend-box">
-        {legends.map((datum, index) => (
-          <div className="legend" key={index}>
-            <div
-              className="tooltip-cube"
-              style={{
-                backgroundColor:
-                  colorPalettes[colorScheme][
-                    index % colorPalettes[colorScheme].length
-                  ],
-              }}
-            />
-            <strong>{datum.id}</strong>{" "}
-            {datum.value && `- ${dollarFormatter(datum.value)}`}
-          </div>
-        ))}
-      </motion.div> : 
-      <div className="empty-space"/>}
+      {legends ? (
+        <motion.div variants={itemFadeIn} className="legend-box">
+          {legends.map((datum, index) => (
+            <div className="legend" key={index}>
+              <div
+                className="tooltip-cube"
+                style={{
+                  backgroundColor:
+                    colorPalettes[colorScheme][
+                      index % colorPalettes[colorScheme].length
+                    ],
+                }}
+              />
+              <strong>{datum.id}</strong>{" "}
+              {datum.value && `- ${dollarFormatter(datum.value)}`}
+            </div>
+          ))}
+        </motion.div>
+      ) : (
+        <div className="empty-space" />
+      )}
     </AnimatePresence>
   );
 }

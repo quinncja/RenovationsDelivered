@@ -1,4 +1,10 @@
-import React, { createContext, useContext, useEffect, useState, useRef} from "react";
+import React, {
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+  useRef,
+} from "react";
 import { saveItems, saveModifiers, savePageModifiers } from "utils/api";
 import { scrollToBottom } from "utils/funcs";
 import { chartObjects } from "graphs/ChartObjects";
@@ -20,14 +26,14 @@ export const DashboardProvider = ({ children }) => {
   const [pageModifiers, setPageModifiers] = useState({
     job: null,
     year: null,
-    phase: null
-  })
+    phase: null,
+  });
   const [single, setSingle] = useState();
   const isValidObject = (value) => value && Object.keys(value).length > 0;
 
   const [modifiers, setModifiers] = useState([]);
   const [legends, setLegends] = useState([]);
-  const [capturedState, setCapturedState] = useState({})
+  const [capturedState, setCapturedState] = useState({});
   const [history, setHistory] = useState([]);
   const historyPtr = useRef(0);
   const idRef = useRef([]);
@@ -37,17 +43,17 @@ export const DashboardProvider = ({ children }) => {
   const { setMessage } = useSystemMessage();
 
   useEffect(() => {
-    if(smartSort === "true") smartSortFunc();
+    if (smartSort === "true") smartSortFunc();
     // eslint-disable-next-line
-  }, [smartSort])
+  }, [smartSort]);
 
   const onLoad = (items, modifiers, pageModifiers) => {
     setLoaded(true);
     setItems(items);
     setModifiers(modifiers);
     setPageModifiers(pageModifiers);
-  }
-  
+  };
+
   // // // // // //
   //  Snapshot   //
   // // // // // //
@@ -70,14 +76,13 @@ export const DashboardProvider = ({ children }) => {
     }
   }, []);
 
-
   // // // // // //
-  // Undo / Redo // 
+  // Undo / Redo //
   // // // // // //
 
   const pushHistory = (newData) => {
     setHistory((prevHistory) => {
-      const truncatedHistory = prevHistory.slice(0, historyPtr.current); 
+      const truncatedHistory = prevHistory.slice(0, historyPtr.current);
       const newHistory = [...truncatedHistory, newData];
       historyPtr.current = newHistory.length;
       return newHistory;
@@ -86,15 +91,15 @@ export const DashboardProvider = ({ children }) => {
 
   const enactChange = (type, change) => {
     if (type === "undo") {
-      change.action(); 
-      setMessage(`Undo ${change.text}`)
-      }
-    if(type === "redo"){
-      change.unAction()
-      setMessage(`Redo ${change.text}`)
+      change.action();
+      setMessage(`Undo ${change.text}`);
     }
-  }
-  
+    if (type === "redo") {
+      change.unAction();
+      setMessage(`Redo ${change.text}`);
+    }
+  };
+
   const handleRedo = () => {
     if (redoActive) {
       const actionToRedo = history[historyPtr.current];
@@ -102,10 +107,10 @@ export const DashboardProvider = ({ children }) => {
       historyPtr.current += 1;
     }
   };
-  
+
   const handleUndo = () => {
     if (undoActive) {
-      historyPtr.current -= 1; 
+      historyPtr.current -= 1;
       const actionToUndo = history[historyPtr.current];
       enactChange("undo", actionToUndo);
     }
@@ -115,24 +120,24 @@ export const DashboardProvider = ({ children }) => {
   useRedo(handleRedo);
 
   // // // // // // // //
-  // Add / Delete Item // 
+  // Add / Delete Item //
   // // // // // // // //
 
   const addItem = async (newItem, newIndex, flag) => {
-    console.log("adding item")
+    console.log("adding item");
     setItems((prevItems) => {
       const newItems = prevItems ? [...prevItems] : [];
-      
+
       if (newIndex >= 0 && newIndex < newItems.length) {
-        newItems.splice(newIndex, 0, newItem); 
+        newItems.splice(newIndex, 0, newItem);
       } else {
-        newItems.push(newItem); 
+        newItems.push(newItem);
       }
-      
+
       itemSaver(newItems);
       return newItems;
     });
-    if(!flag){
+    if (!flag) {
       const item = newItem;
       const index = newIndex;
       const historyObj = {
@@ -140,7 +145,7 @@ export const DashboardProvider = ({ children }) => {
         type: "add",
         unAction: () => addItem(item, index, true),
         action: () => removeItem(item, true),
-      }
+      };
       pushHistory(historyObj);
       setTimeout(scrollToBottom, 0);
     }
@@ -148,7 +153,7 @@ export const DashboardProvider = ({ children }) => {
 
   const removeItem = async (old, flag) => {
     const { id } = old;
-    
+
     const newItems = [...items];
     const iIndex = newItems.findIndex((item) => item.id === id);
     const oldItem = { ...newItems[iIndex] };
@@ -157,61 +162,61 @@ export const DashboardProvider = ({ children }) => {
       newItems.splice(iIndex, 1);
     }
 
-    if(!flag){
+    if (!flag) {
       const historyObj = {
         text: "Delete Widget",
         unAction: () => removeItem(oldItem, true),
         action: () => addItem(oldItem, iIndex),
-      }
+      };
       pushHistory(historyObj);
     }
 
-    setItems(newItems)
+    setItems(newItems);
   };
-  
+
   // // // // // // //
   // Reorder Items  //
   // // // // // // //
 
   const itemSaver = async (items) => {
-    try{
+    try {
       await saveItems(items);
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
+  };
 
   const captureItemState = (active) => {
     const activeIndex = items.findIndex((item) => item.id === active.id);
     idRef.current[0] = activeIndex;
     setCapturedState(items);
-  }
+  };
 
   const compareItemStates = () => {
-    let array1 = JSON.stringify(items)
-    let array2 = JSON.stringify(capturedState)
+    let array1 = JSON.stringify(items);
+    let array2 = JSON.stringify(capturedState);
 
     if (array1 === array2) {
       setCapturedState({});
       return;
     }
 
-    const ids = [...idRef.current]; 
+    const ids = [...idRef.current];
 
     const historyObj = {
       text: "Move",
       type: "fixed",
       action: () => reorderByIndex(ids[0], ids[1]),
       unAction: () => reorderByIndex(ids[1], ids[0]),
-    }
+    };
 
-    pushHistory(historyObj)
-  }
+    pushHistory(historyObj);
+  };
 
   const reorderByIndex = (index1, index2) => {
     setItems((items) => {
       const newItems = arrayMove(items, index1, index2);
-      itemSaver(newItems)
+      itemSaver(newItems);
       return newItems;
     });
   };
@@ -220,11 +225,11 @@ export const DashboardProvider = ({ children }) => {
     setItems((items) => {
       const activeIndex = items.findIndex((item) => item.id === activeId);
       const overIndex = items.findIndex((item) => item.id === overId);
-  
+
       idRef.current[1] = [overIndex];
-  
+
       const newItems = arrayMove(items, activeIndex, overIndex);
-      itemSaver(newItems)
+      itemSaver(newItems);
       return newItems;
     });
   };
@@ -235,18 +240,20 @@ export const DashboardProvider = ({ children }) => {
 
   useEffect(() => {
     const updateDBModifiers = async () => {
-      try{
+      try {
         await savePageModifiers(pageModifiers);
-        setSingle(isValidObject(pageModifiers.job) && isValidObject(pageModifiers.year) && isValidObject(pageModifiers.phase));
+        setSingle(
+          isValidObject(pageModifiers.job) &&
+            isValidObject(pageModifiers.year) &&
+            isValidObject(pageModifiers.phase),
+        );
       } catch (error) {
-        console.log(error)
+        console.log(error);
       }
-    }
+    };
 
-    if(loaded) updateDBModifiers();
-
-  }, [pageModifiers, loaded])
-
+    if (loaded) updateDBModifiers();
+  }, [pageModifiers, loaded]);
 
   // // // // // //
   //  Modifiers  //
@@ -256,25 +263,24 @@ export const DashboardProvider = ({ children }) => {
 
   const modifierSaver = async (mods) => {
     try {
-      await saveModifiers(mods)
+      await saveModifiers(mods);
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
+  };
 
   const editModifiers = async (id, newMods, flag, callback) => {
-    let exisiting = {}; 
+    let exisiting = {};
     let isEmpty = !newMods || Object.keys(newMods).length === 0;
 
     if (modifiers && modifiers.length > 0) {
-  
       setModifiers((prevModifiers) => {
         let found = false;
-  
+
         const newModifiers = prevModifiers.map((mod) => {
           if (mod.id === id) {
             exisiting = { ...mod };
-  
+
             found = true;
             return {
               ...mod,
@@ -283,28 +289,27 @@ export const DashboardProvider = ({ children }) => {
           }
           return mod;
         });
-  
+
         if (!found) {
           newModifiers.push({ id, modifiers: newMods });
         }
-  
+
         modifierSaver(newModifiers);
         return newModifiers;
       });
-  
     } else {
-      modifierSaver([{ id, modifiers: newMods }])
+      modifierSaver([{ id, modifiers: newMods }]);
       setModifiers([{ id, modifiers: newMods }]);
     }
 
-    if(!flag){
-      console.log("onsave", newMods, exisiting)
+    if (!flag) {
+      console.log("onsave", newMods, exisiting);
       const historyObj = {
         text: "Modifier Edit",
         type: "fixed",
         unAction: () => editModifiers(id, newMods, true),
         action: () => editModifiers(id, exisiting.modifiers, true),
-      }
+      };
       pushHistory(historyObj);
     }
 
@@ -326,9 +331,9 @@ export const DashboardProvider = ({ children }) => {
   //       addItem(oldItem, iIndex, true);
   //     });
   // };
-  
+
   const getModifier = (id) => {
-    if(modifiers) return modifiers.find((modifier) => modifier.id === id);
+    if (modifiers) return modifiers.find((modifier) => modifier.id === id);
   };
 
   const getModiferOptions = (type) => {
@@ -339,8 +344,7 @@ export const DashboardProvider = ({ children }) => {
     return chartObjects.find((obj) => obj.type === type);
   };
 
-
-  // // // // // // 
+  // // // // // //
   // Smart Sort  //
   // // // // // //
 
@@ -348,21 +352,21 @@ export const DashboardProvider = ({ children }) => {
     const chartType = getChartObj(type).chartType;
     if (chartType === "Pie") return 1;
     return 2;
-  }
+  };
 
   const swapPositions = (i, k, newItems) => {
     const temp = newItems[i];
     newItems[i] = newItems[k];
     newItems[k] = temp;
   };
-  
+
   const forwardSearch = (i, count, newItems, columnCount) => {
     let currentCount = count - getChartSize(newItems[i].type);
-  
+
     for (let k = i + 1; k < newItems.length; k++) {
       const size = getChartSize(newItems[k].type);
       currentCount += size;
-  
+
       if (currentCount > columnCount) {
         currentCount -= size;
       } else if (currentCount === columnCount) {
@@ -387,9 +391,8 @@ export const DashboardProvider = ({ children }) => {
       }
       if (count === columnCount) count = 0;
     }
-    setItems(newItems)
-  }
-
+    setItems(newItems);
+  };
 
   return (
     <DashboardContext.Provider
@@ -411,7 +414,7 @@ export const DashboardProvider = ({ children }) => {
         compareItemStates,
         handleUndo,
         handleRedo,
-        undoActive, 
+        undoActive,
         redoActive,
         smartSort,
         setSmartSort,
@@ -420,7 +423,7 @@ export const DashboardProvider = ({ children }) => {
         single,
         snapshots,
         setSnapshots,
-        chartRefs
+        chartRefs,
       }}
     >
       {children}

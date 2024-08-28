@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { testAPI } from 'utils/api';
+import React, { useEffect, useState } from "react";
+import { testAPI } from "utils/api";
 
 function Jobcosting() {
   const [obj, setObj] = useState();

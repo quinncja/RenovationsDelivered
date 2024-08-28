@@ -4,7 +4,7 @@ import { useUserContext } from "context/UserContext";
 import { useDashboardContext } from "context/DashboardContext";
 import { dollarFormatter } from "utils/formatters";
 
-function BarChart({ data, open, showLabel, chartRef}) {
+function BarChart({ data, open, showLabel, chartRef }) {
   const { setLegends } = useDashboardContext();
   const { colorScheme } = useUserContext();
 
@@ -31,23 +31,23 @@ function BarChart({ data, open, showLabel, chartRef}) {
     },
   };
   function generateDataKeys(data) {
-    return data.map(item => `${item.id} -`);
+    return data.map((item) => `${item.id} -`);
   }
 
   useEffect(() => {
     if (open) setLegends();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open]);
-  
-  const axisLeft = open && showLabel ? {
-    tickValues: 5,
-    format: v => dollarFormatter(v)} : false
 
-  if(!data) return(
-      <div style={{margin: "auto"}}>
-        No Data
-      </div>
-      )
+  const axisLeft =
+    open && showLabel
+      ? {
+          tickValues: 5,
+          format: (v) => dollarFormatter(v),
+        }
+      : false;
+
+  if (!data) return <div style={{ margin: "auto" }}>No Data</div>;
   return (
     <BarCanvas
       data={data}

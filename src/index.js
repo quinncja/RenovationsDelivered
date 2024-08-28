@@ -12,7 +12,7 @@ root.render(
   <React.StrictMode>
     <SystemMessageProvider>
       <DashboardProvider>
-        <ProjectProvider> 
+        <ProjectProvider>
           <UserProvider>
             <Router />
           </UserProvider>

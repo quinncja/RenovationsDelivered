@@ -37,22 +37,20 @@ export function getItemData(type, modifiers) {
 
 export async function LoadItemData(chartObj, pageModifiers) {
   const modifiers = chartObj.modifierOptions.reduce((acc, option) => {
-      if (pageModifiers[option]) {
-          if(pageModifiers[option][0])
-            acc[option] = pageModifiers[option][0].num;
-          else 
-            acc[option] = undefined;
-      }
+    if (pageModifiers[option]) {
+      if (pageModifiers[option][0]) acc[option] = pageModifiers[option][0].num;
+      else acc[option] = undefined;
+    }
 
-      return acc;
+    return acc;
   }, {});
 
-  const formatted = modifierFormatter(modifiers)
+  const formatted = modifierFormatter(modifiers);
   let newData = await chartObj.getter(formatted);
-  if(newData){
+  if (newData) {
     newData = chartObj.cleaner(newData);
     return newData;
-  } 
+  }
 
   return null;
 }

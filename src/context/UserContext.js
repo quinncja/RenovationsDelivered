@@ -30,7 +30,7 @@ export const UserProvider = ({ children }) => {
       "filter3",
       "filter4",
       "filter5",
-      "filter6"
+      "filter6",
     ];
 
     variables.forEach((varName) => {
@@ -46,7 +46,14 @@ export const UserProvider = ({ children }) => {
 
   return (
     <UserContext.Provider
-      value={{ appearance, setAppearance, colorScheme, setColorScheme, label, setLabel}}
+      value={{
+        appearance,
+        setAppearance,
+        colorScheme,
+        setColorScheme,
+        label,
+        setLabel,
+      }}
     >
       {children}
     </UserContext.Provider>

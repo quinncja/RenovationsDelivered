@@ -13,11 +13,10 @@ export function generateRandomId(length = 8) {
 
 export const scrollToBottom = () => {
   window.scrollTo({
-      top: document.documentElement.scrollHeight,
-      behavior: 'smooth'
+    top: document.documentElement.scrollHeight,
+    behavior: "smooth",
   });
 };
-
 
 export const calculateTotalSum = (data) => {
   return data.reduce((acc, datum) => acc + datum.value, 0);

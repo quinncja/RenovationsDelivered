@@ -8,13 +8,13 @@ function ToggleLabels({ item }) {
 
   const toggleLabel = async (input) => {
     const oldChoice = input;
-    setLabel(input)
-    try{
+    setLabel(input);
+    try {
       await saveLabelSettings(input);
     } catch (error) {
-      setLabel(oldChoice)
+      setLabel(oldChoice);
     }
-  }
+  };
 
   return (
     <motion.div className="setting">
@@ -40,12 +40,11 @@ function ToggleLabels({ item }) {
             className={`setting-button ${label === "open" && "active-button"}`}
             onClick={() => toggleLabel("open")}
             title="Show while open"
-
           >
             {" "}
             Open{" "}
           </button>
-          
+
           <button
             className={`setting-button ${label === "always" && "active-button"}`}
             onClick={() => toggleLabel("always")}

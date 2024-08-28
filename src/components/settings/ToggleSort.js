@@ -8,13 +8,13 @@ function ToggleSort({ item }) {
 
   const toggleSmartSort = async (input) => {
     const oldChoice = input;
-    setSmartSort(input)
-    try{
+    setSmartSort(input);
+    try {
       await saveSortSetting(input);
     } catch (error) {
-      setSmartSort(oldChoice)
+      setSmartSort(oldChoice);
     }
-  }
+  };
 
   return (
     <motion.div className="setting">

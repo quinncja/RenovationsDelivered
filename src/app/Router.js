@@ -1,4 +1,10 @@
-import { BrowserRouter, Navigate, Route, Routes, useLocation } from "react-router-dom";
+import {
+  BrowserRouter,
+  Navigate,
+  Route,
+  Routes,
+  useLocation,
+} from "react-router-dom";
 import Home from "pages/home/Home";
 import App from "./App";
 import Dashboard from "pages/dashboard/Dashboard";
@@ -14,8 +20,6 @@ function RequireAuth({ children }) {
   return children;
 }
 
-
-
 function Router() {
   return (
     <BrowserRouter>
@@ -24,8 +28,24 @@ function Router() {
           <Route index element={<Home />} />
           <Route path="/*" element={<Home />} />
           <Route path="/home" element={<Home />} />
-          <Route path="/dashboard" element={<RequireAuth> <Dashboard />  </RequireAuth>} />
-          <Route path="/job-costing" element={<RequireAuth>  <Jobcosting />  </RequireAuth>} />
+          <Route
+            path="/dashboard"
+            element={
+              <RequireAuth>
+                {" "}
+                <Dashboard />{" "}
+              </RequireAuth>
+            }
+          />
+          <Route
+            path="/job-costing"
+            element={
+              <RequireAuth>
+                {" "}
+                <Jobcosting />{" "}
+              </RequireAuth>
+            }
+          />
         </Route>
       </Routes>
     </BrowserRouter>

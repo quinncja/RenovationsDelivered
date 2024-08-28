@@ -9,24 +9,26 @@ import { calculateTotalSum } from "utils/funcs";
 function PieChart({ data, open, chartObj, showLabel, chartRef }) {
   const { setLegends } = useDashboardContext();
   const { colorScheme } = useUserContext();
-  const arcLabelColor = useCSSVariable("--white")
+  const arcLabelColor = useCSSVariable("--white");
   const slicedData = data.slice(0, 20);
-  const legendsData = slicedData ? slicedData.map((d) => ({
-    id: d.id,
-    label: d.label,
-    color: d.color,
-  })) : ""
+  const legendsData = slicedData
+    ? slicedData.map((d) => ({
+        id: d.id,
+        label: d.label,
+        color: d.color,
+      }))
+    : "";
 
   const sum = calculateTotalSum(data);
 
   const trimLabel = (label) => {
-      return label
-          .replace(/the/gi, '')  
-          .replace(/, inc/gi, '')
-          .replace(/inc\./gi, '')
-          .replace(/inc/gi, '')
-          .replace(/llc/gi, '')
-          .trim();
+    return label
+      .replace(/the/gi, "")
+      .replace(/, inc/gi, "")
+      .replace(/inc\./gi, "")
+      .replace(/inc/gi, "")
+      .replace(/llc/gi, "")
+      .trim();
   };
 
   useEffect(() => {
@@ -40,7 +42,7 @@ function PieChart({ data, open, chartObj, showLabel, chartRef }) {
       height={320}
       data={slicedData}
       ref={chartRef}
-      margin={{ top: 5, bottom: 90, right: 0, left: -20}}
+      margin={{ top: 5, bottom: 90, right: 0, left: -20 }}
       innerRadius={0.6}
       padAngle={0.7}
       cornerRadius={1}
@@ -51,7 +53,7 @@ function PieChart({ data, open, chartObj, showLabel, chartRef }) {
         from: "color",
         modifiers: [["darker", "0.3"]],
       }}
-      tooltip={({ datum }) => (chartObj.tooltip(datum, sum))}
+      tooltip={({ datum }) => chartObj.tooltip(datum, sum)}
       arcLabel={(datum) => showLabel && trimLabel(chartObj.label(datum))}
       arcLabelsSkipAngle={20}
       enableArcLinkLabels={false}
@@ -62,7 +64,12 @@ function PieChart({ data, open, chartObj, showLabel, chartRef }) {
       arcLinkLabelsColor={arcLabelColor}
       arcLabelsTextColor={arcLabelColor}
       animate={false}
-      layers={['arcs', 'arcLabels', 'legends', (props) => <CenterSum {...props} sum={sum}/>]}
+      layers={[
+        "arcs",
+        "arcLabels",
+        "legends",
+        (props) => <CenterSum {...props} sum={sum} />,
+      ]}
     />
   );
 }

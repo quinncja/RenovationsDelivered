@@ -14,7 +14,7 @@ function Navbar({ openSettings }) {
 
   return (
     <>
-      <Topbar/>
+      <Topbar />
       <Dropdown
         openSettings={openSettings}
         expanded={expanded}
@@ -28,7 +28,7 @@ function Navbar({ openSettings }) {
             exit="exit"
             variants={overlayVariants(color)}
             className="open-widget-overlay"
-            style={{zIndex: 12}}
+            style={{ zIndex: 12 }}
             onClick={() => toggleDropdown()}
           />
         )}

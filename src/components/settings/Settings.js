@@ -27,7 +27,6 @@ function Settings({ closeSelf }) {
       name: "Graph Details",
       type: "toggle",
     },
-
   ];
 
   return (
