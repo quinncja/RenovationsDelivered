@@ -6,7 +6,7 @@ const userApiUrl = `https://api.userfront.com/v0/users/${Userfront.user.userUuid
 const defaultHeaders = {
   headers: {
     Accept: "*/*",
-    Authorization: `Bearer uf_test_admin_xbpwwqmn_12b172c3c811cde03adf090fd03e736d`,
+    Authorization: process.env.REACT_APP_USERFRONT_KEY,
   },
 };
 

@@ -45,10 +45,6 @@ function Modifiers(){
         }
     }
 
-    useEffect(() => {
-        console.log(pageModifiers)
-    }, [pageModifiers])
-
     const handleYearChange = (value) => {
         if(value.length > 0){
             setPageModifiers((prev) => ({
@@ -80,7 +76,7 @@ function Modifiers(){
             <Select 
                 labelField="name"
                 valueField="name"
-                options={projects} 
+                options={projects || []} 
                 values={pageModifiers.job || []}
                 placeholder="Showing All Projects"
                 className="select-dropdown"
