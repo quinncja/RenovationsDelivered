@@ -11,9 +11,9 @@ import { CSS } from "@dnd-kit/utilities";
 import DraggingItem from "./DraggingItem.js";
 
 const DashboardItem = memo(
-  forwardRef((props, ref) => {
+  forwardRef((props) => {
     const { getChartObj, pageModifiers } = useDashboardContext();
-    const { dragging, current, deleteSelf, setOpen, id, type, children, open } =
+    const { dragging, current, deleteSelf, setOpen, id, type, children } =
       props;
 
     useEffect(() => {

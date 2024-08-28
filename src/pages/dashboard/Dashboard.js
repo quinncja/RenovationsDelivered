@@ -1,7 +1,6 @@
 import React, { useState, useCallback, useEffect } from "react";
 import { useDashboardContext } from "context/DashboardContext";
 import { loadingSvg } from "business/svg";
-import { motion } from "framer-motion";
 import {
   DndContext,
   useSensor,

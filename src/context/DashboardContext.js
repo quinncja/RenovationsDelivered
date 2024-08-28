@@ -11,7 +11,6 @@ import { chartObjects } from "graphs/ChartObjects";
 import { arrayMove } from "@dnd-kit/sortable";
 import { useRedo, useUndo } from "utils/hooks/useHistory";
 import { useSystemMessage } from "context/SystemMessageContext";
-import svgToImage from "utils/hooks/svgToImage";
 
 const DashboardContext = createContext();
 
@@ -53,28 +52,6 @@ export const DashboardProvider = ({ children }) => {
     setModifiers(modifiers);
     setPageModifiers(pageModifiers);
   };
-
-  // // // // // //
-  //  Snapshot   //
-  // // // // // //
-
-  const generateSnapshots = async () => {
-    const newSnapshots = {};
-    for (const item of items) {
-      const ref = chartRefs.current[item.id];
-      if (ref) {
-        const snapshot = await svgToImage(ref);
-        newSnapshots[item.id] = snapshot;
-      }
-    }
-    setSnapshots(newSnapshots);
-  };
-
-  useEffect(() => {
-    if (items.length > 0) {
-      generateSnapshots();
-    }
-  }, []);
 
   // // // // // //
   // Undo / Redo //

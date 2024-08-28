@@ -3,7 +3,7 @@ import LineChart from "./LineChart";
 import { motion } from "framer-motion";
 import BarChart from "./BarChart";
 import { useUserContext } from "context/UserContext";
-import { useEffect, useRef, useState, memo } from "react";
+import { useEffect, useRef, memo } from "react";
 import svgToImage from "utils/hooks/svgToImage";
 import { useDashboardContext } from "context/DashboardContext";
 
@@ -30,10 +30,7 @@ const ChartDisplay = memo(({ chartObj, data, open, id, handleClick }) => {
         });
       }
     }
-  }, []);
-
-  useEffect(() => {
-    console.log("chart display rerender");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const snapshotImage = snapshots[id];
@@ -50,6 +47,7 @@ const ChartDisplay = memo(({ chartObj, data, open, id, handleClick }) => {
             <img
               src={snapshotImage}
               draggable="false"
+              alt=""
               style={{
                 userSelect: "none",
                 position: "relative",
@@ -78,7 +76,7 @@ const ChartDisplay = memo(({ chartObj, data, open, id, handleClick }) => {
           {showImage ? (
             <img
               src={snapshotImage}
-              alt="line"
+              alt=""
               draggable="false"
               style={{
                 userSelect: "none",

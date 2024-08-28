@@ -87,8 +87,8 @@ function Modifiers() {
       <Select
         labelField="name"
         valueField="name"
-        options={projects || []}
-        values={pageModifiers ? pageModifiers.job : []}
+        options={projects}
+        values={pageModifiers.job || []}
         placeholder="Showing All Projects"
         className="select-dropdown"
         dropdownGap={10}

@@ -6,11 +6,10 @@ import LegendDisplay from "graphs/LegendDisplay";
 import LineTable from "graphs/LineTable";
 import { overlayVariants } from "utils/animations";
 import { useCSSVariable } from "utils/hooks/useCSSVariable";
-import { formatSubtitle } from "utils/formatters";
 import { useDashboardContext } from "context/DashboardContext";
 
 function OpenItem({ item, closeSelf }) {
-  const { data, chartType, type, modifiers, id } = item;
+  const { data, chartType, type, id } = item;
   const [activeColumn, setActiveColumn] = useState();
   const { getChartObj } = useDashboardContext();
   const color = useCSSVariable("--overlay");
