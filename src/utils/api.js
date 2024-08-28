@@ -6,7 +6,7 @@ const userApiUrl = `https://api.userfront.com/v0/users/${Userfront.user.userUuid
 const defaultHeaders = {
   headers: {
     Accept: "*/*",
-    Authorization: 'Bearer process.env.REACT_APP_USERFRONT_KEY',
+    Authorization: `Bearer ${process.env.REACT_APP_USERFRONT_KEY}`,
   },
 };
 const ngrokHeaders = {
