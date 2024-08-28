@@ -6,6 +6,13 @@ import { close } from "business/svg";
 function Modifiers() {
   const { projects } = useProjectContext();
   const { pageModifiers, setPageModifiers } = useDashboardContext();
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (projects && projects.length > 0) {
+      setLoading(false);
+    }
+  }, [projects]);
 
   const yearList = [
     { num: 24, year: "2024" },
@@ -86,6 +93,7 @@ function Modifiers() {
         className="select-dropdown"
         dropdownGap={10}
         dropdownHandle={false}
+        disabled={loading}
         onChange={(value) => handleProjectChange(value)}
       />
       <Select
@@ -97,6 +105,7 @@ function Modifiers() {
         className="select-dropdown select-dropdown-small"
         dropdownGap={10}
         dropdownHandle={false}
+        disabled={loading}
         onChange={(value) => handleYearChange(value)}
       />
       <Select
@@ -108,6 +117,7 @@ function Modifiers() {
         className="select-dropdown select-dropdown-small"
         dropdownGap={10}
         dropdownHandle={false}
+        disabled={loading}
         onChange={(value) => handlePhaseChange(value)}
       />
       {(pageModifiers.job || pageModifiers.year) && (
