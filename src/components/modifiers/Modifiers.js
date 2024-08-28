@@ -3,6 +3,7 @@ import { useDashboardContext } from "context/DashboardContext";
 import { useProjectContext } from "context/ProjectContext";
 import { useEffect, useState } from "react";
 import { close } from "business/svg";
+
 function Modifiers() {
   const { projects } = useProjectContext();
   const { pageModifiers, setPageModifiers } = useDashboardContext();
@@ -88,7 +89,7 @@ function Modifiers() {
         labelField="name"
         valueField="name"
         options={projects}
-        values={pageModifiers.job || {}}
+        values={pageModifiers.job || undefined}
         placeholder="Showing All Projects"
         className="select-dropdown"
         dropdownGap={10}
@@ -99,7 +100,7 @@ function Modifiers() {
       <Select
         labelField="year"
         valueField="year"
-        values={pageModifiers.year || {}}
+        values={pageModifiers.year || undefined}
         options={years}
         placeholder="Year"
         className="select-dropdown select-dropdown-small"
@@ -112,7 +113,7 @@ function Modifiers() {
         labelField="name"
         valueField="name"
         options={phases}
-        values={pageModifiers.phase || {}}
+        values={pageModifiers.phase || undefined}
         placeholder="Phase"
         className="select-dropdown select-dropdown-small"
         dropdownGap={10}

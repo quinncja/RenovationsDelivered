@@ -85,8 +85,8 @@ function Dashboard() {
           sensors={sensors}
         >
           <Droppable isOpen={open}>
-            <SortableContext items={items || []} strategy={() => null}>
-              {items &&
+            <SortableContext items={items.length > 0 ? items : []} strategy={() => null}>
+              {items && items.length > 0 &&
                 items.map(
                   (item) =>
                     item && (
