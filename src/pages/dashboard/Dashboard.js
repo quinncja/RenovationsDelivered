@@ -37,9 +37,6 @@ function Dashboard() {
     }),
   );
 
-  useEffect(() => {
-    console.log(active);
-  }, [active]);
   const openSelf = (data) => {
     setOpen(data);
   };
