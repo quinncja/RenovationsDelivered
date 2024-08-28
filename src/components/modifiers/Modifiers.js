@@ -88,7 +88,7 @@ function Modifiers() {
         labelField="name"
         valueField="name"
         options={projects}
-        values={pageModifiers.job || []}
+        values={pageModifiers.job || {}}
         placeholder="Showing All Projects"
         className="select-dropdown"
         dropdownGap={10}
@@ -99,7 +99,7 @@ function Modifiers() {
       <Select
         labelField="year"
         valueField="year"
-        values={pageModifiers.year || []}
+        values={pageModifiers.year || {}}
         options={years}
         placeholder="Year"
         className="select-dropdown select-dropdown-small"
@@ -112,7 +112,7 @@ function Modifiers() {
         labelField="name"
         valueField="name"
         options={phases}
-        values={pageModifiers.phase || []}
+        values={pageModifiers.phase || {}}
         placeholder="Phase"
         className="select-dropdown select-dropdown-small"
         dropdownGap={10}
