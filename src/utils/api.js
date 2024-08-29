@@ -22,7 +22,6 @@ export async function fetchChartData(modifiers, signal) {
     return response.data;
   } catch (error) {
     if (axios.isCancel(error)) {
-      console.log("Request canceled:", error.message);
     } else if (error.response && error.response.data && error.response.data.error) {
       console.error(`Error loading ${modifiers.type}:`, error.response.data.error);
     } else {

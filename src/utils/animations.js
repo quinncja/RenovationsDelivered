@@ -156,7 +156,8 @@ export const dropdownVariants = {
   },
   expanded: {
     width: "150px",
-    height: "375px",
+    height: "max-content",
+    paddingBottom: "20px",
     opacity: 1,
     transition: { duration: 0.4, ease: "easeInOut" },
   },

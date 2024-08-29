@@ -46,7 +46,6 @@ export async function LoadItemData(chartObj, pageModifiers, signal) {
   }, {});
 
   const formatted = modifierFormatter(modifiers);
-  console.log("-------------" ,formatted)
   let newData = await chartObj.getter(formatted, signal);
   if (newData) {
     newData = chartObj.cleaner(newData);

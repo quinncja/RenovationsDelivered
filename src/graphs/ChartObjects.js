@@ -92,12 +92,6 @@ export const chartObjects = [
     modifierOptions: ["year", "job", "phase"],
   },
   {
-    type: "Phase Summary",
-    chartType: "Bar",
-    modifierOptions: ["job", "phase"],
-    cleaner: "NA",
-  },
-  {
     type: "Financial Overview",
     chartType: "Text",
     getter: (mods, signal) => fetchChartData({ ...mods, type: "ytd" }, signal),

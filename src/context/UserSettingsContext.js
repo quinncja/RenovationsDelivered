@@ -70,7 +70,6 @@ export function UserSettingsProvider({ children }) {
       return response.data;
     } catch (error) {
       if (axios.isCancel(error)) {
-        console.log("Request canceled", error.message);
       } else {
         console.error("Failed to update user settings", error);
         setError("Failed to update user settings");

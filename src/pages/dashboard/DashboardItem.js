@@ -21,7 +21,6 @@ const DashboardItem = memo(
     const chartObj = getChartObj(type);
     const { getter, chartType } = chartObj;
     const showSingle = data && chartObj.checkIfSingle && chartObj.checkIfSingle(data, pageModifiers);
-    console.log(chartObj.type, data, showSingle) 
     const chartToShow = showSingle ? chartObj.single : chartObj;
 
     const dataToShow = dragging
@@ -104,7 +103,6 @@ const DashboardItem = memo(
         ref={setNodeRef}
         listeners={listeners}
         attributes={attributes}
-        layout
         onClick={
           data
             ? () =>

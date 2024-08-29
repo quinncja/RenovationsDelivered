@@ -20,11 +20,11 @@ function Dropdown(props) {
       item: "Dashboard",
       onClick: () => handleClick(() => navigate("/dashboard")),
     },
-    {
-      id: "2",
-      item: "Job Costing",
-      onClick: () => handleClick(() => navigate("/job-costing")),
-    },
+    // {
+    //   id: "2",
+    //   item: "Job Costing",
+    //   onClick: () => handleClick(() => navigate("/job-costing")),
+    // },
     {
       id: "3",
       item: "Settings",

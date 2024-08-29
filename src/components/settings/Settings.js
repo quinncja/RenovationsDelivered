@@ -19,10 +19,11 @@ function Settings({ closeSelf }) {
       name: "Color Scheme",
       type: "dropdown",
     },
-    {
-      name: "Smart Sort",
-      type: "toggle",
-    },
+    // {
+    //   name: "Smart Sort",
+    //   type: "toggle",
+    // <ToggleSort item={settings[2]} />
+    // },
     {
       name: "Graph Details",
       type: "toggle",
@@ -52,8 +53,7 @@ function Settings({ closeSelf }) {
         </div>
         <div className="settings">
           <ToggleColorMode item={settings[0]} />
-          <ToggleLabels item={settings[3]} />
-          <ToggleSort item={settings[2]} />
+          <ToggleLabels item={settings[2]} />
           <DropdownItem item={settings[1]} />
         </div>
       </motion.div>
