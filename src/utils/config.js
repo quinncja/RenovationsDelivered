@@ -12,6 +12,5 @@ export const ngrokHeaders = {
     headers: {
       "ngrok-skip-browser-warning": "true",
       Authorization: `Bearer ${Userfront.tokens.accessToken}`,
-      Mode: "Test"
     },
   };
