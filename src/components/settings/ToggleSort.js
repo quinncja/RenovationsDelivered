@@ -1,10 +1,11 @@
 import { motion } from "framer-motion";
 import { smartSortVariants } from "utils/animations";
-import { saveSortSetting } from "utils/api";
 import { useDashboardContext } from "context/DashboardContext";
+import { useUserSettings } from "context/UserSettingsContext";
 
 function ToggleSort({ item }) {
   const { smartSort, setSmartSort } = useDashboardContext();
+  const { saveSortSetting } = useUserSettings();
 
   const toggleSmartSort = async (input) => {
     const oldChoice = input;

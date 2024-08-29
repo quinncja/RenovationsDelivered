@@ -4,17 +4,17 @@ export function SingleMargin(props) {
   let text;
   let currMargin;
   let prevMargin;
-  if (data[0].data.length === 1) {
+  if (data.previous.length === 0) {
     text = (
       <>
         {" "}
         No data <br /> from last phase{" "}
       </>
     );
-    currMargin = data[0].data[0].y.toFixed(2);
+    currMargin = data.current[0].y.toFixed(2);
   } else {
-    prevMargin = data[0].data[0].y.toFixed(2);
-    currMargin = data[0].data[1].y.toFixed(2);
+    currMargin = data.current[0].y.toFixed(2);
+    prevMargin = data.previous[0].y.toFixed(2);
     const diff = currMargin - prevMargin;
     text = (
       <>

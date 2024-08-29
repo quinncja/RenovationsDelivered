@@ -40,6 +40,7 @@ function LineChart({ data, open, handleClick, showLabel, chartObj }) {
 
   let margin = { top: 5, right: 70, bottom: 120, left: 40 };
   const axisLeft = open && showLabel ? chartObj.chartProps.axisLeft : false;
+  let chartData = chartObj.chartProps.chartFormat ? chartObj.chartProps.chartFormat(data) : data;
 
   if (!data) return <div style={{ margin: "auto" }}>No Data</div>;
   return (
@@ -47,7 +48,7 @@ function LineChart({ data, open, handleClick, showLabel, chartObj }) {
       {...chartObj.chartProps}
       width={640}
       height={320}
-      data={data}
+      data={chartData}
       margin={margin}
       xScale={{ type: "point" }}
       yScale={{

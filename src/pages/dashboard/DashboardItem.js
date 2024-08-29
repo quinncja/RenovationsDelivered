@@ -12,20 +12,16 @@ import DraggingItem from "./DraggingItem.js";
 
 const DashboardItem = memo(
   forwardRef((props, ref) => {
-    const { getChartObj, pageModifiers } = useDashboardContext();
+    const { getChartObj, pageModifiers} = useDashboardContext();
     const { dragging, current, deleteSelf, setOpen, id, type, children } =
       props;
-
-    useEffect(() => {
-      console.log("dashboard item rerender");
-    }, []);
 
     const [data, setData] = useState(null);
 
     const chartObj = getChartObj(type);
     const { getter, chartType } = chartObj;
-    const showSingle =
-      data && chartObj.checkIfSingle && chartObj.checkIfSingle(data);
+    const showSingle = data && chartObj.checkIfSingle && chartObj.checkIfSingle(data, pageModifiers);
+    console.log(chartObj.type, data, showSingle) 
     const chartToShow = showSingle ? chartObj.single : chartObj;
 
     const dataToShow = dragging
@@ -62,27 +58,47 @@ const DashboardItem = memo(
       transition,
     };
 
+    const [abortController, setAbortController] = useState(null);
+
     useEffect(() => {
       const fetchData = async () => {
         try {
           setData();
           let newData;
+
+          if (abortController) {
+            abortController.abort(); 
+          }
+
+          const controller = new AbortController();
+          setAbortController(controller);
+
           if (getter) {
-            newData = await LoadItemData(chartObj, pageModifiers);
+            newData = await LoadItemData(chartObj, pageModifiers, controller.signal);
           } else newData = await getItemData(type);
           setData(newData);
         } catch (error) {
-          console.log(error);
+          if (error.name === "AbortError") {
+            console.log("Fetch request aborted");
+          } else {
+            console.error("Error fetching data:", error);
+          }
         }
       };
       if (!dragging) fetchData();
 
+      return () => {
+        if (abortController) {
+          abortController.abort();
+        }
+      };
+  
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [type, pageModifiers]);
 
     return (
       //brainstorm motion.div causing premature item displacement
-      <motion.div
+      <div
         className={`dashboard-widget ${chartType === "Line" || chartType === "Bar" ? "wide-widget" : ""} ${!data && !dragging ? "loading-widget" : ""} `}
         style={style}
         ref={setNodeRef}
@@ -148,7 +164,7 @@ const DashboardItem = memo(
             </AnimatePresence>
           )}
         </motion.div>
-      </motion.div>
+      </div>
     );
   }),
 );

@@ -39,7 +39,7 @@ function OpenItem({ item, closeSelf }) {
           />
           {chartToShow.chartType !== "Text" && <LegendDisplay />}
         </div>
-        {chartType === "Line" && (
+        {chartObj.showTable && (
           <LineTable data={data} activeColumn={activeColumn} />
         )}
       </>

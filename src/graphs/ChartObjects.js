@@ -12,7 +12,7 @@ import { SingleMargin } from "./Margin/SingleMargin";
 export const chartObjects = [
   {
     type: "Vender Breakdown",
-    getter: (mods) => fetchChartData({ ...mods, type: "vender" }),
+    getter: (mods, signal) => fetchChartData({ ...mods, type: "vender" }, signal),
     tooltip: (datum, sum) => <PieChartToolTip datum={datum} sum={sum} />,
     label: (datum) => getVenderLabel(datum),
     chartType: "Pie",
@@ -23,7 +23,7 @@ export const chartObjects = [
   },
   {
     type: "COGs Breakdown",
-    getter: (mods) => fetchChartData({ ...mods, type: "cogs" }),
+    getter: (mods, signal) => fetchChartData({ ...mods, type: "cogs" }, signal),
     tooltip: (datum, sum) => <PieChartToolTip datum={datum} sum={sum} />,
     label: (datum) => {
       return datum.id;
@@ -36,7 +36,7 @@ export const chartObjects = [
   },
   {
     type: "Sub Breakdown",
-    getter: (mods) => fetchChartData({ ...mods, type: "sub" }),
+    getter: (mods, signal) => fetchChartData({ ...mods, type: "sub" }, signal),
     tooltip: (datum, sum) => <PieChartToolTip datum={datum} sum={sum} />,
     label: (datum) => {
       return datum.id;
@@ -50,7 +50,7 @@ export const chartObjects = [
   {
     type: "Cost Analysis",
     chartType: "Line",
-    getter: (mods) => fetchChartData({ ...mods, type: "revenue" }),
+    getter: (mods, signal) => fetchChartData({ ...mods, type: "revenue" }, signal),
     cleaner: (data) => RevenueCleaner(data),
     tooltip: (slice) => <RevenueTooltip slice={slice} />,
     checkIfSingle: (data) =>
@@ -70,16 +70,17 @@ export const chartObjects = [
     },
     chartProps: revChartProps,
     modifierOptions: ["year", "job", "phase"],
+    showTable: true,
   },
   {
     type: "Margin",
     chartType: "Line",
-    getter: (mods) => fetchChartData({ ...mods, type: "margin" }),
+    getter: (mods, signal) => fetchChartData({ ...mods, type: "margin" }, signal),
     cleaner: (data) => {
       return data;
     },
     tooltip: (slice) => <MarginToolTip slice={slice} />,
-    checkIfSingle: (data) => (data[0].data.length === 1 ? true : false),
+    checkIfSingle: (data) => (data && data.current.length === 1 ? true : false),
     single: {
       chartType: "Text",
       display: (data) => <SingleMargin data={data} />,
@@ -99,7 +100,7 @@ export const chartObjects = [
   {
     type: "Financial Overview",
     chartType: "Text",
-    getter: (mods) => fetchChartData({ ...mods, type: "ytd" }),
+    getter: (mods, signal) => fetchChartData({ ...mods, type: "ytd" }, signal),
     display: (data) => ytdDisplay(data),
     cleaner: (data) => {
       return data;

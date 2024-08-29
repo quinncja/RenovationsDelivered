@@ -27,7 +27,8 @@ function Dashboard() {
     reorderById,
     captureItemState,
     compareItemStates,
-    setNewWidgetOpen
+    setNewWidgetOpen,
+    loaded
   } = useDashboardContext();
   const [open, setOpen] = useState(null);
   const sensors = useSensors(
@@ -54,7 +55,7 @@ function Dashboard() {
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const debouncedDragOver = useCallback(
-    debounce(handleDragOver, 40, {
+    debounce(handleDragOver, 100, {
       trailing: false,
       leading: true,
     }),
@@ -118,11 +119,12 @@ function Dashboard() {
         </DndContext>
       </>
     );
-  return <div className="loading-wrapper no-item-text"> 
-    <h2>Your dashboard is empty. </h2>
-    <br/>
-    <h3 onClick={() => setNewWidgetOpen(true)}> Click here to add a widget </h3>
-   </div>;
+  if (loaded && items.length === 0)
+    return <div className="loading-wrapper no-item-text"> 
+      <h2>Your dashboard is empty. </h2>
+      <br/>
+      <h3 onClick={() => setNewWidgetOpen(true)}> Click here to add a widget </h3>
+    </div>;
 }
 
 export default Dashboard;

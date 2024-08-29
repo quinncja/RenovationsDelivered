@@ -5,18 +5,18 @@ import React, {
   useState,
   useRef,
 } from "react";
-import { saveItems, saveModifiers, savePageModifiers } from "utils/api";
-import { scrollToBottom } from "utils/funcs";
 import { chartObjects } from "graphs/ChartObjects";
 import { arrayMove } from "@dnd-kit/sortable";
 import { useRedo, useUndo } from "utils/hooks/useHistory";
 import { useSystemMessage } from "context/SystemMessageContext";
+import { useUserSettings } from "./UserSettingsContext";
 
 const DashboardContext = createContext();
 
 export const useDashboardContext = () => useContext(DashboardContext);
 
 export const DashboardProvider = ({ children }) => {
+  const {saveItems, saveModifiers, savePageModifiers} = useUserSettings();
   const [active, setActive] = useState(false);
   const [smartSort, setSmartSort] = useState("true");
   const [items, setItems] = useState([]);
@@ -27,9 +27,6 @@ export const DashboardProvider = ({ children }) => {
     year: null,
     phase: null,
   });
-  const [single, setSingle] = useState();
-  const isValidObject = (value) => value && Object.keys(value).length > 0;
-
   const [modifiers, setModifiers] = useState([]);
   const [legends, setLegends] = useState([]);
   const [capturedState, setCapturedState] = useState({});
@@ -102,9 +99,17 @@ export const DashboardProvider = ({ children }) => {
   // Add / Delete Item //
   // // // // // // // //
 
+  const addMultItems = async (itemList) => {
+    setItems((prevItems) => {
+      const newItems = prevItems ? [...prevItems] : [];
+      newItems.push(...itemList);
+      itemSaver(newItems);
+      return newItems;
+    });
+  }
+
   const addItem = async (newItem, newIndex, flag) => {
     setItems((prevItems) => {
-      console.log(prevItems)
       const newItems = prevItems ? [...prevItems] : [];
 
       if (newIndex >= 0 && newIndex < newItems.length) {
@@ -126,7 +131,6 @@ export const DashboardProvider = ({ children }) => {
         action: () => removeItem(item, true),
       };
       pushHistory(historyObj);
-      setTimeout(scrollToBottom, 0);
     }
   };
 
@@ -145,6 +149,7 @@ export const DashboardProvider = ({ children }) => {
       action: () => addItem(oldItem, iIndex),
     };
     pushHistory(historyObj);
+    itemSaver(newItems)
     setItems(newItems);
   };
 
@@ -216,17 +221,13 @@ export const DashboardProvider = ({ children }) => {
     const updateDBModifiers = async () => {
       try {
         await savePageModifiers(pageModifiers);
-        setSingle(
-          isValidObject(pageModifiers.job) &&
-            isValidObject(pageModifiers.year) &&
-            isValidObject(pageModifiers.phase),
-        );
       } catch (error) {
         console.log(error);
       }
     };
 
     if (loaded) updateDBModifiers();
+    // eslint-disable-next-line
   }, [pageModifiers, loaded]);
 
   // // // // // //
@@ -277,7 +278,6 @@ export const DashboardProvider = ({ children }) => {
     }
 
     if (!flag) {
-      console.log("onsave", newMods, exisiting);
       const historyObj = {
         text: "Modifier Edit",
         type: "fixed",
@@ -394,12 +394,13 @@ export const DashboardProvider = ({ children }) => {
         setSmartSort,
         pageModifiers,
         setPageModifiers,
-        single,
         snapshots,
         setSnapshots,
         chartRefs,
-        newWidgetOpen, 
-        setNewWidgetOpen
+        newWidgetOpen,
+        setNewWidgetOpen,
+        addMultItems,
+        loaded
       }}
     >
       {children}

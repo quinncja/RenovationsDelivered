@@ -1,10 +1,11 @@
-import { saveAppearance } from "utils/api";
 import { useUserContext } from "context/UserContext";
 import { motion } from "framer-motion";
 import { toggleVariants } from "utils/animations";
+import { useUserSettings } from "context/UserSettingsContext";
 
 function ToggleColorMode({ item }) {
-  const { appearance, setAppearance } = useUserContext();
+  const { appearance, setAppearance } = useUserContext(); 
+  const {saveAppearance} = useUserSettings();
 
   const handleAppearanceChange = async (newChoice) => {
     const oldChoice = appearance;

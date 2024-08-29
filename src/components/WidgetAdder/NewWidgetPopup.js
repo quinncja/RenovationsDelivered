@@ -13,23 +13,56 @@ import {
   widgetItemsFadeIn,
 } from "../../utils/animations";
 import { useCSSVariable } from "../../utils/hooks/useCSSVariable";
-import { groupedByChartType } from "graphs/ChartObjects";
+import { chartObjects, groupedByChartType } from "graphs/ChartObjects";
 import { generateRandomId } from "utils/funcs";
 import { useDashboardContext } from "context/DashboardContext";
 
+
 function NewWidgetPopup({ closeSelf }) {
   const color = useCSSVariable("--overlay");
-  const { addItem } = useDashboardContext();
+  const { addItem, addMultItems } = useDashboardContext();
   const [body, setBody] = useState();
 
+  const chartObjectMap = chartObjects.reduce((acc, chartObject) => {
+    acc[chartObject.type] = chartObject;
+    return acc;
+  }, {});
+
+  
+  const projectView = {
+    items: [
+      chartObjectMap["Cost Analysis"],
+      chartObjectMap["Margin"],
+      chartObjectMap["Financial Overview"],
+      chartObjectMap["COGs Breakdown"],
+      chartObjectMap["Vender Breakdown"],
+      chartObjectMap["Sub Breakdown"],
+    ]
+  }
+
   const handleClick = (obj) => {
-    const newItem = {
-      id: generateRandomId(),
-      type: obj.type,
-    };
-    addItem(newItem, -1);
+    if(obj === "project-view"){
+      let items = []
+      projectView.items.forEach(item => {
+      const newItem = {
+        id: generateRandomId(),
+        type: item.type,
+      };
+      items.push(newItem)
+    });
+    addMultItems(items)
     closeSelf();
+    }
+    else {
+      const newItem = {
+        id: generateRandomId(),
+        type: obj.type,
+      };
+      addItem(newItem, -1);
+      closeSelf();
+    }
   };
+
 
   const buttonOptions = [
     {
@@ -38,9 +71,9 @@ function NewWidgetPopup({ closeSelf }) {
       next: <Admin />,
     },
     {
-      title: "Job",
+      title: "Preset",
       svg: GridSvg(),
-      next: <Job />,
+      next: <Preset />,
     },
     {
       title: "Single",
@@ -75,8 +108,23 @@ function NewWidgetPopup({ closeSelf }) {
     );
   }
 
-  function Job() {
-    return <></>;
+  function Preset() {
+    return (
+      <motion.div variants={widgetItemsFadeIn} layout="position">
+        <motion.div>
+          <div className="widget-button-header">Preset</div>
+          <div className="widget-button-row">
+          <button
+            className="widget-button"
+            key={'project-view'}
+            onClick={() => handleClick("project-view")}
+          >
+            {"Project View"}
+           </button>
+          </div>
+        </motion.div>
+      </motion.div>
+    );
   }
 
   function Admin() {

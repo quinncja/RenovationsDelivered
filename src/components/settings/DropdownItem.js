@@ -1,12 +1,13 @@
 import { useState } from "react";
-import { saveColorScheme } from "utils/api";
 import { useUserContext } from "context/UserContext";
 import { AnimatePresence, motion } from "framer-motion";
 import { burger } from "business/svg";
 import ColorSchemePicker from "./ColorSchemePicker";
+import { useUserSettings } from "context/UserSettingsContext";
 
 function DropdownItem({ item }) {
   const { colorScheme, setColorScheme } = useUserContext();
+  const { saveColorScheme } = useUserSettings();
   const [open, setOpen] = useState(false);
 
   const handleColorChange = async (newChoice) => {

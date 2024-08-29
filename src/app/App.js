@@ -5,14 +5,16 @@ import "./App.css";
 import Navbar from "components/navbar/Navbar";
 import Settings from "components/settings/Settings";
 import { AnimatePresence } from "framer-motion";
-import { fetchUserData } from "utils/api";
 import { useDashboardContext } from "context/DashboardContext";
 import { useUserContext } from "context/UserContext";
 import NewWidgetPopup from "components/WidgetAdder/NewWidgetPopup";
+import { useUserSettings } from "context/UserSettingsContext";
+import SettingsLoading from "components/settings/Loading";
 
 function App() {
   const navigate = useNavigate();
   const { setSmartSort, onLoad, newWidgetOpen, setNewWidgetOpen} = useDashboardContext();
+  const { fetchCurrentUser } = useUserSettings();
   const { setAppearance, setColorScheme, setLabel } = useUserContext();
   const [open, setOpen] = useState(false);
   const location = useLocation();
@@ -28,7 +30,7 @@ function App() {
   useEffect(() => {
     const loadUser = async () => {
       try {
-        const settings = await fetchUserData();
+        const settings = await fetchCurrentUser();
         onLoad(
           settings.itemArray || [],
           settings.itemModifiers || [],
@@ -56,6 +58,7 @@ function App() {
     <div className="App">
       {Userfront.user.userUuid && <Navbar openSettings={openSettings} />}
       <Outlet />
+      <SettingsLoading/>
       <AnimatePresence>
         {open && <Settings closeSelf={closeSettings} />}
         {newWidgetOpen && (
