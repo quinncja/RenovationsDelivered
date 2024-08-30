@@ -1,17 +1,17 @@
 import { useEffect } from "react";
 import { BarCanvas } from "@nivo/bar";
-import { useUserContext } from "context/UserContext";
 import { useDashboardContext } from "context/DashboardContext";
 import { dollarFormatter } from "utils/formatters";
+import { useCSSVariable } from "utils/hooks/useCSSVariable";
 
-function BarChart({ data, open, showLabel, chartRef }) {
+function BarChart({ data, open, showLabel, chartRef, colorScheme }) {
   const { setLegends } = useDashboardContext();
-  const { colorScheme } = useUserContext();
+  const gridColor = useCSSVariable("--grid-color")
 
   const customTheme = {
     grid: {
       line: {
-        stroke: "#555",
+        stroke: gridColor,
         strokeWidth: 1,
         opacity: showLabel ? "1" : "0",
       },
@@ -61,7 +61,7 @@ function BarChart({ data, open, showLabel, chartRef }) {
       groupMode="stacked"
       valueScale={{ type: "linear" }}
       indexScale={{ type: "band", round: true }}
-      colors={{ scheme: colorScheme }}
+      colors={colorScheme}
       borderColor={{
         from: "color",
         modifiers: [["darker", 1.6]],

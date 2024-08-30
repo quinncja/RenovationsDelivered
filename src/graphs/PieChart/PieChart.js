@@ -1,15 +1,12 @@
 import { Pie } from "@nivo/pie";
 import { useDashboardContext } from "context/DashboardContext";
 import { useEffect } from "react";
-import { useUserContext } from "context/UserContext";
-import { useCSSVariable } from "utils/hooks/useCSSVariable";
 import { CenterSum } from "./CenterSum";
 import { calculateTotalSum } from "utils/funcs";
 
-function PieChart({ data, open, chartObj, showLabel, chartRef }) {
+function PieChart({ data, open, chartObj, showLabel, chartRef, colorScheme }) {
   const { setLegends } = useDashboardContext();
-  const { colorScheme } = useUserContext();
-  const arcLabelColor = useCSSVariable("--white");
+  const arcLabelColor = "#f3f3f3"
   const slicedData = data.slice(0, 20);
   const legendsData = slicedData
     ? slicedData.map((d) => ({
@@ -43,12 +40,12 @@ function PieChart({ data, open, chartObj, showLabel, chartRef }) {
       height={320}
       data={slicedData}
       ref={chartRef}
-      margin={{ top: 5, bottom: 90, right: 0, left: -20 }}
+      margin={{ top: 10, bottom: 90, right: 0, left: -20 }}
       innerRadius={0.6}
       padAngle={0.7}
       cornerRadius={1}
       activeOuterRadiusOffset={8}
-      colors={{ scheme: colorScheme }}
+      colors={colorScheme}
       borderWidth={1}
       borderColor={{
         from: "color",
@@ -64,7 +61,7 @@ function PieChart({ data, open, chartObj, showLabel, chartRef }) {
       arcLinkLabelsTextColor={arcLabelColor}
       arcLinkLabelsColor={arcLabelColor}
       arcLabelsTextColor={arcLabelColor}
-      animate={false}
+      animate={true}
       layers={[
         "arcs",
         "arcLabels",

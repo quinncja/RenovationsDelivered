@@ -4,7 +4,7 @@ import { useCSSVariable } from "utils/hooks/useCSSVariable";
 
 export const CenterSum = ({ centerX, centerY, sum }) => {
   sum = dollarFormatter(sum);
-  let fontColor = useCSSVariable("--less-white");
+  let fontColor = useCSSVariable("--white");
 
   return (
     <svg>

@@ -1,12 +1,12 @@
 import { Line } from "@nivo/line";
 import { useDashboardContext } from "context/DashboardContext";
-import { useUserContext } from "context/UserContext";
 import { useEffect } from "react";
 import { phaseToMonth } from "utils/formatters";
+import { useCSSVariable } from "utils/hooks/useCSSVariable";
 
-function LineChart({ data, open, handleClick, showLabel, chartObj }) {
-  const { colorScheme } = useUserContext();
+function LineChart({ data, open, handleClick, showLabel, chartObj, colorScheme }) {
   const { setLegends } = useDashboardContext();
+  const gridColor = useCSSVariable("--grid-color")
 
   useEffect(() => {
     if (open && chartObj.chartProps.legendsFunc)
@@ -18,7 +18,7 @@ function LineChart({ data, open, handleClick, showLabel, chartObj }) {
   const customTheme = {
     grid: {
       line: {
-        stroke: "#55555565",
+        stroke: gridColor,
         strokeWidth: 1,
         opacity: showLabel ? "1" : "0",
       },
@@ -78,10 +78,10 @@ function LineChart({ data, open, handleClick, showLabel, chartObj }) {
       enableGridX={showLabel}
       enableGridY={showLabel}
       axisLeft={axisLeft}
-      colors={{ scheme: colorScheme }}
+      colors={colorScheme}
       lineWidth={3}
       pointSize={8}
-      pointColor={{ from: "color", modifiers: [["darker"]] }}
+      pointColor={{ from: "color" }}
       pointBorderWidth={0}
       pointBorderColor={{ from: "color", modifiers: [] }}
       pointLabel="data.yFormatted"

@@ -8,7 +8,7 @@ import svgToImage from "utils/hooks/svgToImage";
 import { useDashboardContext } from "context/DashboardContext";
 
 const ChartDisplay = memo(({ chartObj, data, open, id, handleClick }) => {
-  const { label } = useUserContext();
+  const { getColorScheme, label } = useUserContext();
   const { snapshots, setSnapshots, active } = useDashboardContext();
   const wrapperRef = useRef(null);
   const showImage = active;
@@ -34,6 +34,7 @@ const ChartDisplay = memo(({ chartObj, data, open, id, handleClick }) => {
   }, []);
 
   const snapshotImage = snapshots[id];
+  const colorScheme = getColorScheme();
 
   switch (chartObj.chartType) {
     case "Pie":
@@ -61,6 +62,7 @@ const ChartDisplay = memo(({ chartObj, data, open, id, handleClick }) => {
               open={open}
               showLabel={showLabels}
               chartObj={chartObj}
+              colorScheme={colorScheme}
             />
           )}
         </motion.div>
@@ -92,6 +94,7 @@ const ChartDisplay = memo(({ chartObj, data, open, id, handleClick }) => {
               handleClick={handleClick}
               showLabel={showLabels}
               chartObj={chartObj}
+              colorScheme={colorScheme}
             />
           )}
         </motion.div>
@@ -104,7 +107,7 @@ const ChartDisplay = memo(({ chartObj, data, open, id, handleClick }) => {
           layoutId={`chart-container-${id}`}
           style={{ position: "relative", width: "660px", height: "320px" }}
         >
-          <BarChart data={data} open={open} showLabel={showLabels} />
+          <BarChart data={data} open={open} showLabel={showLabels} colorScheme={colorScheme}/>
         </motion.div>
       );
 

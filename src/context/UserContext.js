@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
+import { colorPalettes } from "utils/colors";
 
 const UserContext = createContext();
 
@@ -13,6 +14,7 @@ export const UserProvider = ({ children }) => {
     const root = document.documentElement;
     const variables = [
       "background",
+      "dropdown-background",
       "dark",
       "mid",
       "mid-highlight",
@@ -25,6 +27,7 @@ export const UserProvider = ({ children }) => {
       "fancy-border",
       "shadow",
       "overlay",
+      "grid-color",
       "filter1",
       "filter2",
       "filter3",
@@ -44,12 +47,17 @@ export const UserProvider = ({ children }) => {
     if (appearance) changeTheme(appearance);
   }, [appearance]);
 
+  const getColorScheme = () => {
+    return(colorPalettes[colorScheme])
+  }
+
   return (
     <UserContext.Provider
       value={{
         appearance,
         setAppearance,
         colorScheme,
+        getColorScheme,
         setColorScheme,
         label,
         setLabel,
