@@ -87,7 +87,7 @@ function Dashboard() {
               {items && items.length > 0 &&
                 items.map(
                   (item) =>
-                    item && (
+                    item && item.type && (
                       <DashboardItem
                         current={active?.id === item.id ? true : false}
                         key={item.id}

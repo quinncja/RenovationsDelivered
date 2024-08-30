@@ -17,11 +17,10 @@ const DashboardItem = memo(
       props;
 
     const [data, setData] = useState(null);
-
     const chartObj = getChartObj(type);
     const { getter, chartType } = chartObj;
-    const showSingle = data && chartObj.checkIfSingle && chartObj.checkIfSingle(data, pageModifiers);
-    const chartToShow = showSingle ? chartObj.single : chartObj;
+    const showSingle = data && chartObj && chartObj.checkIfSingle && chartObj.checkIfSingle(data, pageModifiers);
+    const chartToShow = (showSingle && chartObj && chartObj.single) ? chartObj.single : chartObj;
 
     const dataToShow = dragging
       ? []
