@@ -7,7 +7,9 @@ export default function AreaLayer(lineChartProps) {
     () => `areaMask-${Math.random().toString(36).slice(2, 15)}`,
     [],
   );
-
+  const maxY = 195;
+  const yVal = Math.min(yScale(0), maxY)
+  
   return (
     <g>
       <mask id={maskId}>
@@ -25,7 +27,7 @@ export default function AreaLayer(lineChartProps) {
       <rect
         x="0"
         y="0"
-        height={yScale(0)}
+        height={yVal}
         width={width}
         mask={`url(#${maskId})`}
         fill="url(#positiveGradient)"
