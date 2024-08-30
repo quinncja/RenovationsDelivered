@@ -22,6 +22,7 @@ function PieChart({ data, open, chartObj, showLabel, chartRef }) {
   const sum = calculateTotalSum(data);
 
   const trimLabel = (label) => {
+    if(!label) return;
     return label
       .replace(/the/gi, "")
       .replace(/, inc/gi, "")
