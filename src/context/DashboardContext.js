@@ -99,16 +99,33 @@ export const DashboardProvider = ({ children }) => {
   // Add / Delete Item //
   // // // // // // // //
 
-  const addMultItems = async (itemList) => {
+  const addMultItems = async (itemList, historyFlag) => {
     setItems((prevItems) => {
       const newItems = prevItems ? [...prevItems] : [];
       newItems.push(...itemList);
       itemSaver(newItems);
       return newItems;
     });
+    if (!historyFlag){
+      const items = [...itemList];
+      const historyObj = {
+        text: "New Widgets",
+        unAction: () => addMultItems(items, true),
+        action: () => deleteMultItems(items)
+      }
+      pushHistory(historyObj)
+    }
   }
 
-  const addItem = async (newItem, newIndex, flag) => {
+  const deleteMultItems = async (itemList) => {
+    setItems((prevItems) => {
+      const newItems = prevItems.filter(item => !itemList.includes(item))
+      itemSaver(newItems);
+      return(newItems)
+    })
+  }
+
+  const addItem = async (newItem, newIndex, historyFlag) => {
     setItems((prevItems) => {
       const newItems = prevItems ? [...prevItems] : [];
 
@@ -121,7 +138,7 @@ export const DashboardProvider = ({ children }) => {
       itemSaver(newItems);
       return newItems;
     });
-    if (!flag) {
+    if (!historyFlag) {
       const item = newItem;
       const index = newIndex;
       const historyObj = {
@@ -134,7 +151,7 @@ export const DashboardProvider = ({ children }) => {
     }
   };
 
-  const removeItem = async (id) => {
+  const removeItem = async (id, historyFlag) => {
     const newItems = [...items];
     const iIndex = newItems.findIndex((item) => item.id === id);
     const oldItem = { ...newItems[iIndex] };
@@ -143,12 +160,15 @@ export const DashboardProvider = ({ children }) => {
       newItems.splice(iIndex, 1);
     }
 
-    const historyObj = {
-      text: "Delete Widget",
-      unAction: () => removeItem(oldItem, true),
-      action: () => addItem(oldItem, iIndex),
-    };
-    pushHistory(historyObj);
+    if(!historyFlag){
+      const historyObj = {
+        text: "Delete Widget",
+        unAction: () => removeItem(oldItem, true),
+        action: () => addItem(oldItem, iIndex, true),
+      };
+      pushHistory(historyObj);
+    }
+
     itemSaver(newItems)
     setItems(newItems);
   };
@@ -194,7 +214,7 @@ export const DashboardProvider = ({ children }) => {
 
   const reorderByIndex = (index1, index2) => {
     setItems((items) => {
-      const newItems = arrayMove(items, index1, index2);
+      const newItems = arrayMove(items, index2, index1);
       itemSaver(newItems);
       return newItems;
     });
