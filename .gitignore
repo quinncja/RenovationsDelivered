@@ -7,7 +7,7 @@
 
 # testing
 /coverage
-ngrokConfig.js
+src/utils/ngrokConfig.js
 
 # production
 /build
