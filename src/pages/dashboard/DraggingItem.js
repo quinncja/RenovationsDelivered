@@ -8,11 +8,10 @@ export function DraggingItem({ chartType, type, id, chart, data, children }) {
       >
         <div className="widget-top">
           <div className="drag-handle-wrapper">
-            <div className="drag-handle widget-item"></div>
           </div>
           <div className="widget-titles">
             <div
-              className="widget-title"
+              className="widget-title dragging"
               layoutId={`dashboard-item-title-${id}`}
             >
               {type}

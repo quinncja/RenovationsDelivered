@@ -377,15 +377,20 @@ h1 {
     width: 1270px;
   }
 }
+@media (width > 1610px) {
+  .dashboard-dropzone {
+    width: 1590px;
+  }
+}
+@media (width > 2000px) {
+  .dashboard-dropzone {
+    width: 1990px;
+  }
+}
 
 @media (width <= 1320px) {
   .dashboard-dropzone {
     width: 1000px;
-  }
-}
-@media (width <= 1010px) {
-  .dashboard-dropzone {
-    width: 660px;
   }
 }
 
@@ -412,6 +417,16 @@ h1 {
 }
 .widget-title {
   font-weight: 500;
+  user-select: none;
+  cursor: grab;
+  cursor: -moz-grab;
+  cursor: -webkit-grab;
+}
+
+.dragging{
+  cursor: grabbing;
+  cursor: -moz-grabbing;
+  cursor: -webkit-grabbing;
 }
 
 .dashboard-widget {

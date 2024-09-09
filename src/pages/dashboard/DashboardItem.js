@@ -129,16 +129,14 @@ const DashboardItem = memo(
         >
           <div className="widget-top">
             <div className="drag-handle-wrapper">
-              <div
-                className="drag-handle widget-item"
-                {...listeners}
-                {...attributes}
-              ></div>
             </div>
-            <motion.div className="widget-titles">
+            <motion.div className="widget-titles"
+             {...listeners}
+             {...attributes}>
               <motion.div
                 className="widget-title"
                 layoutId={`dashboard-item-title-${id}`}
+                
               >
                 {type}
               </motion.div>
