@@ -1,5 +1,4 @@
 import Userfront from "@userfront/toolkit/react";
-import { mode } from "./ngrokConfig";
 
 export const apiUrl = process.env.REACT_APP_API_URL;
 export const userApiUrl = `https://api.userfront.com/v0/users/${Userfront.user.userUuid}`;
@@ -14,6 +13,6 @@ export const ngrokHeaders = {
   headers: {
     "ngrok-skip-browser-warning": "true",
     Authorization: `Bearer ${Userfront.tokens.accessToken}`,
-    Mode: mode
+    Mode: process.env.REACT_APP_MODE,
   },
 };
