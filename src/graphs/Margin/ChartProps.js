@@ -28,7 +28,9 @@ export const marginChartProps = {
     format: (v) => `${v}%`,
     tickValues: 5,
   },
-  chartFormat: (data) => {return [{id: "Margin", data: [...data.current]}]},
+  chartFormat: (data) => {
+    return [{ id: "Margin", data: [...data.current] }];
+  },
   enableArea: true,
   singleItem: (singleItemData, open, showLabel) => (
     <SingleMargin data={singleItemData} open={open} showLabel={showLabel} />

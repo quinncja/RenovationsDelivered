@@ -107,7 +107,12 @@ const ChartDisplay = memo(({ chartObj, data, open, id, handleClick }) => {
           layoutId={`chart-container-${id}`}
           style={{ position: "relative", width: "660px", height: "320px" }}
         >
-          <BarChart data={data} open={open} showLabel={showLabels} colorScheme={colorScheme}/>
+          <BarChart
+            data={data}
+            open={open}
+            showLabel={showLabels}
+            colorScheme={colorScheme}
+          />
         </motion.div>
       );
 

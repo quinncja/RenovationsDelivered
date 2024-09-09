@@ -4,8 +4,8 @@ import { toggleVariants } from "utils/animations";
 import { useUserSettings } from "context/UserSettingsContext";
 
 function ToggleColorMode({ item }) {
-  const { appearance, setAppearance } = useUserContext(); 
-  const {saveAppearance} = useUserSettings();
+  const { appearance, setAppearance } = useUserContext();
+  const { saveAppearance } = useUserSettings();
 
   const handleAppearanceChange = async (newChoice) => {
     const oldChoice = appearance;

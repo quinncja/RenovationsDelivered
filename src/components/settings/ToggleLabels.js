@@ -5,7 +5,7 @@ import { useUserSettings } from "context/UserSettingsContext";
 
 function ToggleLabels({ item }) {
   const { label, setLabel } = useUserContext();
-  const {saveLabelSettings} = useUserSettings();
+  const { saveLabelSettings } = useUserSettings();
 
   const toggleLabel = async (input) => {
     const oldChoice = input;

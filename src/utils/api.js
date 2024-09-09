@@ -22,8 +22,15 @@ export async function fetchChartData(modifiers, signal) {
     return response.data;
   } catch (error) {
     if (axios.isCancel(error)) {
-    } else if (error.response && error.response.data && error.response.data.error) {
-      console.error(`Error loading ${modifiers.type}:`, error.response.data.error);
+    } else if (
+      error.response &&
+      error.response.data &&
+      error.response.data.error
+    ) {
+      console.error(
+        `Error loading ${modifiers.type}:`,
+        error.response.data.error,
+      );
     } else {
       console.error(`Error loading ${modifiers.type}:`, error.message);
     }

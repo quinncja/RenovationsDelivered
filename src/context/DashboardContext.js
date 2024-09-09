@@ -16,7 +16,7 @@ const DashboardContext = createContext();
 export const useDashboardContext = () => useContext(DashboardContext);
 
 export const DashboardProvider = ({ children }) => {
-  const {saveItems, saveModifiers, savePageModifiers} = useUserSettings();
+  const { saveItems, saveModifiers, savePageModifiers } = useUserSettings();
   const [active, setActive] = useState(false);
   const [smartSort, setSmartSort] = useState("true");
   const [items, setItems] = useState([]);
@@ -106,24 +106,24 @@ export const DashboardProvider = ({ children }) => {
       itemSaver(newItems);
       return newItems;
     });
-    if (!historyFlag){
+    if (!historyFlag) {
       const items = [...itemList];
       const historyObj = {
         text: "New Widgets",
         unAction: () => addMultItems(items, true),
-        action: () => deleteMultItems(items)
-      }
-      pushHistory(historyObj)
+        action: () => deleteMultItems(items),
+      };
+      pushHistory(historyObj);
     }
-  }
+  };
 
   const deleteMultItems = async (itemList) => {
     setItems((prevItems) => {
-      const newItems = prevItems.filter(item => !itemList.includes(item))
+      const newItems = prevItems.filter((item) => !itemList.includes(item));
       itemSaver(newItems);
-      return(newItems)
-    })
-  }
+      return newItems;
+    });
+  };
 
   const addItem = async (newItem, newIndex, historyFlag) => {
     setItems((prevItems) => {
@@ -160,7 +160,7 @@ export const DashboardProvider = ({ children }) => {
       newItems.splice(iIndex, 1);
     }
 
-    if(!historyFlag){
+    if (!historyFlag) {
       const historyObj = {
         text: "Delete Widget",
         unAction: () => removeItem(oldItem, true),
@@ -169,7 +169,7 @@ export const DashboardProvider = ({ children }) => {
       pushHistory(historyObj);
     }
 
-    itemSaver(newItems)
+    itemSaver(newItems);
     setItems(newItems);
   };
 
@@ -420,7 +420,7 @@ export const DashboardProvider = ({ children }) => {
         newWidgetOpen,
         setNewWidgetOpen,
         addMultItems,
-        loaded
+        loaded,
       }}
     >
       {children}

@@ -8,8 +8,8 @@ export default function AreaLayer(lineChartProps) {
     [],
   );
   const maxY = 195;
-  const yVal = Math.min(yScale(0), maxY)
-  
+  const yVal = Math.min(yScale(0), maxY);
+
   return (
     <g>
       <mask id={maskId}>

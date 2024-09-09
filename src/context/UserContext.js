@@ -48,8 +48,8 @@ export const UserProvider = ({ children }) => {
   }, [appearance]);
 
   const getColorScheme = () => {
-    return(colorPalettes[colorScheme])
-  }
+    return colorPalettes[colorScheme];
+  };
 
   return (
     <UserContext.Provider

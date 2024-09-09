@@ -15,7 +15,7 @@ import { useDashboardContext } from "context/DashboardContext";
 function Topbar() {
   const { appearance } = useUserContext();
   const { systemMessage } = useSystemMessage();
-  const {setNewWidgetOpen} = useDashboardContext();
+  const { setNewWidgetOpen } = useDashboardContext();
   const [expanded, setExpanded] = useState(false);
   const toggleExpanded = () => {
     setExpanded(!expanded);

@@ -6,7 +6,7 @@ import { calculateTotalSum } from "utils/funcs";
 
 function PieChart({ data, open, chartObj, showLabel, chartRef, colorScheme }) {
   const { setLegends } = useDashboardContext();
-  const arcLabelColor = "#f3f3f3"
+  const arcLabelColor = "#f3f3f3";
   const slicedData = data.slice(0, 20);
   const legendsData = slicedData
     ? slicedData.map((d) => ({
@@ -19,7 +19,7 @@ function PieChart({ data, open, chartObj, showLabel, chartRef, colorScheme }) {
   const sum = calculateTotalSum(data);
 
   const trimLabel = (label) => {
-    if(!label) return;
+    if (!label) return;
     return label
       .replace(/the/gi, "")
       .replace(/, inc/gi, "")

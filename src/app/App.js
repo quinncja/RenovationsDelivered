@@ -13,7 +13,8 @@ import SettingsLoading from "components/settings/Loading";
 
 function App() {
   const navigate = useNavigate();
-  const { setSmartSort, onLoad, newWidgetOpen, setNewWidgetOpen} = useDashboardContext();
+  const { setSmartSort, onLoad, newWidgetOpen, setNewWidgetOpen } =
+    useDashboardContext();
   const { fetchCurrentUser } = useUserSettings();
   const { setAppearance, setColorScheme, setLabel } = useUserContext();
   const [open, setOpen] = useState(false);
@@ -58,12 +59,12 @@ function App() {
     <div className="App">
       {Userfront.user.userUuid && <Navbar openSettings={openSettings} />}
       <Outlet />
-      <SettingsLoading/>
+      <SettingsLoading />
       <AnimatePresence>
         {open && <Settings closeSelf={closeSettings} />}
         {newWidgetOpen && (
-            <NewWidgetPopup closeSelf={() => setNewWidgetOpen(false)} />
-          )}
+          <NewWidgetPopup closeSelf={() => setNewWidgetOpen(false)} />
+        )}
       </AnimatePresence>
     </div>
   );

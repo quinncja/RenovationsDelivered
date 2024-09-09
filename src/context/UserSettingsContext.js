@@ -64,7 +64,7 @@ export function UserSettingsProvider({ children }) {
         {
           ...defaultHeaders,
           signal: controller.signal,
-        }
+        },
       );
 
       return response.data;
@@ -81,13 +81,20 @@ export function UserSettingsProvider({ children }) {
     }
   };
 
-  const saveAppearance = async (appearance) => await updateUserSettings({ appearance }, "saveAppearance");
-  const saveColorScheme = async (colorScheme) => await updateUserSettings({ colorScheme }, "saveColorScheme");
-  const saveItems = async (itemArray) => await updateUserSettings({ itemArray }, "saveItems");
-  const saveModifiers = async (itemModifiers) => await updateUserSettings({ itemModifiers }, "saveModifiers");
-  const savePageModifiers = async (pageModifiers) => await updateUserSettings({ pageModifiers }, "savePageModifiers");
-  const saveSortSetting = async (smartSort) => await updateUserSettings({ smartSort }, "saveSortSetting");
-  const saveLabelSettings = async (label) => await updateUserSettings({ label }, "saveLabelSettings");
+  const saveAppearance = async (appearance) =>
+    await updateUserSettings({ appearance }, "saveAppearance");
+  const saveColorScheme = async (colorScheme) =>
+    await updateUserSettings({ colorScheme }, "saveColorScheme");
+  const saveItems = async (itemArray) =>
+    await updateUserSettings({ itemArray }, "saveItems");
+  const saveModifiers = async (itemModifiers) =>
+    await updateUserSettings({ itemModifiers }, "saveModifiers");
+  const savePageModifiers = async (pageModifiers) =>
+    await updateUserSettings({ pageModifiers }, "savePageModifiers");
+  const saveSortSetting = async (smartSort) =>
+    await updateUserSettings({ smartSort }, "saveSortSetting");
+  const saveLabelSettings = async (label) =>
+    await updateUserSettings({ label }, "saveLabelSettings");
 
   return (
     <UserSettingsContext.Provider
@@ -100,8 +107,8 @@ export function UserSettingsProvider({ children }) {
         saveModifiers,
         savePageModifiers,
         saveSortSetting,
-        saveLabelSettings,  
-        fetchCurrentUser
+        saveLabelSettings,
+        fetchCurrentUser,
       }}
     >
       {children}

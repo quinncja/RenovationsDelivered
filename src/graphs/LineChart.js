@@ -4,9 +4,16 @@ import { useEffect } from "react";
 import { phaseToMonth } from "utils/formatters";
 import { useCSSVariable } from "utils/hooks/useCSSVariable";
 
-function LineChart({ data, open, handleClick, showLabel, chartObj, colorScheme }) {
+function LineChart({
+  data,
+  open,
+  handleClick,
+  showLabel,
+  chartObj,
+  colorScheme,
+}) {
   const { setLegends } = useDashboardContext();
-  const gridColor = useCSSVariable("--grid-color")
+  const gridColor = useCSSVariable("--grid-color");
 
   useEffect(() => {
     if (open && chartObj.chartProps.legendsFunc)
@@ -40,7 +47,9 @@ function LineChart({ data, open, handleClick, showLabel, chartObj, colorScheme }
 
   let margin = { top: 5, right: 70, bottom: 120, left: 40 };
   const axisLeft = open && showLabel ? chartObj.chartProps.axisLeft : false;
-  let chartData = chartObj.chartProps.chartFormat ? chartObj.chartProps.chartFormat(data) : data;
+  let chartData = chartObj.chartProps.chartFormat
+    ? chartObj.chartProps.chartFormat(data)
+    : data;
 
   if (!data) return <div style={{ margin: "auto" }}>No Data</div>;
   return (

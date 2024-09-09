@@ -17,6 +17,7 @@ import debounce from "lodash/debounce";
 import OpenItem from "./OpenItem";
 import { AnimatePresence } from "framer-motion";
 import DashboardItem from "./DashboardItem";
+import _ from "lodash";
 
 function Dashboard() {
   const {
@@ -28,7 +29,7 @@ function Dashboard() {
     captureItemState,
     compareItemStates,
     setNewWidgetOpen,
-    loaded
+    loaded,
   } = useDashboardContext();
   const [open, setOpen] = useState(null);
   const sensors = useSensors(
@@ -69,62 +70,74 @@ function Dashboard() {
     }, 105);
   }
 
-  if (items && items.length > 0)
+  if (
+    loaded &&
+    (items.length === 0 || (items.length === 1 && _.isEmpty(items[0])))
+  )
     return (
-      <>
-        <DndContext
-          onDragStart={({ active }) => {
-            setActive(active);
-            captureItemState(active);
-          }}
-          onDragOver={debouncedDragOver}
-          onDragEnd={handleDragEnd}
-          modifiers={[]}
-          sensors={sensors}
-        >
-          <Droppable isOpen={open}>
-            <SortableContext items={items.length > 0 ? items : []} strategy={() => null}>
-              {items && items.length > 0 &&
-                items.map(
-                  (item) =>
-                    item && item.type && (
-                      <DashboardItem
-                        current={active?.id === item.id ? true : false}
-                        key={item.id}
-                        placed={item}
-                        id={item.id}
-                        type={item.type}
-                        data={{}}
-                        open={open}
-                        setOpen={openSelf}
-                        deleteSelf={removeItem}
-                      />
-                    ),
-                )}
-            </SortableContext>
-          </Droppable>
-          <AnimatePresence>
-            {open && <OpenItem item={open} closeSelf={closeSelf} />}
-          </AnimatePresence>
-          <DragOverlay
-            dropAnimation={{
-              duration: 300,
-              easing: "cubic-bezier(0.18, 0.67, 0.6, 1.22)",
-            }}
-          >
-            {active &&
-              active.data &&
-              active.data.current.renderDragOverlay?.(active)}
-          </DragOverlay>
-        </DndContext>
-      </>
+      <div className="loading-wrapper no-item-text">
+        <h2>Your dashboard is empty. </h2>
+        <br />
+        <h3 onClick={() => setNewWidgetOpen(true)}>
+          {" "}
+          Click here to add a widget{" "}
+        </h3>
+      </div>
     );
-  if (loaded && items.length === 0)
-    return <div className="loading-wrapper no-item-text"> 
-      <h2>Your dashboard is empty. </h2>
-      <br/>
-      <h3 onClick={() => setNewWidgetOpen(true)}> Click here to add a widget </h3>
-    </div>;
+  return (
+    <>
+      <DndContext
+        onDragStart={({ active }) => {
+          setActive(active);
+          captureItemState(active);
+        }}
+        onDragOver={debouncedDragOver}
+        onDragEnd={handleDragEnd}
+        modifiers={[]}
+        sensors={sensors}
+      >
+        <Droppable isOpen={open}>
+          <SortableContext
+            items={items.length > 0 ? items : []}
+            strategy={() => null}
+          >
+            {items &&
+              items.length > 0 &&
+              items.map(
+                (item) =>
+                  item &&
+                  item.type && (
+                    <DashboardItem
+                      current={active?.id === item.id ? true : false}
+                      key={item.id}
+                      placed={item}
+                      id={item.id}
+                      type={item.type}
+                      data={{}}
+                      open={open}
+                      setOpen={openSelf}
+                      deleteSelf={removeItem}
+                    />
+                  ),
+              )}
+          </SortableContext>
+        </Droppable>
+        <AnimatePresence>
+          {open && <OpenItem item={open} closeSelf={closeSelf} />}
+        </AnimatePresence>
+        <DragOverlay
+          dropAnimation={{
+            duration: 300,
+            easing: "cubic-bezier(0.18, 0.67, 0.6, 1.22)",
+          }}
+        >
+          {active &&
+            active.data &&
+            active.data.current.renderDragOverlay?.(active)}
+        </DragOverlay>
+      </DndContext>
+    </>
+  );
 }
 
 export default Dashboard;

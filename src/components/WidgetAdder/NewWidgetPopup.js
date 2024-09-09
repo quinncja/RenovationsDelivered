@@ -17,7 +17,6 @@ import { chartObjects, groupedByChartType } from "graphs/ChartObjects";
 import { generateRandomId } from "utils/funcs";
 import { useDashboardContext } from "context/DashboardContext";
 
-
 function NewWidgetPopup({ closeSelf }) {
   const color = useCSSVariable("--overlay");
   const { addItem, addMultItems } = useDashboardContext();
@@ -28,7 +27,6 @@ function NewWidgetPopup({ closeSelf }) {
     return acc;
   }, {});
 
-  
   const projectView = {
     items: [
       chartObjectMap["Cost Analysis"],
@@ -37,23 +35,22 @@ function NewWidgetPopup({ closeSelf }) {
       chartObjectMap["COGs Breakdown"],
       chartObjectMap["Vender Breakdown"],
       chartObjectMap["Sub Breakdown"],
-    ]
-  }
+    ],
+  };
 
   const handleClick = (obj) => {
-    if(obj === "project-view"){
-      let items = []
-      projectView.items.forEach(item => {
-      const newItem = {
-        id: generateRandomId(),
-        type: item.type,
-      };
-      items.push(newItem)
-    });
-    addMultItems(items)
-    closeSelf();
-    }
-    else {
+    if (obj === "project-view") {
+      let items = [];
+      projectView.items.forEach((item) => {
+        const newItem = {
+          id: generateRandomId(),
+          type: item.type,
+        };
+        items.push(newItem);
+      });
+      addMultItems(items);
+      closeSelf();
+    } else {
       const newItem = {
         id: generateRandomId(),
         type: obj.type,
@@ -62,7 +59,6 @@ function NewWidgetPopup({ closeSelf }) {
       closeSelf();
     }
   };
-
 
   const buttonOptions = [
     {
@@ -114,13 +110,13 @@ function NewWidgetPopup({ closeSelf }) {
         <motion.div>
           <div className="widget-button-header">Preset</div>
           <div className="widget-button-row">
-          <button
-            className="widget-button"
-            key={'project-view'}
-            onClick={() => handleClick("project-view")}
-          >
-            {"Project View"}
-           </button>
+            <button
+              className="widget-button"
+              key={"project-view"}
+              onClick={() => handleClick("project-view")}
+            >
+              {"Project View"}
+            </button>
           </div>
         </motion.div>
       </motion.div>

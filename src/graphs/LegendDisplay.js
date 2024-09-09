@@ -18,10 +18,7 @@ function LegendDisplay() {
               <div
                 className="tooltip-cube"
                 style={{
-                  backgroundColor:
-                  colorPalette[
-                      index % colorPalette.length
-                    ],
+                  backgroundColor: colorPalette[index % colorPalette.length],
                 }}
               />
               <strong>{datum.id}</strong>{" "}

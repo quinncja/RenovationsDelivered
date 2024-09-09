@@ -12,7 +12,8 @@ import { SingleMargin } from "./Margin/SingleMargin";
 export const chartObjects = [
   {
     type: "Vender Breakdown",
-    getter: (mods, signal) => fetchChartData({ ...mods, type: "vender" }, signal),
+    getter: (mods, signal) =>
+      fetchChartData({ ...mods, type: "vender" }, signal),
     tooltip: (datum, sum) => <PieChartToolTip datum={datum} sum={sum} />,
     label: (datum) => getVenderLabel(datum),
     chartType: "Pie",
@@ -50,7 +51,8 @@ export const chartObjects = [
   {
     type: "Cost Analysis",
     chartType: "Line",
-    getter: (mods, signal) => fetchChartData({ ...mods, type: "revenue" }, signal),
+    getter: (mods, signal) =>
+      fetchChartData({ ...mods, type: "revenue" }, signal),
     cleaner: (data) => RevenueCleaner(data),
     tooltip: (slice) => <RevenueTooltip slice={slice} />,
     checkIfSingle: (data) =>
@@ -75,7 +77,8 @@ export const chartObjects = [
   {
     type: "Margin",
     chartType: "Line",
-    getter: (mods, signal) => fetchChartData({ ...mods, type: "margin" }, signal),
+    getter: (mods, signal) =>
+      fetchChartData({ ...mods, type: "margin" }, signal),
     cleaner: (data) => {
       return data;
     },

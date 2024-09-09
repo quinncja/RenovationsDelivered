@@ -6,7 +6,7 @@ import { useCSSVariable } from "utils/hooks/useCSSVariable";
 
 function BarChart({ data, open, showLabel, chartRef, colorScheme }) {
   const { setLegends } = useDashboardContext();
-  const gridColor = useCSSVariable("--grid-color")
+  const gridColor = useCSSVariable("--grid-color");
 
   const customTheme = {
     grid: {

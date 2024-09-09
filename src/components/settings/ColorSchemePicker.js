@@ -21,7 +21,7 @@ export function colorPallete(colorPalette) {
 }
 
 function ColorSchemePicker({ handleClick, colorScheme }) {
-  const options = Object.keys(colorPalettes)
+  const options = Object.keys(colorPalettes);
 
   return (
     <motion.div

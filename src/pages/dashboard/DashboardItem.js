@@ -12,15 +12,20 @@ import DraggingItem from "./DraggingItem.js";
 
 const DashboardItem = memo(
   forwardRef((props, ref) => {
-    const { getChartObj, pageModifiers} = useDashboardContext();
+    const { getChartObj, pageModifiers } = useDashboardContext();
     const { dragging, current, deleteSelf, setOpen, id, type, children } =
       props;
 
     const [data, setData] = useState(null);
     const chartObj = getChartObj(type);
     const { getter, chartType } = chartObj;
-    const showSingle = data && chartObj && chartObj.checkIfSingle && chartObj.checkIfSingle(data, pageModifiers);
-    const chartToShow = (showSingle && chartObj && chartObj.single) ? chartObj.single : chartObj;
+    const showSingle =
+      data &&
+      chartObj &&
+      chartObj.checkIfSingle &&
+      chartObj.checkIfSingle(data, pageModifiers);
+    const chartToShow =
+      showSingle && chartObj && chartObj.single ? chartObj.single : chartObj;
 
     const dataToShow = dragging
       ? []
@@ -65,14 +70,18 @@ const DashboardItem = memo(
           let newData;
 
           if (abortController) {
-            abortController.abort(); 
+            abortController.abort();
           }
 
           const controller = new AbortController();
           setAbortController(controller);
 
           if (getter) {
-            newData = await LoadItemData(chartObj, pageModifiers, controller.signal);
+            newData = await LoadItemData(
+              chartObj,
+              pageModifiers,
+              controller.signal,
+            );
           } else newData = await getItemData(type);
           setData(newData);
         } catch (error) {
@@ -90,7 +99,7 @@ const DashboardItem = memo(
           abortController.abort();
         }
       };
-  
+
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [type, pageModifiers]);
 
