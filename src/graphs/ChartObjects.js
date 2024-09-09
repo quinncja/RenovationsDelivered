@@ -8,6 +8,7 @@ import PieChartToolTip from "./PieChart/PieChartToolTip";
 import getVenderLabel from "./Vender/Label";
 import ytdDisplay from "./YTD/display";
 import { SingleMargin } from "./Margin/SingleMargin";
+import { trimLabel } from "./PieChart/TrimLabel";
 
 export const chartObjects = [
   {
@@ -26,9 +27,7 @@ export const chartObjects = [
     type: "COGs Breakdown",
     getter: (mods, signal) => fetchChartData({ ...mods, type: "cogs" }, signal),
     tooltip: (datum, sum) => <PieChartToolTip datum={datum} sum={sum} />,
-    label: (datum) => {
-      return datum.id;
-    },
+    label: (datum) => trimLabel(datum.id),
     chartType: "Pie",
     modifierOptions: ["year", "job", "phase"],
     cleaner: (data) => {
@@ -39,9 +38,18 @@ export const chartObjects = [
     type: "Sub Breakdown",
     getter: (mods, signal) => fetchChartData({ ...mods, type: "sub" }, signal),
     tooltip: (datum, sum) => <PieChartToolTip datum={datum} sum={sum} />,
-    label: (datum) => {
-      return datum.id;
+    label: (datum) => trimLabel(datum.id),
+    chartType: "Pie",
+    modifierOptions: ["year", "job", "phase"],
+    cleaner: (data) => {
+      return data;
     },
+  },
+  {
+    type: "Client Breakdown",
+    getter: (mods, signal) => fetchChartData({ ...mods, type: "client" }, signal),
+    tooltip: (datum, sum) => <PieChartToolTip datum={datum} sum={sum} />,
+    label: (datum) => trimLabel(datum.id),
     chartType: "Pie",
     modifierOptions: ["year", "job", "phase"],
     cleaner: (data) => {

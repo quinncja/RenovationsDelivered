@@ -1,7 +1,6 @@
 import { motion } from "framer-motion";
 import { close } from "../../business/svg";
 import ToggleColorMode from "./ToggleColorMode";
-import ToggleSort from "./ToggleSort";
 import DropdownItem from "./DropdownItem";
 import { settingWidgetVariants, overlayVariants } from "../../utils/animations";
 import { useCSSVariable } from "../../utils/hooks/useCSSVariable";

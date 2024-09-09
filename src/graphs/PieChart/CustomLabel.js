@@ -6,16 +6,6 @@ const CustomLabel = ({ datum, label, style }) => {
   const [textWidth, setTextWidth] = useState(0);
   const arcLabelColor = useCSSVariable("--dark");
 
-  const trimLabel = (label) => {
-    return label
-      .replace(/the/gi, "")
-      .replace(/, inc/gi, "")
-      .replace(/inc\./gi, "")
-      .replace(/inc/gi, "")
-      .replace(/llc/gi, "")
-      .trim();
-  };
-
   useEffect(() => {
     if (textRef.current) {
       setTextWidth(textRef.current.getBBox().width);
@@ -44,7 +34,7 @@ const CustomLabel = ({ datum, label, style }) => {
           fontSize: "12px",
         }}
       >
-        {trimLabel(label)}
+        {label}
       </text>
     </g>
   );
