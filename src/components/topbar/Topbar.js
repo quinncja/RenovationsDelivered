@@ -1,5 +1,8 @@
-import whiteLogo from "images/R-Only-White.png";
-import blackLogo from "images/R-Only-Grey.png";
+import whiteLogo from "images/R-Only-White-Empty.png";
+import blackLogo from "images/R-Only-Grey-Empty.png";
+import whiteLogoHover from "images/R-Only-White.png";
+import blackLogoHover from "images/R-Only-Grey.png";
+
 import { AnimatePresence, motion } from "framer-motion";
 import { useUserContext } from "context/UserContext";
 import { useState } from "react";
@@ -16,6 +19,14 @@ function Topbar() {
   const { appearance } = useUserContext();
   const { systemMessage } = useSystemMessage();
   const { setNewWidgetOpen } = useDashboardContext();
+  const [hovered, setHovered] = useState(false);
+  const handleMouseEnter = () => {
+    setHovered(true);
+  };
+  const handleMouseLeave = () => {
+    setHovered(false);
+  };
+
   const [expanded, setExpanded] = useState(false);
   const toggleExpanded = () => {
     setExpanded(!expanded);
@@ -37,7 +48,17 @@ function Topbar() {
         >
           <img
             onClick={() => toggleExpanded()}
-            src={appearance === "light" ? blackLogo : whiteLogo}
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
+            src={
+              appearance === "light"
+                ? hovered || expanded
+                  ? blackLogoHover
+                  : blackLogo
+                : hovered || expanded
+                ? whiteLogoHover
+                : whiteLogo
+            }
             className="logo nav-logo"
             alt="Renovations Delivered"
           />
