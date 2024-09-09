@@ -6,17 +6,17 @@ import ColorSchemePicker from "./ColorSchemePicker";
 import { useUserSettings } from "context/UserSettingsContext";
 
 function DropdownItem({ item }) {
-  const { colorScheme, setColorScheme } = useUserContext();
+  const { colorScheme, handleColorScheme } = useUserContext();
   const { saveColorScheme } = useUserSettings();
   const [open, setOpen] = useState(false);
 
   const handleColorChange = async (newChoice) => {
     const oldChoice = colorScheme;
-    setColorScheme(newChoice);
+    handleColorScheme(newChoice);
     try {
       await saveColorScheme(newChoice);
     } catch (error) {
-      setColorScheme(oldChoice);
+      handleColorScheme(oldChoice);
     }
   };
 

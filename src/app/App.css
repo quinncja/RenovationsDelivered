@@ -1,4 +1,5 @@
 :root {
+  --activePrimary: #ffffff;
   --primary: #f7941d;
   --accent: #ff8c00;
   --primary-highlight: #f7a848;
@@ -10,7 +11,7 @@
   --dark-mid-highlight: #414141;
   --dark-button-filter: 180%;
   --dark-light: #7d7d7d;
-  --dark-border-color: #3c3c3c;
+  --dark-border-color: var(--activePrimary);
   --dark-border: 2px solid var(--border-color);
   --dark-less-white: #d7d7d7;
   --dark-white: #f3f3f3;
@@ -32,7 +33,7 @@
   --light-mid-highlight: #ece9e6;
   --light-button-filter: 90%;
   --light-light: #cbcbcb;
-  --light-border-color: #dddddd;
+  --light-border-color: var(--activePrimary);
   --light-border: 2px solid var(--border-color);
   --light-less-white: #929292;
   --light-white: #616060;
@@ -164,10 +165,12 @@ h1 {
   align-items: center;
   background-color: var(--dark);
   height: 80px;
-  width: 90px;
-  box-sizing: border-box;
+  width: 91px;
+  box-sizing: content-box;
   transition: background-color 0.3s ease-in-out;
   position: relative;
+  margin-right: -1.5px;
+  padding-right: 3px;
 }
 
 .nav-container img {
@@ -175,10 +178,10 @@ h1 {
 }
 
 .nav-container::before {
-  background-color: var(--border-color);
+  background-color: var(--fancy-border);
   content: "";
-  height: calc(100% + 3px);
-  width: calc(100% + 3px);
+  height: calc(100%);
+  width: calc(100% + 2px);
   position: absolute;
   clip-path: polygon(
     evenodd,

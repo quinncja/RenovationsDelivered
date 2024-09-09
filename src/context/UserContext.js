@@ -10,6 +10,33 @@ export const UserProvider = ({ children }) => {
   const [appearance, setAppearance] = useState();
   const [label, setLabel] = useState();
 
+  const handleColorScheme = (colorScheme) => {
+    changeRoot(colorScheme)
+    setColorScheme(colorScheme)
+  }
+
+  const changeRoot = (colorScheme) => {
+    const root = document.documentElement;
+    root.style.setProperty("--primary", colorPalettes[colorScheme][1]);
+    const rootColor = hslToHsla(colorPalettes[colorScheme][1], .15)
+    root.style.setProperty("--activePrimary", rootColor);
+  }
+
+  function hslToHsla(hsl, alpha) {
+    console.log("hsla", appearance)
+    const hslValues = hsl.match(/\d+/g);
+    let hue = hslValues[0];
+    let saturation = hslValues[1];
+    let lightness = parseInt(hslValues[2]);
+  
+    const adjustment = appearance === "light" ? -20 : 0;
+    lightness = Math.max(0, Math.min(100, lightness + adjustment));
+    console.log(`hsla(${hue}, ${saturation}%, ${lightness}%, ${alpha})`)
+
+    return `hsla(${hue}, ${saturation}%, ${lightness}%, ${alpha})`;
+  }
+  
+
   const changeTheme = (state) => {
     const root = document.documentElement;
     const variables = [
@@ -44,8 +71,13 @@ export const UserProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    if (appearance) changeTheme(appearance);
-  }, [appearance]);
+    if (appearance && colorScheme){ 
+      changeTheme(appearance)
+      changeRoot(colorScheme)
+    }
+
+    // eslint-disable-next-line
+  }, [appearance, colorScheme]);
 
   const getColorScheme = () => {
     return colorPalettes[colorScheme];
@@ -59,6 +91,7 @@ export const UserProvider = ({ children }) => {
         colorScheme,
         getColorScheme,
         setColorScheme,
+        handleColorScheme,
         label,
         setLabel,
       }}

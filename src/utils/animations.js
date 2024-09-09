@@ -165,19 +165,19 @@ export const dropdownVariants = {
 
 export const topbarVariants = {
   initial: {
-    width: "65px",
-    height: "57px",
+    width: "68px",
+    height: "60px",
     transition: { duration: 0.3, ease: "easeInOut" },
   },
   expanded: {
-    width: "65px",
+    width: "68px",
     height: "max-content",
     opacity: 1,
     transition: { duration: 0.3, ease: "easeInOut" },
   },
   exit: {
-    width: "65px",
-    height: "59px",
+    width: "68px",
+    height: "60px",
     transition: { duration: 0.3, ease: "easeInOut" },
   },
 };
