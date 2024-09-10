@@ -4,7 +4,7 @@ export const blankImage =
 
 
 export const preloadImage = (imageSrc) => {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       const img = new Image();
       img.src = imageSrc;
       
@@ -12,7 +12,6 @@ export const preloadImage = (imageSrc) => {
       
       img.onerror = (err) => {
         console.error('Image failed to load:', err); 
-        resolve(blankImage);
       };
     });
   };
