@@ -10,6 +10,7 @@ import { arrayMove } from "@dnd-kit/sortable";
 import { useRedo, useUndo } from "utils/hooks/useHistory";
 import { useSystemMessage } from "context/SystemMessageContext";
 import { useUserSettings } from "./UserSettingsContext";
+import { deleteImageCache } from "utils/images/imageCacheUtils";
 
 const DashboardContext = createContext();
 
@@ -20,7 +21,6 @@ export const DashboardProvider = ({ children }) => {
   const [active, setActive] = useState(false);
   const [smartSort, setSmartSort] = useState("true");
   const [items, setItems] = useState([]);
-  const [snapshots, setSnapshots] = useState([]);
   const chartRefs = useRef({});
   const [pageModifiers, setPageModifiers] = useState({
     job: null,
@@ -118,11 +118,16 @@ export const DashboardProvider = ({ children }) => {
   };
 
   const deleteMultItems = async (itemList) => {
+    itemList.forEach((item) => {
+      deleteImageCache(item.id);
+    });
+
     setItems((prevItems) => {
       const newItems = prevItems.filter((item) => !itemList.includes(item));
       itemSaver(newItems);
       return newItems;
     });
+ 
   };
 
   const addItem = async (newItem, newIndex, historyFlag) => {
@@ -170,6 +175,7 @@ export const DashboardProvider = ({ children }) => {
     }
 
     itemSaver(newItems);
+    deleteImageCache(id)
     setItems(newItems);
   };
 
@@ -414,8 +420,6 @@ export const DashboardProvider = ({ children }) => {
         setSmartSort,
         pageModifiers,
         setPageModifiers,
-        snapshots,
-        setSnapshots,
         chartRefs,
         newWidgetOpen,
         setNewWidgetOpen,

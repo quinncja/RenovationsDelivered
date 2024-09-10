@@ -3,15 +3,17 @@ import LineChart from "./LineChart";
 import { motion } from "framer-motion";
 import BarChart from "./BarChart";
 import { useUserContext } from "context/UserContext";
-import { useEffect, useRef, memo } from "react";
-import svgToImage from "utils/hooks/svgToImage";
+import { useState, useEffect, useRef, memo } from "react";
 import { useDashboardContext } from "context/DashboardContext";
+import svgToImage from "utils/images/svgToImage";
+import { blankImage, cacheImage, getCachedImage } from "utils/images/imageCacheUtils";
 
 const ChartDisplay = memo(({ chartObj, data, open, id, handleClick }) => {
-  const { getColorScheme, label } = useUserContext();
-  const { snapshots, setSnapshots, active } = useDashboardContext();
+  const { colorScheme, appearance, getColorScheme, label } = useUserContext();
+  const { active } = useDashboardContext();
   const wrapperRef = useRef(null);
   const showImage = active;
+  const [cachedImage, setCachedImage] = useState(null);
 
   let showLabels;
   if (label === "always") showLabels = true;
@@ -22,19 +24,24 @@ const ChartDisplay = memo(({ chartObj, data, open, id, handleClick }) => {
     if (data && wrapperRef.current && !open) {
       const svgElement = wrapperRef.current.querySelector("svg");
       if (svgElement instanceof SVGElement) {
-        svgToImage(svgElement).then((imageData) => {
-          setSnapshots((prevSnapshots) => ({
-            ...prevSnapshots,
-            [id]: imageData,
-          }));
-        });
+        setTimeout(() => {
+          svgToImage(svgElement).then((imageData) => {
+            cacheImage(id, imageData).then((cached) => {
+              setCachedImage(cached); 
+            });
+          });
+        }, 1000); 
       }
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
-  const snapshotImage = snapshots[id];
-  const colorScheme = getColorScheme();
+    return () => {
+      setCachedImage(null);   
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [colorScheme, appearance]);
+
+  const snapshotImage = cachedImage || getCachedImage(id) || blankImage;
+  const colorPallete = getColorScheme();
 
   switch (chartObj.chartType) {
     case "Pie":
@@ -62,7 +69,7 @@ const ChartDisplay = memo(({ chartObj, data, open, id, handleClick }) => {
               open={open}
               showLabel={showLabels}
               chartObj={chartObj}
-              colorScheme={colorScheme}
+              colorScheme={colorPallete}
             />
           )}
         </motion.div>
@@ -94,7 +101,7 @@ const ChartDisplay = memo(({ chartObj, data, open, id, handleClick }) => {
               handleClick={handleClick}
               showLabel={showLabels}
               chartObj={chartObj}
-              colorScheme={colorScheme}
+              colorScheme={colorPallete}
             />
           )}
         </motion.div>
@@ -111,7 +118,7 @@ const ChartDisplay = memo(({ chartObj, data, open, id, handleClick }) => {
             data={data}
             open={open}
             showLabel={showLabels}
-            colorScheme={colorScheme}
+            colorScheme={colorPallete}
           />
         </motion.div>
       );
