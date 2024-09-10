@@ -29,7 +29,7 @@ export const UserProvider = ({ children }) => {
     let saturation = hslValues[1];
     let lightness = parseInt(hslValues[2]);
   
-    const adjustment = appearance === "light" ? -20 : 0;
+    const adjustment = appearance === "light" ? -30 : -15;
     lightness = Math.max(0, Math.min(100, lightness + adjustment));
     console.log(`hsla(${hue}, ${saturation}%, ${lightness}%, ${alpha})`)
 

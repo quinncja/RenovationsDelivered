@@ -28,7 +28,7 @@
 
   --light-background: #faf8f5;
   --light-dropdown-background: #f3f3f3;
-  --light-dark: #ffffff;
+  --light-dark: #fefefe;
   --light-mid: #f3f3f3;
   --light-mid-highlight: #ece9e6;
   --light-button-filter: 90%;
@@ -450,6 +450,7 @@ h1 {
   background-color: var(--dark);
   border: 3px solid var(--border-color);
   box-sizing: border-box;
+  border-radius: 2px;
 }
 
 .opaque-widget {

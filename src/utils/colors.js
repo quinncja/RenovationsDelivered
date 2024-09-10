@@ -1,5 +1,5 @@
 export const colorPalettes = {
-  Vibrant: ["#9f3ff3", "hsl(347, 81%, 60%)", "#e7bc0d", "#f17341", "#7564f7", "#ef43e9"],
+  Vibrant: ["hsl(347, 81%, 60%)", "hsl(17, 86%, 60%)", "hsl(272, 88%, 60%)", "#e7bc0d", "#7564f7", "#ef43e9"],
 
   Contrast: ["#5a35d4", "hsl(146, 81%, 48%)", "#f69013", "#8557ef", "#ff476c", "#07e6b9"],
 
