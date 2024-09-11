@@ -3,7 +3,7 @@ import LineChart from "./LineChart";
 import { motion } from "framer-motion";
 import BarChart from "./BarChart";
 import { useUserContext } from "context/UserContext";
-import { useState, useEffect, useRef, memo } from "react";
+import { useEffect, useRef, memo } from "react";
 import { useDashboardContext } from "context/DashboardContext";
 import svgToImage from "utils/images/svgToImage";
 import { blankImage, cacheImage, getCachedImage } from "utils/images/imageCacheUtils";
@@ -13,7 +13,6 @@ const ChartDisplay = memo(({ chartObj, data, open, id, handleClick }) => {
   const { active } = useDashboardContext();
   const wrapperRef = useRef(null);
   const showImage = active;
-  const [cachedImage, setCachedImage] = useState(null);
 
   let showLabels;
   if (label === "always") showLabels = true;
@@ -26,21 +25,15 @@ const ChartDisplay = memo(({ chartObj, data, open, id, handleClick }) => {
       if (svgElement instanceof SVGElement) {
         setTimeout(() => {
           svgToImage(svgElement).then((imageData) => {
-            cacheImage(id, imageData).then((cached) => {
-              setCachedImage(cached); 
-            });
+            cacheImage(id, imageData)
           });
         }, 1000); 
       }
     }
-
-    return () => {
-      setCachedImage(null);   
-    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [colorScheme, appearance, label]);
 
-  const snapshotImage = cachedImage || getCachedImage(id) || blankImage;
+  const snapshotImage = getCachedImage(id) || blankImage;
   const colorPallete = getColorScheme();
 
   switch (chartObj.chartType) {
