@@ -679,11 +679,12 @@ h1 {
   width: calc(33% - 2px);
 }
 .active-button {
+  background-color: var(--primary);
   color: white;
 }
 .active-button:hover {
-  background: none;
   filter: none;
+  background-color: var(--primary);
 }
 .active-color-button {
   background: var(--mid-highlight);

@@ -1,34 +1,25 @@
-import { motion } from "framer-motion";
-import { labelVariants } from "utils/animations";
 import { useUserContext } from "context/UserContext";
 import { useUserSettings } from "context/UserSettingsContext";
 
 function ToggleLabels({ item }) {
   const { label, setLabel } = useUserContext();
   const { saveLabelSettings } = useUserSettings();
-
+  
   const toggleLabel = async (input) => {
-    const oldChoice = input;
+    const oldInput = input;
     setLabel(input);
     try {
       await saveLabelSettings(input);
     } catch (error) {
-      setLabel(oldChoice);
+      setLabel(oldInput);
     }
   };
 
   return (
-    <motion.div className="setting">
+    <div className="setting">
       <div className="setting-header">
         {item.name}
         <div className="button-row">
-          <motion.div
-            className="button-overlay triple-button"
-            variants={labelVariants}
-            animate={label}
-            id={item.name}
-            transition={{ type: "spring", stiffness: 300, damping: 30 }}
-          />
           <button
             className={`setting-button ${label === "none" && "active-button"}`}
             onClick={() => toggleLabel("none")}
@@ -56,7 +47,7 @@ function ToggleLabels({ item }) {
           </button>
         </div>
       </div>
-    </motion.div>
+    </div>
   );
 }
 

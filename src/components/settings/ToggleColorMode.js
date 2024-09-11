@@ -1,6 +1,4 @@
 import { useUserContext } from "context/UserContext";
-import { motion } from "framer-motion";
-import { toggleVariants } from "utils/animations";
 import { useUserSettings } from "context/UserSettingsContext";
 
 function ToggleColorMode({ item }) {
@@ -18,17 +16,10 @@ function ToggleColorMode({ item }) {
   };
 
   return (
-    <motion.div className="setting">
+    <div className="setting">
       <div className="setting-header">
         {item.name}
         <div className="button-row">
-          <motion.div
-            className="button-overlay"
-            variants={toggleVariants}
-            animate={appearance}
-            id={item.name}
-            transition={{ type: "spring", stiffness: 300, damping: 30 }}
-          />
           <button
             className={`setting-button ${appearance === "dark" && "active-button"}`}
             onClick={() => handleAppearanceChange("dark")}
@@ -45,7 +36,7 @@ function ToggleColorMode({ item }) {
           </button>
         </div>
       </div>
-    </motion.div>
+    </div>
   );
 }
 
