@@ -6,7 +6,7 @@ import { itemFadeIn } from "utils/animations";
 import { useDashboardContext } from "context/DashboardContext";
 import { useSortable } from "@dnd-kit/sortable";
 import { restrictToParentElement } from "@dnd-kit/modifiers";
-import { LoadItemData, getItemData } from "./DashboardHooks.js";
+import { LoadItemData } from "./DashboardHooks.js";
 import { CSS } from "@dnd-kit/utilities";
 import DraggingItem from "./DraggingItem.js";
 
@@ -82,8 +82,8 @@ const DashboardItem = memo(
               pageModifiers,
               controller.signal,
             );
-          } else newData = await getItemData(type);
-          setData(newData);
+            setData(newData);
+          }
         } catch (error) {
           if (error.name === "AbortError") {
             console.log("Fetch request aborted");

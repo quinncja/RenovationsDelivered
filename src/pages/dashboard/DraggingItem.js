@@ -12,7 +12,6 @@ export function DraggingItem({ chartType, type, id, chart, data, children }) {
           <div className="widget-titles">
             <div
               className="widget-title dragging"
-              layoutId={`dashboard-item-title-${id}`}
             >
               {type}
             </div>

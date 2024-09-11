@@ -1,7 +1,7 @@
 import PieChart from "./PieChart/PieChart";
-import LineChart from "./LineChart";
+import LineChart from "./LineChart/LineChart";
 import { motion } from "framer-motion";
-import BarChart from "./BarChart";
+import BarChart from "./BarChart/BarChart";
 import { useUserContext } from "context/UserContext";
 import { useEffect, useRef, memo } from "react";
 import { useDashboardContext } from "context/DashboardContext";
