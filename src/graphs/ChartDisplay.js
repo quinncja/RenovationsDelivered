@@ -38,7 +38,7 @@ const ChartDisplay = memo(({ chartObj, data, open, id, handleClick }) => {
       setCachedImage(null);   
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [colorScheme, appearance]);
+  }, [colorScheme, appearance, label]);
 
   const snapshotImage = cachedImage || getCachedImage(id) || blankImage;
   const colorPallete = getColorScheme();
