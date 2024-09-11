@@ -38,19 +38,28 @@ const ChartDisplay = memo(({ chartObj, data, open, id, handleClick, key }) => {
   }, [colorScheme, appearance, label]);
 
   useEffect(() => {
+    const reloadImage = () => {
+      const image = getCachedImage(id);
+      preloadImage(image).then((preloadedImage) => {
+        snapshotImage.current = preloadedImage;
+      });
+    };
+
     const handleVisibilityChange = () => {
-      console.log("Visbility change")
       if (document.visibilityState === 'visible') {
-        const image = getCachedImage(id);
-        preloadImage(image).then((preloadedImage) => {
-          snapshotImage.current = preloadedImage;
-        })
+        reloadImage();
       }
     };
 
+    const handleFocus = () => {
+      reloadImage();
+    };
+
     document.addEventListener('visibilitychange', handleVisibilityChange);
+    window.addEventListener('focus', handleFocus);
     return () => {
       document.removeEventListener('visibilitychange', handleVisibilityChange);
+      window.removeEventListener('focus', handleFocus);
     };
   }, [id]);
 
