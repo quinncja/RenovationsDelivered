@@ -23,7 +23,6 @@ export const UserProvider = ({ children }) => {
   }
 
   function hslToHsla(hsl, alpha) {
-    console.log("hsla", appearance)
     const hslValues = hsl.match(/\d+/g);
     let hue = hslValues[0];
     let saturation = hslValues[1];
@@ -31,7 +30,6 @@ export const UserProvider = ({ children }) => {
   
     const adjustment = appearance === "light" ? -30 : -15;
     lightness = Math.max(0, Math.min(100, lightness + adjustment));
-    console.log(`hsla(${hue}, ${saturation}%, ${lightness}%, ${alpha})`)
 
     return `hsla(${hue}, ${saturation}%, ${lightness}%, ${alpha})`;
   }
