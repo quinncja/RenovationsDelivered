@@ -6,12 +6,13 @@ import { useUserContext } from "context/UserContext";
 import { useEffect, useRef, memo } from "react";
 import { useDashboardContext } from "context/DashboardContext";
 import svgToImage from "utils/images/svgToImage";
-import { blankImage, cacheImage, getCachedImage } from "utils/images/imageCacheUtils";
+import { preloadImage, cacheImage, getCachedImage } from "utils/images/imageCacheUtils";
 
-const ChartDisplay = memo(({ chartObj, data, open, id, handleClick }) => {
+const ChartDisplay = memo(({ chartObj, data, open, id, handleClick, key }) => {
   const { colorScheme, appearance, getColorScheme, label } = useUserContext();
   const { active } = useDashboardContext();
   const wrapperRef = useRef(null);
+  const snapshotImage = useRef(getCachedImage(id));
   const showImage = active;
 
   let showLabels;
@@ -25,15 +26,34 @@ const ChartDisplay = memo(({ chartObj, data, open, id, handleClick }) => {
       if (svgElement instanceof SVGElement) {
         setTimeout(() => {
           svgToImage(svgElement).then((imageData) => {
-            cacheImage(id, imageData)
+            preloadImage(imageData).then((preloadedImage) => {
+              cacheImage(id, preloadedImage);
+              snapshotImage.current = preloadedImage;
+            });
           });
-        }, 1000); 
+        }, 1000);
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [colorScheme, appearance, label]);
 
-  const snapshotImage = getCachedImage(id) || blankImage;
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      console.log("Visbility change")
+      if (document.visibilityState === 'visible') {
+        const image = getCachedImage(id);
+        preloadImage(image).then((preloadedImage) => {
+          snapshotImage.current = preloadedImage;
+        })
+      }
+    };
+
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    return () => {
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+    };
+  }, [id]);
+
   const colorPallete = getColorScheme();
 
   switch (chartObj.chartType) {
@@ -46,9 +66,10 @@ const ChartDisplay = memo(({ chartObj, data, open, id, handleClick }) => {
         >
           {showImage ? (
             <img
-              src={snapshotImage}
+              src={snapshotImage.current}
               draggable="false"
               alt=""
+              key={key}
               style={{
                 userSelect: "none",
                 position: "relative",
@@ -77,7 +98,7 @@ const ChartDisplay = memo(({ chartObj, data, open, id, handleClick }) => {
         >
           {showImage ? (
             <img
-              src={snapshotImage}
+              src={snapshotImage.current}
               alt=""
               draggable="false"
               style={{
