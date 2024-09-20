@@ -35,9 +35,9 @@ function App() {
         onLoad(
           settings.itemArray || [],
           settings.itemModifiers || [],
-          settings.pageModifiers || {},
+          settings.pageModifiers || { active: "Total" },
         );
-        setLabel(settings.label || "none");
+        setLabel(settings.label || "always");
         setAppearance(settings.appearance || "dark");
         setColorScheme(settings.colorScheme || "Rust");
         setSmartSort(settings.smartSort || "false");
