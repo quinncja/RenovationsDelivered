@@ -13,7 +13,7 @@ import DraggingItem from "./DraggingItem.js";
 const DashboardItem = memo(
   forwardRef((props, ref) => {
     const { getChartObj, pageModifiers } = useDashboardContext();
-    const { dragging, current, deleteSelf, setOpen, id, type, children } =
+    const { dragging, current, deleteSelf, setOpen, id, type, children, open } =
       props;
 
     const [data, setData] = useState(null);
@@ -106,13 +106,16 @@ const DashboardItem = memo(
     return (
       //brainstorm motion.div causing premature item displacement
       <div
-        className={`dashboard-widget ${chartType === "Line" || chartType === "Bar" ? "wide-widget" : ""} ${!data && !dragging ? "loading-widget" : ""} `}
+        className={`dashboard-widget 
+        ${chartType === "Line" || chartType === "Bar" ? "wide-widget" : ""} 
+        ${!data && !dragging ? "loading-widget" : ""} 
+        ${chartType === "Text" ? "text-widget" : ""}`}
         style={style}
         ref={setNodeRef}
         listeners={listeners}
         attributes={attributes}
         onClick={
-          data
+          data && chartType !== "Text"
             ? () =>
                 setOpen({
                   id: id,
@@ -123,24 +126,17 @@ const DashboardItem = memo(
             : () => ({})
         }
       >
-        <motion.div
-          layoutId={`dashboard-item-${id}`}
+        <div
           className={`widget-background ${chartType === "Line" || chartType === "Bar" ? "wide-widget" : ""} ${current && "opaque-widget"} `}
         >
           <div className="widget-top">
-            <div className="drag-handle-wrapper">
-            </div>
-            <motion.div className="widget-titles"
-             {...listeners}
-             {...attributes}>
-              <motion.div
-                className="widget-title"
-                layoutId={`dashboard-item-title-${id}`}
-                
-              >
+            <div className="drag-handle-wrapper"></div>
+            <div className="widget-titles" {...listeners} {...attributes}>
+              <div
+                className="widget-title">
                 {type}
-              </motion.div>
-            </motion.div>
+              </div>
+            </div>
             <button
               className="x-button widget-item"
               onClick={(e) => {
@@ -163,11 +159,12 @@ const DashboardItem = memo(
                   chartObj={chartToShow}
                   data={dataToShow}
                   id={id}
+                  replaceImage={open}
                 />
               </motion.div>
             </AnimatePresence>
           )}
-        </motion.div>
+        </div>
       </div>
     );
   }),

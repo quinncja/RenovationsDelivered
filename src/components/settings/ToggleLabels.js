@@ -4,7 +4,7 @@ import { useUserSettings } from "context/UserSettingsContext";
 function ToggleLabels({ item }) {
   const { label, setLabel } = useUserContext();
   const { saveLabelSettings } = useUserSettings();
-  
+
   const toggleLabel = async (input) => {
     const oldInput = input;
     setLabel(input);

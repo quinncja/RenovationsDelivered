@@ -39,11 +39,16 @@ export async function fetchChartData(modifiers, signal) {
 
 export async function processTableData(data, type) {
   try {
-    const response = await axios.post(`${apiUrl}process-table-data`, {
-      data,
-      type,
-      ...ngrokHeaders,
-    });
+    const response = await axios.post(
+      `${apiUrl}process-table-data`,
+      {
+        data,
+        type,
+      },
+      {
+        ...ngrokHeaders,
+      },
+    );
     return response.data;
   } catch (error) {
     console.error("Error loading revenue:", error);

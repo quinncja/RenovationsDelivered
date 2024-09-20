@@ -39,7 +39,7 @@ function App() {
         );
         setLabel(settings.label || "none");
         setAppearance(settings.appearance || "dark");
-        setColorScheme(settings.colorScheme || "nivo");
+        setColorScheme(settings.colorScheme || "Rust");
         setSmartSort(settings.smartSort || "false");
       } catch (error) {
         console.log(error, "failed to load user");

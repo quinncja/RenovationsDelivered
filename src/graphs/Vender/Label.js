@@ -3,7 +3,7 @@ function getVenderLabel(datum) {
     "Home Depot": "HMD",
     "Kitchen Cubes LLC": "KC",
     "Sherwin Williams": "SHW",
-    "Ferguson": "FRG",
+    Ferguson: "FRG",
     "Novak & Parker": "N&P",
     "The Carpet Group, Inc": "TCG",
     "KitchenArt, LLC": "KA",
@@ -14,7 +14,7 @@ function getVenderLabel(datum) {
     "Lowes 3094": "LOW",
     "Kitchen Cabinets Deal": "KCD",
     "AAA Distributor, LLC": "AAA",
-    "Daltile": "DAL",
+    Daltile: "DAL",
   };
 
   return venderMap[datum.id];

@@ -1,26 +1,17 @@
 import { Line } from "@nivo/line";
-import { useDashboardContext } from "context/DashboardContext";
-import { useEffect } from "react";
 import { phaseToMonth } from "utils/formatters";
 import { useCSSVariable } from "utils/hooks/useCSSVariable";
 
 function LineChart({
   data,
   open,
+  size,
   handleClick,
   showLabel,
   chartObj,
   colorScheme,
 }) {
-  const { setLegends } = useDashboardContext();
   const gridColor = useCSSVariable("--grid-color");
-
-  useEffect(() => {
-    if (open && chartObj.chartProps.legendsFunc)
-      setLegends(chartObj.chartProps.legendsFunc(data));
-    else setLegends(undefined);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [open]);
 
   const customTheme = {
     grid: {
@@ -45,7 +36,8 @@ function LineChart({
     },
   };
 
-  let margin = { top: 5, right: 70, bottom: 120, left: 40 };
+  let margin = open ? { top: 5, right: 20, bottom: 50, left: 50 } :
+  { top: 5, right: 70, bottom: 120, left: 40 };
   const axisLeft = open && showLabel ? chartObj.chartProps.axisLeft : false;
   let chartData = chartObj.chartProps.chartFormat
     ? chartObj.chartProps.chartFormat(data)
@@ -55,8 +47,7 @@ function LineChart({
   return (
     <Line
       {...chartObj.chartProps}
-      width={640}
-      height={320}
+      {...size}
       data={chartData}
       margin={margin}
       xScale={{ type: "point" }}
@@ -108,7 +99,7 @@ function LineChart({
       }}
       sliceTooltip={({ slice }) => chartObj.tooltip(slice)}
       theme={customTheme}
-      animate={false}
+      animate={true}
     />
   );
 }

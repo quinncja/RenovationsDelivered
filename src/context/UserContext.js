@@ -11,29 +11,28 @@ export const UserProvider = ({ children }) => {
   const [label, setLabel] = useState();
 
   const handleColorScheme = (colorScheme) => {
-    changeRoot(colorScheme)
-    setColorScheme(colorScheme)
-  }
+    changeRoot(colorScheme);
+    setColorScheme(colorScheme);
+  };
 
   const changeRoot = (colorScheme) => {
     const root = document.documentElement;
     root.style.setProperty("--primary", colorPalettes[colorScheme][1]);
-    const rootColor = hslToHsla(colorPalettes[colorScheme][1], .15)
+    const rootColor = hslToHsla(colorPalettes[colorScheme][1], 0.15);
     root.style.setProperty("--activePrimary", rootColor);
-  }
+  };
 
   function hslToHsla(hsl, alpha) {
     const hslValues = hsl.match(/\d+/g);
     let hue = hslValues[0];
     let saturation = hslValues[1];
     let lightness = parseInt(hslValues[2]);
-  
+
     const adjustment = appearance === "light" ? -30 : -15;
     lightness = Math.max(0, Math.min(100, lightness + adjustment));
 
     return `hsla(${hue}, ${saturation}%, ${lightness}%, ${alpha})`;
   }
-  
 
   const changeTheme = (state) => {
     const root = document.documentElement;
@@ -69,9 +68,9 @@ export const UserProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    if (appearance && colorScheme){ 
-      changeTheme(appearance)
-      changeRoot(colorScheme)
+    if (appearance && colorScheme) {
+      changeTheme(appearance);
+      changeRoot(colorScheme);
     }
 
     // eslint-disable-next-line

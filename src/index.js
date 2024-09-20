@@ -10,17 +10,15 @@ import { UserSettingsProvider } from "context/UserSettingsContext";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <React.StrictMode>
-    <SystemMessageProvider>
-      <UserSettingsProvider>
-        <DashboardProvider>
-          <ProjectProvider>
-            <UserProvider>
-              <Router />
-            </UserProvider>
-          </ProjectProvider>
-        </DashboardProvider>
-      </UserSettingsProvider>
-    </SystemMessageProvider>
-  </React.StrictMode>,
+  <SystemMessageProvider>
+    <UserSettingsProvider>
+      <DashboardProvider>
+        <ProjectProvider>
+          <UserProvider>
+            <Router />
+          </UserProvider>
+        </ProjectProvider>
+      </DashboardProvider>
+    </UserSettingsProvider>
+  </SystemMessageProvider>,
 );

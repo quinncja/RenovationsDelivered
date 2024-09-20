@@ -1,4 +1,4 @@
-import { fetchChartData } from "utils/api";
+import { fetchChartData, processTableData } from "utils/api";
 import RevenueCleaner from "./Revenue/Cleaner";
 import RevenueTooltip from "./Revenue/Tooltip";
 import MarginToolTip from "./Margin/Tooltip";
@@ -7,57 +7,78 @@ import { revChartProps } from "./Revenue/ChartProps";
 import PieChartToolTip from "./PieChart/PieChartToolTip";
 import getVenderLabel from "./Vender/Label";
 import ytdDisplay from "./YTD/display";
+import jobDisplay from "./Jobs/jobDisplay";
 import { SingleMargin } from "./Margin/SingleMargin";
 import { trimLabel } from "./PieChart/TrimLabel";
+import transformMarginData from "./Margin/transformData.js";
+import { transformLineData } from "./LineChart/transformLineData";
 
 export const chartObjects = [
   {
     type: "Vender Breakdown",
+    admin: false,
     getter: (mods, signal) =>
       fetchChartData({ ...mods, type: "vender" }, signal),
     tooltip: (datum, sum) => <PieChartToolTip datum={datum} sum={sum} />,
     label: (datum) => getVenderLabel(datum),
     chartType: "Pie",
-    modifierOptions: ["year", "job", "phase"],
+    modifierOptions: ["year", "job", "phase", "active"],
     cleaner: (data) => {
+      return data;
+    },
+    tableFunc: (data) => {
       return data;
     },
   },
   {
     type: "COGs Breakdown",
+    admin: false,
     getter: (mods, signal) => fetchChartData({ ...mods, type: "cogs" }, signal),
     tooltip: (datum, sum) => <PieChartToolTip datum={datum} sum={sum} />,
     label: (datum) => trimLabel(datum.id),
     chartType: "Pie",
-    modifierOptions: ["year", "job", "phase"],
+    modifierOptions: ["year", "job", "phase", "active"],
     cleaner: (data) => {
+      return data;
+    },
+    tableFunc: (data) => {
       return data;
     },
   },
   {
     type: "Sub Breakdown",
+    admin: false,
     getter: (mods, signal) => fetchChartData({ ...mods, type: "sub" }, signal),
     tooltip: (datum, sum) => <PieChartToolTip datum={datum} sum={sum} />,
     label: (datum) => trimLabel(datum.id),
     chartType: "Pie",
-    modifierOptions: ["year", "job", "phase"],
+    modifierOptions: ["year", "job", "phase", "active"],
     cleaner: (data) => {
+      return data;
+    },
+    tableFunc: (data) => {
       return data;
     },
   },
   {
     type: "Client Breakdown",
-    getter: (mods, signal) => fetchChartData({ ...mods, type: "client" }, signal),
+    admin: true,
+    getter: (mods, signal) =>
+      fetchChartData({ ...mods, type: "client" }, signal),
     tooltip: (datum, sum) => <PieChartToolTip datum={datum} sum={sum} />,
     label: (datum) => trimLabel(datum.id),
     chartType: "Pie",
-    modifierOptions: ["year", "job", "phase"],
+    modifierOptions: ["year", "job", "phase", "active"],
     cleaner: (data) => {
+      return data;
+    },
+    tableFunc: (data) => {
       return data;
     },
   },
   {
     type: "Cost Analysis",
+    admin: false,
     chartType: "Line",
     getter: (mods, signal) =>
       fetchChartData({ ...mods, type: "revenue" }, signal),
@@ -79,11 +100,15 @@ export const chartObjects = [
         }),
     },
     chartProps: revChartProps,
-    modifierOptions: ["year", "job", "phase"],
-    showTable: true,
+    modifierOptions: ["year", "job", "phase", "active"],
+    tableFunc: async (data) => {
+      const processedData = await processTableData(data, "revenue");
+      return transformLineData(processedData);
+    },
   },
   {
     type: "Margin",
+    admin: false,
     chartType: "Line",
     getter: (mods, signal) =>
       fetchChartData({ ...mods, type: "margin" }, signal),
@@ -100,17 +125,35 @@ export const chartObjects = [
       },
     },
     chartProps: marginChartProps,
-    modifierOptions: ["year", "job", "phase"],
+    modifierOptions: ["year", "job", "phase", "active"],
+    tableFunc: (data) => {
+      const processedData = transformMarginData(data);
+      return transformLineData(processedData);
+    },
+  },
+  {
+    type: "Status",
+    admin: false,
+    chartType: "Text",
+    getter: () => {
+      return {};
+    },
+    display: (data, chartObj) => jobDisplay(data, chartObj),
+    cleaner: (data) => {
+      return data;
+    },
+    modifierOptions: ["year", "job", "phase", "active"],
   },
   {
     type: "Financial Overview",
+    admin: false,
     chartType: "Text",
     getter: (mods, signal) => fetchChartData({ ...mods, type: "ytd" }, signal),
     display: (data) => ytdDisplay(data),
     cleaner: (data) => {
       return data;
     },
-    modifierOptions: ["year", "job", "phase"],
+    modifierOptions: ["year", "job", "phase", "active"],
   },
 ];
 

@@ -3,134 +3,155 @@ import { useDashboardContext } from "context/DashboardContext";
 import { useProjectContext } from "context/ProjectContext";
 import { useEffect, useState } from "react";
 import { close } from "business/svg";
+import { yearList, phaseList } from "utils/modifiers";
 
-function Modifiers() {
-  const { projects } = useProjectContext();
-  const { pageModifiers, setPageModifiers } = useDashboardContext();
-  const [loading, setLoading] = useState(true);
+export function Modifiers() {
+  const { projects, getAllProjects } = useProjectContext();
+  const { pageModifiers, modTimeout, updatePageModifiers } =
+    useDashboardContext();
+  const [loading, setLoading] = useState(!projects);
 
   useEffect(() => {
-    if (projects && projects.length > 0) {
+    if (projects) {
       setLoading(false);
+    } else {
+      setLoading(true);
     }
   }, [projects]);
 
-  const yearList = [
-    { num: 24, year: "2024" },
-    { num: 23, year: "2023" },
-  ];
-  const phaseList = [
-    { num: "01", name: "P1" },
-    { num: "02", name: "P2" },
-    { num: "03", name: "P3" },
-    { num: "04", name: "P4" },
-    { num: "05", name: "P5" },
-    { num: "06", name: "P6" },
-    { num: "07", name: "P7" },
-    { num: "08", name: "P8" },
-    { num: "09", name: "P9" },
-    { num: "10", name: "P10" },
-    { num: "11", name: "P11" },
-    { num: "12", name: "P12" },
-  ];
+  const allProjects = getAllProjects() || [];
+  const { jobs = {}, years = {}, phases = {} } = projects || {};
 
-  const [years, setYears] = useState(yearList);
-  const [phases, setPhases] = useState([]);
+  const selectedJobNum = pageModifiers.jobNum;
+  const selectedYearId = pageModifiers.yearId;
+  const selectedPhaseId = pageModifiers.phaseId;
 
-  const handleProjectChange = (value) => {
-    if (value.length > 0) {
-      setPageModifiers((prev) => ({
-        ...prev,
-        job: value,
-        year: null,
-        phase: null,
-      }));
-      setYears(value[0].years);
-    } else {
-      setPageModifiers((prev) => ({
-        ...prev,
-        job: null,
-        year: null,
-        phase: null,
-      }));
-      setYears(yearList);
-    }
+  const selectedJob = selectedJobNum && jobs ? jobs[selectedJobNum] : null;
+
+  const selectedJobYears =
+    selectedJob && selectedJob.years && years
+      ? selectedJob.years.map((yearId) => years[yearId])
+      : yearList;
+
+  const selectedYear = selectedYearId && years ? years[selectedYearId] : null;
+
+  const selectedYearPhases =
+    selectedYear && selectedYear.phases && phases
+      ? selectedYear.phases.map((phaseId) => phases[phaseId])
+      : selectedJob
+        ? []
+        : phaseList;
+
+  const handleJobChange = (value) => {
+    if (modTimeout) return;
+    const jobNum = value.length > 0 ? value[0].num : null;
+
+    const newMods = {
+      jobNum: jobNum,
+      yearId: null,
+      phaseId: null,
+    };
+
+    updatePageModifiers(newMods);
   };
 
   const handleYearChange = (value) => {
-    if (value.length > 0) {
-      setPageModifiers((prev) => ({
-        ...prev,
-        year: value,
-        phase: null,
-      }));
-      if (value[0].phases) setPhases(value[0].phases);
-      else setPhases(phaseList);
-    } else {
-      setPageModifiers((prev) => ({
-        ...prev,
-        year: null,
-        phase: null,
-      }));
-      setPhases([]);
-    }
+    if (modTimeout) return;
+    const yearId = value.length > 0 ? value[0].id : null;
+
+    const newMods = {
+      yearId: yearId,
+      phaseId: null,
+    };
+
+    updatePageModifiers(newMods);
   };
 
   const handlePhaseChange = (value) => {
-    setPageModifiers((prev) => ({
-      ...prev,
-      phase: value,
-    }));
+    if (modTimeout) return;
+    const phaseId = value.length > 0 ? value[0].id : null;
+
+    const newMods = {
+      phaseId: phaseId,
+    };
+
+    updatePageModifiers(newMods);
+  };
+
+  const clearModifiers = () => {
+    const newMods = {
+      jobNum: null,
+      yearId: null,
+      phaseId: null,
+    };
+
+    updatePageModifiers(newMods);
   };
 
   return (
     <div className="modifier-options">
       <Select
         labelField="name"
-        valueField="name"
-        options={projects}
-        values={pageModifiers.job || undefined}
+        valueField="num"
+        options={allProjects}
+        values={
+          selectedJobNum && jobs[selectedJobNum] ? [jobs[selectedJobNum]] : []
+        }
         placeholder="Showing All Projects"
         className="select-dropdown"
         dropdownGap={10}
         dropdownHandle={false}
         disabled={loading}
-        onChange={(value) => handleProjectChange(value)}
+        searchBy="name"
+        sortBy="name"
+        onChange={handleJobChange}
       />
+
       <Select
         labelField="year"
-        valueField="year"
-        values={pageModifiers.year || undefined}
-        options={years}
+        valueField="id"
+        options={selectedJobYears}
+        values={
+          selectedYearId
+            ? [
+                selectedJobYears.find((year) => year.id === selectedYearId),
+              ].filter(Boolean)
+            : []
+        }
         placeholder="Year"
         className="select-dropdown select-dropdown-small"
         dropdownGap={10}
         dropdownHandle={false}
         disabled={loading}
-        onChange={(value) => handleYearChange(value)}
+        onChange={handleYearChange}
       />
+
       <Select
         labelField="name"
-        valueField="name"
-        options={phases}
-        values={pageModifiers.phase || undefined}
+        valueField="id"
+        options={selectedYearPhases}
+        values={
+          selectedPhaseId
+            ? [
+                selectedYearPhases.find(
+                  (phase) => phase.id === selectedPhaseId,
+                ),
+              ].filter(Boolean)
+            : []
+        }
         placeholder="Phase"
         className="select-dropdown select-dropdown-small"
         dropdownGap={10}
         dropdownHandle={false}
         disabled={loading}
-        onChange={(value) => handlePhaseChange(value)}
+        onChange={handlePhaseChange}
       />
-      {(pageModifiers.job || pageModifiers.year) && (
-        <button
-          className="clear-modifiers"
-          onClick={() => handleProjectChange([])}
-        >
+
+      {(selectedJobNum || selectedYearId) && (
+        <button className="clear-modifiers" onClick={clearModifiers}>
           {close()}
         </button>
       )}
     </div>
   );
 }
-
-export default Modifiers;

@@ -1,35 +1,37 @@
-import { useDashboardContext } from "context/DashboardContext";
 import { useUserContext } from "context/UserContext";
-import { dollarFormatter } from "utils/formatters";
-import { AnimatePresence, motion } from "framer-motion";
-import { itemFadeIn } from "utils/animations";
+import { useCSSVariable } from "utils/hooks/useCSSVariable";
 
-function LegendDisplay() {
-  const { legends } = useDashboardContext();
+function LegendDisplay({data, toggleData, filteredIds, line}) {
   const { getColorScheme } = useUserContext();
+  const grayed = useCSSVariable("--grid-color")
   const colorPalette = getColorScheme();
 
+  function Legend({datum, index}){
+    return(
+      <div className="legend" key={index} onClick={() => toggleData(datum)}>
+        <div
+          className="tooltip-cube"
+          style={{
+            backgroundColor: filteredIds.includes(datum.id) ? grayed : colorPalette[index % colorPalette.length],
+          }}
+        />
+        <strong color="legend-title">{datum.id}</strong>{" "}
+      </div>
+    )
+  }
+
   return (
-    <AnimatePresence>
-      {legends ? (
-        <motion.div variants={itemFadeIn} className="legend-box">
-          {legends.map((datum, index) => (
-            <div className="legend" key={index}>
-              <div
-                className="tooltip-cube"
-                style={{
-                  backgroundColor: colorPalette[index % colorPalette.length],
-                }}
-              />
-              <strong>{datum.id}</strong>{" "}
-              {datum.value && `- ${dollarFormatter(datum.value)}`}
-            </div>
-          ))}
-        </motion.div>
+    <>
+      {data ? (
+        <div className={`legend-box ${line ? "legend-box-line" : ""}`}>
+          {data.map((datum, index) => (
+            <Legend datum={datum} index={index}/>
+         ))}
+         </div>
       ) : (
         <div className="empty-space" />
       )}
-    </AnimatePresence>
+    </>
   );
 }
 export default LegendDisplay;

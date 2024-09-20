@@ -13,6 +13,10 @@ export function dollarFormatter(input) {
   return formattedNumber;
 }
 
+export function percentFomatter(input) {
+  return `${input}%`;
+}
+
 export function formatNumberShort(number) {
   if (Math.abs(number) >= 1_000 && Math.abs(number) < 1_000_000) {
     return (number / 1_000).toFixed(1).replace(/\.0$/, "") + "K";
@@ -56,6 +60,30 @@ export const formatPhase = (phase) => {
   return phase.replace("P", "").padStart(2, "0");
 };
 
+export const phaseNumToMonth = (phase) => {
+  let phaseMap = {
+    "00": "January",
+    "01": "January",
+    "02": "February",
+    "03": "March",
+    "04": "April",
+    "05": "May",
+    "06": "June",
+    "07": "July",
+    "08": "August",
+    "09": "September",
+    10: "October",
+    11: "November",
+    12: "December",
+    13: "Extra Work",
+    14: "Extra Work",
+    15: "Extra Work",
+    16: "Extra Work",
+  };
+
+  return phaseMap[phase];
+};
+
 export const phaseToMonth = (phase, optional) => {
   if (typeof phase !== "string" || phase.length < 5) {
     throw new Error("Invalid phase format");
@@ -91,9 +119,56 @@ export const phaseToMonth = (phase, optional) => {
 };
 
 export const modifierFormatter = (mods) => {
-  const newMods = { ...mods };
-  if (mods?.job?.length !== 6) return mods;
-  newMods.job = mods.job.substring(0, 4);
-  newMods.phase = mods.job.substring(4);
-  return newMods;
+  const formatted = {
+    job: mods.jobNum || "",
+    year: "",
+    phase: "",
+    active: "",
+  };
+
+  if (mods.yearId && mods.yearId.length >= 5) {
+    formatted.year = mods.yearId.slice(-2);
+  }
+
+  if (mods.phaseId && mods.phaseId.length >= 7) {
+    formatted.phase = mods.phaseId.slice(-2);
+  }
+  if (
+    formatted.year !== "" &&
+    (formatted.job !== "") & (formatted.phase !== "")
+  )
+    formatted.active = "Total";
+  else formatted.active = mods.active;
+
+  return formatted;
+};
+
+export const pageModifierToString = (pageModifiers) => {
+  const parts = [];
+  console.log(pageModifiers)
+
+
+  const jobName =
+    (pageModifiers.job && pageModifiers.job[0]?.name) || "All Projects";
+  if (jobName) parts.push(jobName);
+
+  const year =
+    pageModifiers.year && pageModifiers.year.length === 1
+      ? pageModifiers.year[0].year
+      : "";
+  if (year) parts.push(year);
+
+  const phaseName =
+    pageModifiers.phase && pageModifiers.phase.length === 1
+      ? pageModifiers.phase[0].name
+      : "";
+  if (phaseName) parts.push(phaseName);
+
+  const str = parts.join(" - ");
+  return str;
+};
+
+export const statusToString = (status) => {
+  if (status === 4) return "Active";
+  return "Complete";
 };

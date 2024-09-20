@@ -26,6 +26,7 @@ export const DashboardProvider = ({ children }) => {
     job: null,
     year: null,
     phase: null,
+    active: null,
   });
   const [modifiers, setModifiers] = useState([]);
   const [legends, setLegends] = useState([]);
@@ -37,8 +38,16 @@ export const DashboardProvider = ({ children }) => {
   const redoActive = historyPtr.current <= history.length - 1;
   const [loaded, setLoaded] = useState(false);
   const { setMessage } = useSystemMessage();
-
+  const [modTimeout, setModTimeout] = useState(true);
   const [newWidgetOpen, setNewWidgetOpen] = useState(false);
+
+  useEffect(() => {
+    if (modTimeout) {
+      setTimeout(() => {
+        setModTimeout(false);
+      }, 1000);
+    }
+  }, [modTimeout]);
 
   useEffect(() => {
     if (smartSort === "true") smartSortFunc();
@@ -127,7 +136,6 @@ export const DashboardProvider = ({ children }) => {
       itemSaver(newItems);
       return newItems;
     });
- 
   };
 
   const addItem = async (newItem, newIndex, historyFlag) => {
@@ -156,10 +164,23 @@ export const DashboardProvider = ({ children }) => {
     }
   };
 
+  const resetActiveModifier = () => {
+    setTimeout(() => {
+      setMessage("Filter set to all Jobs");
+      setPageModifiers((prev) => ({
+        ...prev,
+        active: "Total",
+      }));
+    }, 100);
+  };
   const removeItem = async (id, historyFlag) => {
     const newItems = [...items];
     const iIndex = newItems.findIndex((item) => item.id === id);
     const oldItem = { ...newItems[iIndex] };
+
+    if (oldItem.type === "Job Overview") {
+      resetActiveModifier();
+    }
 
     if (iIndex > -1) {
       newItems.splice(iIndex, 1);
@@ -175,7 +196,7 @@ export const DashboardProvider = ({ children }) => {
     }
 
     itemSaver(newItems);
-    deleteImageCache(id)
+    deleteImageCache(id);
     setItems(newItems);
   };
 
@@ -242,6 +263,25 @@ export const DashboardProvider = ({ children }) => {
   // // // // // // //
   //  DB Modifiers  //
   // // // // // // //
+
+  const updatePageModifiers = (newMods, flag = false) => {
+    setModTimeout(true)
+    const oldMods = { ...pageModifiers };
+    const newModObj = {
+      ...pageModifiers,
+      ...newMods,
+    };
+    if(!flag){
+      const historyObj = {
+        text: "Modifer change",
+        type: "fixed",
+        action: () => updatePageModifiers(oldMods, true),
+        unAction: () => updatePageModifiers(newModObj, true),
+      };
+      pushHistory(historyObj);
+    }
+    setPageModifiers(newModObj);
+  };
 
   useEffect(() => {
     const updateDBModifiers = async () => {
@@ -420,11 +460,14 @@ export const DashboardProvider = ({ children }) => {
         setSmartSort,
         pageModifiers,
         setPageModifiers,
+        updatePageModifiers,
         chartRefs,
         newWidgetOpen,
         setNewWidgetOpen,
         addMultItems,
         loaded,
+        modTimeout,
+        setModTimeout,
       }}
     >
       {children}

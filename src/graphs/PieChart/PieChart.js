@@ -1,22 +1,20 @@
 import { Pie } from "@nivo/pie";
-import { useDashboardContext } from "context/DashboardContext";
-import { useEffect } from "react";
 import { CenterSum } from "./CenterSum";
 import { calculateTotalSum } from "utils/funcs";
+import { useCSSVariable } from "utils/hooks/useCSSVariable";
 
-function PieChart({ data, open, chartObj, showLabel, chartRef, colorScheme }) {
-  const { setLegends } = useDashboardContext();
+function PieChart({ data, open, size, chartObj, showLabel, chartRef, colorScheme }) {
   const arcLabelColor = "#f3f3f3";
+  const arcLinkLabelColor = useCSSVariable("--white")
   const slicedData = data.slice(0, 20);
-  const legendsData = slicedData
-    ? slicedData.map((d) => ({
-        id: d.id,
-        label: d.label,
-        color: d.color,
-      }))
-    : "";
-
+  
   const sum = calculateTotalSum(data);
+
+  const getPercentage = (datum) => {
+    if (sum === 0) return "0%";
+    const percentage = (datum.value / sum) * 100;
+    return `${percentage.toFixed(2)}%`;
+  };
 
   const trimLabel = (label) => {
     if (!label) return;
@@ -29,18 +27,20 @@ function PieChart({ data, open, chartObj, showLabel, chartRef, colorScheme }) {
       .trim();
   };
 
-  useEffect(() => {
-    if (open) setLegends(legendsData);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [open]);
+  const margin = open ? { top: 40, bottom: 90, right: 50, left: 70 }
+  : { top: 10, bottom: 90, right: 0, left: -20 }
+
+  const label = (datum) => {
+   return open ? getPercentage(datum) :
+    showLabel && trimLabel(chartObj.label(datum))
+  }
 
   return (
     <Pie
-      width={320}
-      height={320}
+      {...size}
       data={slicedData}
       ref={chartRef}
-      margin={{ top: 10, bottom: 90, right: 0, left: -20 }}
+      margin={margin}
       innerRadius={0.6}
       padAngle={0.7}
       cornerRadius={1}
@@ -52,19 +52,20 @@ function PieChart({ data, open, chartObj, showLabel, chartRef, colorScheme }) {
         modifiers: [["darker", "0.3"]],
       }}
       tooltip={({ datum }) => chartObj.tooltip(datum, sum)}
-      arcLabel={(datum) => showLabel && trimLabel(chartObj.label(datum))}
-      arcLabelsSkipAngle={20}
-      enableArcLinkLabels={false}
-      arcLinkLabelsSkipAngle={10}
-      arcLinkLabelsDiagonalLength={6}
-      arcLinkLabelsStraightLength={10}
-      arcLinkLabelsTextColor={arcLabelColor}
-      arcLinkLabelsColor={arcLabelColor}
+      arcLabel={(datum) => label(datum)}
+      arcLabelsSkipAngle={open ? 10 : 20}
+      enableArcLinkLabels={open ? true : false}
+      arcLinkLabelsSkipAngle={5}
+      arcLinkLabelsDiagonalLength={15}
+      arcLinkLabelsStraightLength={15}
+      arcLinkLabelsTextColor={arcLinkLabelColor}
+      arcLinkLabelsColor={arcLinkLabelColor}
       arcLabelsTextColor={arcLabelColor}
       animate={true}
       layers={[
         "arcs",
         "arcLabels",
+        "arcLinkLabels",
         "legends",
         (props) => <CenterSum {...props} sum={sum} />,
       ]}

@@ -14,5 +14,6 @@ export const ngrokHeaders = {
     "ngrok-skip-browser-warning": "true",
     Authorization: `Bearer ${Userfront.tokens.accessToken}`,
     Mode: process.env.REACT_APP_MODE,
+    "Content-Type": "application/json",
   },
 };

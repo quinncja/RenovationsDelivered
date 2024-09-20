@@ -1,7 +1,7 @@
 import React from "react";
 import { useDroppable } from "@dnd-kit/core";
 
-export function Droppable({ children, isOpen }) {
+export function Droppable({ children }) {
   const { setNodeRef } = useDroppable({
     id: "dashboard",
   });
@@ -9,7 +9,7 @@ export function Droppable({ children, isOpen }) {
   return (
     <div
       id="dashboard"
-      className={`dashboard-dropzone ${isOpen && "noscroll"}`}
+      className={`dashboard-dropzone`}
       ref={setNodeRef}
     >
       {children}

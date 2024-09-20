@@ -29,12 +29,13 @@ function NewWidgetPopup({ closeSelf }) {
 
   const projectView = {
     items: [
+      chartObjectMap["Status"],
       chartObjectMap["Cost Analysis"],
-      chartObjectMap["Margin"],
       chartObjectMap["Financial Overview"],
+      chartObjectMap["Margin"],
       chartObjectMap["COGs Breakdown"],
-      chartObjectMap["Vender Breakdown"],
       chartObjectMap["Sub Breakdown"],
+      chartObjectMap["Vender Breakdown"],
     ],
   };
 
@@ -82,7 +83,9 @@ function NewWidgetPopup({ closeSelf }) {
     return (
       <motion.div variants={widgetItemsFadeIn} layout="position">
         {Object.keys(groupedByChartType).map((chartType, index) => {
-          const chartObjects = groupedByChartType[chartType];
+          let chartObjects = groupedByChartType[chartType];
+          chartObjects = chartObjects.filter((obj) => obj.admin === false)
+          if(chartObjects.length > 0)
           return (
             <motion.div key={index}>
               <div className="widget-button-header">{chartType}</div>
@@ -99,6 +102,7 @@ function NewWidgetPopup({ closeSelf }) {
               </div>
             </motion.div>
           );
+          else return "";
         })}
       </motion.div>
     );
@@ -124,7 +128,30 @@ function NewWidgetPopup({ closeSelf }) {
   }
 
   function Admin() {
-    return <></>;
+    return <motion.div variants={widgetItemsFadeIn} layout="position">
+    {Object.keys(groupedByChartType).map((chartType, index) => {
+      let chartObjects = groupedByChartType[chartType];
+      chartObjects = chartObjects.filter((obj) => obj.admin === true)
+      if(chartObjects.length > 0)
+      return (
+        <motion.div key={index}>
+          <div className="widget-button-header">{chartType}</div>
+          <div className="widget-button-row">
+            {chartObjects.map((obj) => (
+              <button
+                className="widget-button"
+                key={obj.id || `${obj.type}-${index}`}
+                onClick={() => handleClick(obj)}
+              >
+                {obj.type}
+              </button>
+            ))}
+          </div>
+        </motion.div>
+      );
+      else return "";
+    })}
+  </motion.div>
   }
 
   function Start() {

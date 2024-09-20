@@ -1,82 +1,125 @@
-import { useState } from "react";
-import { motion } from "framer-motion";
+import { useEffect, useState, useMemo } from "react";
 import { close } from "business/svg";
 import ChartDisplay from "graphs/ChartDisplay";
 import LegendDisplay from "graphs/LegendDisplay";
-import LineTable from "graphs/LineTable";
-import { overlayVariants } from "utils/animations";
-import { useCSSVariable } from "utils/hooks/useCSSVariable";
 import { useDashboardContext } from "context/DashboardContext";
+import ReactTable from "graphs/ReactTable";
+
+import whiteLogo from "images/R-Only-White-Empty.png";
+import blackLogo from "images/R-Only-Grey-Empty.png";
+import { useUserContext } from "context/UserContext";
+import { useProjectContext } from "context/ProjectContext";
 
 function OpenItem({ item, closeSelf }) {
   const { data, chartType, type, id } = item;
   const [activeColumn, setActiveColumn] = useState();
-  const { getChartObj } = useDashboardContext();
-  const color = useCSSVariable("--overlay");
+  const { appearance } = useUserContext();
+  const [tableData, setTableData] = useState();
+  const { getChartObj, pageModifiers } = useDashboardContext();
+  const {pageModifierToString} = useProjectContext();
   const chartObj = getChartObj(type);
+  const [filteredIds, setFilteredIds] = useState([]);
 
-  const showSingle =
-    data && chartObj.checkIfSingle && chartObj.checkIfSingle(data);
-  const chartToShow = showSingle ? chartObj.single : chartObj;
-  const dataToShow = showSingle ? chartObj.single.cleaner(data) : data;
+  const showSingle = useMemo(() => {
+    return data && chartObj.checkIfSingle && chartObj.checkIfSingle(data);
+  }, [data, chartObj]);
+
+
+  const chartToShow = useMemo(() => {
+    return showSingle ? chartObj.single : chartObj;
+  }, [showSingle, chartObj]);
+
+  const initialDataToShow = useMemo(() => {
+    return showSingle ? chartToShow.cleaner(data) : data;
+  }, [showSingle, chartToShow, data]);
+
+  const dataToShow = useMemo(() => {
+    if(Array.isArray(initialDataToShow)){
+    return initialDataToShow.filter(
+      (dataItem) => !filteredIds.includes(dataItem.id)
+    );
+    }
+    return(initialDataToShow)
+  }, [initialDataToShow, filteredIds]);
 
   function handleClose() {
     closeSelf();
   }
 
-  function body() {
-    return (
-      <>
-        <div
-          className={`open-chart-row ${chartType === "Line" && "shift-right"}`}
-        >
-          <ChartDisplay
-            chartObj={chartToShow}
-            handleClick={setActiveColumn}
-            data={dataToShow}
-            id={id}
-            open={true}
-          />
-          {chartToShow.chartType !== "Text" && <LegendDisplay />}
-        </div>
-        {chartObj.showTable && (
-          <LineTable data={data} activeColumn={activeColumn} />
-        )}
-      </>
-    );
+  function toggleData(item){
+    const { id: toggledId } = item;
+    setFilteredIds((prevFilteredIds) => {
+      if (prevFilteredIds.includes(toggledId)) {
+        return prevFilteredIds.filter((currentId) => currentId !== toggledId);
+      } else {
+        return [...prevFilteredIds, toggledId];
+      }
+    });
   }
 
+  useEffect(() => {
+    const loadTableData = async () => {
+      try {
+        const tData = await chartObj.tableFunc(data);
+        setTableData(tData);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    const timer = setTimeout(() => {
+      loadTableData();
+    }, 500);
+
+    return () => clearTimeout(timer);
+  }, [chartObj, data]);
+
   return (
-    <motion.div
-      initial="hidden"
-      animate="visible"
-      exit="exit"
-      variants={overlayVariants(color)}
-      className="open-widget-overlay"
-      onClick={handleClose}
+    <div
+      className="widget-background dashboard-widget-open"
+      onClick={() => closeSelf()}
     >
-      <motion.div layout style={{ width: "100%" }}>
-        <motion.div
-          className="widget-background dashboard-widget-open"
-          layoutId={`dashboard-item-${id}`}
-          onClick={(e) => e.stopPropagation()}
-        >
-          <div className="widget-top">
-            <div className="drag-handle-wrapper" />
-            <motion.div
-              className="widget-title"
-              layoutId={`dashboard-item-title-${id}`}
-            >
-              {type}
-            </motion.div>
-            <button className="x-button widget-item" onClick={handleClose}>
-              {close()}
-            </button>
+      <div className="open-widget-top-container" onClick={(e) => e.stopPropagation() }>
+        <div className="open-widget-top">
+          <div className="open-widget-left">
+            <img
+              src={appearance === "light" ? blackLogo : whiteLogo}
+              className="logo nav-logo"
+              alt="Renovations Delivered"
+            />
+            <div className="widget-title open-widget-title">
+              <h2> {type} </h2>{" "}
+              <span className="pmt">
+                {" "}
+                {pageModifierToString(pageModifiers)}{" "}
+              </span>
+            </div>
           </div>
-          {body()}
-        </motion.div>
-      </motion.div>
-    </motion.div>
+          <button
+            className="x-button widget-item open-widget-close"
+            onClick={handleClose}
+          >
+            {close()}
+          </button>
+        </div>
+      </div>
+
+      <div className="open-widget-container"  onClick={(e) => e.stopPropagation()}> 
+      <div
+        className={`open-chart-row ${chartType === "Pie" && "pie-chart-row"}`}
+      >
+        <ChartDisplay
+          chartObj={chartToShow}
+          handleClick={setActiveColumn}
+          data={dataToShow}
+          id={id}
+          open={true}
+        />
+        {chartObj.type !== "Margin" && <LegendDisplay data={initialDataToShow} toggleData={toggleData} filteredIds={filteredIds} line={chartType === "Line" ? true : false}/> }
+      </div>
+      <ReactTable data={tableData} activeColumn={activeColumn} />
+      </div>
+    </div>
   );
 }
 

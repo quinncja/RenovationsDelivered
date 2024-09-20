@@ -12,7 +12,7 @@ import NewWidgetButton from "components/WidgetAdder/NewWidgetButton";
 import { newWidgetButtonVariants } from "utils/animations";
 import { useSystemMessage } from "../../context/SystemMessageContext";
 import RedoButton from "components/RedoButton";
-import Modifiers from "components/modifiers/Modifiers";
+import { Modifiers } from "components/modifiers/Modifiers";
 import { useDashboardContext } from "context/DashboardContext";
 
 function Topbar() {
@@ -56,8 +56,8 @@ function Topbar() {
                   ? blackLogoHover
                   : blackLogo
                 : hovered || expanded
-                ? whiteLogoHover
-                : whiteLogo
+                  ? whiteLogoHover
+                  : whiteLogo
             }
             className="logo nav-logo"
             alt="Renovations Delivered"

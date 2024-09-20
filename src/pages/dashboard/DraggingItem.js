@@ -7,14 +7,9 @@ export function DraggingItem({ chartType, type, id, chart, data, children }) {
         className={`widget-background ${chartType === "Line" || chartType === "Bar" ? "wide-widget" : ""} dragging-widget`}
       >
         <div className="widget-top">
-          <div className="drag-handle-wrapper">
-          </div>
+          <div className="drag-handle-wrapper"></div>
           <div className="widget-titles">
-            <div
-              className="widget-title dragging"
-            >
-              {type}
-            </div>
+            <div className="widget-title dragging">{type}</div>
           </div>
           <button
             className="x-button widget-item"

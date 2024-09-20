@@ -1,11 +1,8 @@
-import { useEffect } from "react";
 import { BarCanvas } from "@nivo/bar";
-import { useDashboardContext } from "context/DashboardContext";
 import { dollarFormatter } from "utils/formatters";
 import { useCSSVariable } from "utils/hooks/useCSSVariable";
 
-function BarChart({ data, open, showLabel, chartRef, colorScheme }) {
-  const { setLegends } = useDashboardContext();
+function BarChart({ data, open, size, showLabel, chartRef, colorScheme }) {
   const gridColor = useCSSVariable("--grid-color");
 
   const customTheme = {
@@ -34,11 +31,6 @@ function BarChart({ data, open, showLabel, chartRef, colorScheme }) {
     return data.map((item) => `${item.id} -`);
   }
 
-  useEffect(() => {
-    if (open) setLegends();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [open]);
-
   const axisLeft =
     open && showLabel
       ? {
@@ -47,16 +39,18 @@ function BarChart({ data, open, showLabel, chartRef, colorScheme }) {
         }
       : false;
 
+  let margin = open ? { top: 5, right: 20, bottom: 25, left: 80 } :
+  { top: 5, right: 95, bottom: 100, left: 65 };
+
   if (!data) return <div style={{ margin: "auto" }}>No Data</div>;
   return (
     <BarCanvas
       data={data}
       ref={chartRef}
       keys={generateDataKeys(data)}
-      width={640}
-      height={320}
+      {...size}
       indexBy="id"
-      margin={{ top: 5, right: 95, bottom: 100, left: 65 }}
+      margin={margin}
       padding={0.15}
       groupMode="stacked"
       valueScale={{ type: "linear" }}

@@ -1,15 +1,14 @@
 export const blankImage =
   "data:image/gif;base64,R0lGODlhAQABAIAAAAUEBAgAAAAAAAD/AQA4IBAwADs="; // Transparent 1x1 pixel image
 
-
 export const preloadImage = (imageSrc) => {
-    return new Promise((resolve) => {
-      const img = new Image();
-      img.src = imageSrc;
-      
-      img.onload = () => resolve(imageSrc); 
-    });
-  };
+  return new Promise((resolve) => {
+    const img = new Image();
+    img.src = imageSrc;
+
+    img.onload = () => resolve(imageSrc);
+  });
+};
 
 export const cacheImage = async (id, imageSrc) => {
   const preloadedImage = await preloadImage(imageSrc);
@@ -17,7 +16,7 @@ export const cacheImage = async (id, imageSrc) => {
 };
 
 export const getCachedImage = (id) => {
-  const storedImage = localStorage.getItem(id); 
+  const storedImage = localStorage.getItem(id);
   return storedImage || null;
 };
 

@@ -2,17 +2,15 @@ import React, { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { dollarFormatter, phaseToMonth } from "utils/formatters";
 import { itemFadeIn } from "utils/animations";
-import { processTableData } from "utils/api";
 
 function LineTable({ data, activeColumn }) {
   const [hasOverflow, setHasOverflow] = useState(true);
-  const [tableData, setTableData] = useState(null);
   const tableRef = useRef(null);
   const headerRefs = useRef({});
   const colHeaders = data[0].data.map((item) => item.x);
 
   useEffect(() => {
-    if (!tableData) return;
+    if (!data) return;
 
     const table = tableRef.current;
 
@@ -38,7 +36,7 @@ function LineTable({ data, activeColumn }) {
       }
       window.removeEventListener("resize", checkOverflow);
     };
-  }, [tableData]);
+  }, [data]);
 
   useEffect(() => {
     if (activeColumn !== null && headerRefs.current[activeColumn]) {
@@ -50,25 +48,9 @@ function LineTable({ data, activeColumn }) {
     }
   }, [activeColumn]);
 
-  useEffect(() => {
-    const fetchTableData = async () => {
-      try {
-        const processedData = await processTableData(data, "revenue");
-        setTableData(processedData);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    const timer = setTimeout(() => {
-      fetchTableData();
-    }, 500);
-
-    return () => clearTimeout(timer);
-  }, [data]);
-
   return (
     <AnimatePresence>
-      {tableData ? (
+      {data ? (
         <motion.div
           variants={itemFadeIn}
           className={`table-wrapper ${hasOverflow && "with-shadow"}`}
@@ -92,7 +74,7 @@ function LineTable({ data, activeColumn }) {
                 </tr>
               </thead>
               <tbody>
-                {tableData.map((dataset) => (
+                {data.map((dataset) => (
                   <tr key={dataset.id}>
                     <td>{dataset.id}</td>
                     {dataset.data.map((item) => (
