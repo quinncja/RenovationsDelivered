@@ -32,53 +32,53 @@ export const ProjectProvider = ({ children }) => {
   };
 
   const getProjectByNum = (jobNum) => {
-    return projects.jobs[jobNum]
-  }
+    return projects.jobs[jobNum];
+  };
 
   const getYearById = (yearId) => {
-   return projects.years[yearId]
-  }
+    return projects.years[yearId];
+  };
 
   const getPhaseById = (phaseId) => {
-    return projects.phases[phaseId]
-  }
+    return projects.phases[phaseId];
+  };
 
   const pageModifierToString = (modifiers) => {
     const parts = [];
-    const {active, jobNum, yearId, phaseId} = modifiers;
+    const { active, jobNum, yearId, phaseId } = modifiers;
     const activeStr = active === "Total" ? "" : active;
-    
+
     let phaseStr = "";
-    if(phaseId){
-      if(phaseId.substring(0,4) === "xxxx") phaseStr = phaseList.find((phase) => phase.id === phaseId).name; 
+    if (phaseId) {
+      if (phaseId.substring(0, 4) === "xxxx")
+        phaseStr = phaseList.find((phase) => phase.id === phaseId).name;
       else phaseStr = getPhaseById(phaseId).name;
     }
     let yearStr = "";
-    if(yearId){
-      if(yearId.substring(0,4) === "xxxx") yearStr = yearList.find((year) => year.id === yearId).year;
+    if (yearId) {
+      if (yearId.substring(0, 4) === "xxxx")
+        yearStr = yearList.find((year) => year.id === yearId).year;
       else yearStr = getYearById(yearId).year;
-    } 
-    
+    }
+
     let jobStr = "";
-    if(jobNum) {
+    if (jobNum) {
       jobStr = getProjectByNum(jobNum).name;
-      if (phaseStr !== "" || yearStr !== "" || activeStr !== "") jobStr += ","
-      parts.push(jobStr)
-      parts.push(activeStr)
-    }
-    else { 
-      let str = `All ${activeStr} Projects`
-      if (phaseStr !== "" || yearStr !== "") str += ","
-      parts.push(str)
+      if (phaseStr !== "" || yearStr !== "" || activeStr !== "") jobStr += ",";
+      parts.push(jobStr);
+      parts.push(activeStr);
+    } else {
+      let str = `All ${activeStr} Projects`;
+      if (phaseStr !== "" || yearStr !== "") str += ",";
+      parts.push(str);
     }
 
-    parts.push(phaseStr)
-    parts.push(yearStr)
-    
-    const str = parts.join(" ")
+    parts.push(phaseStr);
+    parts.push(yearStr);
+
+    const str = parts.join(" ");
     return str;
-  }
-
+  };
 
   return (
     <ProjectContext.Provider

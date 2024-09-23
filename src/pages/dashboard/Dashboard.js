@@ -40,27 +40,27 @@ function Dashboard() {
 
   function toggleBodyScroll(disable) {
     if (!window.tempScrollTop) {
-      window.tempScrollTop = window.scrollY;   
+      window.tempScrollTop = window.scrollY;
     }
     if (disable) {
-      document.getElementById("dashboard").classList.add('noscroll');
-      document.getElementById("dashboard").style.top = `-${window.tempScrollTop}px`;
+      document.getElementById("dashboard").classList.add("noscroll");
+      document.getElementById("dashboard").style.top =
+        `-${window.tempScrollTop}px`;
     } else {
-      document.getElementById("dashboard").classList.remove('noscroll');
+      document.getElementById("dashboard").classList.remove("noscroll");
       document.getElementById("dashboard").style.top = `0px`;
-      window.scrollTo({top: window.tempScrollTop});
+      window.scrollTo({ top: window.tempScrollTop });
       window.tempScrollTop = 0;
     }
   }
 
-  
   const openSelf = (data) => {
-    toggleBodyScroll(true)
+    toggleBodyScroll(true);
     setOpen(data);
   };
 
   const closeSelf = () => {
-    toggleBodyScroll(false)
+    toggleBodyScroll(false);
     setOpen(false);
   };
 

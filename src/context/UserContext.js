@@ -17,8 +17,8 @@ export const UserProvider = ({ children }) => {
 
   const changeRoot = (colorScheme) => {
     const root = document.documentElement;
-    root.style.setProperty("--primary", colorPalettes[colorScheme][1]);
-    const rootColor = hslToHsla(colorPalettes[colorScheme][1], 0.15);
+    root.style.setProperty("--primary", colorPalettes[colorScheme][1].color);
+    const rootColor = hslToHsla(colorPalettes[colorScheme][1].color, 0.15);
     root.style.setProperty("--activePrimary", rootColor);
   };
 

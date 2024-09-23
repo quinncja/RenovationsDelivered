@@ -5,7 +5,8 @@ import { useMemo } from "react";
 import { phaseNumToMonth, statusToString } from "utils/formatters";
 
 export const JobDisplay = () => {
-  const { pageModifiers, updatePageModifiers, setModTimeout } = useDashboardContext();
+  const { pageModifiers, updatePageModifiers, setModTimeout } =
+    useDashboardContext();
   const { projects } = useProjectContext();
   const selected = pageModifiers.active;
   const { jobNum, yearId, phaseId, active } = pageModifiers;
@@ -24,15 +25,15 @@ export const JobDisplay = () => {
   };
 
   const changePhaseYear = (year, phase) => {
-    const yearId = `xxxx-${year}`
-    const phaseFormatted = phase.toString().padStart(2, '0');
+    const yearId = `xxxx-${year}`;
+    const phaseFormatted = phase.toString().padStart(2, "0");
     const phaseId = `xxxx-xx-${phaseFormatted}`;
-    console.log(yearId, phaseId)
-    
+    console.log(yearId, phaseId);
+
     setModTimeout(true);
-    updatePageModifiers({ 
+    updatePageModifiers({
       yearId: yearId,
-      phaseId: phaseId
+      phaseId: phaseId,
     });
   };
 
@@ -55,27 +56,32 @@ export const JobDisplay = () => {
   );
 
   const projectMapper = (groupedPhases) => {
-    return(
-      groupedPhases.map((group) => (
-        <div key={`${group.phaseName}-${group.yearNum}`}>
-          <div className="filtered-job-button sticky-job" onClick={() => changePhaseYear(group.yearNum, group.phaseNum)}>{`${group.phaseName} - 20${group.yearNum}`}</div>
-          {group.jobs.map(({ job, phase }) => (
-            <button
-              className="filtered-job-button"
-              onClick={() => changeProj(job, projects.years[phase.yearId], phase)}
-              key={phase.id}
-            >
-              <p id="fjb-name">{job.name}</p>
-            </button>
-          ))}
-        </div>
-      ))
-    )
-  }
- 
+    return groupedPhases.map((group) => (
+      <div key={`${group.phaseName}-${group.yearNum}`}>
+        <div
+          className="filtered-job-button sticky-job"
+          onClick={() => changePhaseYear(group.yearNum, group.phaseNum)}
+        >{`${group.phaseName} - 20${group.yearNum}`}</div>
+        {group.jobs.map(({ job, phase }) => (
+          <button
+            className="filtered-job-button"
+            onClick={() => changeProj(job, projects.years[phase.yearId], phase)}
+            key={phase.id}
+          >
+            <p id="fjb-name">{job.name}</p>
+          </button>
+        ))}
+      </div>
+    ));
+  };
+
   const { counts, groupedPhases, singlePhaseData } = useMemo(() => {
     if (!projects || !projects.jobs || !projects.years || !projects.phases) {
-      return { counts: { Total: 0, Active: 0, Closed: 0 }, groupedPhases: [], singlePhaseData: null };
+      return {
+        counts: { Total: 0, Active: 0, Closed: 0 },
+        groupedPhases: [],
+        singlePhaseData: null,
+      };
     }
 
     const counts = { Total: 0, Active: 0, Closed: 0 };
@@ -129,7 +135,9 @@ export const JobDisplay = () => {
         const job = projects.jobs[phase.jobNum];
         const year = projects.years[phase.yearId];
         const phaseNumberMatch = phase.name.match(/\d+/);
-        const phaseNum = phaseNumberMatch ? parseInt(phaseNumberMatch[0], 10) : 0;
+        const phaseNum = phaseNumberMatch
+          ? parseInt(phaseNumberMatch[0], 10)
+          : 0;
         const normalizedPhaseName = `Phase ${phaseNum}`;
         const key = `${normalizedPhaseName}-${year.num}`;
 
@@ -172,7 +180,16 @@ export const JobDisplay = () => {
   if (!projects) return <div className="loading-widget" />;
 
   if (singlePhaseData) {
-    const { phase, job, year, phaseIndex, goForward, goBackward, month, statusString } = singlePhaseData;
+    const {
+      phase,
+      job,
+      year,
+      phaseIndex,
+      goForward,
+      goBackward,
+      month,
+      statusString,
+    } = singlePhaseData;
 
     return (
       <div className="job-display job-display-single">
@@ -187,7 +204,9 @@ export const JobDisplay = () => {
           <div className="job-display-section">
             <h2>{phase.name}</h2>
             {month} - {year.year}
-            <div className={`job-display-status status-${statusString}`}>{statusString}</div>
+            <div className={`job-display-status status-${statusString}`}>
+              {statusString}
+            </div>
           </div>
           <button
             className={`job-display-arrow ${!goForward && "arrow-hidden"}`}
@@ -205,9 +224,7 @@ export const JobDisplay = () => {
       <div className="job-buttons">
         {jobButtons.map((type) => buttonMapper(type))}
       </div>
-      <div className="filtered-jobs">
-        {projectMapper(groupedPhases)}
-      </div>
+      <div className="filtered-jobs">{projectMapper(groupedPhases)}</div>
     </div>
   );
 };

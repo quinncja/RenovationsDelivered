@@ -132,10 +132,7 @@ const DashboardItem = memo(
           <div className="widget-top">
             <div className="drag-handle-wrapper"></div>
             <div className="widget-titles" {...listeners} {...attributes}>
-              <div
-                className="widget-title">
-                {type}
-              </div>
+              <div className="widget-title">{type}</div>
             </div>
             <button
               className="x-button widget-item"

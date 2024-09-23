@@ -2,13 +2,24 @@ import { Pie } from "@nivo/pie";
 import { CenterSum } from "./CenterSum";
 import { calculateTotalSum } from "utils/funcs";
 import { useCSSVariable } from "utils/hooks/useCSSVariable";
+import { hashData } from "utils/colors";
+import { trimLabel } from "utils/formatters";
 
-function PieChart({ data, open, size, chartObj, showLabel, chartRef, colorScheme }) {
+function PieChart({
+  data,
+  open,
+  size,
+  chartObj,
+  showLabel,
+  chartRef,
+  colorScheme,
+}) {
   const arcLabelColor = "#f3f3f3";
-  const arcLinkLabelColor = useCSSVariable("--white")
-  const slicedData = data.slice(0, 20);
-  
+  const arcLinkLabelColor = useCSSVariable("--white");
+  const visualData = data.map((datum) => hashData(datum, colorScheme));
+
   const sum = calculateTotalSum(data);
+  const slicedData = visualData.slice(0, 20);
 
   const getPercentage = (datum) => {
     if (sum === 0) return "0%";
@@ -16,36 +27,27 @@ function PieChart({ data, open, size, chartObj, showLabel, chartRef, colorScheme
     return `${percentage.toFixed(2)}%`;
   };
 
-  const trimLabel = (label) => {
-    if (!label) return;
-    return label
-      .replace(/the/gi, "")
-      .replace(/, inc/gi, "")
-      .replace(/inc\./gi, "")
-      .replace(/inc/gi, "")
-      .replace(/llc/gi, "")
-      .trim();
-  };
-
-  const margin = open ? { top: 40, bottom: 90, right: 50, left: 70 }
-  : { top: 10, bottom: 90, right: 0, left: -20 }
+  const margin = open
+    ? { top: 40, bottom: 90, right: 50, left: 70 }
+    : { top: 10, bottom: 90, right: 0, left: -20 };
 
   const label = (datum) => {
-   return open ? getPercentage(datum) :
-    showLabel && trimLabel(chartObj.label(datum))
-  }
+    return open
+      ? getPercentage(datum)
+      : showLabel && trimLabel(chartObj.label(datum));
+  };
 
   return (
     <Pie
       {...size}
       data={slicedData}
       ref={chartRef}
+      colors={(datum) => datum.data.color}
       margin={margin}
       innerRadius={0.6}
       padAngle={0.7}
       cornerRadius={1}
       activeOuterRadiusOffset={8}
-      colors={colorScheme}
       borderWidth={1}
       borderColor={{
         from: "color",

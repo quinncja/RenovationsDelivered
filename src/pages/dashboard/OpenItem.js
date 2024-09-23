@@ -16,14 +16,13 @@ function OpenItem({ item, closeSelf }) {
   const { appearance } = useUserContext();
   const [tableData, setTableData] = useState();
   const { getChartObj, pageModifiers } = useDashboardContext();
-  const {pageModifierToString} = useProjectContext();
+  const { pageModifierToString } = useProjectContext();
   const chartObj = getChartObj(type);
   const [filteredIds, setFilteredIds] = useState([]);
 
   const showSingle = useMemo(() => {
     return data && chartObj.checkIfSingle && chartObj.checkIfSingle(data);
   }, [data, chartObj]);
-
 
   const chartToShow = useMemo(() => {
     return showSingle ? chartObj.single : chartObj;
@@ -34,19 +33,19 @@ function OpenItem({ item, closeSelf }) {
   }, [showSingle, chartToShow, data]);
 
   const dataToShow = useMemo(() => {
-    if(Array.isArray(initialDataToShow)){
-    return initialDataToShow.filter(
-      (dataItem) => !filteredIds.includes(dataItem.id)
-    );
+    if (Array.isArray(initialDataToShow)) {
+      return initialDataToShow.filter(
+        (dataItem) => !filteredIds.includes(dataItem.id),
+      );
     }
-    return(initialDataToShow)
+    return initialDataToShow;
   }, [initialDataToShow, filteredIds]);
 
   function handleClose() {
     closeSelf();
   }
 
-  function toggleData(item){
+  function toggleData(item) {
     const { id: toggledId } = item;
     setFilteredIds((prevFilteredIds) => {
       if (prevFilteredIds.includes(toggledId)) {
@@ -79,7 +78,10 @@ function OpenItem({ item, closeSelf }) {
       className="widget-background dashboard-widget-open"
       onClick={() => closeSelf()}
     >
-      <div className="open-widget-top-container" onClick={(e) => e.stopPropagation() }>
+      <div
+        className="open-widget-top-container"
+        onClick={(e) => e.stopPropagation()}
+      >
         <div className="open-widget-top">
           <div className="open-widget-left">
             <img
@@ -104,20 +106,30 @@ function OpenItem({ item, closeSelf }) {
         </div>
       </div>
 
-      <div className="open-widget-container"  onClick={(e) => e.stopPropagation()}> 
       <div
-        className={`open-chart-row ${chartType === "Pie" && "pie-chart-row"}`}
+        className="open-widget-container"
+        onClick={(e) => e.stopPropagation()}
       >
-        <ChartDisplay
-          chartObj={chartToShow}
-          handleClick={setActiveColumn}
-          data={dataToShow}
-          id={id}
-          open={true}
-        />
-        {chartObj.type !== "Margin" && <LegendDisplay data={initialDataToShow} toggleData={toggleData} filteredIds={filteredIds} line={chartType === "Line" ? true : false}/> }
-      </div>
-      <ReactTable data={tableData} activeColumn={activeColumn} />
+        <div
+          className={`open-chart-row ${chartType === "Pie" && "pie-chart-row"}`}
+        >
+          <ChartDisplay
+            chartObj={chartToShow}
+            handleClick={setActiveColumn}
+            data={dataToShow}
+            id={id}
+            open={true}
+          />
+          {chartObj.type !== "Margin" && (
+            <LegendDisplay
+              data={initialDataToShow}
+              toggleData={toggleData}
+              filteredIds={filteredIds}
+              line={chartType === "Line" ? true : false}
+            />
+          )}
+        </div>
+        <ReactTable data={tableData} activeColumn={activeColumn} />
       </div>
     </div>
   );

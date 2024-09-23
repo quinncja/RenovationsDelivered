@@ -265,13 +265,13 @@ export const DashboardProvider = ({ children }) => {
   // // // // // // //
 
   const updatePageModifiers = (newMods, flag = false) => {
-    setModTimeout(true)
+    setModTimeout(true);
     const oldMods = { ...pageModifiers };
     const newModObj = {
       ...pageModifiers,
       ...newMods,
     };
-    if(!flag){
+    if (!flag) {
       const historyObj = {
         text: "Modifer change",
         type: "fixed",

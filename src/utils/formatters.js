@@ -145,8 +145,7 @@ export const modifierFormatter = (mods) => {
 
 export const pageModifierToString = (pageModifiers) => {
   const parts = [];
-  console.log(pageModifiers)
-
+  console.log(pageModifiers);
 
   const jobName =
     (pageModifiers.job && pageModifiers.job[0]?.name) || "All Projects";
@@ -171,4 +170,15 @@ export const pageModifierToString = (pageModifiers) => {
 export const statusToString = (status) => {
   if (status === 4) return "Active";
   return "Complete";
+};
+
+export const trimLabel = (label) => {
+  if (!label) return;
+  return label
+    .replace(/the/gi, "")
+    .replace(/, inc/gi, "")
+    .replace(/inc\./gi, "")
+    .replace(/inc/gi, "")
+    .replace(/llc/gi, "")
+    .trim();
 };

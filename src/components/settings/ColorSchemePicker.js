@@ -6,9 +6,9 @@ export function colorPallete(colorPalette) {
     <div className="color-palette">
       {colorPalette.map((color) => (
         <span
-          key={color}
+          key={color.color}
           style={{
-            background: color,
+            background: color.color,
             width: "10px",
             height: "10px",
             display: "inline-block",

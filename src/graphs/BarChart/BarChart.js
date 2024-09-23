@@ -39,8 +39,9 @@ function BarChart({ data, open, size, showLabel, chartRef, colorScheme }) {
         }
       : false;
 
-  let margin = open ? { top: 5, right: 20, bottom: 25, left: 80 } :
-  { top: 5, right: 95, bottom: 100, left: 65 };
+  let margin = open
+    ? { top: 5, right: 20, bottom: 25, left: 80 }
+    : { top: 5, right: 95, bottom: 100, left: 65 };
 
   if (!data) return <div style={{ margin: "auto" }}>No Data</div>;
   return (

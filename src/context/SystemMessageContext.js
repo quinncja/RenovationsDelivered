@@ -1,4 +1,10 @@
-import React, { createContext, useContext, useState, useRef, useEffect } from "react";
+import React, {
+  createContext,
+  useContext,
+  useState,
+  useRef,
+  useEffect,
+} from "react";
 
 const SystemMessageContext = createContext();
 
@@ -6,7 +12,7 @@ export const SystemMessageProvider = ({ children, timeout = 2000 }) => {
   const [systemMessage, setSystemMessage] = useState(null);
   const timeoutIdRef = useRef(null);
 
-    const setMessage = (message) => {
+  const setMessage = (message) => {
     if (timeoutIdRef.current) {
       clearTimeout(timeoutIdRef.current);
     }

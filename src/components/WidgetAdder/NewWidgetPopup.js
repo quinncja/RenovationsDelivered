@@ -84,24 +84,24 @@ function NewWidgetPopup({ closeSelf }) {
       <motion.div variants={widgetItemsFadeIn} layout="position">
         {Object.keys(groupedByChartType).map((chartType, index) => {
           let chartObjects = groupedByChartType[chartType];
-          chartObjects = chartObjects.filter((obj) => obj.admin === false)
-          if(chartObjects.length > 0)
-          return (
-            <motion.div key={index}>
-              <div className="widget-button-header">{chartType}</div>
-              <div className="widget-button-row">
-                {chartObjects.map((obj) => (
-                  <button
-                    className="widget-button"
-                    key={obj.id || `${obj.type}-${index}`}
-                    onClick={() => handleClick(obj)}
-                  >
-                    {obj.type}
-                  </button>
-                ))}
-              </div>
-            </motion.div>
-          );
+          chartObjects = chartObjects.filter((obj) => obj.admin === false);
+          if (chartObjects.length > 0)
+            return (
+              <motion.div key={index}>
+                <div className="widget-button-header">{chartType}</div>
+                <div className="widget-button-row">
+                  {chartObjects.map((obj) => (
+                    <button
+                      className="widget-button"
+                      key={obj.id || `${obj.type}-${index}`}
+                      onClick={() => handleClick(obj)}
+                    >
+                      {obj.type}
+                    </button>
+                  ))}
+                </div>
+              </motion.div>
+            );
           else return "";
         })}
       </motion.div>
@@ -128,30 +128,32 @@ function NewWidgetPopup({ closeSelf }) {
   }
 
   function Admin() {
-    return <motion.div variants={widgetItemsFadeIn} layout="position">
-    {Object.keys(groupedByChartType).map((chartType, index) => {
-      let chartObjects = groupedByChartType[chartType];
-      chartObjects = chartObjects.filter((obj) => obj.admin === true)
-      if(chartObjects.length > 0)
-      return (
-        <motion.div key={index}>
-          <div className="widget-button-header">{chartType}</div>
-          <div className="widget-button-row">
-            {chartObjects.map((obj) => (
-              <button
-                className="widget-button"
-                key={obj.id || `${obj.type}-${index}`}
-                onClick={() => handleClick(obj)}
-              >
-                {obj.type}
-              </button>
-            ))}
-          </div>
-        </motion.div>
-      );
-      else return "";
-    })}
-  </motion.div>
+    return (
+      <motion.div variants={widgetItemsFadeIn} layout="position">
+        {Object.keys(groupedByChartType).map((chartType, index) => {
+          let chartObjects = groupedByChartType[chartType];
+          chartObjects = chartObjects.filter((obj) => obj.admin === true);
+          if (chartObjects.length > 0)
+            return (
+              <motion.div key={index}>
+                <div className="widget-button-header">{chartType}</div>
+                <div className="widget-button-row">
+                  {chartObjects.map((obj) => (
+                    <button
+                      className="widget-button"
+                      key={obj.id || `${obj.type}-${index}`}
+                      onClick={() => handleClick(obj)}
+                    >
+                      {obj.type}
+                    </button>
+                  ))}
+                </div>
+              </motion.div>
+            );
+          else return "";
+        })}
+      </motion.div>
+    );
   }
 
   function Start() {

@@ -7,7 +7,6 @@ import {
 } from "utils/formatters";
 
 function ReactTable({ data, activeColumn }) {
-
   const formatFuncMap = {
     x: phaseToMonth,
     Budgeted: dollarFormatter,
@@ -31,9 +30,11 @@ function ReactTable({ data, activeColumn }) {
   };
 
   if (!data || data.length === 0) {
-    return <div className="line-table-loading">
-      <div className="line-table-loading-widget"/>
-    </div>;
+    return (
+      <div className="line-table-loading">
+        <div className="line-table-loading-widget" />
+      </div>
+    );
   }
 
   const frozenField = data[0].hasOwnProperty("x")

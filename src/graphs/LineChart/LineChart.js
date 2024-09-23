@@ -36,8 +36,9 @@ function LineChart({
     },
   };
 
-  let margin = open ? { top: 5, right: 20, bottom: 50, left: 50 } :
-  { top: 5, right: 70, bottom: 120, left: 40 };
+  let margin = open
+    ? { top: 5, right: 20, bottom: 50, left: 50 }
+    : { top: 5, right: 70, bottom: 120, left: 40 };
   const axisLeft = open && showLabel ? chartObj.chartProps.axisLeft : false;
   let chartData = chartObj.chartProps.chartFormat
     ? chartObj.chartProps.chartFormat(data)
@@ -78,7 +79,7 @@ function LineChart({
       enableGridX={showLabel}
       enableGridY={showLabel}
       axisLeft={axisLeft}
-      colors={colorScheme}
+      colors={colorScheme.map((obj) => obj.color )}
       lineWidth={3}
       pointSize={8}
       pointColor={{ from: "color" }}
