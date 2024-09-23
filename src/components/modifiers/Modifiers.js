@@ -147,7 +147,7 @@ export function Modifiers() {
         onChange={handlePhaseChange}
       />
 
-      {(selectedJobNum || selectedYearId) && (
+      {(selectedJobNum || selectedYearId || selectedPhaseId) && (
         <button className="clear-modifiers" onClick={clearModifiers}>
           {close()}
         </button>

@@ -1628,6 +1628,19 @@ h1 {
 .filtered-job-button:hover {
   filter: brightness(var(--filter3));
 }
+
+.sticky-job{
+  position: sticky;
+  top: 0;
+  background-color: var(--mid);
+  z-index: 8;
+  padding: 6px !important;
+  font-weight: 600;
+  text-align: left;
+  cursor: pointer;
+  box-sizing: border-box;
+}
+
 #fjb-name {
   max-width: 55%;
 }

@@ -1,4 +1,5 @@
 export const phaseList = [
+  { num: "00", name: "P0", id: "xxxx-xx-00" },
   { num: "01", name: "P1", id: "xxxx-xx-01" },
   { num: "02", name: "P2", id: "xxxx-xx-02" },
   { num: "03", name: "P3", id: "xxxx-xx-03" },
