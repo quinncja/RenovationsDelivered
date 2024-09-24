@@ -12,8 +12,8 @@ export const JobDisplay = () => {
   const { jobNum, yearId, phaseId, active } = pageModifiers;
 
   const clickHandler = (option) => {
-    const container = document.getElementById("job-display")
-    if(container){
+    const container = document.getElementById("job-display");
+    if (container) {
       container.scrollTop = 0;
     }
     updatePageModifiers({ active: option });
@@ -227,7 +227,9 @@ export const JobDisplay = () => {
       <div className="job-buttons">
         {jobButtons.map((type) => buttonMapper(type))}
       </div>
-      <div id="job-display" className="filtered-jobs">{projectMapper(groupedPhases)}</div>
+      <div id="job-display" className="filtered-jobs">
+        {projectMapper(groupedPhases)}
+      </div>
     </div>
   );
 };
