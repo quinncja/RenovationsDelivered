@@ -4,7 +4,7 @@ function SettingsLoading() {
   const { isLoading } = useUserSettings();
 
   if (isLoading) {
-    return <div className="settings-loading"></div>;
+    return <div className="settings-loading"> </div>;
   }
 }
 
