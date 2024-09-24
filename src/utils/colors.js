@@ -1,4 +1,31 @@
 export const colorPalettes = {
+  Tranquil: [
+    {
+      color: "hsl(210, 50%, 40%)",
+      lighter: true,
+      darker: true,
+    },
+    {
+      color: "hsl(220, 34%, 30%)",
+      lighter: true,
+      darker: true,
+    },
+    {
+      color: "hsl(25, 70%, 45%)",
+      lighter: true,
+      darker: false,
+    },
+    {
+      color: "hsl(0, 0%, 25%)",
+      lighter: true,
+      darker: true,
+    },
+    {
+      color: "hsl(120, 15%, 55%)",
+      lighter: true,
+      darker: true,
+    },
+  ],
   Vibrant: [
     {
       color: "hsl(347, 81%, 60%)",
@@ -29,7 +56,7 @@ export const colorPalettes = {
 
   Contrast: [
     {
-      color: "hsl(254, 65%, 52%)",
+      color: "hsl(258, 83%, 64%)",
       lighter: true,
       darker: true,
     },
@@ -39,63 +66,29 @@ export const colorPalettes = {
       darker: false,
     },
     {
-      color: "hsl(33, 93%, 52%)",
-      lighter: true,
-      darker: false,
-    },
-    {
-      color: "hsl(258, 83%, 64%)",
-      lighter: true,
-      darker: true,
-    },
-    {
       color: "hsl(348, 100%, 64%)",
       lighter: true,
       darker: true,
     },
     {
-      color: "hsl(168, 94%, 46%)",
-      lighter: true,
-      darker: true,
-    },
-  ],
-
-  Construction: [
-    {
-      color: "hsl(210, 50%, 40%)",
+      color: "hsl(254, 65%, 52%)",
       lighter: true,
       darker: true,
     },
     {
-      color: "hsl(25, 70%, 45%)",
-      lighter: true,
+      color: "hsl(33, 93%, 52%)",
+      lighter: false,
       darker: false,
     },
-    {
-      color: "hsl(220, 34%, 30%)",
-      lighter: true,
-      darker: true,
-    },
-    {
-      color: "hsl(0, 0%, 25%)",
-      lighter: true,
-      darker: true,
-    },
-    {
-      color: "hsl(120, 15%, 55%)",
-      lighter: true,
-      darker: true,
-    },
   ],
-
-  Calm: [
+  Blues: [
+    {
+      color: "hsl(222, 65%, 64%)",
+      lighter: true,
+      darker: true,
+    },
     {
       color: "hsl(222, 64%, 47%)",
-      lighter: true,
-      darker: true,
-    },
-    {
-      color: "hsl(262, 54%, 78%)",
       lighter: true,
       darker: true,
     },
@@ -105,13 +98,13 @@ export const colorPalettes = {
       darker: true,
     },
     {
-      color: "hsl(222, 65%, 64%)",
+      color: "hsl(269, 64%, 38%)",
       lighter: true,
       darker: true,
     },
     {
-      color: "hsl(269, 64%, 38%)",
-      lighter: true,
+      color: "hsl(262, 54%, 78%)",
+      lighter: false,
       darker: true,
     },
   ],
@@ -133,9 +126,14 @@ export const colorPalettes = {
       darker: true,
     },
     {
-      color: "hsl(358, 77%, 19%)",
+      color: "hsl(195, 2%, 33%)",
       lighter: true,
       darker: true,
+    },
+    {
+      color: "hsl(358, 77%, 19%)",
+      lighter: true,
+      darker: false,
     },
   ],
 
@@ -151,9 +149,9 @@ export const colorPalettes = {
       darker: true,
     },
     {
-      color: "hsl(26, 46%, 82%)",
+      color: "hsl(124, 18%, 31%)",
       lighter: true,
-      darker: true,
+      darker: false,
     },
     {
       color: "hsl(58, 15%, 57%)",
@@ -167,7 +165,6 @@ export const colorPalettes = {
     },
   ],
 };
-
 
 function murmurhash3_32_gc(key, seed = 0) {
   let remainder = key.length & 3;
@@ -199,17 +196,17 @@ function murmurhash3_32_gc(key, seed = 0) {
   switch (remainder) {
     case 3:
       k1 ^= (key.charCodeAt(i + 2) & 0xff) << 16;
-      break
+      break;
     case 2:
       k1 ^= (key.charCodeAt(i + 1) & 0xff) << 8;
-      break
+      break;
     case 1:
       k1 ^= key.charCodeAt(i) & 0xff;
       k1 = Math.imul(k1, c1);
       k1 = (k1 << 15) | (k1 >>> 17);
       k1 = Math.imul(k1, c2);
       h1 ^= k1;
-      break
+      break;
     default:
   }
 
@@ -245,40 +242,39 @@ function adjustColor(colorObj, id) {
   let lightnessAdjustment = 0;
 
   if (adjustDecision < 30) {
-    hueAdjustment = (idHash % 16) - 12; 
+    hueAdjustment = (idHash % 16) - 12;
   } else if (adjustDecision < 60) {
     if (colorObj.lighter && colorObj.darker) {
-      const lighten = ((idHash >> 1) % 2) === 0;
+      const lighten = (idHash >> 1) % 2 === 0;
       lightnessAdjustment = lighten
-        ? Math.floor((idHash % 21)) 
-        : -Math.floor((idHash % 21)); 
+        ? Math.floor(idHash % 21)
+        : -Math.floor(idHash % 21);
     } else if (colorObj.lighter) {
-      lightnessAdjustment = Math.floor(idHash % 21); 
+      lightnessAdjustment = Math.floor(idHash % 21);
     } else if (colorObj.darker) {
-      lightnessAdjustment = -Math.floor(idHash % 21); 
+      lightnessAdjustment = -Math.floor(idHash % 21);
     }
   } else if (adjustDecision < 80) {
     return color;
   } else {
-    hueAdjustment = (idHash % 40) - 12; 
+    hueAdjustment = (idHash % 40) - 12;
     if (colorObj.lighter && colorObj.darker) {
-      const lighten = ((idHash >> 1) % 2) === 0;
+      const lighten = (idHash >> 1) % 2 === 0;
       lightnessAdjustment = lighten
-        ? Math.floor((idHash % 21)) 
-        : -Math.floor((idHash % 21));
+        ? Math.floor(idHash % 21)
+        : -Math.floor(idHash % 21);
     } else if (colorObj.lighter) {
-      lightnessAdjustment = Math.floor(idHash % 21); 
+      lightnessAdjustment = Math.floor(idHash % 21);
     } else if (colorObj.darker) {
       lightnessAdjustment = -Math.floor(idHash % 21);
     }
   }
 
-  const newH = (h + hueAdjustment + 360) % 360; 
-  const newL = Math.max(0, Math.min(100, l + lightnessAdjustment)); 
+  const newH = (h + hueAdjustment + 360) % 360;
+  const newL = Math.max(0, Math.min(100, l + lightnessAdjustment));
 
   return `hsl(${newH}, ${s}%, ${newL}%)`;
 }
-
 
 export function getColorByID(id, palette) {
   const hash = murmurhash3_32_gc(id);

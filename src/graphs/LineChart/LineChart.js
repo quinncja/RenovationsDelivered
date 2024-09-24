@@ -1,4 +1,5 @@
 import { Line } from "@nivo/line";
+import { hashData } from "utils/colors";
 import { phaseToMonth } from "utils/formatters";
 import { useCSSVariable } from "utils/hooks/useCSSVariable";
 
@@ -43,6 +44,10 @@ function LineChart({
   let chartData = chartObj.chartProps.chartFormat
     ? chartObj.chartProps.chartFormat(data)
     : data;
+  const colors =
+    chartObj.type === "Margin"
+      ? colorScheme.map((obj) => obj.color)
+      : data.map((data) => hashData(data, colorScheme).color);
 
   if (!data) return <div style={{ margin: "auto" }}>No Data</div>;
   return (
@@ -79,7 +84,7 @@ function LineChart({
       enableGridX={showLabel}
       enableGridY={showLabel}
       axisLeft={axisLeft}
-      colors={colorScheme.map((obj) => obj.color )}
+      colors={colors}
       lineWidth={3}
       pointSize={8}
       pointColor={{ from: "color" }}

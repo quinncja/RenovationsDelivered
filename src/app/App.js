@@ -39,7 +39,7 @@ function App() {
         );
         setLabel(settings.label || "always");
         setAppearance(settings.appearance || "dark");
-        setColorScheme(settings.colorScheme || "Rust");
+        setColorScheme(settings.colorScheme || "Tranquil");
         setSmartSort(settings.smartSort || "false");
       } catch (error) {
         console.log(error, "failed to load user");

@@ -1,4 +1,5 @@
 import { useUserContext } from "context/UserContext";
+import { hashData } from "utils/colors";
 import { useCSSVariable } from "utils/hooks/useCSSVariable";
 
 function LegendDisplay({ data, toggleData, filteredIds, line }) {
@@ -7,17 +8,25 @@ function LegendDisplay({ data, toggleData, filteredIds, line }) {
   const colorPalette = getColorScheme();
 
   function Legend({ datum, index }) {
+    const inactive = filteredIds.includes(datum.id);
     return (
       <div className="legend" key={index} onClick={() => toggleData(datum)}>
         <div
           className="tooltip-cube"
           style={{
-            backgroundColor: filteredIds.includes(datum.id)
+            backgroundColor: inactive
               ? grayed
-              : colorPalette[index % colorPalette.length],
+              : hashData(datum, colorPalette).color,
           }}
         />
-        <strong color="legend-title">{datum.id}</strong>{" "}
+        <strong
+          style={{
+            textDecoration: inactive ? "line-through" : "",
+          }}
+          color="legend-title"
+        >
+          {datum.id}
+        </strong>{" "}
       </div>
     );
   }

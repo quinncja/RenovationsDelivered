@@ -1,4 +1,5 @@
 import { BarCanvas } from "@nivo/bar";
+import { hashData } from "utils/colors";
 import { dollarFormatter } from "utils/formatters";
 import { useCSSVariable } from "utils/hooks/useCSSVariable";
 
@@ -47,6 +48,7 @@ function BarChart({ data, open, size, showLabel, chartRef, colorScheme }) {
   return (
     <BarCanvas
       data={data}
+      colors={data.map((data) => hashData(data, colorScheme).color)}
       ref={chartRef}
       keys={generateDataKeys(data)}
       {...size}
@@ -56,7 +58,6 @@ function BarChart({ data, open, size, showLabel, chartRef, colorScheme }) {
       groupMode="stacked"
       valueScale={{ type: "linear" }}
       indexScale={{ type: "band", round: true }}
-      colors={colorScheme}
       borderColor={{
         from: "color",
         modifiers: [["darker", 1.6]],
