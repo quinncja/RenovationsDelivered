@@ -1616,7 +1616,7 @@ h1 {
   border: none;
   color: var(--less-white);
   text-align: left;
-  padding-inline: 20px;
+  padding-inline: 25px;
   display: flex;
   width: 100%;
   justify-content: space-between;
@@ -1636,13 +1636,10 @@ h1 {
   z-index: 8;
   padding: 6px !important;
   font-weight: 600;
+  padding-left: 10px !important;
   text-align: left;
   cursor: pointer;
   box-sizing: border-box;
-}
-
-#fjb-name {
-  max-width: 55%;
 }
 
 .no-item-text {

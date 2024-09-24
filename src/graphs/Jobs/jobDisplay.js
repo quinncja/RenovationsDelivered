@@ -12,6 +12,10 @@ export const JobDisplay = () => {
   const { jobNum, yearId, phaseId, active } = pageModifiers;
 
   const clickHandler = (option) => {
+    const container = document.getElementById("job-display")
+    if(container){
+      container.scrollTop = 0;
+    }
     updatePageModifiers({ active: option });
   };
 
@@ -28,7 +32,6 @@ export const JobDisplay = () => {
     const yearId = `xxxx-${year}`;
     const phaseFormatted = phase.toString().padStart(2, "0");
     const phaseId = `xxxx-xx-${phaseFormatted}`;
-    console.log(yearId, phaseId);
 
     setModTimeout(true);
     updatePageModifiers({
@@ -224,7 +227,7 @@ export const JobDisplay = () => {
       <div className="job-buttons">
         {jobButtons.map((type) => buttonMapper(type))}
       </div>
-      <div className="filtered-jobs">{projectMapper(groupedPhases)}</div>
+      <div id="job-display" className="filtered-jobs">{projectMapper(groupedPhases)}</div>
     </div>
   );
 };
