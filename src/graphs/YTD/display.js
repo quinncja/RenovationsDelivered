@@ -11,12 +11,12 @@ export const ytdDisplay = (data) => {
         <h2> {dollarFormatter(Contract || 0)} </h2>
       </div>
       <div className="ytd-single">
-        <p> Budget </p>
-        <h2> {dollarFormatter(Budget || 0)} </h2>
-      </div>
-      <div className="ytd-single">
         <p> Cost </p>
         <h2> {dollarFormatter(Cost || 0)} </h2>
+      </div>
+      <div className="ytd-single">
+        <p> Budget </p>
+        <h2> {dollarFormatter(Budget || 0)} </h2>
       </div>
       <div className="ytd-single">
         <p> Margin </p>
