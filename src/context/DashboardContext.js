@@ -8,7 +8,7 @@ import React, {
 import { chartObjects } from "graphs/ChartObjects";
 import { arrayMove } from "@dnd-kit/sortable";
 import { useRedo, useUndo } from "utils/hooks/useHistory";
-import { useSystemMessage } from "context/SystemMessageContext";
+import { useSystemMessage } from "modules/systemMessage/SystemMessageContext";
 import { useUserSettings } from "./UserSettingsContext";
 import { deleteImageCache } from "utils/images/imageCacheUtils";
 
@@ -39,7 +39,6 @@ export const DashboardProvider = ({ children }) => {
   const [loaded, setLoaded] = useState(false);
   const { setMessage } = useSystemMessage();
   const [modTimeout, setModTimeout] = useState(true);
-  const [newWidgetOpen, setNewWidgetOpen] = useState(false);
 
   useEffect(() => {
     if (modTimeout) {
@@ -462,8 +461,6 @@ export const DashboardProvider = ({ children }) => {
         setPageModifiers,
         updatePageModifiers,
         chartRefs,
-        newWidgetOpen,
-        setNewWidgetOpen,
         addMultItems,
         loaded,
         modTimeout,

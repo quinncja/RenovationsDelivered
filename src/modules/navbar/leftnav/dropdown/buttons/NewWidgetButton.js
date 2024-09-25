@@ -1,8 +1,16 @@
 import { plus } from "business/svg";
+import { useModalContext } from "modules/modals/ModalContext";
 import { motion } from "framer-motion";
 import { newWidgetButtonVariants } from "utils/animations";
 
-function NewWidgetButton({ handleClick }) {
+function NewWidgetButton({toggleExpanded}) {
+  const {openModal} = useModalContext()
+
+  const handleClick = () => {
+    toggleExpanded()
+    openModal('newWidget');
+  };
+
   return (
     <motion.button
       initial="hidden"

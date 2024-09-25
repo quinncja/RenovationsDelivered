@@ -4,21 +4,24 @@ import "./index.css";
 import Router from "./app/Router";
 import { UserProvider } from "./context/UserContext";
 import { DashboardProvider } from "./context/DashboardContext";
-import { SystemMessageProvider } from "context/SystemMessageContext";
+import { SystemMessageProvider } from "modules/systemMessage/SystemMessageContext";
 import { ProjectProvider } from "context/ProjectContext";
 import { UserSettingsProvider } from "context/UserSettingsContext";
+import { ModalProvider } from "modules/modals/ModalContext";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <SystemMessageProvider>
-    <UserSettingsProvider>
-      <DashboardProvider>
-        <ProjectProvider>
-          <UserProvider>
-            <Router />
-          </UserProvider>
-        </ProjectProvider>
-      </DashboardProvider>
-    </UserSettingsProvider>
+    <ModalProvider> 
+      <UserSettingsProvider>
+        <DashboardProvider>
+          <ProjectProvider>
+            <UserProvider>
+              <Router />
+            </UserProvider>
+          </ProjectProvider>
+        </DashboardProvider>
+      </UserSettingsProvider>
+    </ModalProvider>
   </SystemMessageProvider>,
 );

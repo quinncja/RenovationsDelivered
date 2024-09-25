@@ -6,19 +6,16 @@ import {
   PieSvg,
   UserSvg,
   close,
-} from "../../business/svg";
+} from "../../../business/svg";
 import {
   newWidgetPopupVariants,
-  overlayVariants,
   widgetItemsFadeIn,
-} from "../../utils/animations";
-import { useCSSVariable } from "../../utils/hooks/useCSSVariable";
+} from "../../../utils/animations";
 import { chartObjects, groupedByChartType } from "graphs/ChartObjects";
 import { generateRandomId } from "utils/funcs";
 import { useDashboardContext } from "context/DashboardContext";
 
 function NewWidgetPopup({ closeSelf }) {
-  const color = useCSSVariable("--overlay");
   const { addItem, addMultItems } = useDashboardContext();
   const [body, setBody] = useState();
 
@@ -136,6 +133,7 @@ function NewWidgetPopup({ closeSelf }) {
           if (chartObjects.length > 0)
             return (
               <motion.div key={index}>
+
                 <div className="widget-button-header">{chartType}</div>
                 <div className="widget-button-row">
                   {chartObjects.map((obj) => (
@@ -176,14 +174,7 @@ function NewWidgetPopup({ closeSelf }) {
   }
 
   return (
-    <motion.div
-      initial="hidden"
-      animate="visible"
-      exit="exit"
-      variants={overlayVariants(color, 0)}
-      className="open-widget-overlay new-widget-overlay"
-      onClick={closeSelf}
-    >
+    <div className="popup-wrapper"> 
       <motion.div
         className="new-widget-popup"
         variants={newWidgetPopupVariants}
@@ -205,7 +196,7 @@ function NewWidgetPopup({ closeSelf }) {
         </motion.div>
         {body || <Start />}
       </motion.div>
-    </motion.div>
+    </div>
   );
 }
 
