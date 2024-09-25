@@ -7,10 +7,11 @@ import React, {
 } from "react";
 import { chartObjects } from "graphs/ChartObjects";
 import { arrayMove } from "@dnd-kit/sortable";
-import { useRedo, useUndo } from "utils/hooks/useHistory";
 import { useSystemMessage } from "modules/systemMessage/SystemMessageContext";
 import { useUserSettings } from "./UserSettingsContext";
 import { deleteImageCache } from "utils/images/imageCacheUtils";
+import { addItemAction, addMultItemsAction, deleteMultItemsAction, removeItemAction, reorderByIndexAction, updatePageModifiersAction } from "utils/dashboardActions";
+import { useHistory } from "./HistoryContext";
 
 const DashboardContext = createContext();
 
@@ -31,14 +32,11 @@ export const DashboardProvider = ({ children }) => {
   const [modifiers, setModifiers] = useState([]);
   const [legends, setLegends] = useState([]);
   const [capturedState, setCapturedState] = useState({});
-  const [history, setHistory] = useState([]);
-  const historyPtr = useRef(0);
   const idRef = useRef([]);
-  const undoActive = historyPtr.current > 0;
-  const redoActive = historyPtr.current <= history.length - 1;
   const [loaded, setLoaded] = useState(false);
   const { setMessage } = useSystemMessage();
   const [modTimeout, setModTimeout] = useState(true);
+  const { pushHistory } = useHistory()
 
   useEffect(() => {
     if (modTimeout) {
@@ -60,107 +58,40 @@ export const DashboardProvider = ({ children }) => {
     setPageModifiers(pageModifiers);
   };
 
-  // // // // // //
-  // Undo / Redo //
-  // // // // // //
-
-  const pushHistory = (newData) => {
-    setHistory((prevHistory) => {
-      const truncatedHistory = prevHistory.slice(0, historyPtr.current);
-      const newHistory = [...truncatedHistory, newData];
-      historyPtr.current = newHistory.length;
-      return newHistory;
-    });
-  };
-
-  const enactChange = (type, change) => {
-    if (type === "undo") {
-      change.action();
-      setMessage(`Undo ${change.text}`);
-    }
-    if (type === "redo") {
-      change.unAction();
-      setMessage(`Redo ${change.text}`);
-    }
-  };
-
-  const handleRedo = () => {
-    if (redoActive) {
-      const actionToRedo = history[historyPtr.current];
-      enactChange("redo", actionToRedo);
-      historyPtr.current += 1;
-    }
-  };
-
-  const handleUndo = () => {
-    if (undoActive) {
-      historyPtr.current -= 1;
-      const actionToUndo = history[historyPtr.current];
-      enactChange("undo", actionToUndo);
-    }
-  };
-
-  useUndo(handleUndo);
-  useRedo(handleRedo);
-
   // // // // // // // //
   // Add / Delete Item //
   // // // // // // // //
 
-  const addMultItems = async (itemList, historyFlag) => {
-    setItems((prevItems) => {
-      const newItems = prevItems ? [...prevItems] : [];
-      newItems.push(...itemList);
-      itemSaver(newItems);
-      return newItems;
-    });
-    if (!historyFlag) {
-      const items = [...itemList];
-      const historyObj = {
-        text: "New Widgets",
-        unAction: () => addMultItems(items, true),
-        action: () => deleteMultItems(items),
-      };
-      pushHistory(historyObj);
-    }
-  };
+  const addMultItems = async (itemList) => {
+    const addMultItemsFn = addMultItemsAction(setItems, itemSaver);
+    const deleteMultItemsFn = deleteMultItemsAction(setItems, itemSaver, deleteImageCache);
 
-  const deleteMultItems = async (itemList) => {
-    itemList.forEach((item) => {
-      deleteImageCache(item.id);
-    });
+    addMultItemsFn(itemList);
 
-    setItems((prevItems) => {
-      const newItems = prevItems.filter((item) => !itemList.includes(item));
-      itemSaver(newItems);
-      return newItems;
-    });
-  };
+    const itemsCopy = [...itemList];
+    const historyObj = {
+      text: "New Widgets",
+      redo: () => addMultItemsFn(itemsCopy),
+      undo: () => deleteMultItemsFn(itemsCopy),
+    };
 
-  const addItem = async (newItem, newIndex, historyFlag) => {
-    setItems((prevItems) => {
-      const newItems = prevItems ? [...prevItems] : [];
+    pushHistory(historyObj);
+  }
+  
+  const addItem = async (newItem, newIndex) => {
+    const addItemFn = addItemAction(setItems, itemSaver)
+    const removeItemFn = removeItemAction(setItems, itemSaver);
 
-      if (newIndex >= 0 && newIndex < newItems.length) {
-        newItems.splice(newIndex, 0, newItem);
-      } else {
-        newItems.push(newItem);
-      }
+    addItemFn(newItem, newIndex);
 
-      itemSaver(newItems);
-      return newItems;
-    });
-    if (!historyFlag) {
-      const item = newItem;
-      const index = newIndex;
-      const historyObj = {
-        text: "New Widget",
-        type: "add",
-        unAction: () => addItem(item, index, true),
-        action: () => removeItem(item, true),
-      };
-      pushHistory(historyObj);
-    }
+    const historyObj = {
+      text: "New Widget",
+      type: "add",
+      redo: () => addItemFn(newItem, newIndex),
+      undo: () => removeItemFn(newItem),
+    };
+
+    pushHistory(historyObj);
   };
 
   const resetActiveModifier = () => {
@@ -172,31 +103,30 @@ export const DashboardProvider = ({ children }) => {
       }));
     }, 100);
   };
-  const removeItem = async (id, historyFlag) => {
-    const newItems = [...items];
-    const iIndex = newItems.findIndex((item) => item.id === id);
-    const oldItem = { ...newItems[iIndex] };
 
-    if (oldItem.type === "Job Overview") {
-      resetActiveModifier();
-    }
+  const removeItem = (id, historyFlag = false) => {
+    const itemToRemove = items.find((item) => item.id === id);
+    const index = items.findIndex((item) => item.id === id);
 
-    if (iIndex > -1) {
-      newItems.splice(iIndex, 1);
-    }
+    const removeItemFn = removeItemAction(
+      setItems,
+      itemSaver,
+      deleteImageCache,
+      resetActiveModifier
+    );
+
+    const addItemFn = addItemAction(setItems, itemSaver);
+
+    removeItemFn(itemToRemove);
 
     if (!historyFlag) {
       const historyObj = {
-        text: "Delete Widget",
-        unAction: () => removeItem(oldItem, true),
-        action: () => addItem(oldItem, iIndex, true),
+        text: 'Delete Widget',
+        undo: () => addItemFn(itemToRemove, index),
+        redo: () => removeItemFn(itemToRemove),
       };
       pushHistory(historyObj);
     }
-
-    itemSaver(newItems);
-    deleteImageCache(id);
-    setItems(newItems);
   };
 
   // // // // // // //
@@ -228,22 +158,16 @@ export const DashboardProvider = ({ children }) => {
 
     const ids = [...idRef.current];
 
+    const reorderByIndexFn = reorderByIndexAction(setItems, itemSaver);
+    
     const historyObj = {
       text: "Move",
       type: "fixed",
-      action: () => reorderByIndex(ids[0], ids[1]),
-      unAction: () => reorderByIndex(ids[1], ids[0]),
+      redo: () => reorderByIndexFn(ids[0], ids[1]),
+      undo: () => reorderByIndexFn(ids[1], ids[0]),
     };
 
     pushHistory(historyObj);
-  };
-
-  const reorderByIndex = (index1, index2) => {
-    setItems((items) => {
-      const newItems = arrayMove(items, index2, index1);
-      itemSaver(newItems);
-      return newItems;
-    });
   };
 
   const reorderById = (activeId, overId) => {
@@ -270,12 +194,16 @@ export const DashboardProvider = ({ children }) => {
       ...pageModifiers,
       ...newMods,
     };
+
+    const updatePageModifiersFn = updatePageModifiersAction(setPageModifiers, setModTimeout);
+    updatePageModifiersFn(newMods);
+
     if (!flag) {
       const historyObj = {
         text: "Modifer change",
         type: "fixed",
-        action: () => updatePageModifiers(oldMods, true),
-        unAction: () => updatePageModifiers(newModObj, true),
+        undo: () => updatePageModifiersFn(oldMods),
+        redo: () => updatePageModifiersFn(newModObj),
       };
       pushHistory(historyObj);
     }
@@ -451,10 +379,6 @@ export const DashboardProvider = ({ children }) => {
         getModiferOptions,
         captureItemState,
         compareItemStates,
-        handleUndo,
-        handleRedo,
-        undoActive,
-        redoActive,
         smartSort,
         setSmartSort,
         pageModifiers,
