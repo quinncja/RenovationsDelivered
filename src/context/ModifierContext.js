@@ -37,9 +37,6 @@ export const ModifierProvider = ({ children }) => {
       ...newMods,
     };
 
-    console.log(oldMods);
-    console.log(newModObj);
-
     const updatePageModifiersFn = updatePageModifiersAction(
       setPageModifiers,
       setModTimeout,

@@ -44,7 +44,6 @@ function BarChart({ data, open, size, tooltip }) {
   let margin = open
     ? { top: 5, right: 20, bottom: 25, left: 80 }
     : { top: 5, right: 95, bottom: 100, left: 65 };
-  console.log(data);
 
   const colors = data.map((data) => data.color);
 
