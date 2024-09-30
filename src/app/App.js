@@ -1,71 +1,21 @@
-import { useEffect, useState } from "react";
-import { Outlet, useNavigate, useLocation } from "react-router-dom";
-import Userfront from "@userfront/toolkit/react";
+import { Outlet } from "react-router-dom";
+import Navbar from "modules/navbar/Navbar";
+import useAuth from "utils/hooks/useAuth";
+import useLoad from "utils/hooks/useLoad";
+import Modal from "../modules/modals/Modal";
+import SystemMessage from "../modules/systemMessage/SystemMessage";
 import "./App.css";
-import Navbar from "components/navbar/Navbar";
-import Settings from "components/settings/Settings";
-import { AnimatePresence } from "framer-motion";
-import { useDashboardContext } from "context/DashboardContext";
-import { useUserContext } from "context/UserContext";
-import NewWidgetPopup from "components/WidgetAdder/NewWidgetPopup";
-import { useUserSettings } from "context/UserSettingsContext";
-import SettingsLoading from "components/settings/Loading";
 
 function App() {
-  const navigate = useNavigate();
-  const { setSmartSort, onLoad, newWidgetOpen, setNewWidgetOpen } =
-    useDashboardContext();
-  const { fetchCurrentUser } = useUserSettings();
-  const { setAppearance, setColorScheme, setLabel } = useUserContext();
-  const [open, setOpen] = useState(false);
-  const location = useLocation();
-  let loc = location.pathname.substring(1);
-
-  const openSettings = () => {
-    setOpen(true);
-  };
-  const closeSettings = () => {
-    setOpen(false);
-  };
-
-  useEffect(() => {
-    const loadUser = async () => {
-      try {
-        const settings = await fetchCurrentUser();
-        onLoad(
-          settings.itemArray || [],
-          settings.itemModifiers || [],
-          settings.pageModifiers || { active: "Total" },
-        );
-        setLabel(settings.label || "always");
-        setAppearance(settings.appearance || "dark");
-        setColorScheme(settings.colorScheme || "Tranquil");
-        setSmartSort(settings.smartSort || "false");
-      } catch (error) {
-        console.log(error, "failed to load user");
-      }
-    };
-    if (Userfront.user.userUuid) loadUser();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  useEffect(() => {
-    if (!Userfront.user.userUuid && loc !== "" && loc !== "login") {
-      navigate("/");
-    }
-  }, [navigate, loc]);
+  const isAuthenticated = useAuth();
+  useLoad(isAuthenticated);
 
   return (
     <div className="App">
-      {Userfront.user.userUuid && <Navbar openSettings={openSettings} />}
+      {isAuthenticated && <Navbar />}
       <Outlet />
-      <SettingsLoading />
-      <AnimatePresence>
-        {open && <Settings closeSelf={closeSettings} />}
-        {newWidgetOpen && (
-          <NewWidgetPopup closeSelf={() => setNewWidgetOpen(false)} />
-        )}
-      </AnimatePresence>
+      <Modal />
+      <SystemMessage />
     </div>
   );
 }

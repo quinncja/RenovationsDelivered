@@ -10,6 +10,7 @@ import App from "./App";
 import Dashboard from "pages/dashboard/Dashboard";
 import Userfront from "@userfront/toolkit";
 import Jobcosting from "pages/jobcosting/Jobcosting";
+import OpenItem from "pages/openItem/OpenItem";
 
 function RequireAuth({ children }) {
   let location = useLocation();
@@ -32,8 +33,15 @@ function Router() {
             path="/dashboard"
             element={
               <RequireAuth>
-                {" "}
-                <Dashboard />{" "}
+                <Dashboard />
+              </RequireAuth>
+            }
+          />
+          <Route
+            path="/item/:param"
+            element={
+              <RequireAuth>
+                <OpenItem />
               </RequireAuth>
             }
           />
@@ -41,8 +49,7 @@ function Router() {
             path="/job-costing"
             element={
               <RequireAuth>
-                {" "}
-                <Jobcosting />{" "}
+                <Jobcosting />
               </RequireAuth>
             }
           />

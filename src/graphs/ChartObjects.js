@@ -1,106 +1,37 @@
-import { fetchChartData, processTableData } from "utils/api";
-import RevenueCleaner from "./Revenue/Cleaner";
-import RevenueTooltip from "./Revenue/Tooltip";
-import MarginToolTip from "./Margin/Tooltip";
-import { marginChartProps } from "./Margin/ChartProps";
-import { revChartProps } from "./Revenue/ChartProps";
-import PieChartToolTip from "./PieChart/PieChartToolTip";
-import getVenderLabel from "./Vender/Label";
-import ytdDisplay from "./YTD/display";
-import jobDisplay from "./Jobs/jobDisplay";
-import { SingleMargin } from "./Margin/SingleMargin";
-import { trimLabel } from "./PieChart/TrimLabel";
-import transformMarginData from "./Margin/transformData.js";
-import { transformLineData } from "./LineChart/transformLineData";
+import { processTableData } from "utils/api";
+import transformMarginData from "./types/Margin/transformData.js";
+import { transformLineData } from "./charts/LineChart/transformLineData.js";
 
 export const chartObjects = [
   {
     type: "Vender Breakdown",
+    query: "vender",
     admin: false,
-    getter: (mods, signal) =>
-      fetchChartData({ ...mods, type: "vender" }, signal),
-    tooltip: (datum, sum) => <PieChartToolTip datum={datum} sum={sum} />,
-    label: (datum) => getVenderLabel(datum),
     chartType: "Pie",
-    modifierOptions: ["year", "job", "phase", "active"],
-    cleaner: (data) => {
-      return data;
-    },
-    tableFunc: (data) => {
-      return data;
-    },
   },
   {
     type: "COGs Breakdown",
+    query: "cogs",
     admin: false,
-    getter: (mods, signal) => fetchChartData({ ...mods, type: "cogs" }, signal),
-    tooltip: (datum, sum) => <PieChartToolTip datum={datum} sum={sum} />,
-    label: (datum) => trimLabel(datum.id),
     chartType: "Pie",
-    modifierOptions: ["year", "job", "phase", "active"],
-    cleaner: (data) => {
-      return data;
-    },
-    tableFunc: (data) => {
-      return data;
-    },
   },
   {
     type: "Sub Breakdown",
+    query: "sub",
     admin: false,
-    getter: (mods, signal) => fetchChartData({ ...mods, type: "sub" }, signal),
-    tooltip: (datum, sum) => <PieChartToolTip datum={datum} sum={sum} />,
-    label: (datum) => trimLabel(datum.id),
     chartType: "Pie",
-    modifierOptions: ["year", "job", "phase", "active"],
-    cleaner: (data) => {
-      return data;
-    },
-    tableFunc: (data) => {
-      return data;
-    },
   },
   {
     type: "Client Breakdown",
+    query: "client",
     admin: true,
-    getter: (mods, signal) =>
-      fetchChartData({ ...mods, type: "client" }, signal),
-    tooltip: (datum, sum) => <PieChartToolTip datum={datum} sum={sum} />,
-    label: (datum) => trimLabel(datum.id),
     chartType: "Pie",
-    modifierOptions: ["year", "job", "phase", "active"],
-    cleaner: (data) => {
-      return data;
-    },
-    tableFunc: (data) => {
-      return data;
-    },
   },
   {
     type: "Cost Analysis",
+    query: "revenue",
     admin: false,
     chartType: "Line",
-    getter: (mods, signal) =>
-      fetchChartData({ ...mods, type: "revenue" }, signal),
-    cleaner: (data) => RevenueCleaner(data),
-    tooltip: (slice) => <RevenueTooltip slice={slice} />,
-    checkIfSingle: (data) =>
-      data && data[0] && data[0].data.length === 1 ? true : false,
-    single: {
-      chartType: "Bar",
-      cleaner: (data) =>
-        data.map((item) => {
-          const flattenedData = item.data
-            .map((dataItem) => `${dataItem.y}`)
-            .join(", ");
-          return {
-            id: item.id,
-            [`${item.id} -`]: flattenedData,
-          };
-        }),
-    },
-    chartProps: revChartProps,
-    modifierOptions: ["year", "job", "phase", "active"],
     tableFunc: async (data) => {
       const processedData = await processTableData(data, "revenue");
       return transformLineData(processedData);
@@ -108,24 +39,9 @@ export const chartObjects = [
   },
   {
     type: "Margin",
+    query: "margin",
     admin: false,
     chartType: "Line",
-    getter: (mods, signal) =>
-      fetchChartData({ ...mods, type: "margin" }, signal),
-    cleaner: (data) => {
-      return data;
-    },
-    tooltip: (slice) => <MarginToolTip slice={slice} />,
-    checkIfSingle: (data) => (data && data.current.length === 1 ? true : false),
-    single: {
-      chartType: "Text",
-      display: (data) => <SingleMargin data={data} />,
-      cleaner: (data) => {
-        return data;
-      },
-    },
-    chartProps: marginChartProps,
-    modifierOptions: ["year", "job", "phase", "active"],
     tableFunc: (data) => {
       const processedData = transformMarginData(data);
       return transformLineData(processedData);
@@ -135,25 +51,26 @@ export const chartObjects = [
     type: "Status",
     admin: false,
     chartType: "Text",
-    getter: () => {
-      return {};
-    },
-    display: (data, chartObj) => jobDisplay(data, chartObj),
-    cleaner: (data) => {
-      return data;
-    },
-    modifierOptions: ["year", "job", "phase", "active"],
+    query: null,
   },
   {
     type: "Financial Overview",
-    admin: false,
+    query: "ytd",
     chartType: "Text",
-    getter: (mods, signal) => fetchChartData({ ...mods, type: "ytd" }, signal),
-    display: (data) => ytdDisplay(data),
-    cleaner: (data) => {
-      return data;
-    },
-    modifierOptions: ["year", "job", "phase", "active"],
+    admin: false,
+  },
+];
+
+export const singleChartObjs = [
+  {
+    type: "Margin",
+    chartType: "Text",
+    query: "margin",
+  },
+  {
+    type: "Cost Analysis",
+    chartType: "Bar",
+    query: "revenue-single",
   },
 ];
 
@@ -165,3 +82,13 @@ export const groupedByChartType = chartObjects.reduce((acc, obj) => {
   acc[chartType].push(obj);
   return acc;
 }, {});
+
+export const getChartObj = (type) => {
+  return chartObjects.find((obj) => obj.type === type);
+};
+
+export const getSingleChartObj = (type) => {
+  let obj = singleChartObjs.find((obj) => obj.type === type);
+  if (!obj) obj = getChartObj(type);
+  return obj;
+};

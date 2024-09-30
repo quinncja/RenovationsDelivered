@@ -182,3 +182,11 @@ export const trimLabel = (label) => {
     .replace(/llc/gi, "")
     .trim();
 };
+
+export const toParam = (str) => {
+  return str.replace(" ", "-");
+};
+
+export const fromParam = (str) => {
+  return str.replace("-", " ");
+};
