@@ -4,14 +4,14 @@ import { useProjectContext } from "context/ProjectContext";
 import { useMemo } from "react";
 import { phaseNumToMonth, statusToString } from "utils/formatters";
 
-export const JobDisplay = () => {
-  const { pageModifiers, updatePageModifiers, setModTimeout } =
-    useModifiers();
+export const JobDisplay = ({ open }) => {
+  const { pageModifiers, updatePageModifiers, setModTimeout } = useModifiers();
   const { projects } = useProjectContext();
   const selected = pageModifiers.active;
   const { jobNum, yearId, phaseId, active } = pageModifiers;
 
-  const clickHandler = (option) => {
+  const clickHandler = (e, option) => {
+    e.stopPropagation();
     const container = document.getElementById("job-display");
     if (container) {
       container.scrollTop = 0;
@@ -19,7 +19,8 @@ export const JobDisplay = () => {
     updatePageModifiers({ active: option });
   };
 
-  const changeProj = (job, year, phase) => {
+  const changeProj = (e, job, year, phase) => {
+    e.stopPropagation();
     setModTimeout(true);
     updatePageModifiers({
       jobNum: job.num,
@@ -28,7 +29,8 @@ export const JobDisplay = () => {
     });
   };
 
-  const changePhaseYear = (year, phase) => {
+  const changePhaseYear = (e, year, phase) => {
+    e.stopPropagation();
     const yearId = `xxxx-${year}`;
     const phaseFormatted = phase.toString().padStart(2, "0");
     const phaseId = `xxxx-xx-${phaseFormatted}`;
@@ -49,8 +51,8 @@ export const JobDisplay = () => {
 
   const buttonMapper = (type) => (
     <button
-      className={`job-button ${type === selected ? "active-job-button" : ""}`}
-      onClick={() => clickHandler(type)}
+      className={`job-button ${open ? "open-job-button" : ""} ${type === selected ? "active-job-button" : ""}`}
+      onClick={(e) => clickHandler(e, type)}
       key={type}
     >
       <p>{type}</p>
@@ -63,12 +65,14 @@ export const JobDisplay = () => {
       <div key={`${group.phaseName}-${group.yearNum}`}>
         <div
           className="filtered-job-button sticky-job"
-          onClick={() => changePhaseYear(group.yearNum, group.phaseNum)}
+          onClick={(e) => changePhaseYear(e, group.yearNum, group.phaseNum)}
         >{`${group.phaseName} - 20${group.yearNum}`}</div>
         {group.jobs.map(({ job, phase }) => (
           <button
             className="filtered-job-button"
-            onClick={() => changeProj(job, projects.years[phase.yearId], phase)}
+            onClick={(e) =>
+              changeProj(e, job, projects.years[phase.yearId], phase)
+            }
             key={phase.id}
           >
             <p id="fjb-name">{job.name}</p>
@@ -172,11 +176,13 @@ export const JobDisplay = () => {
     return { counts, groupedPhases, singlePhaseData: null };
   }, [jobNum, yearId, phaseId, active, projects]);
 
-  const stepBack = (phaseIndex, phases) => {
+  const stepBack = (e, phaseIndex, phases) => {
+    e.stopPropagation();
     changePhase(phases[phaseIndex - 1]);
   };
 
-  const stepForward = (phaseIndex, phases) => {
+  const stepForward = (e, phaseIndex, phases) => {
+    e.stopPropagation();
     changePhase(phases[phaseIndex + 1]);
   };
 
@@ -200,7 +206,7 @@ export const JobDisplay = () => {
         <div className="job-display-content">
           <button
             className={`job-display-arrow ${!goBackward && "arrow-hidden"}`}
-            onClick={() => stepBack(phaseIndex, year.phases)}
+            onClick={(e) => stepBack(e, phaseIndex, year.phases)}
           >
             {leftArrowSvg()}
           </button>
@@ -213,7 +219,7 @@ export const JobDisplay = () => {
           </div>
           <button
             className={`job-display-arrow ${!goForward && "arrow-hidden"}`}
-            onClick={() => stepForward(phaseIndex, year.phases)}
+            onClick={(e) => stepForward(e, phaseIndex, year.phases)}
           >
             {rightArrowSvg()}
           </button>
@@ -223,11 +229,14 @@ export const JobDisplay = () => {
   }
 
   return (
-    <div className="job-display">
+    <div className={`${open ? "open-job-display" : ""} job-display`}>
       <div className="job-buttons">
         {jobButtons.map((type) => buttonMapper(type))}
       </div>
-      <div id="job-display" className="filtered-jobs">
+      <div
+        id="job-display"
+        className={`${open ? "open-filtered-job" : ""} filtered-jobs `}
+      >
         {projectMapper(groupedPhases)}
       </div>
     </div>

@@ -133,7 +133,6 @@ function NewWidgetPopup({ closeSelf }) {
           if (chartObjects.length > 0)
             return (
               <motion.div key={index}>
-
                 <div className="widget-button-header">{chartType}</div>
                 <div className="widget-button-row">
                   {chartObjects.map((obj) => (
@@ -174,7 +173,7 @@ function NewWidgetPopup({ closeSelf }) {
   }
 
   return (
-    <div className="popup-wrapper"> 
+    <div className="popup-wrapper">
       <motion.div
         className="new-widget-popup"
         variants={newWidgetPopupVariants}

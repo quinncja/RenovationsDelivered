@@ -7,8 +7,7 @@ import { yearList, phaseList } from "utils/modifiers";
 
 export function Modifiers() {
   const { projects, getAllProjects } = useProjectContext();
-  const { pageModifiers, modTimeout, updatePageModifiers } =
-    useModifiers();
+  const { pageModifiers, modTimeout, updatePageModifiers } = useModifiers();
   const [loading, setLoading] = useState(!projects);
 
   useEffect(() => {

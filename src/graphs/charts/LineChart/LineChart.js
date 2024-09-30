@@ -2,14 +2,7 @@ import { Line } from "@nivo/line";
 import { phaseToMonth } from "utils/formatters";
 import { useCSSVariable } from "utils/hooks/useCSSVariable";
 
-function LineChart({
-  data,
-  open,
-  size,
-  chartObj,
-  chartProps,
-  tooltip,
-}) {
+function LineChart({ data, open, size, chartObj, chartProps, tooltip }) {
   const gridColor = useCSSVariable("--grid-color");
   let showLabel = true;
   const customTheme = {
@@ -41,11 +34,9 @@ function LineChart({
 
   const axisLeft = open && showLabel ? chartObj.chartProps.axisLeft : false;
   const colors =
-    chartObj.type === "Margin"
-      ? ""
-      : data.map((data) => data.color);
-  
-  console.log(data)
+    chartObj.type === "Margin" ? "" : data.map((data) => data.color);
+
+  console.log(data);
 
   if (!data) return <div style={{ margin: "auto" }}>No Data</div>;
   return (

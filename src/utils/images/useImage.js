@@ -1,5 +1,5 @@
-import { useEffect, useRef } from 'react';
-import { preloadImage, getCachedImage } from './imageCacheUtils';
+import { useEffect, useRef } from "react";
+import { preloadImage, getCachedImage } from "./imageCacheUtils";
 
 function useImage(id) {
   const imageSrc = useRef(getCachedImage(id));
@@ -10,9 +10,9 @@ function useImage(id) {
     const loadImage = () => {
       const imageData = getCachedImage(id);
       preloadImage(imageData).then((preloadedImage) => {
-          if (isMounted) {
-            imageSrc.current = preloadedImage;
-          }
+        if (isMounted) {
+          imageSrc.current = preloadedImage;
+        }
       });
     };
 
@@ -21,7 +21,7 @@ function useImage(id) {
     const interval = setInterval(loadImage, 2 * 60 * 1000);
 
     const handleVisibilityChange = () => {
-      if (document.visibilityState === 'visible') {
+      if (document.visibilityState === "visible") {
         loadImage();
       }
     };
@@ -30,14 +30,14 @@ function useImage(id) {
       loadImage();
     };
 
-    document.addEventListener('visibilitychange', handleVisibilityChange);
-    window.addEventListener('focus', handleFocus);
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+    window.addEventListener("focus", handleFocus);
 
     return () => {
       isMounted = false;
       clearInterval(interval);
-      document.removeEventListener('visibilitychange', handleVisibilityChange);
-      window.removeEventListener('focus', handleFocus);
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+      window.removeEventListener("focus", handleFocus);
     };
   }, [id]);
 

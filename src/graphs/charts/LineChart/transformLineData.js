@@ -1,4 +1,6 @@
 export function transformLineData(data) {
+  if (!data[0].data) return data;
+
   const xValues = data[0].data.map((item) => item.x);
 
   const transformedData = xValues.map((xValue, index) => {

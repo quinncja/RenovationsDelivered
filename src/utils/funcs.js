@@ -22,7 +22,6 @@ export const calculateTotalSum = (data) => {
   return data.reduce((acc, datum) => acc + datum.value, 0);
 };
 
-
 export function toggleBodyScroll(disable) {
   if (!window.tempScrollTop) {
     window.tempScrollTop = window.scrollY;
@@ -39,38 +38,44 @@ export function toggleBodyScroll(disable) {
   }
 }
 
-
 export function getItemContainers(type, open) {
-  
   if (type === "Pie") {
     const pieContainer = open
-      ? { width: "420px", height: "450px" }
+      ? { width: "640px", height: "450px" }
       : { width: "320px", height: "360px" };
 
-      let pieSize = open
+    let pieSize = open
       ? { width: 700, height: 500 }
-      : { width: 320, height: 320 };  
+      : { width: 320, height: 320 };
 
-      const imageSize = {
-        width: "100%",
-        height: "89%"
-      }
+    const imageSize = {
+      width: "100%",
+      height: "89%",
+    };
 
-    return { container: pieContainer, chartSize: pieSize, imageSize: imageSize};
+    return {
+      container: pieContainer,
+      chartSize: pieSize,
+      imageSize: imageSize,
+    };
   } else {
     const wideContainer = open
-      ? { width: "1100px", height: "450px" }
+      ? { width: "1100px", height: "400px" }
       : { width: "660px", height: "320px" };
 
-      let wideSize = open
-      ? { width: 950, height: 400 }
+    let wideSize = open
+      ? { width: 950, height: 450 }
       : { width: 640, height: 320 };
 
-      const imageSize = {
-        width: "97%",
-        height: "100%"
-      }
+    const imageSize = {
+      width: "97%",
+      height: "100%",
+    };
 
-    return { container: wideContainer, chartSize: wideSize, imageSize: imageSize};
+    return {
+      container: wideContainer,
+      chartSize: wideSize,
+      imageSize: imageSize,
+    };
   }
 }

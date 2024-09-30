@@ -1,5 +1,5 @@
 function transformMarginData(data) {
-  const dataArray = [...data.previous, ...data.current].map((obj) => {
+  const dataArray = data[0].data.map((obj) => {
     return {
       ...obj,
       y: parseFloat(obj.y.toFixed(2)),

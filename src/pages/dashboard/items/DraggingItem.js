@@ -1,6 +1,6 @@
 import BodyDisplay from "./display/BodyDisplay";
 
-export function DraggingItem({ chartObj, type, id, children, data}) {
+export function DraggingItem({ chartObj, type, id, children, data }) {
   const { chartType } = chartObj;
 
   return (
@@ -22,7 +22,12 @@ export function DraggingItem({ chartObj, type, id, children, data}) {
           ></button>
         </div>
         <div>
-          <BodyDisplay chartObj={chartObj} id={id} dragging={true} data={data}/>
+          <BodyDisplay
+            chartObj={chartObj}
+            id={id}
+            dragging={true}
+            data={data}
+          />
         </div>
       </div>
     </div>

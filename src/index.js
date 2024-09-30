@@ -14,18 +14,18 @@ import { ItemsProvider } from "context/ItemsContext";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <SystemMessageProvider>
-    <ModalProvider> 
+    <ModalProvider>
       <UserSettingsProvider>
-      <HistoryProvider> 
-      <ItemsProvider> 
-        <ModifierProvider>
-            <ProjectProvider>
-              <UserProvider>
-                <Router />
-              </UserProvider>
-            </ProjectProvider>
+        <HistoryProvider>
+          <ItemsProvider>
+            <ModifierProvider>
+              <ProjectProvider>
+                <UserProvider>
+                  <Router />
+                </UserProvider>
+              </ProjectProvider>
             </ModifierProvider>
-            </ItemsProvider>
+          </ItemsProvider>
         </HistoryProvider>
       </UserSettingsProvider>
     </ModalProvider>

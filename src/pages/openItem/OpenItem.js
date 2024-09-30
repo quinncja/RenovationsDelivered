@@ -1,136 +1,68 @@
-import ReactTable from "pages/openItem/ReactTable";
-import whiteLogo from "images/R-Only-White-Empty.png";
-import blackLogo from "images/R-Only-Grey-Empty.png";
+import { useEffect, useRef } from "react";
+import { getChartObj, getSingleChartObj } from "graphs/ChartObjects";
+import { useNavigate, useParams } from "react-router-dom";
+import { fromParam } from "utils/formatters";
+import { useChartData } from "utils/hooks/useChartData";
+import { useItems } from "context/ItemsContext";
+import { useSingle } from "utils/hooks/useSingle";
+import DataLayer from "./DataLayer";
 
-import { useEffect, useState, useMemo } from "react";
-import { close } from "business/svg";
-import ChartDisplay from "graphs/ChartDisplay";
-import LegendDisplay from "pages/openItem/LegendDisplay";
-import { useModifiers } from "context/ModifierContext";
-import { useUserContext } from "context/UserContext";
-import { useProjectContext } from "context/ProjectContext";
-import { getChartObj } from "graphs/ChartObjects";
+function OpenItem() {
+  const navigate = useNavigate();
+  const single = useSingle();
+  const { param } = useParams();
+  const type = fromParam(param);
+  const chartObj = single ? getSingleChartObj(type) : getChartObj(type);
+  if (!chartObj) navigate("/dashboard");
 
-function OpenItem({ item, closeSelf }) {
-  const { data, chartType, type, id } = item;
-  const [activeColumn, setActiveColumn] = useState();
-  const { appearance } = useUserContext();
-  const [tableData, setTableData] = useState();
-  const { pageModifiers } = useModifiers();
-  const { pageModifierToString } = useProjectContext();
-  const chartObj = getChartObj(type);
-  const [filteredIds, setFilteredIds] = useState([]);
-
-  const showSingle = useMemo(() => {
-    return data && chartObj.checkIfSingle && chartObj.checkIfSingle(data);
-  }, [data, chartObj]);
-
-  const chartToShow = useMemo(() => {
-    return showSingle ? chartObj.single : chartObj;
-  }, [showSingle, chartObj]);
-
-  const initialDataToShow = useMemo(() => {
-    return showSingle ? chartToShow.cleaner(data) : data;
-  }, [showSingle, chartToShow, data]);
-
-  const dataToShow = useMemo(() => {
-    if (Array.isArray(initialDataToShow)) {
-      return initialDataToShow.filter(
-        (dataItem) => !filteredIds.includes(dataItem.id),
-      );
-    }
-    return initialDataToShow;
-  }, [initialDataToShow, filteredIds]);
-
-  function handleClose() {
-    closeSelf();
-  }
-
-  function toggleData(item) {
-    const { id: toggledId } = item;
-    setFilteredIds((prevFilteredIds) => {
-      if (prevFilteredIds.includes(toggledId)) {
-        return prevFilteredIds.filter((currentId) => currentId !== toggledId);
-      } else {
-        return [...prevFilteredIds, toggledId];
-      }
-    });
-  }
+  const { dataMap, clearOpenData } = useItems();
+  const loadData = useChartData();
+  const abortControllerRef = useRef(null);
+  const data = type === "Status" ? [] : dataMap["open"] || null;
 
   useEffect(() => {
-    const loadTableData = async () => {
+    const fetchData = async () => {
       try {
-        const tData = await chartObj.tableFunc(data);
-        setTableData(tData);
+        if (abortControllerRef.current) {
+          abortControllerRef.current.abort();
+        }
+        const controller = new AbortController();
+        abortControllerRef.current = controller;
+        loadData("open", chartObj.query, controller.signal);
       } catch (error) {
-        console.log(error);
+        if (error.name === "AbortError") {
+          console.log("Fetch request aborted");
+        } else {
+          console.error("Error fetching data:", error);
+        }
       }
     };
 
-    const timer = setTimeout(() => {
-      loadTableData();
-    }, 500);
+    fetchData();
 
-    return () => clearTimeout(timer);
-  }, [chartObj, data]);
+    return () => {
+      if (abortControllerRef.current) {
+        abortControllerRef.current.abort();
+      }
+    };
+  }, [type, loadData, chartObj.query]);
+
+  function handleClose() {
+    clearOpenData();
+    navigate(`/dashboard`);
+  }
 
   return (
     <div
       className="widget-background dashboard-widget-open"
-      onClick={() => closeSelf()}
+      onClick={handleClose}
     >
       <div
-        className="open-widget-top-container"
+        className={`${!data ? "loading-widget" : ""} open-widget-container`}
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="open-widget-top">
-          <div className="open-widget-left">
-            <img
-              src={appearance === "light" ? blackLogo : whiteLogo}
-              className="logo nav-logo"
-              alt="Renovations Delivered"
-            />
-            <div className="widget-title open-widget-title">
-              <h2> {type} </h2>{" "}
-              <span className="pmt">
-                {" "}
-                {pageModifierToString(pageModifiers)}{" "}
-              </span>
-            </div>
-          </div>
-          <button
-            className="x-button widget-item open-widget-close"
-            onClick={handleClose}
-          >
-            {close()}
-          </button>
-        </div>
-      </div>
-
-      <div
-        className="open-widget-container"
-        onClick={(e) => e.stopPropagation()}
-      >
-        <div
-          className={`open-chart-row ${chartType === "Pie" && "pie-chart-row"}`}
-        >
-          <ChartDisplay
-            chartObj={chartToShow}
-            handleClick={setActiveColumn}
-            data={dataToShow}
-            id={id}
-            open={true}
-          />
-          {chartObj.type !== "Margin" && (
-            <LegendDisplay
-              data={initialDataToShow}
-              toggleData={toggleData}
-              filteredIds={filteredIds}
-              line={chartType === "Line" ? true : false}
-            />
-          )}
-        </div>
-        <ReactTable data={tableData} activeColumn={activeColumn} />
+        <h2 style={{ paddingTop: "20px" }}> {type} </h2>
+        {data && <DataLayer data={data} chartObj={chartObj} />}
       </div>
     </div>
   );

@@ -12,7 +12,7 @@ function App() {
 
   return (
     <div className="App">
-      {isAuthenticated && <Navbar/>}
+      {isAuthenticated && <Navbar />}
       <Outlet />
       <Modal />
       <SystemMessage />

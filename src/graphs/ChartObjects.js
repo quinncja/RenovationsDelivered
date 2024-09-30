@@ -70,9 +70,9 @@ export const singleChartObjs = [
   {
     type: "Cost Analysis",
     chartType: "Bar",
-    query: "revenue-single"
-  }
-]
+    query: "revenue-single",
+  },
+];
 
 export const groupedByChartType = chartObjects.reduce((acc, obj) => {
   const { chartType } = obj;
@@ -89,6 +89,6 @@ export const getChartObj = (type) => {
 
 export const getSingleChartObj = (type) => {
   let obj = singleChartObjs.find((obj) => obj.type === type);
-  if(!obj) obj = getChartObj(type)
-  return obj
+  if (!obj) obj = getChartObj(type);
+  return obj;
 };

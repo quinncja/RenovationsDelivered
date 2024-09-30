@@ -5,14 +5,7 @@ import getVenderLabel from "graphs/types/Vender/Label";
 import { CenterSum } from "./CenterSum";
 import { trimLabel } from "./TrimLabel";
 
-function PieChart({
-  data,
-  open,
-  size,
-  chartRef,
-  tooltip,
-  chartProps
-}) {
+function PieChart({ data, open, size, chartRef, tooltip, chartProps }) {
   const arcLabelColor = "#f3f3f3";
   const arcLinkLabelColor = useCSSVariable("--white");
 
@@ -29,7 +22,7 @@ function PieChart({
     const vendorLabel = getVenderLabel(datum);
     const trimmedLabel = trimLabel(vendorLabel);
     return trimmedLabel;
-  }
+  };
 
   const margin = open
     ? { top: 40, bottom: 90, right: 50, left: 70 }
@@ -39,7 +32,7 @@ function PieChart({
     <Pie
       {...size}
       {...chartProps}
-      tooltip={({datum}) => tooltip(datum, sum)}
+      tooltip={({ datum }) => tooltip(datum, sum)}
       data={slicedData}
       ref={chartRef}
       colors={(datum) => datum.data.color}

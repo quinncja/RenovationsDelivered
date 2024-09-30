@@ -62,11 +62,11 @@ function Dashboard() {
     }, 105);
   }
 
-  if (items &&
+  if (
+    items &&
     (items.length === 0 || (items.length === 1 && _.isEmpty(items[0])))
-  ) return (
-    <EmptyDashboard/>
-  );
+  )
+    return <EmptyDashboard />;
 
   return (
     <>

@@ -1,9 +1,7 @@
 export function SingleMargin(props) {
-
   const { data } = props;
-  console.log(data)
-  const margin = 
-  data[0].data[0] ? data[0].data[0].y.toFixed(2) : ""
+  console.log(data);
+  const margin = data[0].data[0] ? data[0].data[0].y.toFixed(2) : "";
 
   // let text;
   // let currMargin;

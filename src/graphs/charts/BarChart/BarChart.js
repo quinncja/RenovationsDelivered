@@ -2,12 +2,7 @@ import { Bar } from "@nivo/bar";
 import { dollarFormatter } from "utils/formatters";
 import { useCSSVariable } from "utils/hooks/useCSSVariable";
 
-function BarChart({ 
-  data, 
-  open, 
-  size,
-  tooltip, 
-}) {
+function BarChart({ data, open, size, tooltip }) {
   const gridColor = useCSSVariable("--grid-color");
 
   let showLabel = true;
@@ -45,13 +40,13 @@ function BarChart({
   function generateDataKeys(data) {
     return data.map((item) => `${item.id} - `);
   }
-    
+
   let margin = open
     ? { top: 5, right: 20, bottom: 25, left: 80 }
     : { top: 5, right: 95, bottom: 100, left: 65 };
-    console.log(data)
+  console.log(data);
 
-  const colors = data.map((data) => data.color)
+  const colors = data.map((data) => data.color);
 
   if (!data) return <div style={{ margin: "auto" }}>No Data</div>;
   return (

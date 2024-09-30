@@ -3,12 +3,12 @@ import { useModalContext } from "modules/modals/ModalContext";
 import { motion } from "framer-motion";
 import { newWidgetButtonVariants } from "utils/animations";
 
-function NewWidgetButton({toggleExpanded}) {
-  const {openModal} = useModalContext()
+function NewWidgetButton({ toggleExpanded }) {
+  const { openModal } = useModalContext();
 
   const handleClick = () => {
-    toggleExpanded()
-    openModal('newWidget');
+    toggleExpanded();
+    openModal("newWidget");
   };
 
   return (

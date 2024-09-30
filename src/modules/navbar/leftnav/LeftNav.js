@@ -10,23 +10,23 @@ function LeftNav() {
   const toggleExpanded = () => {
     setExpanded(!expanded);
   };
-  
+
   return (
-      <div className="top-left-container">
-        <motion.div
-          className="nav-container"
-          variants={topbarVariants}
-          initial="initial"
-          animate={expanded ? "expanded" : "initial"}
-          exit="exit"
-        >
-          <Logo expanded={expanded} toggleExpanded={toggleExpanded}/>
-          <AnimatePresence> 
-            {expanded && <Dropdown toggleExpanded={toggleExpanded}/>}
-          </AnimatePresence>
-        </motion.div>
-        <Modifiers />
-      </div>
+    <div className="top-left-container">
+      <motion.div
+        className="nav-container"
+        variants={topbarVariants}
+        initial="initial"
+        animate={expanded ? "expanded" : "initial"}
+        exit="exit"
+      >
+        <Logo expanded={expanded} toggleExpanded={toggleExpanded} />
+        <AnimatePresence>
+          {expanded && <Dropdown toggleExpanded={toggleExpanded} />}
+        </AnimatePresence>
+      </motion.div>
+      <Modifiers />
+    </div>
   );
 }
 

@@ -1,10 +1,10 @@
-import React from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { overlayVariants } from 'utils/animations';
-import { useCSSVariable } from 'utils/hooks/useCSSVariable';
+import React from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { overlayVariants } from "utils/animations";
+import { useCSSVariable } from "utils/hooks/useCSSVariable";
 
 const Overlay = ({ isVisible, onClick, zIndex = 15 }) => {
-const color = useCSSVariable("--overlay");
+  const color = useCSSVariable("--overlay");
 
   return (
     <AnimatePresence>

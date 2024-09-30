@@ -1,9 +1,4 @@
-import React, {
-  createContext,
-  useContext,
-  useEffect,
-  useState,
-} from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
 import { useUserSettings } from "./UserSettingsContext";
 import { updatePageModifiersAction } from "utils/dashboardActions";
 import { useHistory } from "./HistoryContext";
@@ -23,14 +18,14 @@ export const ModifierProvider = ({ children }) => {
     active: "Total",
   });
   const [modTimeout, setModTimeout] = useState(true);
-  const { pushHistory } = useHistory()
+  const { pushHistory } = useHistory();
 
   useEffect(() => {
     if (modTimeout) {
       setTimeout(() => {
         setModTimeout(false);
       }, 1000);
-    } 
+    }
   }, [modTimeout]);
 
   const updatePageModifiers = (newMods, flag = false) => {
@@ -42,10 +37,14 @@ export const ModifierProvider = ({ children }) => {
       ...newMods,
     };
 
-    console.log(oldMods)
-    console.log(newModObj)
+    console.log(oldMods);
+    console.log(newModObj);
 
-    const updatePageModifiersFn = updatePageModifiersAction(setPageModifiers, setModTimeout, clearDataMap);
+    const updatePageModifiersFn = updatePageModifiersAction(
+      setPageModifiers,
+      setModTimeout,
+      clearDataMap,
+    );
     updatePageModifiersFn(newMods);
 
     if (!flag) {
@@ -73,11 +72,10 @@ export const ModifierProvider = ({ children }) => {
     // eslint-disable-next-line
   }, [pageModifiers]);
 
-  
-  // // // // // // // 
-  //    INACTIVE    // 
+  // // // // // // //
+  //    INACTIVE    //
   // Item Modifiers //
-  // // // // // // //   
+  // // // // // // //
 
   // const modifierSaver = async (mods) => {
   //   try {
@@ -154,7 +152,7 @@ export const ModifierProvider = ({ children }) => {
   // };
 
   // // // // // // //
-  //    INACTIVE    // 
+  //    INACTIVE    //
   //   Smart Sort   //
   // // // // // // //
 

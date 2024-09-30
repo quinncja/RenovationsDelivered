@@ -555,8 +555,7 @@ h1 {
 }
 
 .dashboard-widget-open {
-  position: fixed;
-  top: 0;
+  position: relative;
   color: var(--less-white);
   width: 100vw !important;
   min-height: 100vh !important;
@@ -565,7 +564,6 @@ h1 {
   opacity: 1;
   cursor: unset;
   padding-bottom: 100px;
-  z-index: 20;
   border: none !important;
   background-color: var(--background);
 }
@@ -635,9 +633,9 @@ h1 {
 .setting-widget {
   position: fixed;
   z-index: 18 !important;
-  top: 50%; 
+  top: 50%;
   right: 50%;
-  transform: translate(50%,-50%);
+  transform: translate(50%, -50%);
   width: 33%;
   min-height: 75%;
   z-index: 11;
@@ -889,16 +887,17 @@ h1 {
   flex-direction: column;
   gap: 0px;
   padding-inline: -20px;
+  margin-top: 20px;
   padding-left: 20px;
   padding-right: 20px;
-  padding-bottom: 20px;
+  padding-bottom: 10px;
   max-height: 400px;
   min-width: 100px;
   width: max-content;
   overflow-y: scroll;
-  padding-top: 20px;
   background-color: var(--dark);
   z-index: 10;
+  box-sizing: border-box;
 }
 .legend-box-line {
   margin-left: -90px;
@@ -925,27 +924,33 @@ h1 {
 }
 
 .open-chart-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
   width: 100%;
   margin-inline: auto;
   box-sizing: border-box;
-  padding-top: 50px;
+  padding-top: 0px;
 }
 
 .open-widget-container {
-  width: min-content;
+  position: relative;
+  width: clamp(300px, 90vw, 2000px);
   margin-inline: auto;
-  height: fit-content;
-  margin-top: 30px;
+  min-height: 90vh;
+  margin-top: 77px;
   border-radius: 2px;
   background-color: var(--dark);
   border: 3px solid var(--fancy-border);
   display: flex;
   flex-direction: column;
   gap: 50px;
-  padding-bottom: 50px;
-  width: 82vw;
+  padding-top: 10px;
+  padding-bottom: 100px;
+  overflow-x: scroll;
+}
+.open-widget-container h2 {
+  margin: 0;
 }
 
 .pie-chart-row {
@@ -1331,7 +1336,7 @@ h1 {
   filter: brightness(var(--filter4));
 }
 
-.popup-wrapper{
+.popup-wrapper {
   position: fixed;
   top: 0;
   display: flex;
@@ -1353,7 +1358,7 @@ h1 {
   background-color: var(--dark);
   border: 3px solid var(--fancy-border);
   color: var(--less-white);
-  pointer-events: auto; 
+  pointer-events: auto;
 }
 
 .new-widget-button-row {
@@ -1440,6 +1445,7 @@ h1 {
   background-color: var(--dark);
   padding: 8px 12px;
   color: var(--less-white);
+  z-index: 12;
 }
 .empty-space {
   width: 50px;
@@ -1476,6 +1482,9 @@ h1 {
   gap: 8px;
   margin-top: -5px;
 }
+.ytd-open {
+  width: clamp(300px, 50vw, 800px);
+}
 
 .ytd-single {
   display: flex;
@@ -1497,6 +1506,21 @@ h1 {
   text-align: center;
   margin: 0;
 }
+.single-open {
+  padding: 20px 30px;
+}
+.single-open > p {
+  text-align: left;
+  margin: 0;
+  font-size: 18px;
+  color: var(--less-white);
+}
+
+.single-open > h2 {
+  text-align: center;
+  margin: 0;
+  font-size: 32px;
+}
 
 .job-display {
   display: flex;
@@ -1507,6 +1531,13 @@ h1 {
   width: calc(var(--widget-size) - 6px);
   height: calc(var(--widget-size) - 60px);
   box-sizing: border-box;
+}
+.open-job-display {
+  width: clamp(300px, 40vw, 2000px);
+  height: clamp(300px, 80vh, 2000px);
+}
+.open-job-display .filtered-jobs {
+  height: unset;
 }
 .job-display-single {
   justify-content: flex-start;
@@ -1575,6 +1606,7 @@ h1 {
   justify-content: space-between;
   width: 100%;
   margin-inline: auto;
+  gap: 10px;
 }
 .job-button {
   border: none;
@@ -1591,6 +1623,9 @@ h1 {
   padding: 8px 15px;
   border-radius: 2px;
   width: 85px;
+}
+.open-job-button {
+  width: 180px;
 }
 .job-button * {
   margin: 0;
