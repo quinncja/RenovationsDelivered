@@ -1,5 +1,5 @@
 import { AnimatePresence, motion } from "framer-motion";
-import { useSystemMessage } from "modules/systemMessage/SystemMessageContext";
+import { useSystemMessage } from "context/SystemMessageContext";
 import { itemFadeIn } from "utils/animations";
 
 function SystemMessage(){

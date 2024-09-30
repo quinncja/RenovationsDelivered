@@ -435,6 +435,7 @@ h1 {
 }
 
 .dashboard-widget {
+  position: relative;
   color: var(--white);
   display: flex;
   flex-direction: column;

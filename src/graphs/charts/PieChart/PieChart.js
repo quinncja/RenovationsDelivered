@@ -1,45 +1,45 @@
 import { Pie } from "@nivo/pie";
-import { CenterSum } from "./CenterSum";
 import { calculateTotalSum } from "utils/funcs";
 import { useCSSVariable } from "utils/hooks/useCSSVariable";
-import { hashData } from "utils/colors";
-import { trimLabel } from "utils/formatters";
+import getVenderLabel from "graphs/types/Vender/Label";
+import { CenterSum } from "./CenterSum";
+import { trimLabel } from "./TrimLabel";
 
 function PieChart({
   data,
   open,
   size,
-  chartObj,
-  showLabel,
   chartRef,
-  colorScheme,
+  tooltip,
+  chartProps
 }) {
   const arcLabelColor = "#f3f3f3";
   const arcLinkLabelColor = useCSSVariable("--white");
-  const visualData = data.map((datum) => hashData(datum, colorScheme));
 
   const sum = calculateTotalSum(data);
-  const slicedData = visualData.slice(0, 20);
+  const slicedData = data.slice(0, 20);
 
-  const getPercentage = (datum) => {
-    if (sum === 0) return "0%";
-    const percentage = (datum.value / sum) * 100;
-    return `${percentage.toFixed(2)}%`;
-  };
+  // const getPercentage = (datum) => {
+  //   if (sum === 0) return "0%";
+  //   const percentage = (datum.value / sum) * 100;
+  //   return `${percentage.toFixed(2)}%`;
+  // };
+
+  const label = (datum) => {
+    const vendorLabel = getVenderLabel(datum);
+    const trimmedLabel = trimLabel(vendorLabel);
+    return trimmedLabel;
+  }
 
   const margin = open
     ? { top: 40, bottom: 90, right: 50, left: 70 }
     : { top: 10, bottom: 90, right: 0, left: -20 };
 
-  const label = (datum) => {
-    return open
-      ? getPercentage(datum)
-      : showLabel && trimLabel(chartObj.label(datum));
-  };
-
   return (
     <Pie
       {...size}
+      {...chartProps}
+      tooltip={({datum}) => tooltip(datum, sum)}
       data={slicedData}
       ref={chartRef}
       colors={(datum) => datum.data.color}
@@ -53,7 +53,6 @@ function PieChart({
         from: "color",
         modifiers: [["darker", "0.3"]],
       }}
-      tooltip={({ datum }) => chartObj.tooltip(datum, sum)}
       arcLabel={(datum) => label(datum)}
       arcLabelsSkipAngle={open ? 10 : 20}
       enableArcLinkLabels={open ? true : false}

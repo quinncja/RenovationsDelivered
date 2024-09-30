@@ -1,11 +1,16 @@
-import { BarCanvas } from "@nivo/bar";
-import { hashData } from "utils/colors";
+import { Bar } from "@nivo/bar";
 import { dollarFormatter } from "utils/formatters";
 import { useCSSVariable } from "utils/hooks/useCSSVariable";
 
-function BarChart({ data, open, size, showLabel, chartRef, colorScheme }) {
+function BarChart({ 
+  data, 
+  open, 
+  size,
+  tooltip, 
+}) {
   const gridColor = useCSSVariable("--grid-color");
 
+  let showLabel = true;
   const customTheme = {
     grid: {
       line: {
@@ -28,9 +33,6 @@ function BarChart({ data, open, size, showLabel, chartRef, colorScheme }) {
       },
     },
   };
-  function generateDataKeys(data) {
-    return data.map((item) => `${item.id} -`);
-  }
 
   const axisLeft =
     open && showLabel
@@ -40,16 +42,22 @@ function BarChart({ data, open, size, showLabel, chartRef, colorScheme }) {
         }
       : false;
 
+  function generateDataKeys(data) {
+    return data.map((item) => `${item.id} - `);
+  }
+    
   let margin = open
     ? { top: 5, right: 20, bottom: 25, left: 80 }
     : { top: 5, right: 95, bottom: 100, left: 65 };
+    console.log(data)
+
+  const colors = data.map((data) => data.color)
 
   if (!data) return <div style={{ margin: "auto" }}>No Data</div>;
   return (
-    <BarCanvas
+    <Bar
       data={data}
-      colors={data.map((data) => hashData(data, colorScheme).color)}
-      ref={chartRef}
+      colors={colors}
       keys={generateDataKeys(data)}
       {...size}
       indexBy="id"
@@ -79,15 +87,7 @@ function BarChart({ data, open, size, showLabel, chartRef, colorScheme }) {
         from: "color",
         modifiers: [["darker", 1.6]],
       }}
-      tooltip={({ id, color, value }) => (
-        <div className="tooltip">
-          <span
-            className="tooltip-cube"
-            style={{ backgroundColor: color }}
-          ></span>
-          <strong>{id}</strong> {dollarFormatter(value)}
-        </div>
-      )}
+      tooltip={({ id, color, value }) => tooltip(id, color, value)}
       enableLabel={false}
       enableGridY={showLabel ? true : false}
       role="application"

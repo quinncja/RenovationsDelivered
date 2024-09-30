@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { smartSortVariants } from "utils/animations";
-import { useDashboardContext } from "context/DashboardContext";
+import { useDashboardContext } from "context/ModifierContext";
 import { useUserSettings } from "context/UserSettingsContext";
 
 function ToggleSort({ item }) {

@@ -1,6 +1,6 @@
 import { dollarFormatter } from "utils/formatters";
 
-export const ytdDisplay = (data) => {
+export const YTDDisplay = ({data}) => {
   const { Contract, Budget, Cost } = data[0];
   const margin = (Contract - Cost) / Contract;
 
@@ -26,4 +26,4 @@ export const ytdDisplay = (data) => {
   );
 };
 
-export default ytdDisplay;
+export default YTDDisplay;

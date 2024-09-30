@@ -1,11 +1,10 @@
 export const blankImage =
-  "data:image/gif;base64,R0lGODlhAQABAIAAAAUEBAgAAAAAAAD/AQA4IBAwADs="; // Transparent 1x1 pixel image
+  "data:image/gif;base64,R0lGODlhAQABAIAAAAUEBAgAAAAAAAD/AQA4IBAwADs=";
 
 export const preloadImage = (imageSrc) => {
   return new Promise((resolve) => {
     const img = new Image();
     img.src = imageSrc;
-
     img.onload = () => resolve(imageSrc);
   });
 };

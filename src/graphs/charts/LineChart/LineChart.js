@@ -1,5 +1,4 @@
 import { Line } from "@nivo/line";
-import { hashData } from "utils/colors";
 import { phaseToMonth } from "utils/formatters";
 import { useCSSVariable } from "utils/hooks/useCSSVariable";
 
@@ -7,13 +6,12 @@ function LineChart({
   data,
   open,
   size,
-  handleClick,
-  showLabel,
   chartObj,
-  colorScheme,
+  chartProps,
+  tooltip,
 }) {
   const gridColor = useCSSVariable("--grid-color");
-
+  let showLabel = true;
   const customTheme = {
     grid: {
       line: {
@@ -40,21 +38,21 @@ function LineChart({
   let margin = open
     ? { top: 5, right: 20, bottom: 50, left: 50 }
     : { top: 5, right: 70, bottom: 120, left: 40 };
+
   const axisLeft = open && showLabel ? chartObj.chartProps.axisLeft : false;
-  let chartData = chartObj.chartProps.chartFormat
-    ? chartObj.chartProps.chartFormat(data)
-    : data;
   const colors =
     chartObj.type === "Margin"
-      ? colorScheme.map((obj) => obj.color)
-      : data.map((data) => hashData(data, colorScheme).color);
+      ? ""
+      : data.map((data) => data.color);
+  
+  console.log(data)
 
   if (!data) return <div style={{ margin: "auto" }}>No Data</div>;
   return (
     <Line
-      {...chartObj.chartProps}
+      {...chartProps}
       {...size}
-      data={chartData}
+      data={data}
       margin={margin}
       xScale={{ type: "point" }}
       yScale={{
@@ -98,12 +96,7 @@ function LineChart({
       enableTouchCrosshair={true}
       useMesh={true}
       enableSlices={"x"}
-      onClick={(data) => {
-        if (handleClick) {
-          handleClick(data.points[0].data.x);
-        }
-      }}
-      sliceTooltip={({ slice }) => chartObj.tooltip(slice)}
+      sliceTooltip={({ slice }) => tooltip(slice)}
       theme={customTheme}
       animate={true}
     />

@@ -1,21 +1,22 @@
+import ReactTable from "pages/openItem/ReactTable";
+import whiteLogo from "images/R-Only-White-Empty.png";
+import blackLogo from "images/R-Only-Grey-Empty.png";
+
 import { useEffect, useState, useMemo } from "react";
 import { close } from "business/svg";
 import ChartDisplay from "graphs/ChartDisplay";
-import LegendDisplay from "graphs/LegendDisplay";
-import { useDashboardContext } from "context/DashboardContext";
-import ReactTable from "graphs/ReactTable";
-
-import whiteLogo from "images/R-Only-White-Empty.png";
-import blackLogo from "images/R-Only-Grey-Empty.png";
+import LegendDisplay from "pages/openItem/LegendDisplay";
+import { useModifiers } from "context/ModifierContext";
 import { useUserContext } from "context/UserContext";
 import { useProjectContext } from "context/ProjectContext";
+import { getChartObj } from "graphs/ChartObjects";
 
 function OpenItem({ item, closeSelf }) {
   const { data, chartType, type, id } = item;
   const [activeColumn, setActiveColumn] = useState();
   const { appearance } = useUserContext();
   const [tableData, setTableData] = useState();
-  const { getChartObj, pageModifiers } = useDashboardContext();
+  const { pageModifiers } = useModifiers();
   const { pageModifierToString } = useProjectContext();
   const chartObj = getChartObj(type);
   const [filteredIds, setFilteredIds] = useState([]);

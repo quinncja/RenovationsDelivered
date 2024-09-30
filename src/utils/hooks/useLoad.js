@@ -1,10 +1,12 @@
 import { useEffect } from 'react';
-import { useDashboardContext } from 'context/DashboardContext';
+import { useModifiers } from 'context/ModifierContext';
 import { useUserContext } from 'context/UserContext';
 import { useUserSettings } from 'context/UserSettingsContext';
+import { useItems } from 'context/ItemsContext';
 
 const useLoad = (isAuthenticated) => {
-  const { setSmartSort, onLoad } = useDashboardContext();
+  const { setPageModifiers } = useModifiers();
+  const { setItems } = useItems();
   const { fetchCurrentUser } = useUserSettings();
   const { setAppearance, setColorScheme, setLabel } = useUserContext();
 
@@ -12,15 +14,11 @@ const useLoad = (isAuthenticated) => {
     const loadUser = async () => {
       try {
         const settings = await fetchCurrentUser();
-        onLoad(
-          settings.itemArray || [],
-          settings.itemModifiers || [],
-          settings.pageModifiers || { active: 'Total' }
-        );
-        setLabel(settings.label || 'always');
-        setAppearance(settings.appearance || 'dark');
-        setColorScheme(settings.colorScheme || 'Tranquil');
-        setSmartSort(settings.smartSort || 'false');
+        setPageModifiers(settings.pageModifiers || { active: 'Total' })
+        setItems( settings.itemArray || [])
+        setLabel( settings.label || 'always');
+        setAppearance( settings.appearance || 'dark');
+        setColorScheme( settings.colorScheme || 'Tranquil');
       } catch (error) {
         console.error('Failed to load user:', error);
       }

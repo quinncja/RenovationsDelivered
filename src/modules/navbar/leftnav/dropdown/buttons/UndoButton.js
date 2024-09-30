@@ -1,10 +1,10 @@
 import { UndoSvg } from "business/svg";
-import { useDashboardContext } from "context/DashboardContext";
+import { useHistory } from "context/HistoryContext";
 import { AnimatePresence, motion } from "framer-motion";
 import { undoVariants } from "utils/animations";
 
 function UndoButton() {
-  const { undoActive, handleUndo } = useDashboardContext();
+  const { undoActive, handleUndo } = useHistory();
 
   return (
     <AnimatePresence>
@@ -13,7 +13,7 @@ function UndoButton() {
         initial="hidden"
         animate="visible"
         variants={undoVariants}
-        onClick={handleUndo}
+        onClick={() => handleUndo()}
         className={`topbar-button ${!undoActive && "topbar-button-disabled"}`}
       >
         {UndoSvg()}

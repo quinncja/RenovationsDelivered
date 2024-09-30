@@ -19,7 +19,6 @@ export const addItemAction = (setItems, itemSaver) => (newItem, newIndex) => {
     setItems,
     itemSaver,
     deleteImageCache,
-    resetActiveModifier
   ) => (itemToRemove) => {
     setItems((prevItems) => {
       const newItems = prevItems.filter((item) => item.id !== itemToRemove.id);
@@ -29,10 +28,6 @@ export const addItemAction = (setItems, itemSaver) => (newItem, newIndex) => {
   
     if (deleteImageCache) {
       deleteImageCache(itemToRemove.id);
-    }
-  
-    if (resetActiveModifier && itemToRemove.type === 'Job Overview') {
-      resetActiveModifier();
     }
   };
   
@@ -65,9 +60,9 @@ export const addItemAction = (setItems, itemSaver) => (newItem, newIndex) => {
     });
   };
 
-export const updatePageModifiersAction = (setPageModifiers, setModTimeout) => (newMods) => {
+export const updatePageModifiersAction = (setPageModifiers, setModTimeout, clearDataMap) => (newMods) => {
+    clearDataMap()
     setModTimeout(true);
-  
     setPageModifiers((prevModifiers) => ({
       ...prevModifiers,
       ...newMods,

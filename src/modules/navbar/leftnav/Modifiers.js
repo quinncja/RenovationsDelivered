@@ -1,5 +1,5 @@
 import Select from "react-dropdown-select";
-import { useDashboardContext } from "context/DashboardContext";
+import { useModifiers } from "context/ModifierContext";
 import { useProjectContext } from "context/ProjectContext";
 import { useEffect, useState } from "react";
 import { close } from "business/svg";
@@ -8,7 +8,7 @@ import { yearList, phaseList } from "utils/modifiers";
 export function Modifiers() {
   const { projects, getAllProjects } = useProjectContext();
   const { pageModifiers, modTimeout, updatePageModifiers } =
-    useDashboardContext();
+    useModifiers();
   const [loading, setLoading] = useState(!projects);
 
   useEffect(() => {

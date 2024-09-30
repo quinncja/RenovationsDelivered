@@ -1,12 +1,12 @@
 import { leftArrowSvg, rightArrowSvg } from "business/svg";
-import { useDashboardContext } from "context/DashboardContext";
+import { useModifiers } from "context/ModifierContext";
 import { useProjectContext } from "context/ProjectContext";
 import { useMemo } from "react";
 import { phaseNumToMonth, statusToString } from "utils/formatters";
 
 export const JobDisplay = () => {
   const { pageModifiers, updatePageModifiers, setModTimeout } =
-    useDashboardContext();
+    useModifiers();
   const { projects } = useProjectContext();
   const selected = pageModifiers.active;
   const { jobNum, yearId, phaseId, active } = pageModifiers;

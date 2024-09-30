@@ -13,10 +13,10 @@ import {
 } from "../../../utils/animations";
 import { chartObjects, groupedByChartType } from "graphs/ChartObjects";
 import { generateRandomId } from "utils/funcs";
-import { useDashboardContext } from "context/DashboardContext";
+import { useItems } from "context/ItemsContext";
 
 function NewWidgetPopup({ closeSelf }) {
-  const { addItem, addMultItems } = useDashboardContext();
+  const { addItem, addMultItems } = useItems();
   const [body, setBody] = useState();
 
   const chartObjectMap = chartObjects.reduce((acc, chartObject) => {

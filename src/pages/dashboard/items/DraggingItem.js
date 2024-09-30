@@ -1,10 +1,12 @@
-import ChartDisplay from "graphs/ChartDisplay";
+import BodyDisplay from "./display/BodyDisplay";
 
-export function DraggingItem({ chartType, type, id, chart, data, children }) {
+export function DraggingItem({ chartObj, type, id, children, data}) {
+  const { chartType } = chartObj;
+
   return (
     <div className={`dashboard-widget`} {...children}>
       <div
-        className={`widget-background ${chartType === "Line" || chartType === "Bar" ? "wide-widget" : ""} dragging-widget`}
+        className={`widget-background ${chartType === "Line" || chartType === "Bar" || type === "Margin" ? "wide-widget" : ""} dragging-widget`}
       >
         <div className="widget-top">
           <div className="drag-handle-wrapper"></div>
@@ -19,11 +21,9 @@ export function DraggingItem({ chartType, type, id, chart, data, children }) {
             style={{ width: "36px" }}
           ></button>
         </div>
-        {data && (
-          <div>
-            <ChartDisplay chartObj={chart} data={data} id={id} />
-          </div>
-        )}
+        <div>
+          <BodyDisplay chartObj={chartObj} id={id} dragging={true} data={data}/>
+        </div>
       </div>
     </div>
   );

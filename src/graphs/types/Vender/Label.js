@@ -17,7 +17,7 @@ function getVenderLabel(datum) {
     Daltile: "DAL",
   };
 
-  return venderMap[datum.id];
+  return venderMap[datum.id] || datum.id;
 }
 
 export default getVenderLabel;

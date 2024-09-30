@@ -1,10 +1,10 @@
 import { redoSvg } from "business/svg";
-import { useDashboardContext } from "context/DashboardContext";
+import { useHistory } from "context/HistoryContext";
 import { AnimatePresence, motion } from "framer-motion";
 import { undoVariants } from "utils/animations";
 
 function RedoButton() {
-  const { redoActive, handleRedo } = useDashboardContext();
+  const { redoActive, handleRedo } = useHistory();
 
   return (
     <AnimatePresence>
@@ -13,7 +13,7 @@ function RedoButton() {
         initial="hidden"
         animate="visible"
         variants={undoVariants}
-        onClick={handleRedo}
+        onClick={() => handleRedo()}
         className={`topbar-button mirrored ${!redoActive && "topbar-button-disabled"}`}
       >
         {redoSvg()}

@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, useRef } from 'react';
-import { useSystemMessage } from "modules/systemMessage/SystemMessageContext";
+import { useSystemMessage } from "context/SystemMessageContext";
 import { useRedo, useUndo } from 'utils/hooks/useHistory';
 
 const HistoryContext = createContext();
@@ -18,7 +18,6 @@ export const HistoryProvider = ({ children }) => {
         historyPtr.current = newHistory.length;
         return newHistory;
         });
-        console.log(newData)
     };
 
     const enactChange = (type, change) => {
@@ -33,7 +32,7 @@ export const HistoryProvider = ({ children }) => {
     };
 
     const handleRedo = () => {
-        if (redoActive) {
+        if (historyPtr.current <= history.length - 1) {
             const actionToRedo = history[historyPtr.current];
             enactChange("redo", actionToRedo);
             historyPtr.current += 1;
@@ -41,7 +40,7 @@ export const HistoryProvider = ({ children }) => {
     };
 
     const handleUndo = () => {
-        if (undoActive) {
+        if (historyPtr.current > 0) {
             historyPtr.current -= 1;
             const actionToUndo = history[historyPtr.current];
             enactChange("undo", actionToUndo);
@@ -52,7 +51,7 @@ export const HistoryProvider = ({ children }) => {
     useRedo(handleRedo);
 
     return (
-        <HistoryContext.Provider value={{ pushHistory, undoActive, redoActive }}>
+        <HistoryContext.Provider value={{ pushHistory, handleRedo, handleUndo, undoActive, redoActive }}>
         {children}
         </HistoryContext.Provider>
     );
