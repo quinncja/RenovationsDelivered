@@ -1590,8 +1590,7 @@ h1 {
 
 .arrow-hidden {
   opacity: 0;
-  cursor: none;
-  pointer-events: none;
+  cursor: unset
 }
 
 .status-Active {
@@ -1600,6 +1599,38 @@ h1 {
 .status-Complete {
   color: var(--red);
 }
+
+.dots-container{
+  width: 70%;
+  overflow-x: scroll;
+  margin-inline: auto;
+  scrollbar-width: none;
+}
+.dots-container::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
+.phase-dots {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+  gap: 7px;
+  width: fit-content;
+  margin-inline: auto;
+}
+.phase-dot {
+  width: 10px;
+  height: 10px;
+  background-color: var(--light);
+  border-radius: 50%;
+}
+.phase-dot-Active{
+  background-color: var(--green);
+}
+.phase-dot-Complete{
+  background-color: var(--red);
+}
+
 .job-buttons {
   display: flex;
   flex-direction: row;
@@ -1608,6 +1639,7 @@ h1 {
   margin-inline: auto;
   gap: 10px;
 }
+
 .job-button {
   border: none;
   outline: none;

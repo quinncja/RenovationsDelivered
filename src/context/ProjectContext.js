@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
 import { fetchJobList } from "utils/api";
 import { normalizeData } from "utils/jobNormalizer";
 import { phaseList, yearList } from "utils/modifiers";
@@ -15,6 +15,7 @@ export const ProjectProvider = ({ children }) => {
       try {
         const jobData = await fetchJobList();
         const normalized = normalizeData(jobData);
+        console.log(normalized)
         setProjects(normalized);
       } catch (error) {
         console.log(error);
@@ -31,17 +32,107 @@ export const ProjectProvider = ({ children }) => {
     return [];
   };
 
-  const getProjectByNum = (jobNum) => {
-    return projects.jobs[jobNum];
+  const getPhaseById = useCallback(
+    (phaseId) => {
+      return projects && projects.phases ? projects.phases[phaseId] : null;
+    },
+    [projects]
+  );
+
+  const getProjectByNum = useCallback(
+    (jobNum) => {
+      return jobNum && projects && projects.jobs ? projects.jobs[jobNum] : null;
+    },
+    [projects]
+  );
+
+
+  const getYearsByJob = (selectedJob) => {
+    return projects && selectedJob && selectedJob.years && projects.years
+      ? selectedJob.years.map((yearId) => projects.years[yearId])
+      : yearList;
   };
 
-  const getYearById = (yearId) => {
-    return projects.years[yearId];
+  const getYearById = useCallback(
+    (yearId) => {
+      return projects && yearId && projects.years ? projects.years[yearId] : null;
+    },
+    [projects]
+  );
+
+  const getPhasesByYear = (selectedYear, selectedJob = null) => {
+    return projects && selectedYear && selectedYear.phases && projects.phases
+      ? selectedYear.phases.map((phaseId) => projects.phases[phaseId])
+      : selectedJob ? [] : phaseList;
   };
 
-  const getPhaseById = (phaseId) => {
-    return projects.phases[phaseId];
+  const getPhasesForJob = useCallback(
+    (jobNum) => {
+      const job = getProjectByNum(jobNum);
+      if (!job) return [];
+      const allPhases = [];
+      job.years.forEach((yearId) => {
+        const year = getYearById(yearId);
+        if (year && year.phases) {
+          year.phases.forEach((phaseId) => {
+            const phase = getPhaseById(phaseId);
+            if (phase) {
+              allPhases.push(phase);
+            }
+          });
+        }
+      });
+      console.log(job, allPhases)
+      return allPhases;
+    },
+    [getProjectByNum, getYearById, getPhaseById]
+  );
+
+  const getLastPhaseForJob = (phaseId) => {
+    const phase = getPhaseById(phaseId);
+    if (!phase) return null;
+    const jobNum = phase.jobNum;
+    const allPhases = getPhasesForJob(jobNum);
+    if (allPhases.length === 0) return null;
+
+    allPhases.sort((a, b) => {
+      const yearA = parseInt(a.yearNum, 10);
+      const yearB = parseInt(b.yearNum, 10);
+      if (yearA !== yearB) {
+        return yearA - yearB;
+      } else {
+        const phaseNumA = parseInt(a.num, 10);
+        const phaseNumB = parseInt(b.num, 10);
+        return phaseNumA - phaseNumB;
+      }
+    });
+
+    return allPhases[allPhases.length - 1];
   };
+
+  const sortedPhasesPerJob = useMemo(() => {
+    if (!projects || !projects.jobs) {
+      return {};
+    }
+    const result = {};
+    Object.keys(projects.jobs).forEach((jobNum) => {
+      const phases = getPhasesForJob(jobNum);
+      const sortedPhases = [...phases].sort((a, b) => {
+        const yearA = parseInt(a.yearNum, 10);
+        const yearB = parseInt(b.yearNum, 10);
+        if (yearA !== yearB) {
+          return yearA - yearB;
+        } else {
+          const phaseNumA = parseInt(a.num, 10);
+          const phaseNumB = parseInt(b.num, 10);
+          return phaseNumA - phaseNumB;
+        }
+      });
+      result[jobNum] = sortedPhases;
+    });
+    return result;
+  }, [projects, getPhasesForJob]);
+
 
   const pageModifierToString = (modifiers) => {
     const parts = [];
@@ -86,6 +177,14 @@ export const ProjectProvider = ({ children }) => {
         projects,
         getAllProjects,
         pageModifierToString,
+        getPhaseById,
+        getProjectByNum,
+        getYearsByJob,
+        getYearById,
+        getPhasesByYear,
+        getLastPhaseForJob,
+
+        sortedPhasesPerJob
       }}
     >
       {children}

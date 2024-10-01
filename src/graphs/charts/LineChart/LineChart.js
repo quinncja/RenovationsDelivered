@@ -36,8 +36,6 @@ function LineChart({ data, open, size, chartObj, chartProps, tooltip }) {
   const colors =
     chartObj.type === "Margin" ? "" : data.map((data) => data.color);
 
-  console.log(data);
-
   if (!data) return <div style={{ margin: "auto" }}>No Data</div>;
   return (
     <Line

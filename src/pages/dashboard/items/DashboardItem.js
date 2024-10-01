@@ -25,6 +25,7 @@ function DashboardItem(props) {
   const loadData = useChartData();
 
   const handleClick = () => {
+    if(single && chartType === "Text") return;
     const param = toParam(type);
     navigate(`/item/${param}`);
   };

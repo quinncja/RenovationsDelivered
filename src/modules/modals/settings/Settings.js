@@ -1,7 +1,7 @@
 import { close } from "../../../business/svg";
 import ToggleColorMode from "./ToggleColorMode";
 import DropdownItem from "./DropdownItem";
-import ToggleLabels from "./ToggleLabels";
+// import ToggleLabels from "./ToggleLabels";
 
 function Settings({ closeSelf }) {
   const settings = [
@@ -18,10 +18,10 @@ function Settings({ closeSelf }) {
     //   type: "toggle",
     // <ToggleSort item={settings[2]} />
     // },
-    {
-      name: "Graph Details",
-      type: "toggle",
-    },
+    // {
+    //   name: "Graph Details",
+    //   type: "toggle",
+    // },
   ];
 
   return (
@@ -38,7 +38,7 @@ function Settings({ closeSelf }) {
       </div>
       <div className="settings">
         <ToggleColorMode item={settings[0]} />
-        <ToggleLabels item={settings[2]} />
+        {/* <ToggleLabels item={settings[2]} /> */}
         <DropdownItem item={settings[1]} />
       </div>
     </div>

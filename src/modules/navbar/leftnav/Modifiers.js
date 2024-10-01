@@ -3,10 +3,10 @@ import { useModifiers } from "context/ModifierContext";
 import { useProjectContext } from "context/ProjectContext";
 import { useEffect, useState } from "react";
 import { close } from "business/svg";
-import { yearList, phaseList } from "utils/modifiers";
 
 export function Modifiers() {
-  const { projects, getAllProjects } = useProjectContext();
+  const { projects, getAllProjects, getProjectByNum,
+    getYearsByJob, getYearById, getPhasesByYear } = useProjectContext();
   const { pageModifiers, modTimeout, updatePageModifiers } = useModifiers();
   const [loading, setLoading] = useState(!projects);
 
@@ -19,27 +19,17 @@ export function Modifiers() {
   }, [projects]);
 
   const allProjects = getAllProjects() || [];
-  const { jobs = {}, years = {}, phases = {} } = projects || {};
+  const { jobs = {} } = projects || {};
 
+  
   const selectedJobNum = pageModifiers.jobNum;
   const selectedYearId = pageModifiers.yearId;
   const selectedPhaseId = pageModifiers.phaseId;
 
-  const selectedJob = selectedJobNum && jobs ? jobs[selectedJobNum] : null;
-
-  const selectedJobYears =
-    selectedJob && selectedJob.years && years
-      ? selectedJob.years.map((yearId) => years[yearId])
-      : yearList;
-
-  const selectedYear = selectedYearId && years ? years[selectedYearId] : null;
-
-  const selectedYearPhases =
-    selectedYear && selectedYear.phases && phases
-      ? selectedYear.phases.map((phaseId) => phases[phaseId])
-      : selectedJob
-        ? []
-        : phaseList;
+  const selectedJob = getProjectByNum(selectedJobNum);
+  const selectedJobYears = getYearsByJob(selectedJob);
+  const selectedYear = getYearById(selectedYearId);
+  const selectedYearPhases = getPhasesByYear(selectedYear, selectedJob);
 
   const handleJobChange = (value) => {
     if (modTimeout) return;
