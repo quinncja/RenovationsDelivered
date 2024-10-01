@@ -5,7 +5,7 @@ import { SingleMargin } from "graphs/types/Margin/SingleMargin";
 function TextBody(props) {
   const { chartObj, data, open } = props;
   switch (chartObj.query) {
-    case "margin":
+    case "margin-single":
       return <SingleMargin data={data} />;
     case "ytd":
       return <YTDDisplay data={data} open={open} />;

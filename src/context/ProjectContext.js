@@ -15,7 +15,6 @@ export const ProjectProvider = ({ children }) => {
       try {
         const jobData = await fetchJobList();
         const normalized = normalizeData(jobData);
-        console.log(normalized)
         setProjects(normalized);
       } catch (error) {
         console.log(error);
@@ -82,7 +81,6 @@ export const ProjectProvider = ({ children }) => {
           });
         }
       });
-      console.log(job, allPhases)
       return allPhases;
     },
     [getProjectByNum, getYearById, getPhaseById]

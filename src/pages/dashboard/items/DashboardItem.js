@@ -18,12 +18,11 @@ function DashboardItem(props) {
   const { dataMap } = useItems();
   const navigate = useNavigate();
   const data = type === "Status" ? [] : dataMap[id] || null;
-
   const chartObj = single ? getSingleChartObj(type) : getChartObj(type);
 
   const { chartType } = chartObj;
   const loadData = useChartData();
-
+   
   const handleClick = () => {
     if(single && chartType === "Text") return;
     const param = toParam(type);

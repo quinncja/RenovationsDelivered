@@ -65,7 +65,7 @@ export const singleChartObjs = [
   {
     type: "Margin",
     chartType: "Text",
-    query: "margin",
+    query: "margin-single",
   },
   {
     type: "Cost Analysis",

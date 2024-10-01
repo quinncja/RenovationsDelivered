@@ -3,12 +3,15 @@ import { useModifiers } from "context/ModifierContext";
 import { useCallback } from "react";
 import { fetchChartData } from "utils/api";
 import { modifierFormatter } from "utils/formatters";
+import usePrevPhase from "./phase/usePrevPhase";
 
 export const useChartData = () => {
-  const { pageModifiers } = useModifiers();
   const { updateDataMap } = useItems();
-  const formattedModifiers = modifierFormatter(pageModifiers);
-
+  const { pageModifiers } = useModifiers();
+  const { phaseId } = pageModifiers;
+  const prevPhase = usePrevPhase(phaseId)
+  const formattedModifiers = modifierFormatter(pageModifiers, prevPhase); 
+  console.log(formattedModifiers)
   const loadData = useCallback(
     async (id, query, signal) => {
       if (query === null) {
@@ -20,11 +23,12 @@ export const useChartData = () => {
         ...formattedModifiers,
         type: query,
       };
+
       const newData = await fetchChartData(modsToUse, signal);
       updateDataMap(id, newData);
     },
     // eslint-disable-next-line
-    [pageModifiers],
+    [pageModifiers, prevPhase],
   );
 
   return loadData;

@@ -25,8 +25,24 @@ const useFilteredPhases = (jobNum, yearId, phaseId, active) => {
 
     const filteredPhases = phasesArray.filter((phase) => {
       if (jobNum && phase.jobNum !== jobNum) return false;
-      if (yearId && phase.yearId !== yearId) return false;
-      if (phaseId && phase.id !== phaseId) return false;
+
+      if (yearId) {
+        if (yearId.startsWith('xxxx-')) {
+          const selectedYearNum = yearId.split('-')[1];
+          if (phase.yearNum !== selectedYearNum) return false;
+        } else {
+          if (phase.yearId !== yearId) return false;
+        }
+      }
+
+      if (phaseId) {
+        if (phaseId.startsWith('xxxx-')) {
+          const selectedPhaseNum = phaseId.split('-')[2];
+          if (phase.num !== selectedPhaseNum) return false;
+        } else {
+          if (phase.id !== phaseId) return false;
+        }
+      }
 
       return true;
     });
