@@ -20,7 +20,7 @@ export const chartObjects = [
   {
     type: "Client Breakdown",
     query: "client",
-    admin: true,
+    admin: false,
     chartType: "Pie",
   },
   {

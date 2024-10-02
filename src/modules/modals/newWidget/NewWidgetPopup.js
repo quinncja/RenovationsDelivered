@@ -1,13 +1,14 @@
 import { useState } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence} from "framer-motion";
 import {
   BackArrowSvg,
   GridSvg,
   PieSvg,
-  UserSvg,
   close,
 } from "../../../business/svg";
 import {
+  buttonVariants,
+  buttonsContainerVariants,
   newWidgetPopupVariants,
   widgetItemsFadeIn,
 } from "../../../utils/animations";
@@ -30,9 +31,11 @@ function NewWidgetPopup({ closeSelf }) {
       chartObjectMap["Cost Analysis"],
       chartObjectMap["Financial Overview"],
       chartObjectMap["Margin"],
+      chartObjectMap["Budget Breakdown"],
       chartObjectMap["COGs Breakdown"],
       chartObjectMap["Sub Breakdown"],
       chartObjectMap["Vender Breakdown"],
+      chartObjectMap["Client Breakdown"],
     ],
   };
 
@@ -60,11 +63,6 @@ function NewWidgetPopup({ closeSelf }) {
 
   const buttonOptions = [
     {
-      title: "Admin",
-      svg: UserSvg(),
-      next: <Admin />,
-    },
-    {
       title: "Preset",
       svg: GridSvg(),
       next: <Preset />,
@@ -76,34 +74,55 @@ function NewWidgetPopup({ closeSelf }) {
     },
   ];
 
+
   function Single() {
     return (
-      <motion.div variants={widgetItemsFadeIn} layout="position">
+      <motion.div layout="position">
         {Object.keys(groupedByChartType).map((chartType, index) => {
           let chartObjects = groupedByChartType[chartType];
           chartObjects = chartObjects.filter((obj) => obj.admin === false);
           if (chartObjects.length > 0)
             return (
-              <motion.div key={index}>
+              <motion.div 
+                key={index} 
+                variants={widgetItemsFadeIn}
+                initial="hidden"
+                animate="visible"
+                exit="exit"
+              >
                 <div className="widget-button-header">{chartType}</div>
-                <div className="widget-button-row">
-                  {chartObjects.map((obj) => (
-                    <button
-                      className="widget-button"
-                      key={obj.id || `${obj.type}-${index}`}
-                      onClick={() => handleClick(obj)}
-                    >
-                      {obj.type}
-                    </button>
-                  ))}
-                </div>
+                
+                <motion.div 
+                  className="widget-button-row" 
+                  variants={buttonsContainerVariants}
+                  initial="hidden"
+                  animate="visible"
+                  exit="hidden"
+                >
+                  <AnimatePresence>
+                    {chartObjects.map((obj) => (
+                      <motion.button
+                        className="widget-button"
+                        key={obj.id || `${obj.type}-${index}`}
+                        onClick={() => handleClick(obj)}
+                        variants={buttonVariants} 
+                        initial="hidden"
+                        animate="visible"
+                        exit="exit"
+                      >
+                        {obj.type}
+                      </motion.button>
+                    ))}
+                  </AnimatePresence>
+                </motion.div>
               </motion.div>
             );
-          else return "";
+          else return null; // Return null instead of an empty string for better React practices
         })}
       </motion.div>
     );
   }
+  
 
   function Preset() {
     return (
@@ -120,35 +139,6 @@ function NewWidgetPopup({ closeSelf }) {
             </button>
           </div>
         </motion.div>
-      </motion.div>
-    );
-  }
-
-  function Admin() {
-    return (
-      <motion.div variants={widgetItemsFadeIn} layout="position">
-        {Object.keys(groupedByChartType).map((chartType, index) => {
-          let chartObjects = groupedByChartType[chartType];
-          chartObjects = chartObjects.filter((obj) => obj.admin === true);
-          if (chartObjects.length > 0)
-            return (
-              <motion.div key={index}>
-                <div className="widget-button-header">{chartType}</div>
-                <div className="widget-button-row">
-                  {chartObjects.map((obj) => (
-                    <button
-                      className="widget-button"
-                      key={obj.id || `${obj.type}-${index}`}
-                      onClick={() => handleClick(obj)}
-                    >
-                      {obj.type}
-                    </button>
-                  ))}
-                </div>
-              </motion.div>
-            );
-          else return "";
-        })}
       </motion.div>
     );
   }
