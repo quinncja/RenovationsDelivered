@@ -2,7 +2,7 @@ import Select from "react-dropdown-select";
 import { useModifiers } from "context/ModifierContext";
 import { useProjectContext } from "context/ProjectContext";
 import { close } from "business/svg";
-import { stateList } from "utils/modifiers";
+import { pmList, stateList } from "utils/modifiers";
 
 export function Modifiers() {
   const {
@@ -22,6 +22,7 @@ export function Modifiers() {
   const selectedYearId = pageModifiers.yearId;
   const selectedPhaseId = pageModifiers.phaseId;
   const selectedState = pageModifiers.state;
+  const selectedPM = pageModifiers.pm;
 
   const selectedJob = getProjectByNum(selectedJobNum);
   const selectedJobYears = getYearsByJob(selectedJob);
@@ -76,12 +77,24 @@ export function Modifiers() {
     updatePageModifiers(newMods);
   };
 
+  const handlePMChange = (value) => {
+    if (modTimeout) return;
+    const pm = value.length > 0 ? value[0].id : null;
+
+    const newMods = {
+      pm: pm,
+    };
+
+    updatePageModifiers(newMods);
+  }
+
   const clearModifiers = () => {
     const newMods = {
       jobNum: null,
       yearId: null,
       phaseId: null,
       state: null,
+      pm: null,
     };
 
     updatePageModifiers(newMods);
@@ -161,10 +174,30 @@ export function Modifiers() {
         onChange={handleStateChange}
       />
 
+      <Select
+        labelField="name"
+        valueField="id"
+        options={pmList}
+        values={
+          selectedPM
+            ? [pmList.find((pm) => pm.id === selectedPM)].filter(
+                Boolean,
+              )
+            : []
+        }
+        placeholder="PM"
+        className="select-dropdown select-dropdown-small"
+        dropdownGap={10}
+        dropdownHandle={false}
+        onChange={handlePMChange}
+      />
+
+
       {(selectedJobNum ||
         selectedYearId ||
         selectedPhaseId ||
-        selectedState) && (
+        selectedState ||
+        selectedPM) && (
         <button className="clear-modifiers" onClick={clearModifiers}>
           {close()}
         </button>

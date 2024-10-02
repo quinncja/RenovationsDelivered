@@ -126,6 +126,7 @@ export const modifierFormatter = (mods, prevPhase) => {
     prevYear: "",
     prevPhase: "",
     state: mods.state || "",
+    pm: mods.pm || "",
     active: "",
   };
 

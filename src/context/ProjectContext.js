@@ -18,7 +18,7 @@ export const useProjectContext = () => useContext(ProjectContext);
 
 export const ProjectProvider = ({ children }) => {
   const { pageModifiers } = useModifiers();
-  const state = pageModifiers?.state || "";
+  const { state, pm } = pageModifiers;
   const [projects, setProjects] = useState(undefined);
   const abortControllerRef = useRef(null);
 
@@ -35,6 +35,7 @@ export const ProjectProvider = ({ children }) => {
         const mods = {
           type: "job-list",
           state: state,
+          pm: pm,
         };
         const jobData = await fetchChartData(mods);
         console.log(jobData);
@@ -46,7 +47,7 @@ export const ProjectProvider = ({ children }) => {
     };
     loadJobs();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [state]);
+  }, [state, pm]);
 
   const getAllProjects = () => {
     if (projects && projects.jobs) {
