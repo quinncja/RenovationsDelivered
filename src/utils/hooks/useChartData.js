@@ -11,7 +11,7 @@ export const useChartData = () => {
   const { phaseId } = pageModifiers;
   const prevPhase = usePrevPhase(phaseId)
   const formattedModifiers = modifierFormatter(pageModifiers, prevPhase); 
-  console.log(formattedModifiers)
+
   const loadData = useCallback(
     async (id, query, signal) => {
       if (query === null) {

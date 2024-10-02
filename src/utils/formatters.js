@@ -144,6 +144,9 @@ export const modifierFormatter = (mods, prevPhase) => {
   if (prevPhase && prevPhase.id.length >= 7) {
     formatted.prevYear = prevPhase.yearNum;
     formatted.prevPhase = prevPhase.id.slice(-2);
+  } else {
+    formatted.prevYear = ""
+    formatted.prevPhase = ""
   }
   if (
     formatted.year !== "" &&

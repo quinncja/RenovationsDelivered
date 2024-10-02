@@ -2,7 +2,6 @@ import AreaLayer from "./AreaLayer";
 import LineLayer from "./LineLayer";
 import ZeroLineLayer from "./ZeroLineLayer";
 import { linearGradientDef } from "@nivo/core";
-import { SingleMargin } from "./SingleMargin";
 
 export const marginChartProps = {
   layers: [
@@ -32,7 +31,4 @@ export const marginChartProps = {
     return [{ id: "Margin", data: [...data.current] }];
   },
   enableArea: true,
-  singleItem: (singleItemData, open, showLabel) => (
-    <SingleMargin data={singleItemData} open={open} showLabel={showLabel} />
-  ),
 };

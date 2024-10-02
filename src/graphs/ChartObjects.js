@@ -1,7 +1,3 @@
-import { processTableData } from "utils/api";
-import transformMarginData from "./types/Margin/transformData.js";
-import { transformLineData } from "./charts/LineChart/transformLineData.js";
-
 export const chartObjects = [
   {
     type: "Vender Breakdown",
@@ -32,20 +28,12 @@ export const chartObjects = [
     query: "revenue",
     admin: false,
     chartType: "Line",
-    tableFunc: async (data) => {
-      const processedData = await processTableData(data, "revenue");
-      return transformLineData(processedData);
-    },
   },
   {
     type: "Margin",
     query: "margin",
     admin: false,
     chartType: "Line",
-    tableFunc: (data) => {
-      const processedData = transformMarginData(data);
-      return transformLineData(processedData);
-    },
   },
   {
     type: "Status",
@@ -59,6 +47,12 @@ export const chartObjects = [
     chartType: "Text",
     admin: false,
   },
+  {
+    type: "Budget Breakdown",
+    query: "budget",
+    chartType: "Bar",
+    admin: false
+  }
 ];
 
 export const singleChartObjs = [

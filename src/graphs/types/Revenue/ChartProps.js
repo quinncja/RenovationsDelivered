@@ -11,4 +11,6 @@ export const revChartProps = {
       label: series.id,
       color: `color-${index}`,
     })),
-};
+  keys: ["Budgeted - ", "COGS - ", "Contracted - "],
+  groupMode: "stacked",
+}
