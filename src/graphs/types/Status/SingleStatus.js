@@ -7,15 +7,8 @@ import usePrevPhase from "utils/hooks/phase/usePrevPhase";
 
 const SingleStatus = ({ singlePhaseData }) => {
   const { updatePageModifiers, setModTimeout } = useModifiers();
-  const {
-    phase,
-    job,
-    year,
-    phaseIndex,
-    phaseLength,
-    month,
-    statusString,
-  } = singlePhaseData;
+  const { phase, job, year, phaseIndex, phaseLength, month, statusString } =
+    singlePhaseData;
   const prevPhase = usePrevPhase(phase.id);
   const nextPhase = useNextPhase(phase.id);
   const activeDotRef = useRef(null);
@@ -30,14 +23,13 @@ const SingleStatus = ({ singlePhaseData }) => {
     }
   }, [phaseIndex]);
 
-
   const stepBack = (e) => {
     e.stopPropagation();
     if (!prevPhase) return;
     setModTimeout(true);
-    updatePageModifiers({ 
-        yearId: prevPhase.yearId,
-        phaseId: prevPhase.id 
+    updatePageModifiers({
+      yearId: prevPhase.yearId,
+      phaseId: prevPhase.id,
     });
   };
 
@@ -45,9 +37,9 @@ const SingleStatus = ({ singlePhaseData }) => {
     e.stopPropagation();
     if (!nextPhase) return;
     setModTimeout(true);
-    updatePageModifiers({ 
-        yearId: nextPhase.yearId,
-        phaseId: nextPhase.id 
+    updatePageModifiers({
+      yearId: nextPhase.yearId,
+      phaseId: nextPhase.id,
     });
   };
 
@@ -89,9 +81,7 @@ const SingleStatus = ({ singlePhaseData }) => {
           {rightArrowSvg()}
         </button>
       </div>
-        <div className="dots-container"> 
-            {displayPhaseDots()}
-        </div>
+      <div className="dots-container">{displayPhaseDots()}</div>
     </div>
   );
 };

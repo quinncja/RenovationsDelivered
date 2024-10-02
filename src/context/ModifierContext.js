@@ -15,6 +15,7 @@ export const ModifierProvider = ({ children }) => {
     jobNum: null,
     yearId: null,
     phaseId: null,
+    state: null,
     active: "Total",
   });
   const [modTimeout, setModTimeout] = useState(true);

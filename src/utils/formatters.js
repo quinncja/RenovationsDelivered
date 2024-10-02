@@ -125,11 +125,12 @@ export const modifierFormatter = (mods, prevPhase) => {
     phase: "",
     prevYear: "",
     prevPhase: "",
+    state: mods.state || "",
     active: "",
   };
 
-  if (mods.jobNum && mods.jobNum.length === 6){
-    formatted.job = mods.jobNum.slice(0, 4)
+  if (mods.jobNum && mods.jobNum.length === 6) {
+    formatted.job = mods.jobNum.slice(0, 4);
     formatted.phase = mods.jobNum.slice(-2);
   } else {
     if (mods.jobNum) formatted.job = mods.jobNum;
@@ -145,8 +146,8 @@ export const modifierFormatter = (mods, prevPhase) => {
     formatted.prevYear = prevPhase.yearNum;
     formatted.prevPhase = prevPhase.id.slice(-2);
   } else {
-    formatted.prevYear = ""
-    formatted.prevPhase = ""
+    formatted.prevYear = "";
+    formatted.prevPhase = "";
   }
   if (
     formatted.year !== "" &&
@@ -154,7 +155,6 @@ export const modifierFormatter = (mods, prevPhase) => {
   )
     formatted.active = "Total";
   else formatted.active = mods.active;
-
   return formatted;
 };
 

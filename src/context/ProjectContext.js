@@ -1,28 +1,52 @@
-import { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
-import { fetchJobList } from "utils/api";
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
+import { fetchChartData } from "utils/api";
 import { normalizeData } from "utils/jobNormalizer";
 import { phaseList, yearList } from "utils/modifiers";
+import { useModifiers } from "./ModifierContext";
 
 const ProjectContext = createContext();
 
 export const useProjectContext = () => useContext(ProjectContext);
 
 export const ProjectProvider = ({ children }) => {
+  const { pageModifiers } = useModifiers();
+  const state = pageModifiers?.state || "";
   const [projects, setProjects] = useState(undefined);
+  const abortControllerRef = useRef(null);
 
   useEffect(() => {
     const loadJobs = async () => {
+      setProjects(undefined);
       try {
-        const jobData = await fetchJobList();
+        if (abortControllerRef.current) {
+          abortControllerRef.current.abort();
+        }
+        const controller = new AbortController();
+        abortControllerRef.current = controller;
+
+        const mods = {
+          type: "job-list",
+          state: state,
+        };
+        const jobData = await fetchChartData(mods);
+        console.log(jobData);
         const normalized = normalizeData(jobData);
         setProjects(normalized);
       } catch (error) {
         console.log(error);
       }
     };
-    if (!projects) loadJobs();
+    loadJobs();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [state]);
 
   const getAllProjects = () => {
     if (projects && projects.jobs) {
@@ -35,16 +59,15 @@ export const ProjectProvider = ({ children }) => {
     (phaseId) => {
       return projects && projects.phases ? projects.phases[phaseId] : null;
     },
-    [projects]
+    [projects],
   );
 
   const getProjectByNum = useCallback(
     (jobNum) => {
       return jobNum && projects && projects.jobs ? projects.jobs[jobNum] : null;
     },
-    [projects]
+    [projects],
   );
-
 
   const getYearsByJob = (selectedJob) => {
     return projects && selectedJob && selectedJob.years && projects.years
@@ -54,15 +77,19 @@ export const ProjectProvider = ({ children }) => {
 
   const getYearById = useCallback(
     (yearId) => {
-      return projects && yearId && projects.years ? projects.years[yearId] : null;
+      return projects && yearId && projects.years
+        ? projects.years[yearId]
+        : null;
     },
-    [projects]
+    [projects],
   );
 
   const getPhasesByYear = (selectedYear, selectedJob = null) => {
     return projects && selectedYear && selectedYear.phases && projects.phases
       ? selectedYear.phases.map((phaseId) => projects.phases[phaseId])
-      : selectedJob ? [] : phaseList;
+      : selectedJob
+        ? []
+        : phaseList;
   };
 
   const getPhasesForJob = useCallback(
@@ -83,7 +110,7 @@ export const ProjectProvider = ({ children }) => {
       });
       return allPhases;
     },
-    [getProjectByNum, getYearById, getPhaseById]
+    [getProjectByNum, getYearById, getPhaseById],
   );
 
   const getLastPhaseForJob = (phaseId) => {
@@ -130,7 +157,6 @@ export const ProjectProvider = ({ children }) => {
     });
     return result;
   }, [projects, getPhasesForJob]);
-
 
   const pageModifierToString = (modifiers) => {
     const parts = [];
@@ -182,7 +208,7 @@ export const ProjectProvider = ({ children }) => {
         getPhasesByYear,
         getLastPhaseForJob,
 
-        sortedPhasesPerJob
+        sortedPhasesPerJob,
       }}
     >
       {children}

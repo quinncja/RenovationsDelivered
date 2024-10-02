@@ -13,7 +13,7 @@ export const JobDisplay = ({ open }) => {
     jobNum,
     yearId,
     phaseId,
-    active
+    active,
   );
 
   const clickHandler = (e, option) => {
@@ -86,7 +86,7 @@ export const JobDisplay = ({ open }) => {
   if (!projects) return <div className="loading-widget" />;
 
   if (singlePhaseData) {
-    return <SingleStatus singlePhaseData={singlePhaseData} />
+    return <SingleStatus singlePhaseData={singlePhaseData} />;
   }
   return (
     <div className={`${open ? "open-job-display" : ""} job-display`}>

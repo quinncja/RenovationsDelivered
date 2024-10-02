@@ -4,16 +4,14 @@ export function SingleMargin(props) {
   const { data } = props;
   let currMargin;
   let prevMargin;
-  if(data[0].data.length > 1){
+  if (data[0].data.length > 1) {
     currMargin = data[0]?.data[1]?.y.toFixed(2) || "";
     prevMargin = data[0]?.data[0]?.y.toFixed(2) || "";
-  }
-  else currMargin = data[0]?.data[0]?.y.toFixed(2) || "";
+  } else currMargin = data[0]?.data[0]?.y.toFixed(2) || "";
 
   let text;
   if (!prevMargin) {
-    text = 
-    (
+    text = (
       <>
         {" "}
         No data <br /> from last phase{" "}
@@ -24,7 +22,8 @@ export function SingleMargin(props) {
     text = (
       <>
         {" "}
-        {diff > 0 ? "Up" : "Down"} {diff.toFixed(2)}% <br /> from {phaseToMonth(data[0].data[0].x)}{" "}
+        {diff > 0 ? "Up" : "Down"} {diff.toFixed(2)}% <br /> from{" "}
+        {phaseToMonth(data[0].data[0].x)}{" "}
       </>
     );
   }

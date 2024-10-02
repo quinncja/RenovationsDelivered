@@ -1590,7 +1590,7 @@ h1 {
 
 .arrow-hidden {
   opacity: 0;
-  cursor: unset
+  cursor: unset;
 }
 
 .status-Active {
@@ -1600,7 +1600,7 @@ h1 {
   color: var(--red);
 }
 
-.dots-container{
+.dots-container {
   width: 70%;
   overflow-x: scroll;
   margin-inline: auto;
@@ -1624,10 +1624,10 @@ h1 {
   background-color: var(--light);
   border-radius: 50%;
 }
-.phase-dot-Active{
+.phase-dot-Active {
   background-color: var(--green);
 }
-.phase-dot-Complete{
+.phase-dot-Complete {
   background-color: var(--red);
 }
 

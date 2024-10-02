@@ -2,7 +2,7 @@ import { Bar } from "@nivo/bar";
 import { dollarFormatter } from "utils/formatters";
 import { useCSSVariable } from "utils/hooks/useCSSVariable";
 
-function BarChart({ data, open, size, tooltip, chartProps}) {
+function BarChart({ data, open, size, tooltip, chartProps }) {
   const gridColor = useCSSVariable("--grid-color");
 
   let showLabel = true;
@@ -83,7 +83,6 @@ function BarChart({ data, open, size, tooltip, chartProps}) {
       role="application"
       theme={customTheme}
       animate={false}
-
     />
   );
 }

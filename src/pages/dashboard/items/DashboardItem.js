@@ -22,9 +22,9 @@ function DashboardItem(props) {
 
   const { chartType } = chartObj;
   const loadData = useChartData();
-   
+
   const handleClick = () => {
-    if(single && chartType === "Text") return;
+    if (single && chartType === "Text") return;
     const param = toParam(type);
     navigate(`/item/${param}`);
   };

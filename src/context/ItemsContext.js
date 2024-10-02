@@ -65,20 +65,21 @@ export const ItemsProvider = ({ children }) => {
   );
 
   const addMultItems = async (itemList) => {
-    const prevItems = [...items]
-    setItems([])
+    const prevItems = [...items];
+    setItems([]);
     addMultItemsFn(itemList);
 
     const itemsCopy = [...itemList];
     const historyObj = {
       text: "New Widgets",
       redo: () => {
-        setItems([])
-        addMultItemsFn(itemsCopy)
+        setItems([]);
+        addMultItemsFn(itemsCopy);
       },
       undo: () => {
-        deleteMultItemsFn(itemsCopy)
-        addMultItemsFn(prevItems)},
+        deleteMultItemsFn(itemsCopy);
+        addMultItemsFn(prevItems);
+      },
     };
 
     pushHistory(historyObj);

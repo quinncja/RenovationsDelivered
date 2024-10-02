@@ -51,8 +51,8 @@ export const chartObjects = [
     type: "Budget Breakdown",
     query: "budget",
     chartType: "Bar",
-    admin: false
-  }
+    admin: false,
+  },
 ];
 
 export const singleChartObjs = [

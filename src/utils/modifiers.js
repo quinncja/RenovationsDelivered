@@ -18,3 +18,9 @@ export const yearList = [
   { num: "24", year: "2024", id: "xxxx-24" },
   { num: "23", year: "2023", id: "xxxx-23" },
 ];
+
+export const stateList = [
+  { name: "IL", id: "IL" },
+  { name: "WI", id: "WI" },
+  { name: "OH", id: "OH" },
+];

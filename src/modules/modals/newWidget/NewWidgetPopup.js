@@ -1,11 +1,6 @@
 import { useState } from "react";
-import { motion, AnimatePresence} from "framer-motion";
-import {
-  BackArrowSvg,
-  GridSvg,
-  PieSvg,
-  close,
-} from "../../../business/svg";
+import { motion, AnimatePresence } from "framer-motion";
+import { BackArrowSvg, GridSvg, PieSvg, close } from "../../../business/svg";
 import {
   buttonVariants,
   buttonsContainerVariants,
@@ -74,7 +69,6 @@ function NewWidgetPopup({ closeSelf }) {
     },
   ];
 
-
   function Single() {
     return (
       <motion.div layout="position">
@@ -83,17 +77,17 @@ function NewWidgetPopup({ closeSelf }) {
           chartObjects = chartObjects.filter((obj) => obj.admin === false);
           if (chartObjects.length > 0)
             return (
-              <motion.div 
-                key={index} 
+              <motion.div
+                key={index}
                 variants={widgetItemsFadeIn}
                 initial="hidden"
                 animate="visible"
                 exit="exit"
               >
                 <div className="widget-button-header">{chartType}</div>
-                
-                <motion.div 
-                  className="widget-button-row" 
+
+                <motion.div
+                  className="widget-button-row"
                   variants={buttonsContainerVariants}
                   initial="hidden"
                   animate="visible"
@@ -105,7 +99,7 @@ function NewWidgetPopup({ closeSelf }) {
                         className="widget-button"
                         key={obj.id || `${obj.type}-${index}`}
                         onClick={() => handleClick(obj)}
-                        variants={buttonVariants} 
+                        variants={buttonVariants}
                         initial="hidden"
                         animate="visible"
                         exit="exit"
@@ -122,7 +116,6 @@ function NewWidgetPopup({ closeSelf }) {
       </motion.div>
     );
   }
-  
 
   function Preset() {
     return (

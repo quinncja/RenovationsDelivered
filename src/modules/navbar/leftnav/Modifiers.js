@@ -1,30 +1,27 @@
 import Select from "react-dropdown-select";
 import { useModifiers } from "context/ModifierContext";
 import { useProjectContext } from "context/ProjectContext";
-import { useEffect, useState } from "react";
 import { close } from "business/svg";
+import { stateList } from "utils/modifiers";
 
 export function Modifiers() {
-  const { projects, getAllProjects, getProjectByNum,
-    getYearsByJob, getYearById, getPhasesByYear } = useProjectContext();
+  const {
+    projects,
+    getAllProjects,
+    getProjectByNum,
+    getYearsByJob,
+    getYearById,
+    getPhasesByYear,
+  } = useProjectContext();
   const { pageModifiers, modTimeout, updatePageModifiers } = useModifiers();
-  const [loading, setLoading] = useState(!projects);
-
-  useEffect(() => {
-    if (projects) {
-      setLoading(false);
-    } else {
-      setLoading(true);
-    }
-  }, [projects]);
 
   const allProjects = getAllProjects() || [];
   const { jobs = {} } = projects || {};
 
-  
   const selectedJobNum = pageModifiers.jobNum;
   const selectedYearId = pageModifiers.yearId;
   const selectedPhaseId = pageModifiers.phaseId;
+  const selectedState = pageModifiers.state;
 
   const selectedJob = getProjectByNum(selectedJobNum);
   const selectedJobYears = getYearsByJob(selectedJob);
@@ -39,6 +36,7 @@ export function Modifiers() {
       jobNum: jobNum,
       yearId: null,
       phaseId: null,
+      state: null,
     };
 
     updatePageModifiers(newMods);
@@ -67,11 +65,23 @@ export function Modifiers() {
     updatePageModifiers(newMods);
   };
 
+  const handleStateChange = (value) => {
+    if (modTimeout) return;
+    const state = value.length > 0 ? value[0].id : null;
+
+    const newMods = {
+      state: state,
+    };
+
+    updatePageModifiers(newMods);
+  };
+
   const clearModifiers = () => {
     const newMods = {
       jobNum: null,
       yearId: null,
       phaseId: null,
+      state: null,
     };
 
     updatePageModifiers(newMods);
@@ -82,7 +92,7 @@ export function Modifiers() {
       <Select
         labelField="name"
         valueField="num"
-        options={allProjects}
+        options={allProjects || []}
         values={
           selectedJobNum && jobs[selectedJobNum] ? [jobs[selectedJobNum]] : []
         }
@@ -90,7 +100,6 @@ export function Modifiers() {
         className="select-dropdown"
         dropdownGap={10}
         dropdownHandle={false}
-        disabled={loading}
         searchBy="name"
         sortBy="name"
         onChange={handleJobChange}
@@ -111,7 +120,6 @@ export function Modifiers() {
         className="select-dropdown select-dropdown-small"
         dropdownGap={10}
         dropdownHandle={false}
-        disabled={loading}
         onChange={handleYearChange}
       />
 
@@ -132,11 +140,31 @@ export function Modifiers() {
         className="select-dropdown select-dropdown-small"
         dropdownGap={10}
         dropdownHandle={false}
-        disabled={loading}
         onChange={handlePhaseChange}
       />
 
-      {(selectedJobNum || selectedYearId || selectedPhaseId) && (
+      <Select
+        labelField="name"
+        valueField="id"
+        options={stateList}
+        values={
+          selectedState
+            ? [stateList.find((state) => state.id === selectedState)].filter(
+                Boolean,
+              )
+            : []
+        }
+        placeholder="State"
+        className="select-dropdown select-dropdown-small"
+        dropdownGap={10}
+        dropdownHandle={false}
+        onChange={handleStateChange}
+      />
+
+      {(selectedJobNum ||
+        selectedYearId ||
+        selectedPhaseId ||
+        selectedState) && (
         <button className="clear-modifiers" onClick={clearModifiers}>
           {close()}
         </button>

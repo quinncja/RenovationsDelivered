@@ -9,8 +9,8 @@ export const useChartData = () => {
   const { updateDataMap } = useItems();
   const { pageModifiers } = useModifiers();
   const { phaseId } = pageModifiers;
-  const prevPhase = usePrevPhase(phaseId)
-  const formattedModifiers = modifierFormatter(pageModifiers, prevPhase); 
+  const prevPhase = usePrevPhase(phaseId);
+  const formattedModifiers = modifierFormatter(pageModifiers, prevPhase);
 
   const loadData = useCallback(
     async (id, query, signal) => {
@@ -23,7 +23,6 @@ export const useChartData = () => {
         ...formattedModifiers,
         type: query,
       };
-
       const newData = await fetchChartData(modsToUse, signal);
       updateDataMap(id, newData);
     },

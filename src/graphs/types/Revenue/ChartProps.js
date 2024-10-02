@@ -13,4 +13,4 @@ export const revChartProps = {
     })),
   keys: ["Budgeted - ", "COGS - ", "Contracted - "],
   groupMode: "stacked",
-}
+};

@@ -8,7 +8,7 @@ const usePhase = (phaseId, direction) => {
   const relativePhase = useMemo(() => {
     if (!phaseId) return null;
 
-    const isPlaceholderPhaseId = phaseId.startsWith('xxxx-');
+    const isPlaceholderPhaseId = phaseId.startsWith("xxxx-");
 
     if (isPlaceholderPhaseId) {
       const index = phaseList.findIndex((phase) => phase.id === phaseId);
@@ -16,7 +16,7 @@ const usePhase = (phaseId, direction) => {
 
       const newIndex = index + direction;
       if (newIndex < 0 || newIndex >= phaseList.length) {
-        return null; 
+        return null;
       }
 
       return phaseList[newIndex];
@@ -33,7 +33,7 @@ const usePhase = (phaseId, direction) => {
 
       const newIndex = index + direction;
       if (newIndex < 0 || newIndex >= phases.length) {
-        return null; 
+        return null;
       }
 
       return phases[newIndex];
