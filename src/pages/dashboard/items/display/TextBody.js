@@ -1,6 +1,6 @@
-import JobDisplay from "graphs/types/Status/StatusDisplay";
-import YTDDisplay from "graphs/types/YTD/YTDDisplay";
-import { SingleMargin } from "graphs/types/Margin/SingleMargin";
+import JobDisplay from "graphs/widgets/Status/StatusDisplay";
+import YTDDisplay from "graphs/widgets/YTD/YTDDisplay";
+import { SingleMargin } from "graphs/widgets/Margin/SingleMargin";
 
 function TextBody(props) {
   const { chartObj, data, open } = props;

@@ -5,7 +5,7 @@ export default function ZeroLineLayer(lineChartProps) {
   const y = lineChartProps.yScale(0);
   const lineColor = useCSSVariable("--shadow");
 
-  const maxY = 195;
+  const maxY = 395;
   const yVal = Math.min(y, maxY);
 
   return (

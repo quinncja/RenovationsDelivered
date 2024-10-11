@@ -1,22 +1,24 @@
 import { Pie } from "@nivo/pie";
 import { calculateTotalSum } from "utils/funcs";
 import { useCSSVariable } from "utils/hooks/useCSSVariable";
-import getVenderLabel from "graphs/types/Vender/Label";
+import getVenderLabel from "graphs/widgets/Vender/Label";
 import { CenterSum } from "./CenterSum";
 import { trimLabel } from "./TrimLabel";
 
-function PieChart({ data, open, size, chartRef, tooltip, chartProps }) {
+function PieChart({
+  data,
+  open,
+  size,
+  chartRef,
+  tooltip,
+  chartProps,
+  toggleData,
+}) {
   const arcLabelColor = "#f3f3f3";
   const arcLinkLabelColor = useCSSVariable("--white");
 
   const sum = calculateTotalSum(data);
   const slicedData = data.slice(0, 20);
-
-  // const getPercentage = (datum) => {
-  //   if (sum === 0) return "0%";
-  //   const percentage = (datum.value / sum) * 100;
-  //   return `${percentage.toFixed(2)}%`;
-  // };
 
   const label = (datum) => {
     const vendorLabel = getVenderLabel(datum);
@@ -28,8 +30,17 @@ function PieChart({ data, open, size, chartRef, tooltip, chartProps }) {
     ? { top: 40, bottom: 90, right: 50, left: 70 }
     : { top: 10, bottom: 90, right: 0, left: -20 };
 
+  const theme = {
+    tooltip: {
+      container: {
+        zIndex: 25,
+      },
+    },
+  };
+
   return (
     <Pie
+      onClick={(e) => toggleData(e)}
       {...size}
       {...chartProps}
       tooltip={({ datum }) => tooltip(datum, sum)}
@@ -63,6 +74,7 @@ function PieChart({ data, open, size, chartRef, tooltip, chartProps }) {
         "legends",
         (props) => <CenterSum {...props} sum={sum} />,
       ]}
+      theme={theme}
     />
   );
 }

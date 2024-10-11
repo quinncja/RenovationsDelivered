@@ -1,6 +1,6 @@
-import transformMarginData from "graphs/types/Margin/transformData";
+import transformMarginData from "graphs/widgets/Margin/transformData";
 import { transformLineData } from "graphs/charts/LineChart/transformLineData";
-import transformRevenueData from "graphs/types/Revenue/transformData";
+import transformRevenueData from "graphs/widgets/Revenue/transformData";
 
 function getTableFunc(type) {
   switch (type) {

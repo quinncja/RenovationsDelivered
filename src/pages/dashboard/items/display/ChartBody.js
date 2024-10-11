@@ -8,7 +8,7 @@ import useChartImage from "utils/images/useChartImage";
 
 function ChartBody(props) {
   const chartRef = useRef(null);
-  const { chartObj, data, container, size, id } = props;
+  const { chartObj, data, container, size, id, toggleData, open } = props;
   const { query, chartType } = chartObj;
   useChartImage(chartRef, id, [data, chartObj]);
   const { chartProps, tooltip, pallete } = useChartProps(query, chartType);
@@ -23,6 +23,7 @@ function ChartBody(props) {
             size={size}
             chartProps={chartProps}
             tooltip={tooltip}
+            toggleData={toggleData}
           />
         );
       case "Line":
@@ -33,6 +34,8 @@ function ChartBody(props) {
             chartProps={chartProps}
             tooltip={tooltip}
             chartObj={chartObj}
+            open={open}
+            toggleData={toggleData}
           />
         );
       case "Bar":
@@ -42,6 +45,7 @@ function ChartBody(props) {
             size={size}
             chartProps={chartProps}
             tooltip={tooltip}
+            open={open}
           />
         );
       default:

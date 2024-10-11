@@ -4,7 +4,7 @@ import ChartBody from "./ChartBody";
 import ImageBody from "./ImageBody";
 
 function BodyDisplay(props) {
-  const { chartObj, open, data, dragging, id } = props;
+  const { chartObj, open, data, dragging, id, toggleData } = props;
   const chartType = chartObj.chartType;
 
   if (chartType === "Text") {
@@ -33,6 +33,8 @@ function BodyDisplay(props) {
       container={container}
       size={chartSize}
       id={id}
+      toggleData={toggleData}
+      open={open}
     />
   );
 }

@@ -32,7 +32,7 @@ function BarChart({ data, open, size, tooltip, chartProps }) {
   const axisLeft =
     open && showLabel
       ? {
-          tickValues: 5,
+          tickValues: 10,
           format: (v) => dollarFormatter(v),
         }
       : false;

@@ -14,7 +14,7 @@ export function dollarFormatter(input) {
 }
 
 export function percentFomatter(input) {
-  return `${input}%`;
+  return `${input.toFixed(2)}%`;
 }
 
 export function formatNumberShort(number) {
@@ -85,15 +85,8 @@ export const phaseNumToMonth = (phase) => {
 };
 
 export const phaseToMonth = (phase, optional) => {
-  if (typeof phase !== "string" || phase.length < 5) {
-    throw new Error("Invalid phase format");
-  }
-
-  const front = phase.substring(0, 2);
-  const back = phase.substring(3, 5);
-
   let phaseMap = {
-    "00": "January",
+    "00": "Extra Work",
     "01": "January",
     "02": "February",
     "03": "March",
@@ -111,6 +104,13 @@ export const phaseToMonth = (phase, optional) => {
     15: "Extra Work",
     16: "Extra Work",
   };
+
+  if (typeof phase !== "string" || phase.length < 5) {
+    return phaseMap[phase];
+  }
+
+  const front = phase.substring(0, 2);
+  const back = phase.substring(3, 5);
 
   let month = phaseMap[front] || "Unknown Phase";
   if (optional) month = month.slice(0, 3);
@@ -205,3 +205,207 @@ export const toParam = (str) => {
 export const fromParam = (str) => {
   return str.replace("-", " ");
 };
+
+export const statusFormatter = (status) => {
+  if (status === 4) return "Paid";
+  if (status === 1) return "Open";
+  if (status === 2) return "Review";
+  if (status === 3) return "Dispute";
+  if (status === 5) return "Void";
+};
+
+export const dateFormatter = (dateInput) => {
+  const date = new Date(dateInput);
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+  const year = date.getFullYear();
+
+  return `${month}-${day}-${year}`;
+};
+
+export const jobStatusFormatter = (status) => {
+  if (status === 1) return "Bid";
+  if (status === 2) return "Refused";
+  if (status === 3) return "Contract";
+  if (status === 4) return "Current";
+  if (status === 5) return "Complete";
+  if (status === 6) return "Closed";
+};
+
+export const costTypeFormatter = (costCode) => {
+  if (costCode === 1) return "Material";
+  if (costCode === 2) return "Labor";
+  if (costCode === 3) return "Equipment";
+  if (costCode === 4) return "Sub";
+  if (costCode === 5) return "WTPM";
+};
+
+export function formatMarginData(data, maxLayer) {
+  let formattedData;
+
+  if (maxLayer === 2) {
+    const flattenedData = data.flatMap((yearObj) => {
+      const year = yearObj.Year;
+      return yearObj.Phases.map((phaseObj) => ({
+        x: `${phaseObj.Phase}_${year}`,
+        y: phaseObj.marginPercentage,
+      }));
+    });
+
+    flattenedData.sort((a, b) => {
+      const [phaseA, yearA] = a.x.split("_").map((item) => parseInt(item, 10));
+      const [phaseB, yearB] = b.x.split("_").map((item) => parseInt(item, 10));
+
+      if (yearA !== yearB) {
+        return yearA - yearB;
+      }
+
+      return phaseA - phaseB;
+    });
+
+    formattedData = [
+      {
+        id: "Margin",
+        data: flattenedData,
+      },
+    ];
+  } else {
+    formattedData = [
+      {
+        id: "Margin",
+        data: data.map((item) => ({
+          x: item.Phase,
+          y: item.marginPercentage,
+        })),
+      },
+    ];
+
+    formattedData[0].data.sort((a, b) => {
+      const phaseA = parseInt(a.x, 10);
+      const phaseB = parseInt(b.x, 10);
+      return phaseA - phaseB;
+    });
+  }
+
+  return formattedData;
+}
+
+export function formatRevenueData(data, maxLayer) {
+  let formattedData;
+
+  if (maxLayer === 2) {
+    const budgetedSums = {};
+    const cogsSums = {};
+    const cntrctSums = {};
+
+    data.forEach((yearObj) => {
+      const year = yearObj.Year;
+      yearObj.Phases.forEach((phaseObj) => {
+        const key = `${phaseObj.Phase}_${year}`;
+
+        budgetedSums[key] = (budgetedSums[key] || 0) + phaseObj.budgetedAmount;
+
+        cogsSums[key] = (cogsSums[key] || 0) + phaseObj.totalCost;
+
+        cntrctSums[key] = (cntrctSums[key] || 0) + phaseObj.contractValue;
+      });
+    });
+
+    const sortByPhaseAndYear = (a, b) => {
+      const [phaseA, yearA] = a.x.split("_").map((item) => parseInt(item, 10));
+      const [phaseB, yearB] = b.x.split("_").map((item) => parseInt(item, 10));
+
+      if (yearA !== yearB) {
+        return yearA - yearB;
+      }
+
+      return phaseA - phaseB;
+    };
+
+    const budgetedResult = {
+      id: "Budgeted",
+      data: Object.keys(budgetedSums)
+        .map((key) => ({
+          x: key,
+          y: budgetedSums[key],
+        }))
+        .sort(sortByPhaseAndYear),
+    };
+
+    const cogsResult = {
+      id: "COGS",
+      data: Object.keys(cogsSums)
+        .map((key) => ({
+          x: key,
+          y: cogsSums[key],
+        }))
+        .sort(sortByPhaseAndYear),
+    };
+
+    const contractResult = {
+      id: "Contracted",
+      data: Object.keys(cntrctSums)
+        .map((key) => ({
+          x: key,
+          y: cntrctSums[key],
+        }))
+        .sort(sortByPhaseAndYear),
+    };
+
+    formattedData = [budgetedResult, cogsResult, contractResult];
+  } else {
+    const budgetedSums = {};
+    const cogsSums = {};
+    const cntrctSums = {};
+
+    data.forEach((item) => {
+      const phase = item.Phase;
+
+      budgetedSums[phase] = (budgetedSums[phase] || 0) + item.budgetedAmount;
+
+      cogsSums[phase] = (cogsSums[phase] || 0) + item.totalCost;
+
+      cntrctSums[phase] = (cntrctSums[phase] || 0) + item.contractValue;
+    });
+
+    const sortByPhase = (a, b) => {
+      const phaseA = parseInt(a.x, 10);
+      const phaseB = parseInt(b.x, 10);
+      return phaseA - phaseB;
+    };
+
+    const budgetedResult = {
+      id: "Budgeted",
+      data: Object.keys(budgetedSums)
+        .map((phase) => ({
+          x: phase,
+          y: budgetedSums[phase],
+        }))
+        .sort(sortByPhase),
+    };
+
+    const cogsResult = {
+      id: "COGS",
+      data: Object.keys(cogsSums)
+        .map((phase) => ({
+          x: phase,
+          y: cogsSums[phase],
+        }))
+        .sort(sortByPhase),
+    };
+
+    const contractResult = {
+      id: "Contracted",
+      data: Object.keys(cntrctSums)
+        .map((phase) => ({
+          x: phase,
+          y: cntrctSums[phase],
+        }))
+        .sort(sortByPhase),
+    };
+
+    formattedData = [budgetedResult, cogsResult, contractResult];
+  }
+
+  return formattedData;
+}

@@ -24,8 +24,10 @@ export const marginChartProps = {
     ]),
   ],
   axisLeft: {
-    format: (v) => `${v}%`,
-    tickValues: 5,
+    format: (v) => {
+      return `${v}%`;
+    },
+    tickValues: 8,
   },
   chartFormat: (data) => {
     return [{ id: "Margin", data: [...data.current] }];

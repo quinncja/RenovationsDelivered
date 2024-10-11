@@ -86,7 +86,7 @@ export function Modifiers() {
     };
 
     updatePageModifiers(newMods);
-  }
+  };
 
   const clearModifiers = () => {
     const newMods = {
@@ -180,9 +180,7 @@ export function Modifiers() {
         options={pmList}
         values={
           selectedPM
-            ? [pmList.find((pm) => pm.id === selectedPM)].filter(
-                Boolean,
-              )
+            ? [pmList.find((pm) => pm.id === selectedPM)].filter(Boolean)
             : []
         }
         placeholder="PM"
@@ -191,7 +189,6 @@ export function Modifiers() {
         dropdownHandle={false}
         onChange={handlePMChange}
       />
-
 
       {(selectedJobNum ||
         selectedYearId ||

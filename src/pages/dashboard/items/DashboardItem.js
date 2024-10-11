@@ -19,7 +19,7 @@ function DashboardItem(props) {
   const navigate = useNavigate();
   const data = type === "Status" ? [] : dataMap[id] || null;
   const chartObj = single ? getSingleChartObj(type) : getChartObj(type);
-
+  const toggleData = () => {};
   const { chartType } = chartObj;
   const loadData = useChartData();
 
@@ -61,6 +61,10 @@ function DashboardItem(props) {
 
   useEffect(() => {
     const fetchData = async () => {
+      if (data) {
+        return;
+      }
+
       try {
         if (abortControllerRef.current) {
           abortControllerRef.current.abort();
@@ -84,6 +88,7 @@ function DashboardItem(props) {
         abortControllerRef.current.abort();
       }
     };
+    //eslint-disable-next-line
   }, [type, loadData, chartObj.query, id]);
 
   return (
@@ -129,6 +134,7 @@ function DashboardItem(props) {
                 data={data}
                 id={id}
                 dragging={dragging}
+                toggleData={toggleData}
               />
             </motion.div>
           </AnimatePresence>

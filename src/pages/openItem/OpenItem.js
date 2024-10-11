@@ -5,7 +5,7 @@ import { fromParam } from "utils/formatters";
 import { useChartData } from "utils/hooks/useChartData";
 import { useItems } from "context/ItemsContext";
 import { useSingle } from "utils/hooks/useSingle";
-import DataLayer from "./DataLayer";
+import TransformLayer from "./TransformLayer";
 
 function OpenItem() {
   const navigate = useNavigate();
@@ -13,8 +13,8 @@ function OpenItem() {
   const { param } = useParams();
   const type = fromParam(param);
   const chartObj = single ? getSingleChartObj(type) : getChartObj(type);
+  const { query } = chartObj;
   if (!chartObj) navigate("/dashboard");
-
   const { dataMap, clearOpenData } = useItems();
   const loadData = useChartData();
   const abortControllerRef = useRef(null);
@@ -28,7 +28,7 @@ function OpenItem() {
         }
         const controller = new AbortController();
         abortControllerRef.current = controller;
-        loadData("open", chartObj.query, controller.signal);
+        loadData("open", query + "-open", controller.signal);
       } catch (error) {
         if (error.name === "AbortError") {
           console.log("Fetch request aborted");
@@ -45,7 +45,7 @@ function OpenItem() {
         abortControllerRef.current.abort();
       }
     };
-  }, [type, loadData, chartObj.query]);
+  }, [type, loadData, query]);
 
   function handleClose() {
     clearOpenData();
@@ -61,8 +61,10 @@ function OpenItem() {
         className={`${!data ? "loading-widget" : ""} open-widget-container`}
         onClick={(e) => e.stopPropagation()}
       >
-        <h2 style={{ paddingTop: "20px" }}> {type} </h2>
-        {data && <DataLayer data={data} chartObj={chartObj} />}
+        <div className="scroll-open-widget">
+          <h2> {type} </h2>
+          {data && <TransformLayer data={data} chartObj={chartObj} />}
+        </div>
       </div>
     </div>
   );

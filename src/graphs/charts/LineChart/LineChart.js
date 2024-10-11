@@ -32,7 +32,7 @@ function LineChart({ data, open, size, chartObj, chartProps, tooltip }) {
     ? { top: 5, right: 20, bottom: 50, left: 50 }
     : { top: 5, right: 70, bottom: 120, left: 40 };
 
-  const axisLeft = open && showLabel ? chartObj.chartProps.axisLeft : false;
+  const axisLeft = open && showLabel ? chartProps.axisLeft : false;
   const colors =
     chartObj.type === "Margin" ? "" : data.map((data) => data.color);
 

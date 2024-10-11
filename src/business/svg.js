@@ -460,7 +460,7 @@ export function SmartSortSvg() {
               fill-rule="evenodd"
               clip-rule="evenodd"
               d="M19 12C15.41 12 11 17.41 11 21C11 17.41 6.59 12 3 12C6.59 12 11 6.59 11 3C11 6.59 15.41 12 19 12Z"
-              stroke="black"
+              style={{ stroke: "var(--less-white)" }}
               strokeWidth="1.7"
               strokeLinecap="round"
               strokeLinejoin="round"
@@ -470,7 +470,7 @@ export function SmartSortSvg() {
               fill-rule="evenodd"
               clip-rule="evenodd"
               d="M21 5C19.974 5 19 5.974 19 7C19 5.974 18.026 5 17 5C18.026 5 19 4.026 19 3C19 4.026 19.974 5 21 5Z"
-              stroke="black"
+              style={{ stroke: "var(--less-white)" }}
               strokeWidth="1.7"
               strokeLinecap="round"
               strokeLinejoin="round"
@@ -632,3 +632,174 @@ export function rightArrowSvg() {
     </svg>
   );
 }
+
+export const tableArrow = (color) => {
+  return (
+    <svg
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M15 10L20 15L15 20"
+        style={{ stroke: color, filter: "brightness(var(--filter3))" }}
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M4 4V11C4 12.0609 4.42143 13.0783 5.17157 13.8284C5.92172 14.5786 6.93913 15 8 15H20"
+        style={{ stroke: color, filter: "brightness(var(--filter3))" }}
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+};
+
+export const sortSvg = (state) => {
+  switch (state) {
+    case "asc":
+      return (
+        <svg
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M13 17.9929H3"
+            style={{ stroke: "var(--less-white)" }}
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+          <path
+            d="M10 13.9929H3"
+            style={{ stroke: "var(--less-white)" }}
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+          <path
+            d="M7 9.99292H3"
+            style={{ stroke: "var(--less-white)" }}
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+          <path
+            d="M5 5.99292H3"
+            style={{ stroke: "var(--less-white)" }}
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+          <path
+            d="M21 14.9929L18 17.9929L15 14.9929"
+            style={{ stroke: "var(--less-white)" }}
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+          <path
+            d="M18 17.9929V5.99292"
+            style={{ stroke: "var(--less-white)" }}
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </svg>
+      );
+    case "desc":
+      return (
+        <svg
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <g id="Property 1=sort-high-to-low">
+            <g id="Group 14">
+              <path
+                id="Stroke 2"
+                d="M3 5.99292H13"
+                style={{ stroke: "var(--less-white)" }}
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+              <path
+                id="Stroke 4"
+                d="M3 9.99292H10"
+                style={{ stroke: "var(--less-white)" }}
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+              <path
+                id="Stroke 6"
+                d="M3 13.9929H7"
+                style={{ stroke: "var(--less-white)" }}
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+              <path
+                id="Stroke 8"
+                d="M3 17.9929H5"
+                style={{ stroke: "var(--less-white)" }}
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+              <path
+                id="Stroke 10"
+                d="M21 14.9929L18 17.9929L15 14.9929"
+                style={{ stroke: "var(--less-white)" }}
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+              <path
+                id="Stroke 13"
+                d="M18 17.9929V5.99292"
+                style={{ stroke: "var(--less-white)" }}
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </g>
+          </g>
+        </svg>
+      );
+    default:
+      return (
+        <svg
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            fill-rule="evenodd"
+            clip-rule="evenodd"
+            d="M21.707 14.2862C21.316 13.8952 20.684 13.8952 20.293 14.2862L19 15.5792V5.99316C19 5.44016 18.553 4.99316 18 4.99316C17.447 4.99316 17 5.44016 17 5.99316V15.5792L15.707 14.2862C15.316 13.8952 14.684 13.8952 14.293 14.2862C13.902 14.6772 13.902 15.3092 14.293 15.7002L17.292 18.6992C17.384 18.7922 17.495 18.8652 17.618 18.9162C17.74 18.9672 17.87 18.9932 18 18.9932C18.13 18.9932 18.26 18.9672 18.382 18.9162C18.505 18.8652 18.616 18.7922 18.708 18.6992L21.707 15.7002C22.098 15.3092 22.098 14.6772 21.707 14.2862"
+            style={{ fill: "var(--less-white)", opacity: ".3" }}
+          />
+          <path
+            fill-rule="evenodd"
+            clip-rule="evenodd"
+            d="M4.29325 9.707C4.68425 10.098 5.31625 10.098 5.70725 9.707L7.00025 8.414L7.00025 18C7.00025 18.553 7.44725 19 8.00025 19C8.55325 19 9.00025 18.553 9.00025 18L9.00025 8.414L10.2933 9.707C10.6843 10.098 11.3163 10.098 11.7073 9.707C12.0983 9.316 12.0983 8.684 11.7073 8.293L8.70825 5.294C8.61625 5.201 8.50525 5.128 8.38225 5.077C8.26025 5.026 8.13025 5 8.00025 5C7.87025 5 7.74025 5.026 7.61825 5.077C7.49525 5.128 7.38425 5.201 7.29225 5.294L4.29325 8.293C3.90225 8.684 3.90225 9.316 4.29325 9.707"
+            style={{ fill: "var(--less-white)", opacity: ".3" }}
+          />
+        </svg>
+      );
+  }
+};

@@ -3,7 +3,7 @@ import { formatNumberShort } from "utils/formatters";
 export const revChartProps = {
   axisLeft: {
     format: (v) => formatNumberShort(v),
-    tickValues: 5,
+    tickValues: 7,
   },
   legendsFunc: (data) =>
     data.map((series, index) => ({

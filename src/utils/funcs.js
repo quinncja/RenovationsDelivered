@@ -41,11 +41,11 @@ export function toggleBodyScroll(disable) {
 export function getItemContainers(type, open) {
   if (type === "Pie") {
     const pieContainer = open
-      ? { width: "640px", height: "450px" }
+      ? { width: "420px", height: "350px" }
       : { width: "320px", height: "360px" };
 
     let pieSize = open
-      ? { width: 700, height: 500 }
+      ? { width: 400, height: 400 }
       : { width: 320, height: 320 };
 
     const imageSize = {
@@ -60,11 +60,11 @@ export function getItemContainers(type, open) {
     };
   } else {
     const wideContainer = open
-      ? { width: "1100px", height: "400px" }
+      ? { width: "900px", height: "450px" }
       : { width: "660px", height: "320px" };
 
     let wideSize = open
-      ? { width: 950, height: 450 }
+      ? { width: 850, height: 430 }
       : { width: 640, height: 320 };
 
     const imageSize = {

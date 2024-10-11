@@ -1,6 +1,6 @@
-import { revChartProps } from "graphs/types/Revenue/ChartProps";
-import { marginChartProps } from "graphs/types/Margin/ChartProps";
-import { budgetChartProps } from "graphs/types/Budget/ChartProps";
+import { revChartProps } from "graphs/widgets/Revenue/ChartProps";
+import { marginChartProps } from "graphs/widgets/Margin/ChartProps";
+import { budgetChartProps } from "graphs/widgets/Budget/ChartProps";
 
 export const getChartProps = (query, type) => {
   if (query === "revenue" || query === "revenue-single") return revChartProps;
