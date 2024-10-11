@@ -261,8 +261,8 @@ function adjustColor(colorObj, id) {
     if (colorObj.lighter && colorObj.darker) {
       const lighten = (idHash >> 1) % 2 === 0;
       lightnessAdjustment = lighten
-        ? Math.floor(idHash % 21)
-        : -Math.floor(idHash % 21);
+        ? Math.floor(idHash % 23)
+        : -Math.floor(idHash % 18);
     } else if (colorObj.lighter) {
       lightnessAdjustment = Math.floor(idHash % 21);
     } else if (colorObj.darker) {
