@@ -38,6 +38,7 @@ export function Modifiers() {
       yearId: null,
       phaseId: null,
       state: null,
+      active: "Total",
     };
 
     updatePageModifiers(newMods);
@@ -50,6 +51,7 @@ export function Modifiers() {
     const newMods = {
       yearId: yearId,
       phaseId: null,
+      active: "Total",
     };
 
     updatePageModifiers(newMods);
@@ -61,6 +63,7 @@ export function Modifiers() {
 
     const newMods = {
       phaseId: phaseId,
+      active: "Total",
     };
 
     updatePageModifiers(newMods);
@@ -72,6 +75,7 @@ export function Modifiers() {
 
     const newMods = {
       state: state,
+      active: "Total",
     };
 
     updatePageModifiers(newMods);
@@ -84,6 +88,7 @@ export function Modifiers() {
     const newMods = {
       jobNum: null,
       pm: pm,
+      active: "Total",
     };
 
     updatePageModifiers(newMods);
@@ -96,6 +101,7 @@ export function Modifiers() {
       phaseId: null,
       state: null,
       pm: null,
+      active: "Total",
     };
 
     updatePageModifiers(newMods);

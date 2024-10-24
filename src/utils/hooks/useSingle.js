@@ -8,27 +8,72 @@ export const useSingle = () => {
 
   const single = useMemo(() => {
     if (!projects) return false;
-    if (
-      pageModifiers.jobNum !== null &&
-      pageModifiers.yearId !== null &&
-      pageModifiers.phaseId !== null
-    ) {
-      return true;
+
+    const { jobNum, yearId, phaseId, active } = pageModifiers;
+
+    const isPhaseActive = (phase) => {
+      if (active === "Active") return phase.status === 4;
+      if (active === "Closed") return phase.status > 4;
+      if (active === "Total") return true;
+      return false;
+    };
+
+    if (jobNum && yearId && phaseId) {
+      const phase = projects.phases[phaseId];
+      if (phase && isPhaseActive(phase)) {
+        return true;
+      }
+      return false;
     }
-    if (pageModifiers.yearId !== null && pageModifiers.phaseId !== null)
-      return true;
 
-    if (!pageModifiers.jobNum) return false;
-
-    const jobNum = pageModifiers.jobNum;
-    if (!pageModifiers.yearId) {
-      const jobYears = projects.jobs[jobNum]?.years || [];
-      if (jobYears.length > 1) return false;
+    if (!jobNum && yearId && phaseId) {
+      const phase = projects.phases[phaseId];
+      if (phase && isPhaseActive(phase)) {
+        return true;
+      }
+      return false;
     }
 
-    const yearId = projects.jobs[jobNum]?.years[0];
-    const phaseNums = projects.years[yearId]?.phases || [];
-    if (phaseNums.length > 1) return false;
+    if (!jobNum) return false;
+
+    const job = projects.jobs[jobNum];
+    if (!job) return false;
+
+    const jobYears = job.years || [];
+
+    const filteredYears = jobYears.filter((yearId) => {
+      const year = projects.years[yearId];
+      if (!year) return false;
+
+      const phasesInYear = year.phases || [];
+      const activePhasesInYear = phasesInYear.filter((phaseId) => {
+        const phase = projects.phases[phaseId];
+        return phase && isPhaseActive(phase);
+      });
+
+      return activePhasesInYear.length > 0;
+    });
+
+    if (!yearId) {
+      if (filteredYears.length !== 1) return false;
+    }
+
+    const selectedYearId = yearId || filteredYears[0];
+    const year = projects.years[selectedYearId];
+    if (!year) return false;
+
+    const phasesInYear = year.phases || [];
+    const activePhasesInYear = phasesInYear.filter((phaseId) => {
+      const phase = projects.phases[phaseId];
+      return phase && isPhaseActive(phase);
+    });
+
+    if (!phaseId) {
+      if (activePhasesInYear.length !== 1) return false;
+    } else {
+      const phase = projects.phases[phaseId];
+      if (!phase || !isPhaseActive(phase)) return false;
+    }
 
     return true;
   }, [pageModifiers, projects]);
