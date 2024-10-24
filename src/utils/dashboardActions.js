@@ -68,3 +68,9 @@ export const updatePageModifiersAction =
       ...newMods,
     }));
   };
+
+export const updateTrackedJobsAction =
+  (setTrackedJobs, saveTrackedJobs) => (newJobs) => {
+    setTrackedJobs(newJobs);
+    saveTrackedJobs(newJobs);
+  };

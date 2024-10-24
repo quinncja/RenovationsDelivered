@@ -803,3 +803,54 @@ export const sortSvg = (state) => {
       );
   }
 };
+
+export const switchSvg = () => {
+  return (
+    <svg
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <g id="Property 1=compare-1">
+        <g id="Group 11">
+          <g id="Group 10">
+            <path
+              id="Stroke 2"
+              d="M16 12.0071L19.75 15.2931C20.141 15.6831 20.141 16.3161 19.75 16.7071L16 20.0071"
+              style={{ stroke: "var(--less-white)" }}
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+            <path
+              id="Stroke 4"
+              d="M20.0429 15.9927H11.9999"
+              style={{ stroke: "var(--less-white)" }}
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+            <path
+              id="Stroke 6"
+              d="M8.0429 12.0071L4.2929 8.72108C3.9019 8.33108 3.9019 7.69808 4.2929 7.30708L8.0429 4.00708"
+              style={{ stroke: "var(--less-white)" }}
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+            <path
+              id="Stroke 8"
+              d="M4 7.99268H12"
+              style={{ stroke: "var(--less-white)" }}
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </g>
+        </g>
+      </g>
+    </svg>
+  );
+};

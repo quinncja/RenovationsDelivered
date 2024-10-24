@@ -7,10 +7,11 @@ import {
 } from "react-router-dom";
 import Home from "pages/home/Home";
 import App from "./App";
-import Dashboard from "pages/dashboard/Dashboard";
 import Userfront from "@userfront/toolkit";
-import Jobcosting from "pages/jobcosting/Jobcosting";
 import OpenItem from "pages/openItem/OpenItem";
+import DashboardHome from "pages/dashboardHome/DashboardHome";
+import JobCost from "pages/jobcost/JobCost";
+import JobCostHeader from "modules/jobcostHeader/JobCostHeader";
 
 function RequireAuth({ children }) {
   let location = useLocation();
@@ -33,23 +34,25 @@ function Router() {
             path="/dashboard"
             element={
               <RequireAuth>
-                <Dashboard />
+                <DashboardHome />
               </RequireAuth>
             }
           />
           <Route
-            path="/item/:param"
+            path="/jobcost"
             element={
               <RequireAuth>
+                <JobCostHeader />
+                <JobCost />
+              </RequireAuth>
+            }
+          />
+          <Route
+            path="/jobcost/item/:param"
+            element={
+              <RequireAuth>
+                <JobCostHeader />
                 <OpenItem />
-              </RequireAuth>
-            }
-          />
-          <Route
-            path="/job-costing"
-            element={
-              <RequireAuth>
-                <Jobcosting />
               </RequireAuth>
             }
           />

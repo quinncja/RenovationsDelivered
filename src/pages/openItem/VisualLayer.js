@@ -1,13 +1,16 @@
 import { useSingle } from "utils/hooks/useSingle";
 import ChartLayer from "./ChartLayer";
 import { DataTable } from "./DataTable";
+import { checkEmpty } from "utils/funcs";
 
 function VisualLayer(props) {
   const { data, chartObj, ...rest } = props;
   const { chartType, type } = chartObj;
 
   const single = useSingle();
-  const hideTable = single && !chartType === "Pie" && !chartType === "Bar";
+  const isEmpty = checkEmpty(data);
+  const hideTable =
+    (single && !chartType === "Pie" && !chartType === "Bar") || isEmpty;
   const showLegend =
     chartType !== "Text" && type !== "Margin" && chartType !== "Bar";
 
@@ -16,6 +19,7 @@ function VisualLayer(props) {
       <div className="open-chart-row">
         <ChartLayer
           data={data}
+          isEmpty={isEmpty}
           chartObj={chartObj}
           showLegend={showLegend}
           {...rest}

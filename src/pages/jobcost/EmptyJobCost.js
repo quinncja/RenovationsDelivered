@@ -1,6 +1,6 @@
-import { useModalContext } from "modules/modals/ModalContext";
+import { useModalContext } from "context/ModalContext";
 
-function EmptyDashboard() {
+function EmptyJobCost() {
   const { openModal } = useModalContext();
   return (
     <div className="loading-wrapper no-item-text">
@@ -14,4 +14,4 @@ function EmptyDashboard() {
   );
 }
 
-export default EmptyDashboard;
+export default EmptyJobCost;

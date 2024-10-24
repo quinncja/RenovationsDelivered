@@ -1,11 +1,10 @@
-// SingleStatus.js
 import React, { useEffect, useRef } from "react";
 import { leftArrowSvg, rightArrowSvg } from "business/svg";
 import { useModifiers } from "context/ModifierContext";
 import useNextPhase from "utils/hooks/phase/useNextPhase";
 import usePrevPhase from "utils/hooks/phase/usePrevPhase";
 
-const SingleStatus = ({ singlePhaseData }) => {
+const PhaseView = ({ singlePhaseData }) => {
   const { updatePageModifiers, setModTimeout } = useModifiers();
   const { phase, job, year, phaseIndex, phaseLength, month, statusString } =
     singlePhaseData;
@@ -30,6 +29,7 @@ const SingleStatus = ({ singlePhaseData }) => {
     updatePageModifiers({
       yearId: prevPhase.yearId,
       phaseId: prevPhase.id,
+      active: "Total"
     });
   };
 
@@ -40,6 +40,7 @@ const SingleStatus = ({ singlePhaseData }) => {
     updatePageModifiers({
       yearId: nextPhase.yearId,
       phaseId: nextPhase.id,
+      active: "Total"
     });
   };
 
@@ -86,4 +87,4 @@ const SingleStatus = ({ singlePhaseData }) => {
   );
 };
 
-export default SingleStatus;
+export default PhaseView;

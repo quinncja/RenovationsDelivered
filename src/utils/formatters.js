@@ -17,6 +17,31 @@ export function percentFomatter(input) {
   return `${input.toFixed(2)}%`;
 }
 
+export function strToPhase(phaseStr) {
+  phaseStr = String(phaseStr);
+  if (phaseStr.length === 1) {
+    return "0" + phaseStr;
+  } else {
+    return phaseStr;
+  }
+}
+
+export function strToMods(job, year, phase) {
+  const jobNum = job || null;
+  const yearId = jobNum && year ? `${jobNum}-${year}` : null;
+  let phaseId = null;
+  if (yearId && phase != null) {
+    const phaseStr = strToPhase(phase);
+    phaseId = phaseStr != null ? `${yearId}-${phaseStr}` : null;
+  }
+
+  return {
+    jobNum,
+    yearId,
+    phaseId,
+  };
+}
+
 export function formatNumberShort(number) {
   if (Math.abs(number) >= 1_000 && Math.abs(number) < 1_000_000) {
     return (number / 1_000).toFixed(1).replace(/\.0$/, "") + "K";
@@ -216,9 +241,9 @@ export const statusFormatter = (status) => {
 
 export const dateFormatter = (dateInput) => {
   const date = new Date(dateInput);
-  const month = String(date.getMonth() + 1).padStart(2, "0");
-  const day = String(date.getDate()).padStart(2, "0");
-  const year = date.getFullYear();
+  const month = String(date.getUTCMonth() + 1).padStart(2, "0");
+  const day = String(date.getUTCDate()).padStart(2, "0");
+  const year = date.getUTCFullYear();
 
   return `${month}-${day}-${year}`;
 };
@@ -290,24 +315,29 @@ export function formatMarginData(data, maxLayer) {
   return formattedData;
 }
 
-export function formatRevenueData(data, maxLayer) {
+export function formatRevenueData(data, maxLayer, isAdmin) {
   let formattedData;
 
   if (maxLayer === 2) {
     const budgetedSums = {};
     const cogsSums = {};
-    const cntrctSums = {};
+    const cntrctSums = isAdmin ? {} : null;
 
     data.forEach((yearObj) => {
       const year = yearObj.Year;
       yearObj.Phases.forEach((phaseObj) => {
         const key = `${phaseObj.Phase}_${year}`;
 
+        // Sum budgetedAmount
         budgetedSums[key] = (budgetedSums[key] || 0) + phaseObj.budgetedAmount;
 
+        // Sum totalCost
         cogsSums[key] = (cogsSums[key] || 0) + phaseObj.totalCost;
 
-        cntrctSums[key] = (cntrctSums[key] || 0) + phaseObj.contractValue;
+        // Sum contractValue only if isAdmin is true
+        if (isAdmin && phaseObj.contractValue !== undefined) {
+          cntrctSums[key] = (cntrctSums[key] || 0) + phaseObj.contractValue;
+        }
       });
     });
 
@@ -342,30 +372,40 @@ export function formatRevenueData(data, maxLayer) {
         .sort(sortByPhaseAndYear),
     };
 
-    const contractResult = {
-      id: "Contracted",
-      data: Object.keys(cntrctSums)
-        .map((key) => ({
-          x: key,
-          y: cntrctSums[key],
-        }))
-        .sort(sortByPhaseAndYear),
-    };
+    const contractResult = isAdmin
+      ? {
+          id: "Contracted",
+          data: Object.keys(cntrctSums)
+            .map((key) => ({
+              x: key,
+              y: cntrctSums[key],
+            }))
+            .sort(sortByPhaseAndYear),
+        }
+      : null;
 
-    formattedData = [budgetedResult, cogsResult, contractResult];
+    formattedData = [budgetedResult, cogsResult];
+    if (isAdmin && contractResult) {
+      formattedData.push(contractResult);
+    }
   } else {
     const budgetedSums = {};
     const cogsSums = {};
-    const cntrctSums = {};
+    const cntrctSums = isAdmin ? {} : null;
 
     data.forEach((item) => {
       const phase = item.Phase;
 
+      // Sum budgetedAmount
       budgetedSums[phase] = (budgetedSums[phase] || 0) + item.budgetedAmount;
 
+      // Sum totalCost
       cogsSums[phase] = (cogsSums[phase] || 0) + item.totalCost;
 
-      cntrctSums[phase] = (cntrctSums[phase] || 0) + item.contractValue;
+      // Sum contractValue only if isAdmin is true
+      if (isAdmin && item.contractValue !== undefined) {
+        cntrctSums[phase] = (cntrctSums[phase] || 0) + item.contractValue;
+      }
     });
 
     const sortByPhase = (a, b) => {
@@ -394,18 +434,28 @@ export function formatRevenueData(data, maxLayer) {
         .sort(sortByPhase),
     };
 
-    const contractResult = {
-      id: "Contracted",
-      data: Object.keys(cntrctSums)
-        .map((phase) => ({
-          x: phase,
-          y: cntrctSums[phase],
-        }))
-        .sort(sortByPhase),
-    };
+    const contractResult = isAdmin
+      ? {
+          id: "Contracted",
+          data: Object.keys(cntrctSums)
+            .map((phase) => ({
+              x: phase,
+              y: cntrctSums[phase],
+            }))
+            .sort(sortByPhase),
+        }
+      : null;
 
-    formattedData = [budgetedResult, cogsResult, contractResult];
+    formattedData = [budgetedResult, cogsResult];
+    if (isAdmin && contractResult) {
+      formattedData.push(contractResult);
+    }
   }
 
   return formattedData;
+}
+
+export function getFirstWord(str) {
+  const words = str.trim().split(" ");
+  return words[0];
 }

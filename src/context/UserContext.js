@@ -41,6 +41,7 @@ export const UserProvider = ({ children }) => {
       "dropdown-background",
       "dark",
       "mid",
+      "more-mid",
       "mid-highlight",
       "button-filter",
       "light",

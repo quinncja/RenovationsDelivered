@@ -29,6 +29,7 @@ export const pmList = [
   { name: "Everardo", id: 178 },
   { name: "Adrian", id: 177 },
   { name: "Nicholas", id: 137 },
-  { name: "Maxwell", id: 127 },
+  { name: "Max", id: 127 },
   { name: "Gabriel", id: 180 },
+  { name: "Quinn", id: 178 },
 ];

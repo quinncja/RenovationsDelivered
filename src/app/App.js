@@ -5,10 +5,13 @@ import useLoad from "utils/hooks/useLoad";
 import Modal from "../modules/modals/Modal";
 import SystemMessage from "../modules/systemMessage/SystemMessage";
 import "./App.css";
+import useScrollToTop from "utils/hooks/useScrollToTop";
 
 function App() {
   const isAuthenticated = useAuth();
   useLoad(isAuthenticated);
+
+  useScrollToTop();
 
   return (
     <div className="App">

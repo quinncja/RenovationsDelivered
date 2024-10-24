@@ -30,8 +30,7 @@ function Settings({ closeSelf }) {
       onClick={(e) => e.stopPropagation()}
     >
       <div className="widget-top setting-top">
-        <div className="drag-handle-wrapper" />
-        <div className="widget-title">Settings</div>
+        <h2>Settings</h2>
         <button className="x-button widget-item" onClick={closeSelf}>
           {close()}
         </button>

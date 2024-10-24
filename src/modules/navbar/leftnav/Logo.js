@@ -5,20 +5,24 @@ import blackLogoHover from "images/R-Only-Grey.png";
 
 import { useUserContext } from "context/UserContext";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-function Logo({ expanded, toggleExpanded }) {
+function Logo({ expanded }) {
   const { appearance } = useUserContext();
   const [hovered, setHovered] = useState(false);
+  const navigate = useNavigate();
   const handleMouseEnter = () => {
     setHovered(true);
   };
   const handleMouseLeave = () => {
     setHovered(false);
   };
-
+  const handleClick = () => {
+    navigate("/dashboard");
+  };
   return (
     <img
-      onClick={() => toggleExpanded()}
+      onClick={() => handleClick()}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       src={

@@ -1,5 +1,5 @@
 import { plus } from "business/svg";
-import { useModalContext } from "modules/modals/ModalContext";
+import { useModalContext } from "context/ModalContext";
 import { motion } from "framer-motion";
 import { newWidgetButtonVariants } from "utils/animations";
 

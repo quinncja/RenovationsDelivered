@@ -79,3 +79,31 @@ export function getItemContainers(type, open) {
     };
   }
 }
+
+export const checkEmpty = (data) => {
+  if (!Array.isArray(data) || data.length === 0) return true;
+
+  for (const item of data) {
+    if (typeof item === "object" && item !== null) {
+      const keys = Object.keys(item).filter((key) => key !== "id");
+
+      for (const key of keys) {
+        const value = item[key];
+
+        if (Array.isArray(value)) {
+          if (value.length > 0) {
+            return false;
+          }
+        } else if (typeof value === "object" && value !== null) {
+          if (!checkEmpty([value])) {
+            return false;
+          }
+        } else if (value !== null && value !== 0 && value !== "") {
+          return false;
+        }
+      }
+    }
+  }
+
+  return true;
+};

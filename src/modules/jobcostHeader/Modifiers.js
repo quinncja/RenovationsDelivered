@@ -82,6 +82,7 @@ export function Modifiers() {
     const pm = value.length > 0 ? value[0].id : null;
 
     const newMods = {
+      jobNum: null,
       pm: pm,
     };
 

@@ -1,12 +1,16 @@
-import { getItemContainers } from "utils/funcs";
+import { checkEmpty, getItemContainers } from "utils/funcs";
 import TextBody from "./TextBody";
 import ChartBody from "./ChartBody";
 import ImageBody from "./ImageBody";
+import EmptyDisplay from "./EmptyDisplay";
 
 function BodyDisplay(props) {
   const { chartObj, open, data, dragging, id, toggleData } = props;
   const chartType = chartObj.chartType;
-
+  const isEmpty = checkEmpty(data);
+  if (isEmpty && chartType !== "Text") {
+    return <EmptyDisplay text={chartObj.type} />;
+  }
   if (chartType === "Text") {
     return <TextBody chartObj={chartObj} data={data} open={open} />;
   }

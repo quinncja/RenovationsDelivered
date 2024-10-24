@@ -13,13 +13,13 @@ import {
 import { Droppable } from "./Droppable";
 import { DragOverlay } from "@dnd-kit/core";
 import debounce from "lodash/debounce";
-import DashboardItem from "./items/DashboardItem";
+import DashboardItem from "./items/CostItem";
 import _ from "lodash";
 import { useItems } from "context/ItemsContext";
-import EmptyDashboard from "./EmptyDashboard";
+import EmptyDashboard from "./EmptyJobCost";
 import { useSingle } from "utils/hooks/useSingle";
 
-function Dashboard() {
+function JobCost() {
   const {
     dragging,
     setDragging,
@@ -81,28 +81,30 @@ function Dashboard() {
         sensors={sensors}
       >
         <Droppable>
-          <SortableContext
-            items={items.length > 0 ? items : []}
-            strategy={() => null}
-          >
-            {items &&
-              items.length > 0 &&
-              items.map(
-                (item) =>
-                  item &&
-                  item.type && (
-                    <DashboardItem
-                      current={dragging?.id === item.id ? true : false}
-                      dragging={dragging}
-                      key={item.id}
-                      id={item.id}
-                      type={item.type}
-                      deleteSelf={removeItem}
-                      single={single}
-                    />
-                  ),
-              )}
-          </SortableContext>
+          <div id="dashboard" className={`dashboard-dropzone`}>
+            <SortableContext
+              items={items.length > 0 ? items : []}
+              strategy={() => null}
+            >
+              {items &&
+                items.length > 0 &&
+                items.map(
+                  (item) =>
+                    item &&
+                    item.type && (
+                      <DashboardItem
+                        current={dragging?.id === item.id ? true : false}
+                        dragging={dragging}
+                        key={item.id}
+                        id={item.id}
+                        type={item.type}
+                        deleteSelf={removeItem}
+                        single={single}
+                      />
+                    ),
+                )}
+            </SortableContext>
+          </div>
         </Droppable>
         <DragOverlay
           dropAnimation={{
@@ -119,4 +121,4 @@ function Dashboard() {
   );
 }
 
-export default Dashboard;
+export default JobCost;

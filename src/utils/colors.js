@@ -16,7 +16,7 @@ export const colorPalettes = {
       darker: false,
     },
     {
-      color: "hsl(0, 0%, 25%)",
+      color: "hsl(234, 20%, 39%)",
       lighter: true,
       darker: true,
     },
@@ -61,7 +61,7 @@ export const colorPalettes = {
       darker: true,
     },
     {
-      color: "hsl(146, 81%, 48%)",
+      color: "hsl(146, 91%, 45%)",
       lighter: true,
       darker: false,
     },

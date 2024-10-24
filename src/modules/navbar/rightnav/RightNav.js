@@ -33,7 +33,7 @@ function RightNav() {
       </motion.div>
       <AnimatePresence>
         {expanded && (
-          <Overlay isVisible={true} onClick={toggleSelf} zIndex={12} />
+          <Overlay isVisible={true} onClick={toggleSelf} zIndex={13} />
         )}
       </AnimatePresence>
     </>

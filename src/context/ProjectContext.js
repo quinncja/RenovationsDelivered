@@ -38,7 +38,6 @@ export const ProjectProvider = ({ children }) => {
           pm: pm,
         };
         const jobData = await fetchChartData(mods);
-        console.log(jobData);
         const normalized = normalizeData(jobData);
         setProjects(normalized);
       } catch (error) {
@@ -196,11 +195,23 @@ export const ProjectProvider = ({ children }) => {
     return str;
   };
 
+  const countActivePhases = useCallback(
+    (jobNum) => {
+      const phases = getPhasesForJob(jobNum);
+      if (!phases) return 0;
+
+      const count = phases.filter((phase) => phase.status === 4).length;
+      return count;
+    },
+    [getPhasesForJob],
+  );
+
   return (
     <ProjectContext.Provider
       value={{
         projects,
         getAllProjects,
+        getPhasesForJob,
         pageModifierToString,
         getPhaseById,
         getProjectByNum,
@@ -208,7 +219,7 @@ export const ProjectProvider = ({ children }) => {
         getYearById,
         getPhasesByYear,
         getLastPhaseForJob,
-
+        countActivePhases,
         sortedPhasesPerJob,
       }}
     >

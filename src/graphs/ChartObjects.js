@@ -1,6 +1,6 @@
 export const chartObjects = [
   {
-    type: "Vendor Breakdown",
+    type: "Material Breakdown",
     query: "vender",
     admin: false,
     chartType: "Pie",

@@ -1,20 +1,45 @@
 import { useModifiers } from "context/ModifierContext";
 import { useProjectContext } from "context/ProjectContext";
-import SingleStatus from "./SingleStatus";
+import PhaseView from "./PhaseView";
 import useFilteredPhases from "utils/hooks/phase/useFilteredPhases";
+import AllView from "./AllView";
+import YearView from "./YearView";
+import DefaultView from "./DefaultView";
+import { useEffect, useState } from "react";
+import ItemsView from "./ItemsView";
 
 export const JobDisplay = ({ open }) => {
-  const { pageModifiers, updatePageModifiers, setModTimeout } = useModifiers();
+  const { pageModifiers, updatePageModifiers } = useModifiers();
   const { projects } = useProjectContext();
   const selected = pageModifiers.active;
   const { jobNum, yearId, phaseId, active } = pageModifiers;
-
-  const { counts, groupedPhases, singlePhaseData } = useFilteredPhases(
+  const [ itemView, setItemView ] = useState({
+    display: false,
+    itemClick: () => {},
+    items: null,
+    tag: null,
+    job: null,
+  })
+  const { counts, defaultData, singlePhaseData, yearData, allViewData } = useFilteredPhases(
     jobNum,
     yearId,
     phaseId,
     active,
   );
+
+  const clearItemView = () => {
+    setItemView({
+      display: false,
+      itemClick: () => {},
+      items: null,
+      tag: null,
+      job: null,
+    })
+  }
+
+  useEffect(() => {
+    clearItemView()
+  }, [pageModifiers])
 
   const clickHandler = (e, option) => {
     e.stopPropagation();
@@ -23,29 +48,6 @@ export const JobDisplay = ({ open }) => {
       container.scrollTop = 0;
     }
     updatePageModifiers({ active: option });
-  };
-
-  const changeProj = (e, job, year, phase) => {
-    e.stopPropagation();
-    setModTimeout(true);
-    updatePageModifiers({
-      jobNum: job.num,
-      yearId: year.id,
-      phaseId: phase.id,
-    });
-  };
-
-  const changePhaseYear = (e, year, phase) => {
-    e.stopPropagation();
-    const yearId = `xxxx-${year}`;
-    const phaseFormatted = phase.toString().padStart(2, "0");
-    const phaseId = `xxxx-xx-${phaseFormatted}`;
-
-    setModTimeout(true);
-    updatePageModifiers({
-      yearId: yearId,
-      phaseId: phaseId,
-    });
   };
 
   const jobButtons = ["Total", "Active", "Closed"];
@@ -61,43 +63,30 @@ export const JobDisplay = ({ open }) => {
     </button>
   );
 
-  const projectMapper = (groupedPhases) => {
-    return groupedPhases.map((group) => (
-      <div key={`${group.phaseName}-${group.yearNum}`}>
-        <div
-          className="filtered-job-button sticky-job"
-          onClick={(e) => changePhaseYear(e, group.yearNum, group.phaseNum)}
-        >{`${group.phaseName} - 20${group.yearNum}`}</div>
-        {group.jobs.map(({ job, phase }) => (
-          <button
-            className="filtered-job-button"
-            onClick={(e) =>
-              changeProj(e, job, projects.years[phase.yearId], phase)
-            }
-            key={phase.id}
-          >
-            <p id="fjb-name">{job.name}</p>
-          </button>
-        ))}
-      </div>
-    ));
-  };
-
   if (!projects) return <div className="loading-widget" />;
 
   if (singlePhaseData) {
-    return <SingleStatus singlePhaseData={singlePhaseData} />;
+    return <PhaseView singlePhaseData={singlePhaseData} />;
   }
+  let bodyComponent;
+  if(itemView.display) {
+    bodyComponent = <ItemsView itemView={itemView} clearItemView={clearItemView}/>
+  }
+  else if(!jobNum && ((yearId && phaseId) || phaseId)) {
+    bodyComponent = <DefaultView defaultData={defaultData} setItemView={setItemView}/>
+  }
+  else if(!yearId && !phaseId){
+    bodyComponent = <AllView allViewData={allViewData} setItemView={setItemView}/>
+  }
+  else if(!phaseId){
+    bodyComponent = <YearView yearData={yearData} setItemView={setItemView}/>
+  }
+
   return (
-    <div className={`${open ? "open-job-display" : ""} job-display`}>
+    <div className={`job-display`}>
+        {bodyComponent}
       <div className="job-buttons">
         {jobButtons.map((type) => buttonMapper(type))}
-      </div>
-      <div
-        id="job-display"
-        className={`${open ? "open-filtered-job" : ""} filtered-jobs `}
-      >
-        {projectMapper(groupedPhases)}
       </div>
     </div>
   );

@@ -1,15 +1,25 @@
-import BodyDisplay from "pages/dashboard/items/display/BodyDisplay";
+import BodyDisplay from "pages/jobcost/items/display/BodyDisplay";
 import { formatMarginData, formatRevenueData } from "utils/formatters";
 import LegendDisplay from "./LegendDisplay";
 
 function ChartLayer(props) {
-  const { data, chartObj, showLegend, nestingLevel, unfiltered, ...rest } =
-    props;
+  const {
+    data,
+    chartObj,
+    showLegend,
+    nestingLevel,
+    unfiltered,
+    isAdmin,
+    isEmpty,
+    ...rest
+  } = props;
   const { chartType, query } = chartObj;
 
   let chartData = data;
-  if (query === "margin") chartData = formatMarginData(data, nestingLevel);
-  if (query === "revenue") chartData = formatRevenueData(data, nestingLevel);
+  if (query === "margin")
+    chartData = formatMarginData(data, nestingLevel, isAdmin);
+  if (query === "revenue")
+    chartData = formatRevenueData(data, nestingLevel, isAdmin);
 
   const legendData = chartType === "Pie" ? unfiltered : chartData;
   const allowToggle = chartType === "Pie";
@@ -23,7 +33,7 @@ function ChartLayer(props) {
         open={true}
         {...rest}
       />
-      {showLegend && (
+      {showLegend && !isEmpty && (
         <LegendDisplay data={legendData} allowToggle={allowToggle} {...rest} />
       )}
     </div>

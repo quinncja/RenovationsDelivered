@@ -2,6 +2,7 @@ import { sortSvg, tableArrow } from "business/svg";
 import { useState, useEffect } from "react";
 
 import {
+  costTypeFormatter,
   dateFormatter,
   dollarFormatter,
   jobStatusFormatter,
@@ -35,6 +36,7 @@ function TableEntry({ headers, entry, currentId, nestingLevel = 0, color }) {
     orderTotal: "Order Total",
     invoiceStatus: "Status",
     jobNumber: "Job Number",
+    jobNum: "Job Number",
     jobName: "Job",
     orderNum: "PO Number",
     orderDesc: "Description",
@@ -46,6 +48,8 @@ function TableEntry({ headers, entry, currentId, nestingLevel = 0, color }) {
     totalCost: "COGS",
     contractValue: "Contract",
     budgetedAmount: "Budget",
+    dueDate: "Due Date",
+    invoiceNum: "Invoice Num",
   };
 
   const formatFuncMap = {
@@ -69,12 +73,13 @@ function TableEntry({ headers, entry, currentId, nestingLevel = 0, color }) {
     Total: dollarFormatter,
     subStatus: jobStatusFormatter,
     costDate: dateFormatter,
-    costType: dollarFormatter,
+    costType: costTypeFormatter,
     marginPercentage: percentFomatter,
     totalCost: dollarFormatter,
     budgetedAmount: dollarFormatter,
     Budget: dollarFormatter,
     Cost: dollarFormatter,
+    dueDate: dateFormatter,
   };
 
   const formatEntry = (item, header) => {

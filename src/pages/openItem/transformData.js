@@ -1,4 +1,4 @@
-const getBaseJobName = (jobName) => {
+export const getBaseJobName = (jobName) => {
   const substrings = ["\\.", "ave", "tr", "pl", "st", "dr", "ct", "rd", "dt"];
   const substringsPattern = substrings.join("|");
   return jobName

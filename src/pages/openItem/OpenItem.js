@@ -49,7 +49,7 @@ function OpenItem() {
 
   function handleClose() {
     clearOpenData();
-    navigate(`/dashboard`);
+    navigate(`/jobcost`);
   }
 
   return (

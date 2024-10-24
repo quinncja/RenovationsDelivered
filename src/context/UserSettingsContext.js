@@ -95,6 +95,8 @@ export function UserSettingsProvider({ children }) {
     await updateUserSettings({ smartSort }, "saveSortSetting");
   const saveLabelSettings = async (label) =>
     await updateUserSettings({ label }, "saveLabelSettings");
+  const saveTrackedJobs = async (trackedJobs) =>
+    await updateUserSettings({ trackedJobs }, "saveTrackedProjects");
 
   return (
     <UserSettingsContext.Provider
@@ -108,6 +110,7 @@ export function UserSettingsProvider({ children }) {
         savePageModifiers,
         saveSortSetting,
         saveLabelSettings,
+        saveTrackedJobs,
         fetchCurrentUser,
       }}
     >

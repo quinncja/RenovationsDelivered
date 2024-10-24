@@ -6,9 +6,5 @@ export function Droppable({ children }) {
     id: "dashboard",
   });
 
-  return (
-    <div id="dashboard" className={`dashboard-dropzone`} ref={setNodeRef}>
-      {children}
-    </div>
-  );
+  return <div ref={setNodeRef}>{children}</div>;
 }

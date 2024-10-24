@@ -13,7 +13,7 @@ import { useItems } from "context/ItemsContext.js";
 import { useNavigate } from "react-router-dom";
 import { toParam } from "utils/formatters.js";
 
-function DashboardItem(props) {
+function CostItem(props) {
   const { current, single, deleteSelf, id, type, dragging } = props;
   const { dataMap } = useItems();
   const navigate = useNavigate();
@@ -24,9 +24,9 @@ function DashboardItem(props) {
   const loadData = useChartData();
 
   const handleClick = () => {
-    if (single && chartType === "Text") return;
+    if (chartType === "Text") return;
     const param = toParam(type);
-    navigate(`/item/${param}`);
+    navigate(`/jobcost/item/${param}`);
   };
 
   const { attributes, listeners, transform, transition, setNodeRef } =
@@ -127,6 +127,7 @@ function DashboardItem(props) {
               initial="hidden"
               animate="visible"
               exit="exit"
+              style={{ position: "relative", height: "100%" }}
               variants={current ? {} : itemFadeIn}
             >
               <BodyDisplay
@@ -144,4 +145,4 @@ function DashboardItem(props) {
   );
 }
 
-export default DashboardItem;
+export default CostItem;

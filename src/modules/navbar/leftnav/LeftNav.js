@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { topbarVariants } from "utils/animations";
-import { Modifiers } from "modules/navbar/leftnav/Modifiers";
 import Dropdown from "./dropdown/Dropdown";
 import Logo from "./Logo";
 
@@ -25,7 +24,6 @@ function LeftNav() {
           {expanded && <Dropdown toggleExpanded={toggleExpanded} />}
         </AnimatePresence>
       </motion.div>
-      <Modifiers />
     </div>
   );
 }

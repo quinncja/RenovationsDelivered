@@ -65,7 +65,9 @@ export const ItemsProvider = ({ children }) => {
   );
 
   const addMultItems = async (itemList) => {
-    const prevItems = [...items];
+    let prevItems;
+    if(items) prevItems = [...items]
+    else prevItems = []
     setItems([]);
     addMultItemsFn(itemList);
 
