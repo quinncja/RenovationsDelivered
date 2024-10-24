@@ -28,7 +28,7 @@ const useLoad = (isAuthenticated) => {
       chartObjectMap["Budget Breakdown"],
       chartObjectMap["COGs Breakdown"],
       chartObjectMap["Sub Breakdown"],
-      chartObjectMap["Vendor Breakdown"]
+      chartObjectMap["Material Breakdown"]
     ],
   };
 
@@ -49,11 +49,8 @@ const useLoad = (isAuthenticated) => {
       try {
         const settings = await fetchCurrentUser();
         setPageModifiers(settings.pageModifiers || { active: "Total" });
-        if(settings.itemArray){
-          setItems(settings.itemArray)
-        } else{
-          initiateUserItems()
-        }
+        setItems(settings.itemArray || [])
+        if(!settings.itemArray) initiateUserItems()
         setLabel(settings.label || "always");
         setAppearance(settings.appearance || "dark");
         setColorScheme(settings.colorScheme || "Tranquil");
