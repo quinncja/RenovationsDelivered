@@ -2209,7 +2209,9 @@ span.grippy::after {
   height: 60vh;
 }
 
+
 .addjobs-button {
+  margin-top: -50px;
   position: relative;
   border: 2px solid var(--fancy-border);
   background-color: var(--background);
