@@ -5,12 +5,16 @@ import blackLogoHover from "images/R-Only-Grey.png";
 
 import { useUserContext } from "context/UserContext";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import useIsAdmin from "utils/hooks/useIsAdmin";
 
 function Logo({ expanded }) {
   const { appearance } = useUserContext();
   const [hovered, setHovered] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
+  const isAdmin = useIsAdmin();
+
   const handleMouseEnter = () => {
     setHovered(true);
   };
@@ -18,8 +22,10 @@ function Logo({ expanded }) {
     setHovered(false);
   };
   const handleClick = () => {
-    navigate("/dashboard");
+    if(location.pathname === "/dashboard" && isAdmin) navigate("/jobcost")
+    else navigate("/dashboard");
   };
+
   return (
     <img
       onClick={() => handleClick()}
