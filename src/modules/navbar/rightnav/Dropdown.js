@@ -1,16 +1,12 @@
 import { useModalContext } from "context/ModalContext";
-import { useNavigate } from "react-router-dom";
 import Userfront, { LogoutButton } from "@userfront/toolkit/react";
 import { dropDownFadeIn } from "utils/animations";
 import { motion } from "framer-motion";
-import useIsAdmin from "utils/hooks/useIsAdmin";
 
 Userfront.init("xbpwwqmn");
 
 function Dropdown({ toggleSelf }) {
   const { openModal } = useModalContext();
-  const navigate = useNavigate();
-  const isAdmin = useIsAdmin();
   const handleClick = (func) => {
     toggleSelf();
     func();
@@ -31,19 +27,6 @@ function Dropdown({ toggleSelf }) {
       ),
     },
   ];
-
-  if(isAdmin){
-    dropdownOptions = [{
-      id: "2",
-      item: "Job Costing",
-      onClick: () =>
-        handleClick(() => {
-          navigate("/jobcost");
-      }),
-    },
-    ...dropdownOptions
-  ]
-  }
 
   return (
     <div className="dropdown-items">
