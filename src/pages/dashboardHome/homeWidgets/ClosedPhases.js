@@ -31,7 +31,7 @@ function ClosedPhases(props) {
               id: "Under Budget",
               label: "Under Budget",
               value: counts.BelowBudgetCount,
-              color: "#4fee44",
+              color: "#2cf21e",
             },
             {
               id: "Over Budget",
