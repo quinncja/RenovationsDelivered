@@ -2208,7 +2208,7 @@ span.grippy::after {
 .addjobs-button {
   position: relative;
   border: 2px solid var(--fancy-border);
-  background-color: var(--background);
+  background-color: var(--dark);
   width: calc(var(--widget-size) / 0.5);
   height: calc(var(--widget-size) / 1.6);
   display: flex;
@@ -2229,8 +2229,8 @@ span.grippy::after {
   left: 0;
   width: 100%;
   height: 100%;
-  opacity: 0.5;
-  background-color: var(--fancy-border);
+  opacity: 0.1;
+  background-color: var(--dark);
   z-index: 0;
   transition: transform 0.3s ease-in-out;
   transform-origin: center;
