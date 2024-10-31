@@ -29,7 +29,7 @@ const PhaseView = ({ singlePhaseData }) => {
     updatePageModifiers({
       yearId: prevPhase.yearId,
       phaseId: prevPhase.id,
-      active: "Total"
+      active: "Total",
     });
   };
 
@@ -40,7 +40,7 @@ const PhaseView = ({ singlePhaseData }) => {
     updatePageModifiers({
       yearId: nextPhase.yearId,
       phaseId: nextPhase.id,
-      active: "Total"
+      active: "Total",
     });
   };
 

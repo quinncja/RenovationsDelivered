@@ -10,18 +10,14 @@ function getPMName() {
 }
 
 function getPMID(name) {
-  const pm = pmList.find(pm => pm.name === name);
+  const pm = pmList.find((pm) => pm.name === name);
   return pm ? pm.id : null;
 }
 
 export default function useReccomendedJobs() {
   const name = getPMName();
   const id = getPMID(name);
-  const {
-    projects,
-    getAllProjects,
-    getPhasesForJob,
-  } = useProjectContext()
+  const { projects, getAllProjects, getPhasesForJob } = useProjectContext();
   const { trackedJobs } = useTrackedJobs();
 
   if (!id) {
@@ -32,10 +28,10 @@ export default function useReccomendedJobs() {
     return [];
   }
 
-  const jobs = getAllProjects(); 
+  const jobs = getAllProjects();
   const recommendedJobs = [];
 
-  jobs.forEach(job => {
+  jobs.forEach((job) => {
     const jobNum = job.num;
     const jobName = job.name;
     const phases = getPhasesForJob(jobNum);
@@ -57,10 +53,7 @@ export default function useReccomendedJobs() {
 
     const lastPhase = sortedPhases[sortedPhases.length - 1];
 
-    if (
-      lastPhase.status === 4 &&
-      lastPhase.pm === String(id)
-    ) {
+    if (lastPhase.status === 4 && lastPhase.pm === String(id)) {
       recommendedJobs.push({ num: jobNum, name: jobName });
     }
   });

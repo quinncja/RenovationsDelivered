@@ -5,7 +5,7 @@ const DefaultView = ({ defaultData, setItemView }) => {
   const { updatePageModifiers, setModTimeout } = useModifiers();
   const { phase, year, jobs, month, nextPhase, prevPhase } = defaultData;
 
-    const formatMonthYear = (month, year) => {
+  const formatMonthYear = (month, year) => {
     if (month && year) {
       return `${month} - ${year}`;
     } else if (month) {
@@ -16,7 +16,7 @@ const DefaultView = ({ defaultData, setItemView }) => {
       return "";
     }
   };
-  
+
   const stepBack = (e) => {
     e.stopPropagation();
     if (!prevPhase) return;
@@ -41,15 +41,14 @@ const DefaultView = ({ defaultData, setItemView }) => {
       items: jobs,
       tag: "name",
       job: "All Projects",
-      itemClick: (item) => 
-      {
-        setModTimeout(true)
+      itemClick: (item) => {
+        setModTimeout(true);
         updatePageModifiers({
           jobNum: item.num,
         });
-      }
-    })
-  }
+      },
+    });
+  };
 
   return (
     <div className="job-display job-display-single job-display-all">
@@ -61,8 +60,11 @@ const DefaultView = ({ defaultData, setItemView }) => {
         >
           {leftArrowSvg()}
         </button>
-        <div className="job-display-section btn-section" onClick={() => handleClick()}>
-          <h2 style={{fontSize: "35px"}}>{phase.name}</h2>
+        <div
+          className="job-display-section btn-section"
+          onClick={() => handleClick()}
+        >
+          <h2 style={{ fontSize: "35px" }}>{phase.name}</h2>
           {formatMonthYear(month, year.year)}
         </div>
         <button

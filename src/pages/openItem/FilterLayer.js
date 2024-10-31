@@ -31,7 +31,6 @@ function FilterLayer(props) {
     unfilteredData = removeContractValueDeep(data);
   }
 
-
   const toggleData = (datum, type = "Pie") => {
     if (type === "Line") {
       setCurrentId(datum.points[0].data.x);

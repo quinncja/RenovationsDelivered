@@ -42,6 +42,7 @@ function TrackedJob(props) {
       <button
         className="job-button margin-button"
         onClick={() => handleClick(obj)}
+        key={phase}
       >
         <h3 className={`job-phase status-${status}`}> P{phase} </h3>
         <h4>{percentFomatter(margin)}</h4>
@@ -57,12 +58,7 @@ function TrackedJob(props) {
           <h4> {data.clnnme} </h4>
         </div>
         <div className="job-right">
-          {data.closedPhase && (
-            marginDisplay(data.closedPhase, "Complete")
-          )}
-          {data.closedPhase && data.openPhases.length > 0 && (
-            <div className="hl-jobline" />
-          )}
+          {data.closedPhase && marginDisplay(data.closedPhase, "Complete")}
           {data.openPhases &&
             data.openPhases.map((obj) => marginDisplay(obj, "Active"))}
         </div>

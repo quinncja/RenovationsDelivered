@@ -55,6 +55,10 @@ export const ProjectProvider = ({ children }) => {
     return [];
   };
 
+  const getAllPhases = useCallback(() => {
+    return projects && projects.phases ? Object.values(projects.phases) : [];
+  }, [projects]);
+
   const getPhaseById = useCallback(
     (phaseId) => {
       return projects && projects.phases ? projects.phases[phaseId] : null;
@@ -206,6 +210,73 @@ export const ProjectProvider = ({ children }) => {
     [getPhasesForJob],
   );
 
+  const getActivePhases = useCallback(
+    (jobNums = []) => {
+      let count = 0;
+
+      if (jobNums.length === 0) {
+        const allPhases = getAllPhases();
+        allPhases.forEach((phase) => {
+          if (phase.status === 4) {
+            count += 1;
+          }
+        });
+      } else {
+        jobNums.forEach((jobNum) => {
+          const jobPhases = getPhasesForJob(jobNum);
+          if (jobPhases && jobPhases.length > 0) {
+            jobPhases.forEach((phase) => {
+              if (phase.status === 4) {
+                count += 1;
+              }
+            });
+          }
+        });
+      }
+
+      return count;
+    },
+    [getAllPhases, getPhasesForJob],
+  );
+
+  const getClosedPhases = useCallback(
+    (jobNums = []) => {
+      let closedPhases = [];
+
+      if (jobNums.length === 0) {
+        const allPhases = getAllPhases();
+        allPhases.forEach((phase) => {
+          if (phase.status > 4) {
+            closedPhases.push(phase);
+          }
+        });
+      } else {
+        jobNums.forEach((jobNum) => {
+          const jobPhases = getPhasesForJob(jobNum);
+          if (jobPhases && jobPhases.length > 0) {
+            jobPhases.forEach((phase) => {
+              if (phase.status > 4) {
+                closedPhases.push(phase);
+              }
+            });
+          }
+        });
+      }
+
+      const recnums = closedPhases.map((phase) => {
+        const yy = phase.yearNum;
+        const jjjj = phase.jobNum;
+        const pp = phase.num.padStart(2, "0");
+
+        const recnum = `${yy}${jjjj}${pp}`;
+        return recnum;
+      });
+
+      return recnums;
+    },
+    [getAllPhases, getPhasesForJob],
+  );
+
   return (
     <ProjectContext.Provider
       value={{
@@ -221,6 +292,8 @@ export const ProjectProvider = ({ children }) => {
         getLastPhaseForJob,
         countActivePhases,
         sortedPhasesPerJob,
+        getActivePhases,
+        getClosedPhases,
       }}
     >
       {children}

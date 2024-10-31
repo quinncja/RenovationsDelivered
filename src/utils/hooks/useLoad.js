@@ -28,7 +28,7 @@ const useLoad = (isAuthenticated) => {
       chartObjectMap["Budget Breakdown"],
       chartObjectMap["COGs Breakdown"],
       chartObjectMap["Sub Breakdown"],
-      chartObjectMap["Material Breakdown"]
+      chartObjectMap["Material Breakdown"],
     ],
   };
 
@@ -42,15 +42,15 @@ const useLoad = (isAuthenticated) => {
       items.push(newItem);
     });
     addMultItems(items);
-  }
+  };
 
   useEffect(() => {
     const loadUser = async () => {
       try {
         const settings = await fetchCurrentUser();
         setPageModifiers(settings.pageModifiers || { active: "Total" });
-        setItems(settings.itemArray || [])
-        if(!settings.itemArray) initiateUserItems()
+        setItems(settings.itemArray || []);
+        if (!settings.itemArray) initiateUserItems();
         setLabel(settings.label || "always");
         setAppearance(settings.appearance || "dark");
         setColorScheme(settings.colorScheme || "Tranquil");

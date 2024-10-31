@@ -14,7 +14,7 @@ function JobSelectors({ closeSelf }) {
   const allProjects = getAllProjects() || [];
   const [jobSelectors, setJobSelectors] = useState([]);
   const [selectedJobs, setSelectedJobs] = useState([]);
-  const [selectedRec, setSelectedRec] = useState([])
+  const [selectedRec, setSelectedRec] = useState([]);
 
   const handleChange = (index, selectedJobNum) => {
     const updatedJobs = [...selectedJobs];
@@ -28,7 +28,11 @@ function JobSelectors({ closeSelf }) {
   };
 
   const handleSubmit = async () => {
-    const allJobs = [...trackedJobs, ...selectedJobs.filter(Boolean), ...selectedRec.filter(Boolean)];
+    const allJobs = [
+      ...trackedJobs,
+      ...selectedJobs.filter(Boolean),
+      ...selectedRec.filter(Boolean),
+    ];
 
     updateTrackedJobs(allJobs, "Add");
     closeSelf();
@@ -36,7 +40,9 @@ function JobSelectors({ closeSelf }) {
 
   const options = allProjects.filter(
     (project) =>
-      !selectedJobs.includes(project.num) && !trackedJobs.includes(project.num) && !selectedRec.includes(project.num),
+      !selectedJobs.includes(project.num) &&
+      !trackedJobs.includes(project.num) &&
+      !selectedRec.includes(project.num),
   );
 
   const updateSelected = (id) => {
@@ -51,37 +57,40 @@ function JobSelectors({ closeSelf }) {
 
   return (
     <>
-    <RecommendedJobs selected={selectedRec} updateSelected={updateSelected}/>
-    <div className="job-selector-body">
-      <div> 
-    <h4 style={{textAlign: "left", fontWeight: "500"}}> 
-        Select from list
-      </h4>
-      <div className="job-selector-row">
-        {jobSelectors.map((jobSelector, index) => (
-          <div key={jobSelector.id} className={`job-selector-item ${(selectedJobs[index] && selectedJobs[index] !== null) ? "active-job-select" : ""}`}>
-            <JobSelector
-              id={jobSelector.id}
-              key={jobSelector.id}
-              options={options}
-              index={index}
-              value={selectedJobs[index] || null}
-              handleChange={(job) => handleChange(index, job.num)}
-            />
+      <RecommendedJobs selected={selectedRec} updateSelected={updateSelected} />
+      <div className="job-selector-body">
+        <div>
+          <h4 style={{ textAlign: "left", fontWeight: "500" }}>
+            Select from list
+          </h4>
+          <div className="job-selector-row">
+            {jobSelectors.map((jobSelector, index) => (
+              <div
+                key={jobSelector.id}
+                className={`job-selector-item ${selectedJobs[index] && selectedJobs[index] !== null ? "active-job-select" : ""}`}
+              >
+                <JobSelector
+                  id={jobSelector.id}
+                  key={jobSelector.id}
+                  options={options}
+                  index={index}
+                  value={selectedJobs[index] || null}
+                  handleChange={(job) => handleChange(index, job.num)}
+                />
+              </div>
+            ))}
+            {jobSelectors.length < 8 && (
+              <button className="add-button" onClick={handleAdd}>
+                {plus()} Project
+              </button>
+            )}
           </div>
-        ))}
-        {jobSelectors.length < 8 && (
-          <button className="add-button" onClick={handleAdd}>
-            {plus()} Project
-          </button>
-        )}
+        </div>
+        <button className="job-button add-job-button" onClick={handleSubmit}>
+          {" "}
+          Save{" "}
+        </button>
       </div>
-      </div>
-      <button className="job-button add-job-button" onClick={handleSubmit}>
-        {" "}
-        Save{" "}
-      </button>
-    </div>
     </>
   );
 }

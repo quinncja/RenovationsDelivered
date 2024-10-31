@@ -12,11 +12,11 @@ const Modal = () => {
   const renderModalContent = () => {
     switch (modalType) {
       case "settings":
-        return <Settings closeSelf={closeModal} key="settingsModal"/>;
+        return <Settings closeSelf={closeModal} key="settingsModal" />;
       case "newWidget":
-        return <NewWidgetPopup closeSelf={closeModal} key="newWidgetModal"/>;
+        return <NewWidgetPopup closeSelf={closeModal} key="newWidgetModal" />;
       case "addJobs":
-        return <AddJobModal closeSelf={closeModal} key="addJobsModal"/>;
+        return <AddJobModal closeSelf={closeModal} key="addJobsModal" />;
       default:
         return null;
     }

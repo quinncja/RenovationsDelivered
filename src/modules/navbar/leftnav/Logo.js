@@ -22,7 +22,7 @@ function Logo({ expanded }) {
     setHovered(false);
   };
   const handleClick = () => {
-    if(location.pathname === "/dashboard" && isAdmin) navigate("/jobcost")
+    if (location.pathname === "/dashboard" && isAdmin) navigate("/jobcost");
     else navigate("/dashboard");
   };
 

@@ -1,0 +1,39 @@
+import { calendarSvg, personSvg } from "business/svg";
+
+function HomeToggle(props) {
+  const { homeState, setHomeState } = props;
+
+  const toggleOptions = [
+    {
+      id: "year",
+      svg: calendarSvg,
+      title: "View year to date",
+    },
+    {
+      id: "user",
+      svg: personSvg,
+      title: "View by tracked projects",
+    },
+  ];
+
+  return (
+    <div className="home-toggle-container">
+      <div className="home-toggle-wrapper">
+        {toggleOptions.map((option) => {
+          return (
+            <button
+              key={option.id}
+              className={`home-toggle ${homeState === option.id ? "active-home-button" : ""}`}
+              onClick={() => setHomeState(option.id)}
+              title={option.title}
+            >
+              {option.svg()}
+            </button>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
+export default HomeToggle;

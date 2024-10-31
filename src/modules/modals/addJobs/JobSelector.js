@@ -6,8 +6,7 @@ const JobSelector = React.forwardRef(
     const handleJobChange = (selected) => {
       if (selected && selected.length > 0) {
         handleChange(selected[0]);
-      } 
-      else handleChange({num: null})
+      } else handleChange({ num: null });
     };
 
     return (

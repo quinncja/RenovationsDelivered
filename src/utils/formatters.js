@@ -39,7 +39,7 @@ export function strToMods(job, year, phase) {
     jobNum,
     yearId,
     phaseId,
-    active: "Total"
+    active: "Total",
   };
 }
 

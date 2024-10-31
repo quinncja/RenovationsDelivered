@@ -12,6 +12,20 @@ export async function fetchJobList() {
   }
 }
 
+export async function fetchBudgetVSChartData(recnumsParam) {
+  try {
+    const response = await axios.get(
+      `${apiUrl}cost-vs-budget?recnums=${recnumsParam}`,
+      {
+        ...ngrokHeaders,
+      },
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error loading jobs:", error);
+  }
+}
+
 export async function fetchChartData(modifiers, signal) {
   try {
     const response = await axios.get(`${apiUrl}chart-data`, {

@@ -1,7 +1,8 @@
 import { useTrackedJobs } from "context/TrackedJobContext";
 import useWelcomeText from "utils/hooks/useWelcomeText";
-import TrackedJobs from "./TrackedJobs";
-import AddJobs from "./AddJobs";
+import TrackedJobs from "./trackedJobs/TrackedJobs";
+import AddJobs from "./trackedJobs/AddJobs";
+import HomeWidgets from "./homeWidgets/HomeWidgets";
 
 function DashboardHome() {
   const welcomeText = useWelcomeText();
@@ -11,6 +12,7 @@ function DashboardHome() {
     <div className="dashboard-welcome">
       <h1> {welcomeText} </h1>
 
+      <HomeWidgets />
       {trackedJobs ? (
         trackedJobs.length > 0 ? (
           <TrackedJobs jobs={trackedJobs} />
