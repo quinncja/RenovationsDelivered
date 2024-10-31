@@ -26,7 +26,7 @@ function OpenPhases(props) {
         className={`home-widget-num ${!activePhases && "home-widget-loading"}`}
       >
         {" "}
-        {activePhases}{" "}
+        {activePhases || ""}{" "}
       </span>
       <span className="home-widget-title">
         {" "}
