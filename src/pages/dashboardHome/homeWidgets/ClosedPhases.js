@@ -18,7 +18,7 @@ function ClosedPhases(props) {
             setPieData()
             return undefined;
         } 
-        else getClosedPhases(trackedJobs);
+        else return getClosedPhases(trackedJobs);
     }
     //eslint-disable-next-line
   }, [homeState]);
@@ -26,6 +26,7 @@ function ClosedPhases(props) {
   useEffect(() => {
     const fetchData = async () => {
     setLoaded(false)
+
       if (!closedPhases) {
         setLoaded(true)
         return;
