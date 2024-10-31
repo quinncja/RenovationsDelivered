@@ -244,12 +244,7 @@ export const ProjectProvider = ({ children }) => {
       let closedPhases = [];
 
       if (jobNums.length === 0) {
-        const allPhases = getAllPhases();
-        allPhases.forEach((phase) => {
-          if (phase.status > 4) {
-            closedPhases.push(phase);
-          }
-        });
+        return []
       } else {
         jobNums.forEach((jobNum) => {
           const jobPhases = getPhasesForJob(jobNum);
@@ -274,7 +269,7 @@ export const ProjectProvider = ({ children }) => {
 
       return recnums;
     },
-    [getAllPhases, getPhasesForJob],
+    [getPhasesForJob],
   );
 
   return (

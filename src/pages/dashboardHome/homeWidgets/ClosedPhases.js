@@ -6,20 +6,31 @@ import { fetchBudgetVSChartData } from "utils/api";
 
 function ClosedPhases(props) {
   const { homeState } = props;
-  const [pieData, setPieData] = useState();
+  const [ pieData, setPieData ] = useState();
+  const [ loaded, setLoaded ] = useState(false)
   const { projects, getClosedPhases } = useProjectContext();
   const { trackedJobs } = useTrackedJobs();
 
   const closedPhases = useMemo(() => {
-    if (!projects || !trackedJobs || trackedJobs.length === 0) return undefined;
-    return homeState === "year"
-      ? getClosedPhases()
-      : getClosedPhases(trackedJobs);
-  }, [projects, trackedJobs, homeState, getClosedPhases]);
+    if (homeState === "year") return getClosedPhases()
+    else {
+        if (!projects || !trackedJobs || trackedJobs.length === 0){
+            setPieData()
+            return undefined;
+        } 
+        else getClosedPhases(trackedJobs);
+    }
+    //eslint-disable-next-line
+  }, [homeState]);
 
   useEffect(() => {
     const fetchData = async () => {
-      if (!closedPhases) return;
+    setLoaded(false)
+      if (!closedPhases) {
+        setLoaded(true)
+        return;
+      }
+
       try {
         const recnumsParam = closedPhases.join(",");
         const data = await fetchBudgetVSChartData(recnumsParam);
@@ -41,6 +52,7 @@ function ClosedPhases(props) {
             },
           ];
           setPieData(pieChartData);
+          setLoaded(true)
         }
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -58,9 +70,13 @@ function ClosedPhases(props) {
 
   return (
     <div className="home-widget home-widget-m">
-      {pieData ? (
+      {loaded ? pieData ? (
         <HalfPieChart data={pieData} size={size} />
-      ) : (
+      ) : 
+      <strong style={{color: "white"}}>
+        No data
+    </strong> :
+      (
         <div style={{ paddingTop: "27px" }} className="home-widget-loading" />
       )}
     </div>

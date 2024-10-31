@@ -2202,12 +2202,10 @@ span.grippy::after {
   width: 100%;
   display: flex;
   justify-content: flex-start;
-  align-items: center;
   height: 60vh;
 }
 
 .addjobs-button {
-  margin-top: -50px;
   position: relative;
   border: 2px solid var(--fancy-border);
   background-color: var(--background);
