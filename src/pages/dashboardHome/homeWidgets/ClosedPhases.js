@@ -21,7 +21,9 @@ function ClosedPhases() {
         updateDataMap(id, -10);
         return;
       }
-
+      if(pieData === -1 || pieData === -10){
+        updateDataMap(id, undefined);
+      }
 
       try {
         if (abortControllerRef.current) {
