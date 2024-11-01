@@ -14,7 +14,6 @@ function OpenPhases() {
     activePhases = -1; 
   else activePhases = getActivePhases(trackedJobs);
 
-  console.log(activePhases)
   if(activePhases === -1) 
   return(
     <div className="home-widget home-widget-sm">

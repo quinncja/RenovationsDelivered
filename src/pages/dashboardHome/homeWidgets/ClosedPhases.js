@@ -13,7 +13,7 @@ function ClosedPhases() {
   useEffect(() => {
     const fetchData = async () => {
       if (closedPhases === undefined) {
-        updateDataMap(id, null);
+        updateDataMap(id, -1);
         return;
       }
 
