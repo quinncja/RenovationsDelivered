@@ -14,11 +14,11 @@ const useWelcomeText = () => {
     if (hours >= 0 && hours < 5) {
       greetingText = "Go to sleep";
     } else if (hours >= 5 && hours < 12) {
-      greetingText = "Good morning";
+      greetingText = "Good Morning";
     } else if (hours >= 12 && hours < 18) {
-      greetingText = "Good afternoon";
+      greetingText = "Good Afternoon";
     } else if (hours >= 18 && hours < 24) {
-      greetingText = "Good evening";
+      greetingText = "Good Evening";
     } else {
       greetingText = "Hello";
     }
