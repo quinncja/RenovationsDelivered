@@ -12,10 +12,16 @@ function ClosedPhases() {
 
   useEffect(() => {
     const fetchData = async () => {
-      if (closedPhases === undefined) {
+
+      if (closedPhases === undefined ) {
         updateDataMap(id, -1);
         return;
       }
+      if (closedPhases === -10 ) {
+        updateDataMap(id, -10);
+        return;
+      }
+
 
       try {
         if (abortControllerRef.current) {
@@ -41,10 +47,19 @@ function ClosedPhases() {
     width: 400,
   };
 
+
+  console.log(pieData)
     if(!pieData) return(
     <div className="home-widget home-widget-m">
         <div style={{ paddingTop: "27px" }} className="home-widget-loading" />
     </div>
+    )
+    if(pieData === -10) return(
+        <div className="home-widget home-widget-m">
+            <strong style={{color: "white"}}>
+            No closed phases
+            </strong> 
+        </div>
     )
     if(pieData === -1) return(
     <div className="home-widget home-widget-m">

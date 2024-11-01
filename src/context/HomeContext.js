@@ -18,13 +18,16 @@ export const HomeProvider = ({children}) => {
   
     const closedPhases = useMemo(() => {
         let phases;
+
+        console.log(homeState, projects, trackedJobs)
         if (homeState === "year") return ""
         else {
             if (!projects || !trackedJobs || trackedJobs.length === 0){
                 return undefined;
             } 
             else phases = getClosedPhases(trackedJobs);
-            return phases.join(",");
+            if(phases.length > 0) return phases.join(",");
+            return -10;
         }
         //eslint-disable-next-line
       }, [projects, trackedJobs, homeState]);
