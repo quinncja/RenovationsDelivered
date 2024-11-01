@@ -5,7 +5,7 @@ import ImageBody from "./ImageBody";
 import EmptyDisplay from "./EmptyDisplay";
 
 function BodyDisplay(props) {
-  const { chartObj, open, data, dragging, id, toggleData } = props;
+  const { chartObj, open, data, id, dragging, toggleData } = props;
   const chartType = chartObj.chartType;
   const isEmpty = checkEmpty(data);
   if (isEmpty && chartType !== "Text") {
@@ -20,26 +20,27 @@ function BodyDisplay(props) {
     open,
   );
 
-  if (dragging)
-    return (
-      <ImageBody
-        chartType={chartObj.chartType}
-        container={container}
-        size={imageSize}
-        id={id}
-      />
-    );
-
   return (
-    <ChartBody
-      chartObj={chartObj}
-      data={data}
+    <> 
+    {!dragging &&
+        <ChartBody
+        chartObj={chartObj}
+        data={data}
+        container={container}
+        size={chartSize}
+        id={id}
+        toggleData={toggleData}
+        open={open}
+      />
+    }
+    <ImageBody
+      chartType={chartObj.chartType}
       container={container}
-      size={chartSize}
+      size={imageSize}
       id={id}
-      toggleData={toggleData}
-      open={open}
+      dragging={dragging}
     />
+  </>
   );
 }
 

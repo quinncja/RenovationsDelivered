@@ -2652,3 +2652,29 @@ h1 {
     width: 100%;
   }
 }
+
+.image-body{
+  border: none;
+  outline: none;
+}
+
+.visible-image{
+  opacity: 1;
+}
+.invisible-image{
+  opacity: 0;
+
+  position: absolute;
+}
+.invisible-container{
+  pointer-events: none;
+  overflow: hidden;
+  height: 0px !important;
+  width: 0px !important;
+}
+
+.cost-wrapper{
+  position: relative;
+  overflow: hidden;
+  height: 100%;
+}

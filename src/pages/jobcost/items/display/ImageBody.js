@@ -1,14 +1,15 @@
 import useImage from "utils/images/useImage";
 
-function ImageBody({ id, container, size }) {
+function ImageBody({ id, container, dragging, size }) {
   const imageSrc = useImage(id);
 
   return (
-    <div style={container}>
+    <div className={`${!dragging ? "invisible-container" : ""}`} style={container}>
       <img
         src={imageSrc}
         alt=""
         draggable="false"
+        className={`image-body ${dragging ? "visible-image" : "invisible-image"}`}
         style={{
           userSelect: "none",
           position: "relative",

@@ -16,16 +16,12 @@ export const addItemAction = (setItems, itemSaver) => (newItem, newIndex) => {
 };
 
 export const removeItemAction =
-  (setItems, itemSaver, deleteImageCache) => (itemToRemove) => {
+  (setItems, itemSaver) => (itemToRemove) => {
     setItems((prevItems) => {
       const newItems = prevItems.filter((item) => item.id !== itemToRemove.id);
       itemSaver(newItems);
       return newItems;
     });
-
-    if (deleteImageCache) {
-      deleteImageCache(itemToRemove.id);
-    }
   };
 
 export const addMultItemsAction = (setItems, itemSaver) => (itemList) => {
@@ -38,10 +34,7 @@ export const addMultItemsAction = (setItems, itemSaver) => (itemList) => {
 };
 
 export const deleteMultItemsAction =
-  (setItems, itemSaver, deleteImageCache) => (itemList) => {
-    itemList.forEach((item) => {
-      deleteImageCache(item.id);
-    });
+  (setItems, itemSaver) => (itemList) => {
 
     setItems((prevItems) => {
       const newItems = prevItems.filter((item) => !itemList.includes(item));

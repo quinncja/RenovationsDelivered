@@ -19,7 +19,6 @@ export const HomeProvider = ({children}) => {
     const closedPhases = useMemo(() => {
         let phases;
 
-        console.log(homeState, projects, trackedJobs)
         if (homeState === "year") return ""
         else {
             if (!projects || !trackedJobs || trackedJobs.length === 0){

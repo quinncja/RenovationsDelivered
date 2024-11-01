@@ -1,4 +1,3 @@
-import { deleteImageCache } from "utils/images/imageCacheUtils";
 import { useUserSettings } from "./UserSettingsContext";
 import { useHistory } from "./HistoryContext";
 import { arrayMove } from "@dnd-kit/sortable";
@@ -55,13 +54,12 @@ export const ItemsProvider = ({ children }) => {
   };
 
   const addItemFn = addItemAction(setItems, itemSaver);
-  const removeItemFn = removeItemAction(setItems, itemSaver, deleteImageCache);
+  const removeItemFn = removeItemAction(setItems, itemSaver);
   const reorderByIndexFn = reorderByIndexAction(setItems, itemSaver);
   const addMultItemsFn = addMultItemsAction(setItems, itemSaver);
   const deleteMultItemsFn = deleteMultItemsAction(
     setItems,
     itemSaver,
-    deleteImageCache,
   );
 
   const addMultItems = async (itemList) => {

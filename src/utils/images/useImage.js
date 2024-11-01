@@ -1,17 +1,21 @@
-import { useEffect, useRef } from "react";
-import { preloadImage, getCachedImage } from "./imageCacheUtils";
+import { useEffect, useState } from "react";
+import { getImage, preloadImage, subscribe, unsubscribe} from "./imageStore";
 
 function useImage(id) {
-  const imageSrc = useRef(getCachedImage(id));
+  const [imageSrc, setImageSrc] = useState(() => {
+    const initialImageData = getImage(id);
+    return initialImageData.image
+  });
 
   useEffect(() => {
     let isMounted = true;
 
     const loadImage = () => {
-      const imageData = getCachedImage(id);
-      preloadImage(imageData).then((preloadedImage) => {
+      const imageData = getImage(id);
+      const src = imageData.image;
+      preloadImage(src).then((preloadedImage) => {
         if (isMounted) {
-          imageSrc.current = preloadedImage;
+          setImageSrc(preloadedImage);
         }
       });
     };
@@ -30,6 +34,13 @@ function useImage(id) {
       loadImage();
     };
 
+    const onImageUpdate = () => {
+      console.log("image updated")
+      loadImage();
+    };
+
+    subscribe(id, onImageUpdate);
+
     document.addEventListener("visibilitychange", handleVisibilityChange);
     window.addEventListener("focus", handleFocus);
 
@@ -38,10 +49,11 @@ function useImage(id) {
       clearInterval(interval);
       document.removeEventListener("visibilitychange", handleVisibilityChange);
       window.removeEventListener("focus", handleFocus);
+      unsubscribe(id, onImageUpdate);
     };
   }, [id]);
 
-  return imageSrc.current;
+  return imageSrc;
 }
 
 export default useImage;

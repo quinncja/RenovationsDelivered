@@ -127,7 +127,7 @@ function CostItem(props) {
               initial="hidden"
               animate="visible"
               exit="exit"
-              style={{ position: "relative", height: "100%" }}
+              style={{ position: "relative", height: "100%"}}
               variants={current ? {} : itemFadeIn}
             >
               <BodyDisplay

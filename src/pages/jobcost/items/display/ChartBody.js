@@ -10,7 +10,7 @@ function ChartBody(props) {
   const chartRef = useRef(null);
   const { chartObj, data, container, size, id, toggleData, open } = props;
   const { query, chartType } = chartObj;
-  useChartImage(chartRef, id, [data, chartObj]);
+  useChartImage(chartRef, id);
   const { chartProps, tooltip, pallete } = useChartProps(query, chartType);
   const visualData = data.map((datum) => hashData(datum, pallete));
 
