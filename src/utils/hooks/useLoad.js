@@ -6,18 +6,25 @@ import { useItems } from "context/ItemsContext";
 import { useTrackedJobs } from "context/TrackedJobContext";
 import { chartObjects } from "graphs/ChartObjects";
 import { generateRandomId } from "utils/funcs";
+import useIsAdmin from "./useIsAdmin";
 
 const useLoad = (isAuthenticated) => {
   const { setPageModifiers } = useModifiers();
-  const { setItems, addMultItems } = useItems();
+  const { setItems, addItem, addMultItems } = useItems();
   const { fetchCurrentUser } = useUserSettings();
   const { setAppearance, setColorScheme, setLabel } = useUserContext();
   const { setTrackedJobs } = useTrackedJobs();
-
+  const isAdmin = useIsAdmin();
   const chartObjectMap = chartObjects.reduce((acc, chartObject) => {
     acc[chartObject.type] = chartObject;
     return acc;
   }, {});
+
+  const adminView = {
+    items: [
+      chartObjectMap["Client Breakdown"]
+    ]
+  }
 
   const projectView = {
     items: [
@@ -30,6 +37,22 @@ const useLoad = (isAuthenticated) => {
       chartObjectMap["Sub Breakdown"],
       chartObjectMap["Material Breakdown"],
     ],
+  };
+
+  const addAdminItems = (userItems) => {
+    const userItemTypes = new Set(userItems.map(item => item.type));
+    adminView.items
+      .filter(adminItem => {
+        return !userItemTypes.has(adminItem.type);
+      })
+      .map(adminItem => {
+        const item = {
+          id: generateRandomId(),
+          type: adminItem.type,
+        };
+        addItem(item)
+        return "";
+      });
   };
 
   const initiateUserItems = () => {
@@ -51,6 +74,7 @@ const useLoad = (isAuthenticated) => {
         setPageModifiers(settings.pageModifiers || { active: "Total" });
         setItems(settings.itemArray || []);
         if (!settings.itemArray) initiateUserItems();
+        if (isAdmin) addAdminItems(settings.itemArray);
         setLabel(settings.label || "always");
         setAppearance(settings.appearance || "dark");
         setColorScheme(settings.colorScheme || "Tranquil");
