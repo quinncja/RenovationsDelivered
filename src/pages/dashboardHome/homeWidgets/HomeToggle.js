@@ -1,7 +1,8 @@
 import { calendarSvg, personSvg } from "business/svg";
+import { useHome } from "context/HomeContext";
 
-function HomeToggle(props) {
-  const { homeState, setHomeState } = props;
+function HomeToggle() {
+  const { homeState, setHomeState } = useHome();
 
   const toggleOptions = [
     {

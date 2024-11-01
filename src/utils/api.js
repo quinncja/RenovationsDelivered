@@ -12,6 +12,31 @@ export async function fetchJobList() {
   }
 }
 
+export async function fetchHomeData(id, body, signal){
+  try {
+    const response = await axios.get(`${apiUrl}${id}`, {
+      params: body,
+      ...ngrokHeaders,
+      signal,
+    });
+    return response.data;
+  } catch (error) {
+    if (axios.isCancel(error)) {
+    } else if (
+      error.response &&
+      error.response.data &&
+      error.response.data.error
+    ) {
+      console.error(
+        `Error loading ${id}:`,
+        error.response.data.error,
+      );
+    } else {
+      console.error(`Error loading ${id}:`, error.message);
+    }
+  }
+}
+
 export async function fetchBudgetVSChartData(recnumsParam) {
   try {
     const response = await axios.get(

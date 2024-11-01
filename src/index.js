@@ -11,6 +11,7 @@ import { ModalProvider } from "context/ModalContext";
 import { HistoryProvider } from "context/HistoryContext";
 import { ItemsProvider } from "context/ItemsContext";
 import { TrackedJobProvider } from "context/TrackedJobContext";
+import { HomeProvider } from "context/HomeContext";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -22,9 +23,11 @@ root.render(
             <ItemsProvider>
               <ModifierProvider>
                 <ProjectProvider>
-                  <UserProvider>
-                    <Router />
-                  </UserProvider>
+                  <HomeProvider>
+                    <UserProvider>
+                      <Router />
+                    </UserProvider>
+                  </HomeProvider>
                 </ProjectProvider>
               </ModifierProvider>
             </ItemsProvider>

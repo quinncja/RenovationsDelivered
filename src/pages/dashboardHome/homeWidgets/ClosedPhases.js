@@ -1,87 +1,64 @@
-import { useProjectContext } from "context/ProjectContext";
-import { useTrackedJobs } from "context/TrackedJobContext";
+import { useHome } from "context/HomeContext";
 import HalfPieChart from "graphs/charts/PieChart/HalfPieChart";
-import { useState, useEffect, useMemo } from "react";
-import { fetchBudgetVSChartData } from "utils/api";
+import { useEffect, useRef } from "react";
+import { useHomeData } from "utils/hooks/useHomeData";
 
-function ClosedPhases(props) {
-  const { homeState } = props;
-  const [ pieData, setPieData ] = useState();
-  const [ loaded, setLoaded ] = useState(false)
-  const { projects, getClosedPhases } = useProjectContext();
-  const { trackedJobs } = useTrackedJobs();
-
-  const closedPhases = useMemo(() => {
-    if (homeState === "year") return getClosedPhases()
-    else {
-        if (!projects || !trackedJobs || trackedJobs.length === 0){
-            setPieData()
-            return undefined;
-        } 
-        else return getClosedPhases(trackedJobs);
-    }
-    //eslint-disable-next-line
-  }, [homeState]);
+function ClosedPhases() {
+  const { dataMap, updateDataMap, closedPhases } = useHome()
+  const id = "cost-vs-budget"
+  const pieData = dataMap[id] || null;
+  const loadData = useHomeData();
+  const abortControllerRef = useRef(null);
 
   useEffect(() => {
     const fetchData = async () => {
-    setLoaded(false)
-
-      if (!closedPhases) {
-        setLoaded(true)
+      if (closedPhases === undefined) {
+        updateDataMap(id, null);
         return;
       }
 
       try {
-        const recnumsParam = closedPhases.join(",");
-        const data = await fetchBudgetVSChartData(recnumsParam);
-
-        if (data && data.length > 0) {
-          const counts = data[0];
-          const pieChartData = [
-            {
-              id: "Under Budget",
-              label: "Under Budget",
-              value: counts.BelowBudgetCount,
-              color: "#2cf21e",
-            },
-            {
-              id: "Over Budget",
-              label: "Over Budget",
-              value: counts.AboveBudgetCount,
-              color: "#ff2049",
-            },
-          ];
-          setPieData(pieChartData);
-          setLoaded(true)
+        if (abortControllerRef.current) {
+            abortControllerRef.current.abort();
         }
-      } catch (error) {
+
+        const controller = new AbortController();
+        abortControllerRef.current = controller;
+        loadData(id, {recnums: closedPhases}, controller.signal);
+
+        } catch (error) {
         console.error("Error fetching data:", error);
-        setPieData(null);
+        updateDataMap(id, null);
       }
-    };
+    }
 
     fetchData();
-  }, [homeState, closedPhases]);
+    // eslint-disable-next-line
+  }, [closedPhases]);
 
   const size = {
     height: 150,
     width: 400,
   };
 
-  return (
+    if(!pieData) return(
     <div className="home-widget home-widget-m">
-      {loaded ? pieData ? (
-        <HalfPieChart data={pieData} size={size} />
-      ) : 
-      <strong style={{color: "white"}}>
-        No data
-    </strong> :
-      (
         <div style={{ paddingTop: "27px" }} className="home-widget-loading" />
-      )}
     </div>
-  );
+    )
+    if(pieData === -1) return(
+    <div className="home-widget home-widget-m">
+        <strong style={{color: "white"}}>
+        No data
+        </strong> 
+    </div>
+    )
+    return(
+        <div className="home-widget home-widget-m">     
+            <HalfPieChart data={pieData} size={size} /> 
+        </div>
+    )
 }
+
 
 export default ClosedPhases;

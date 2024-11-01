@@ -1,22 +1,19 @@
-import { useState } from "react";
+import useIsAdmin from "utils/hooks/useIsAdmin";
 import ClosedPhases from "./ClosedPhases";
 import HomeToggle from "./HomeToggle";
 import OpenPhases from "./OpenPhases";
-import useIsAdmin from "utils/hooks/useIsAdmin";
 
 function HomeWidgets() {
-  const isAdmin = useIsAdmin();
-  const defaultState = isAdmin ? "year" : "user";
-  const [homeState, setHomeState] = useState(defaultState);
+    const isAdmin = useIsAdmin();
 
   return (
     <>
       {isAdmin && (
-        <HomeToggle homeState={homeState} setHomeState={setHomeState} />
+        <HomeToggle />
       )}
       <div className="home-widget-container">
-        <OpenPhases homeState={homeState} />
-        <ClosedPhases homeState={homeState} />
+        <OpenPhases />
+        <ClosedPhases />
       </div>
     </>
   );
