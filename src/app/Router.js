@@ -12,6 +12,7 @@ import OpenItem from "pages/openItem/OpenItem";
 import DashboardHome from "pages/dashboardHome/DashboardHome";
 import JobCost from "pages/jobcost/JobCost";
 import JobCostHeader from "modules/jobcostHeader/JobCostHeader";
+import Team from "pages/Team/Team";
 
 function RequireAuth({ children }) {
   let location = useLocation();
@@ -44,6 +45,14 @@ function Router() {
               <RequireAuth>
                 <JobCostHeader />
                 <JobCost />
+              </RequireAuth>
+            }
+          />
+          <Route
+            path="/team"
+            element={
+              <RequireAuth>
+                <Team />
               </RequireAuth>
             }
           />

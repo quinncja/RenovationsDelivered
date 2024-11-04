@@ -59,8 +59,6 @@ const useFilteredPhases = (jobNum, yearId, phaseId, active, state, pm) => {
         return true;
       });
 
-      console.log(filteredPhases)
-
       filteredPhases.forEach((phase) => {
         counts.Total += 1;
         if (phase.status === 4) counts.Active += 1;

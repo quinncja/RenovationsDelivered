@@ -1,7 +1,7 @@
 import BarTooltip from "graphs/charts/BarChart/BarToolTip";
-import MarginToolTip from "../widgets/Margin/Tooltip";
+import MarginToolTip from "../../widgets/jobWidgets/Margin/Tooltip";
 import PieChartToolTip from "../charts/PieChart/PieChartToolTip";
-import RevenueTooltip from "../widgets/Revenue/Tooltip";
+import RevenueTooltip from "../../widgets/jobWidgets/Revenue/Tooltip";
 
 export const getToolTip = (query, chartType) => {
   if (chartType === "Pie")

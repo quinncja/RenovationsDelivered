@@ -2,7 +2,7 @@ import { useTrackedJobs } from "context/TrackedJobContext";
 import useWelcomeText from "utils/hooks/useWelcomeText";
 import TrackedJobs from "./trackedJobs/TrackedJobs";
 import AddJobs from "./trackedJobs/AddJobs";
-import HomeWidgets from "./homeWidgets/HomeWidgets";
+import HomeWidgets from "../../widgets/homeWidgets/HomeWidgets";
 
 function DashboardHome() {
   const welcomeText = useWelcomeText();

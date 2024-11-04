@@ -1,7 +1,7 @@
 import { Pie } from "@nivo/pie";
 import { calculateTotalSum } from "utils/funcs";
 import { useCSSVariable } from "utils/hooks/useCSSVariable";
-import getVenderLabel from "graphs/widgets/Vender/Label";
+import getVenderLabel from "widgets/jobWidgets/Vender/Label";
 import { CenterSum } from "./CenterSum";
 import { trimLabel } from "./TrimLabel";
 

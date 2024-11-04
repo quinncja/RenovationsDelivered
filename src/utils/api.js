@@ -1,6 +1,18 @@
 import axios from "axios";
 import { apiUrl, ngrokHeaders } from "./config";
 
+export async function fetchUserList(){
+  try{
+    const response = await axios.get(`${apiUrl}user-list`, {
+
+      ...ngrokHeaders,
+    });
+    return response.data;
+  }  catch (error) {
+    console.error("Error loading Users:", error);
+  }
+}
+
 export async function fetchJobList() {
   try {
     const response = await axios.get(`${apiUrl}job-list`, {
