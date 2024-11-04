@@ -12,7 +12,7 @@ export const JobDisplay = ({ open }) => {
   const { pageModifiers, updatePageModifiers } = useModifiers();
   const { projects } = useProjectContext();
   const selected = pageModifiers.active;
-  const { jobNum, yearId, phaseId, active } = pageModifiers;
+  const { jobNum, yearId, phaseId, active, state, pm} = pageModifiers;
   const [itemView, setItemView] = useState({
     display: false,
     itemClick: () => {},
@@ -21,7 +21,7 @@ export const JobDisplay = ({ open }) => {
     job: null,
   });
   const { counts, defaultData, singlePhaseData, yearData, allViewData } =
-    useFilteredPhases(jobNum, yearId, phaseId, active);
+    useFilteredPhases(jobNum, yearId, phaseId, active, state, pm);
 
   const clearItemView = () => {
     setItemView({

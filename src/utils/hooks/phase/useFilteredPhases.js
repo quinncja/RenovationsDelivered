@@ -10,7 +10,7 @@ const getDefaultPhase = (phaseId) => {
   return phaseList.find((phase) => phase.id === phaseId);
 };
 
-const useFilteredPhases = (jobNum, yearId, phaseId, active) => {
+const useFilteredPhases = (jobNum, yearId, phaseId, active, state, pm) => {
   const { projects, getProjectByNum, getYearById, sortedPhasesPerJob } =
     useProjectContext();
 
@@ -49,9 +49,17 @@ const useFilteredPhases = (jobNum, yearId, phaseId, active) => {
             if (phase.id !== phaseId) return false;
           }
         }
+        if(state){
+          if( phase.state !== state) return false;
+        }
+        if(pm){
+          if( Number(phase.pm) !== pm) return false;
+        }
 
         return true;
       });
+
+      console.log(filteredPhases)
 
       filteredPhases.forEach((phase) => {
         counts.Total += 1;
@@ -107,7 +115,6 @@ const useFilteredPhases = (jobNum, yearId, phaseId, active) => {
         };
       }
 
-      // Step 5: Handle singlePhaseData
       if (phaseId && activeFilteredPhases.length === 1) {
         const phase = activeFilteredPhases[0];
         const job = getProjectByNum(phase.jobNum);
@@ -268,6 +275,8 @@ const useFilteredPhases = (jobNum, yearId, phaseId, active) => {
       yearId,
       phaseId,
       active,
+      state,
+      pm,
       projects,
       getProjectByNum,
       getYearById,
