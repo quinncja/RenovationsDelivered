@@ -50,7 +50,6 @@ function ClosedPhases() {
   };
 
 
-  console.log(pieData)
     if(!pieData) return(
     <div className="home-widget home-widget-m">
         <div style={{ paddingTop: "27px" }} className="home-widget-loading" />

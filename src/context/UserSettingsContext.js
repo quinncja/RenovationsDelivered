@@ -32,7 +32,6 @@ export function UserSettingsProvider({ children }) {
   async function fetchCurrentUser() {
     try {
       const response = await axios.get(userApiUrl, defaultHeaders);
-      console.log(response.data)
       return response.data.data;
     } catch (error) {
       console.error("Failed to fetch user data", error);

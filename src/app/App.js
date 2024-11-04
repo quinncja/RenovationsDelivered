@@ -6,10 +6,12 @@ import Modal from "../modules/modals/Modal";
 import SystemMessage from "../modules/systemMessage/SystemMessage";
 import "./App.css";
 import useScrollToTop from "utils/hooks/useScrollToTop";
+import useRoles from "utils/hooks/useRoles";
 
 function App() {
   const isAuthenticated = useAuth();
   useLoad(isAuthenticated);
+  useRoles(isAuthenticated);
 
   useScrollToTop();
 
