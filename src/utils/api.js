@@ -104,11 +104,9 @@ export async function testAPI() {
 }
 
 export async function initializeUserRole(userId){
-  console.log("initializing user...")
+  console.log("initializing user...");
   try{
-    await axios.post(`${apiUrl}initialize-user?userId=${userId}`, {
-      ...ngrokHeaders,
-    });
+    await axios.post(`${apiUrl}initialize-user?userId=${userId}`, null, ngrokHeaders);
   } catch (error) {
     console.error("Error initializing user", error);
   }
