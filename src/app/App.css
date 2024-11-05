@@ -2355,8 +2355,17 @@ h1 {
   background-color: var(--mid);
 }
 
+.job-select-dropdown .react-dropdown-select-option{
+  padding: 5px 10px;
+}
 .active-job-select .job-select-dropdown {
   background-color: var(--primary) !important;
+}
+
+.job-select-dropdown.react-dropdown-select{
+  width: 500px !important;
+  height: unset !important;
+  padding: 10px 5px !important;
 }
 
 .add-job-button {
@@ -2769,3 +2778,4 @@ h1 {
   background-color: var(--mid);
   transition: background-color 0.3s, border 0.3s;
 }
+

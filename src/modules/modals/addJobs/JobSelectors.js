@@ -1,30 +1,20 @@
 import { useState } from "react";
 import JobSelector from "./JobSelector";
-import { plus } from "business/svg";
 import { useTrackedJobs } from "context/TrackedJobContext";
 import { useProjectContext } from "context/ProjectContext";
 import RecommendedJobs from "./ReccomendedJobs";
 
-let nextId = 0;
-const generateId = () => nextId++;
 
 function JobSelectors({ closeSelf }) {
   const { trackedJobs, updateTrackedJobs } = useTrackedJobs();
   const { getAllProjects } = useProjectContext();
   const allProjects = getAllProjects() || [];
-  const [jobSelectors, setJobSelectors] = useState([]);
   const [selectedJobs, setSelectedJobs] = useState([]);
   const [selectedRec, setSelectedRec] = useState([]);
 
-  const handleChange = (index, selectedJobNum) => {
-    const updatedJobs = [...selectedJobs];
-    updatedJobs[index] = selectedJobNum;
-    setSelectedJobs(updatedJobs);
-  };
-
-  const handleAdd = () => {
-    setJobSelectors([...jobSelectors, { id: generateId() }]);
-    setSelectedJobs([...selectedJobs, null]);
+  const handleChange = (values) => {
+    const jobNums = values.map((item) => item.num)
+    setSelectedJobs(jobNums);
   };
 
   const handleSubmit = async () => {
@@ -63,27 +53,11 @@ function JobSelectors({ closeSelf }) {
           <h4 style={{ textAlign: "left", fontWeight: "500" }}>
             Select from list
           </h4>
-          <div className="job-selector-row">
-            {jobSelectors.map((jobSelector, index) => (
-              <div
-                key={jobSelector.id}
-                className={`job-selector-item ${selectedJobs[index] && selectedJobs[index] !== null ? "active-job-select" : ""}`}
-              >
-                <JobSelector
-                  id={jobSelector.id}
-                  key={jobSelector.id}
+          <div className="job-selector-wrapper"> 
+              <JobSelector
                   options={options}
-                  index={index}
-                  value={selectedJobs[index] || null}
-                  handleChange={(job) => handleChange(index, job.num)}
+                  handleChange={(values) => handleChange(values)}
                 />
-              </div>
-            ))}
-            {jobSelectors.length < 8 && (
-              <button className="add-button" onClick={handleAdd}>
-                {plus()} Project
-              </button>
-            )}
           </div>
         </div>
         <button className="job-button add-job-button" onClick={handleSubmit}>
