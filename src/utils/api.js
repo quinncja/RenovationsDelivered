@@ -103,6 +103,18 @@ export async function testAPI() {
   }
 }
 
+export async function changeUserRole(userId, newRole){
+  try{
+    const response = await axios.post(`${apiUrl}change-user-role`, { userId, newRole }, {
+      ...ngrokHeaders,
+    });
+    return response;
+  } catch (error) {
+    console.error("Error initializing user", error);
+  }
+}
+
+
 export async function initializeUserRole(userId){
   try{
     await axios.get(`${apiUrl}initialize-user?userId=${userId}`, 

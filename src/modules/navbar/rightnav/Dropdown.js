@@ -35,8 +35,8 @@ function Dropdown({ toggleSelf }) {
   if(isAdmin){
     dropdownOptions =[{
       id: "2",
-      item: "Team",
-      onClick: () => handleClick(() => navigate("/team")),
+      item: "Users",
+      onClick: () => handleClick(() => navigate("/users")),
     },
     ...dropdownOptions
   ]
