@@ -22,9 +22,14 @@ function CostItem(props) {
   const toggleData = () => {};
   const { chartType } = chartObj;
   const loadData = useChartData();
+  const staticItem = chartType === "Text" && type !== "Change Orders" && type !== "Financial Overview";
 
-  const handleClick = () => {
-    if (chartType === "Text") return;
+  const handleClick = (event) => {
+    const interactiveElements = ['BUTTON', 'A', 'INPUT'];
+    if (interactiveElements.includes(event.target.tagName)) {
+      return;
+    }
+    if (staticItem) return;
     const param = toParam(type);
     navigate(`/jobcost/item/${param}`);
   };
@@ -96,7 +101,8 @@ function CostItem(props) {
       className={`dashboard-widget 
         ${chartType === "Line" || chartType === "Bar" || type === "Margin" ? "wide-widget" : ""} 
         ${!data && !current ? "loading-widget" : ""} 
-        ${chartType === "Text" ? "text-widget" : ""}`}
+        ${chartType === "Text" ? "text-widget" : ""}
+        ${!staticItem ? "clickable-widget" : ""}`}
       style={style}
       ref={setNodeRef}
       listeners={listeners}

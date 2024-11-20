@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useMemo, useCallback } from 'react';
 import { useModifiers } from "context/ModifierContext";
 import { useUserContext } from "context/UserContext";
 import { useUserSettings } from "context/UserSettingsContext";
@@ -10,23 +10,26 @@ import useIsAdmin from "./useIsAdmin";
 
 const useLoad = (isAuthenticated) => {
   const { setPageModifiers } = useModifiers();
-  const { setItems, addItem, addMultItems } = useItems();
+  const { addMultItems, setItems } = useItems();
   const { fetchCurrentUser } = useUserSettings();
   const { setAppearance, setColorScheme, setLabel } = useUserContext();
   const { setTrackedJobs } = useTrackedJobs();
   const isAdmin = useIsAdmin();
-  const chartObjectMap = chartObjects.reduce((acc, chartObject) => {
-    acc[chartObject.type] = chartObject;
-    return acc;
-  }, {});
 
-  const adminView = {
+  const chartObjectMap = useMemo(() => {
+    return chartObjects.reduce((acc, chartObject) => {
+      acc[chartObject.type] = chartObject;
+      return acc;
+    }, {});
+  }, []);
+
+  const adminView = useMemo(() => ({
     items: [
       chartObjectMap["Client Breakdown"]
     ]
-  }
+  }), [chartObjectMap]);
 
-  const projectView = {
+  const projectView = useMemo(() => ({
     items: [
       chartObjectMap["Status"],
       chartObjectMap["Cost Analysis"],
@@ -36,45 +39,56 @@ const useLoad = (isAuthenticated) => {
       chartObjectMap["COGs Breakdown"],
       chartObjectMap["Sub Breakdown"],
       chartObjectMap["Material Breakdown"],
+      chartObjectMap["Change Orders"],
     ],
-  };
+  }), [chartObjectMap]);
 
-  const addAdminItems = (userItems) => {
+  const getMissingAdminItems = useCallback((userItems) => {
     const userItemTypes = new Set(userItems.map(item => item.type));
-    adminView.items
-      .filter(adminItem => {
-        return !userItemTypes.has(adminItem.type);
-      })
-      .map(adminItem => {
-        const item = {
-          id: generateRandomId(),
-          type: adminItem.type,
-        };
-        addItem(item)
-        return "";
-      });
-  };
-
-  const initiateUserItems = () => {
-    let items = [];
-    projectView.items.forEach((item) => {
-      const newItem = {
+    return adminView.items
+      .filter(adminItem => !userItemTypes.has(adminItem.type))
+      .map(adminItem => ({
         id: generateRandomId(),
-        type: item.type,
-      };
-      items.push(newItem);
-    });
-    addMultItems(items);
-  };
+        type: adminItem.type,
+      }));
+  }, [adminView.items]);
+
+  const getMissingProjectItems = useCallback((userItems) => {
+    const userItemTypes = new Set(userItems.map(item => item.type));
+    return projectView.items
+      .filter(projectItem => !userItemTypes.has(projectItem.type))
+      .map(projectItem => ({
+        id: generateRandomId(),
+        type: projectItem.type,
+      }));
+  }, [projectView.items]);
+
+  const processUserItems = useCallback((existingItems) => {
+    let itemsToAdd = [...existingItems];
+
+    const missingProjectItems = getMissingProjectItems(existingItems);
+    itemsToAdd = [...itemsToAdd, ...missingProjectItems];
+
+    if (isAdmin) {
+      const missingAdminItems = getMissingAdminItems(existingItems);
+      itemsToAdd = [...itemsToAdd, ...missingAdminItems];
+    }
+
+    if (itemsToAdd.length > 0) {
+      setItems(itemsToAdd);
+      console.log("Added missing items:", itemsToAdd);
+    } else {
+      console.log("No new items to add.");
+    }
+  }, [getMissingProjectItems, getMissingAdminItems, isAdmin, addMultItems]);
 
   useEffect(() => {
     const loadUser = async () => {
       try {
         const settings = await fetchCurrentUser();
+
         setPageModifiers(settings.pageModifiers || { active: "Total" });
-        setItems(settings.itemArray || []);
-        if (!settings.itemArray) initiateUserItems();
-        if (isAdmin) addAdminItems(settings.itemArray);
+        processUserItems(settings.itemArray || []);
         setLabel(settings.label || "always");
         setAppearance(settings.appearance || "dark");
         setColorScheme(settings.colorScheme || "Tranquil");
@@ -84,9 +98,14 @@ const useLoad = (isAuthenticated) => {
       }
     };
 
-    if (isAuthenticated) loadUser();
-    //eslint-disable-next-line
-  }, []);
+    if (isAuthenticated) {
+      loadUser();
+    }
+  }, 
+  //eslint-disable-next-line
+  [
+    isAuthenticated,
+  ]);
 };
 
 export default useLoad;

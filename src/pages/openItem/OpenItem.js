@@ -6,6 +6,9 @@ import { useChartData } from "utils/hooks/useChartData";
 import { useItems } from "context/ItemsContext";
 import { useSingle } from "utils/hooks/useSingle";
 import TransformLayer from "./TransformLayer";
+import PopulateChangeOrders from "./openItemDisplays/PopulateChangeOrders";
+import FinancialOverview from "./openItemDisplays/FinancialOverview";
+import ChangeOrders from "pages/changeOrders/ChangeOrders";
 
 function OpenItem() {
   const navigate = useNavigate();
@@ -15,7 +18,7 @@ function OpenItem() {
   const chartObj = single ? getSingleChartObj(type) : getChartObj(type);
   const { query } = chartObj;
   if (!chartObj) navigate("/dashboard");
-  const { dataMap, clearOpenData } = useItems();
+  const { dataMap } = useItems();
   const loadData = useChartData();
   const abortControllerRef = useRef(null);
   const data = type === "Status" ? [] : dataMap["open"] || null;
@@ -47,24 +50,28 @@ function OpenItem() {
     };
   }, [type, loadData, query]);
 
-  function handleClose() {
-    clearOpenData();
-    navigate(`/jobcost`);
+  const body = () => {
+    if(!data) return (
+      <div style={{display: "flex", width: "100%", height: "50vh", justifyContent: 'center', alignItems: "center"}}>      
+          <span
+              className={`home-widget-num ${"home-widget-loading"}`}>
+          </span>
+      </div>
+    )  
+
+    if(type === "Change Orders") return <PopulateChangeOrders data={data}/>
+    if(type === "Financial Overview") return <FinancialOverview data={data}/>
+    else return <TransformLayer data={data} chartObj={chartObj} />
   }
 
   return (
     <div
       className="widget-background dashboard-widget-open"
-      onClick={handleClose}
     >
-      <div
-        className={`${!data ? "loading-widget" : ""} open-widget-container`}
-        onClick={(e) => e.stopPropagation()}
-      >
-        <div className="scroll-open-widget">
-          <h2> {type} </h2>
-          {data && <TransformLayer data={data} chartObj={chartObj} />}
-        </div>
+      <div className={`dashboard-welcome user-page open-widget-page`}>
+
+          <h1> {type} </h1>
+         {body()}
       </div>
     </div>
   );

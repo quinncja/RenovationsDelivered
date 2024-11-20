@@ -7,7 +7,7 @@ import HomeWidgets from "../../widgets/homeWidgets/HomeWidgets";
 function DashboardHome() {
   const welcomeText = useWelcomeText();
   const { trackedJobs } = useTrackedJobs();
-
+  console.log(trackedJobs)
   return (
     <div className="dashboard-welcome">
       <h1> {welcomeText} </h1>

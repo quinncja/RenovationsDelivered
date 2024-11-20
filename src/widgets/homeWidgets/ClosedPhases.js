@@ -4,7 +4,7 @@ import { useEffect, useRef } from "react";
 import { useHomeData } from "utils/hooks/useHomeData";
 
 function ClosedPhases() {
-  const { dataMap, updateDataMap, closedPhases } = useHome()
+  const { dataMap, updateDataMap, closedPhases } = useHome();
   const id = "cost-vs-budget"
   const pieData = dataMap[id] || null;
   const loadData = useHomeData();

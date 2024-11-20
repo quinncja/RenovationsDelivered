@@ -50,6 +50,7 @@ function TableEntry({ headers, entry, currentId, nestingLevel = 0, color }) {
     budgetedAmount: "Budget",
     dueDate: "Due Date",
     invoiceNum: "Invoice Num",
+    BudgetedAmount: "Budget"
   };
 
   const formatFuncMap = {
@@ -80,6 +81,7 @@ function TableEntry({ headers, entry, currentId, nestingLevel = 0, color }) {
     Budget: dollarFormatter,
     Cost: dollarFormatter,
     dueDate: dateFormatter,
+    BudgetedAmount: dollarFormatter,
   };
 
   const formatEntry = (item, header) => {

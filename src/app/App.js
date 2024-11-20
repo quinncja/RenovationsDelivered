@@ -7,6 +7,7 @@ import SystemMessage from "../modules/systemMessage/SystemMessage";
 import "./App.css";
 import useScrollToTop from "utils/hooks/useScrollToTop";
 import useRoles from "utils/hooks/useRoles";
+import { Toaster } from "sonner";
 
 function App() {
   const isAuthenticated = useAuth();
@@ -20,6 +21,7 @@ function App() {
       {isAuthenticated && <Navbar />}
       <Outlet />
       <Modal />
+      <Toaster richColors position="top-center" />
       <SystemMessage />
     </div>
   );

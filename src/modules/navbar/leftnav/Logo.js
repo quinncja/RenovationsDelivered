@@ -21,11 +21,20 @@ function Logo({ expanded }) {
   const handleMouseLeave = () => {
     setHovered(false);
   };
-  const handleClick = () => {
-    if (location.pathname === "/dashboard" && isAdmin) navigate("/jobcost");
-    else navigate("/dashboard");
-  };
 
+  const handleClick = () => {
+    const currentPath = location.pathname;
+
+    if (currentPath === "/dashboard" && isAdmin) {
+      navigate("/jobcost");
+    } else if (currentPath === "/jobcost") {
+      navigate("/dashboard");
+    } else if (currentPath.startsWith("/jobcost/item/")) {
+      navigate("/jobcost");
+    } else {
+      navigate("/dashboard");
+    }
+  };
   return (
     <img
       onClick={() => handleClick()}

@@ -24,7 +24,7 @@ export function DataTable({ data, chartType, currentId }) {
     marginPercentage: "Margin",
     totalCost: "COGS",
     contractValue: "Contract",
-    budgetedAmount: "Budget",
+    BudgetedAmount: "Budget",
   };
   const subHeaderMap = {
     orderDate: "Order Date",
@@ -36,6 +36,7 @@ export function DataTable({ data, chartType, currentId }) {
     orderDesc: "Description",
     marginPercentage: "Margin",
     totalCost: "COGS",
+    BudgetedAmount: "Budget"
   };
 
   const getSubInfo = (obj) => {

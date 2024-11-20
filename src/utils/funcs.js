@@ -60,11 +60,11 @@ export function getItemContainers(type, open) {
     };
   } else {
     const wideContainer = open
-      ? { width: "900px", height: "450px" }
+      ? { width: "1100px", height: "450px" }
       : { width: "660px", height: "320px" };
 
     let wideSize = open
-      ? { width: 850, height: 430 }
+      ? { width: 1125, height: 430 }
       : { width: 640, height: 320 };
 
     const imageSize = {

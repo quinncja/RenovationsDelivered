@@ -53,6 +53,12 @@ export const chartObjects = [
     chartType: "Bar",
     admin: false,
   },
+  {
+    type: "Change Orders",
+    query: "change-orders",
+    chartType: "Text",
+    admin: false,
+  },
 ];
 
 export const singleChartObjs = [

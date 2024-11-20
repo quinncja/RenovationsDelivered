@@ -185,29 +185,6 @@ export const modifierFormatter = (mods, prevPhase) => {
   return formatted;
 };
 
-export const pageModifierToString = (pageModifiers) => {
-  const parts = [];
-
-  const jobName =
-    (pageModifiers.job && pageModifiers.job[0]?.name) || "All Projects";
-  if (jobName) parts.push(jobName);
-
-  const year =
-    pageModifiers.year && pageModifiers.year.length === 1
-      ? pageModifiers.year[0].year
-      : "";
-  if (year) parts.push(year);
-
-  const phaseName =
-    pageModifiers.phase && pageModifiers.phase.length === 1
-      ? pageModifiers.phase[0].name
-      : "";
-  if (phaseName) parts.push(phaseName);
-
-  const str = parts.join(" - ");
-  return str;
-};
-
 export const statusToString = (status) => {
   if (status === 4) return "Active";
   return "Complete";
@@ -460,3 +437,52 @@ export function getFirstWord(str) {
   const words = str.trim().split(" ");
   return words[0];
 }
+
+
+export function destructureJobNumber(jobNumber) {
+  const jobStr = jobNumber.toString().padStart(8, '0');
+
+  const jobNumberRegex = /^\d{8}$/;
+  if (!jobNumberRegex.test(jobStr)) {
+    throw new Error(
+      'Invalid job number format. It must be exactly 8 digits.'
+    );
+  }
+
+  const yearDigits = jobStr.slice(0, 2); 
+  const phaseDigits = jobStr.slice(6, 8);
+
+  const year = `20${yearDigits}`;
+
+  const phaseNumber = parseInt(phaseDigits, 10);
+  let jobNum;
+
+  if (phaseDigits === '00' || phaseNumber > 12) {
+    jobNum = jobStr.slice(2, 8); 
+  } else {
+    jobNum = jobStr.slice(2, 6);
+  }
+
+  const phase = phaseDigits;
+
+  return {
+    year,
+    jobNum, 
+    phase,
+  };
+}
+
+
+
+const timeOptions = {
+  weekday: "short",
+  day: "numeric",
+  month: "short",
+  hour: "numeric",
+  minute: "numeric",
+  timeZone: "America/Chicago",
+};
+
+export const dateTimeToString = (date) => {
+  return date.toLocaleString("en-US", timeOptions);
+};

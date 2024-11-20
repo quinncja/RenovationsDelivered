@@ -44,22 +44,8 @@ export async function fetchHomeData(id, body, signal){
         error.response.data.error,
       );
     } else {
-      console.error(`Error loading ${id}:`, error.message);
+      throw Error
     }
-  }
-}
-
-export async function fetchBudgetVSChartData(recnumsParam) {
-  try {
-    const response = await axios.get(
-      `${apiUrl}cost-vs-budget?recnums=${recnumsParam}`,
-      {
-        ...ngrokHeaders,
-      },
-    );
-    return response.data;
-  } catch (error) {
-    console.error("Error loading jobs:", error);
   }
 }
 
@@ -88,21 +74,6 @@ export async function fetchChartData(modifiers, signal) {
   }
 }
 
-export async function testAPI() {
-  try {
-    const response = await axios({
-      method: "get",
-      url: apiUrl,
-      headers: {
-        "ngrok-skip-browser-warning": "true",
-      },
-    });
-    return response.data;
-  } catch (error) {
-    console.log(error);
-  }
-}
-
 export async function changeUserRole(userId, newRole){
   try{
     const response = await axios.post(`${apiUrl}change-user-role`, { userId, newRole }, {
@@ -114,7 +85,6 @@ export async function changeUserRole(userId, newRole){
   }
 }
 
-
 export async function initializeUserRole(userId){
   try{
     await axios.get(`${apiUrl}initialize-user?userId=${userId}`, 
@@ -123,5 +93,71 @@ export async function initializeUserRole(userId){
     });
   } catch (error) {
     console.error("Error initializing user", error);
+  }
+}
+
+export async function submitChangeOrder(changeObj) {
+  try {
+    const response = await axios.post(
+      `${apiUrl}change-order`,
+      changeObj,
+      {
+        ...ngrokHeaders,
+      }
+    );
+    return response;
+  } catch (error) {
+    console.error("Error submitting change order", error);
+  }
+}
+
+export async function sendChangeOrderEmail(changeObj) {
+  try {
+    const response = await axios.post(
+      `${apiUrl}change-order/email`,
+      changeObj,
+      {
+        ...ngrokHeaders,
+      }
+    );
+    return response;
+  } catch (error) {
+    console.log(error)
+    throw Error;
+  }
+}
+
+export async function sendChangeOrderCreatedEmail(emailObj) {
+  console.log(emailObj)
+  try {
+    const response = await axios.post(
+      `${apiUrl}change-order-created/email`,
+      emailObj,
+      {
+        ...ngrokHeaders,
+      }
+    );
+    return response;
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+export async function patchChangeOrder(idnum, status) {
+  try {
+    const response = await axios.patch(
+      `${apiUrl}change-order`,
+      {
+        _idnum: idnum,
+        status: Number(status),
+      },
+      {
+        ...ngrokHeaders,
+      }
+    );
+    return response;
+  } catch (error) {
+    console.log(error)
+    throw Error;
   }
 }

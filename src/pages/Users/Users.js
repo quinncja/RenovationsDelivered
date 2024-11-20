@@ -8,6 +8,8 @@ import {
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import User from "./User";
+import { toast } from "sonner";
+import { set } from "lodash";
 
 export function Users() {
   const [items, setItems] = useState({
@@ -19,17 +21,25 @@ export function Users() {
 
   useEffect(() => {
     const loadUsers = async () => {
-      const userData = await fetchUserList();
-      const sortedUsers = userData.results.sort(
-        (a, b) => new Date(b.lastActiveAt) - new Date(a.lastActiveAt)
-      );
-      const admins = sortedUsers.filter((user) => hasAdmin(user));
-      const normals = sortedUsers.filter((user) => !hasAdmin(user));
-
-      setItems({
-        adminUsers: admins,
-        normalUsers: normals,
-      });
+      try{ 
+        const userData = await fetchUserList();
+        const sortedUsers = userData.results.sort(
+          (a, b) => new Date(b.lastActiveAt) - new Date(a.lastActiveAt)
+        );
+        const admins = sortedUsers.filter((user) => hasAdmin(user));
+        const normals = sortedUsers.filter((user) => !hasAdmin(user));
+  
+        setItems({
+          adminUsers: admins,
+          normalUsers: normals,
+        });
+      } catch {
+        setItems({
+          adminUsers: -10,
+          normalUsers: -10,
+        })
+        toast.error('Failed to load user data')
+      }
     };
 
     loadUsers();
@@ -210,6 +220,15 @@ export function Users() {
       (a, b) => new Date(b.lastActiveAt) - new Date(a.lastActiveAt)
     );
   }
+
+  if (
+    items.adminUsers === -10 &&
+    items.normalUsers === -10
+  ) return(  
+    <div className="dashboard-welcome user-page">
+      <h1> Users </h1>
+    </div>
+    )
 
   if (
     items.adminUsers.length === 0 &&

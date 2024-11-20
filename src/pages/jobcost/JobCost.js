@@ -28,10 +28,13 @@ function JobCost() {
     reorderById,
     captureItemState,
     compareItemStates,
+    dataMap,
+    clearOpenData,
   } = useItems();
 
   const single = useSingle();
-
+  if(dataMap["open"]) clearOpenData();
+  
   const sensors = useSensors(
     useSensor(PointerSensor),
     useSensor(KeyboardSensor, {

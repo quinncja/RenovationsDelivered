@@ -457,7 +457,7 @@ export function SmartSortSvg() {
           <g id="Group 6">
             <path
               id="Stroke 2"
-              fill-rule="evenodd"
+              fillRule="evenodd"
               clip-rule="evenodd"
               d="M19 12C15.41 12 11 17.41 11 21C11 17.41 6.59 12 3 12C6.59 12 11 6.59 11 3C11 6.59 15.41 12 19 12Z"
               style={{ stroke: "var(--less-white)" }}
@@ -467,7 +467,7 @@ export function SmartSortSvg() {
             />
             <path
               id="Stroke 4"
-              fill-rule="evenodd"
+              fillRule="evenodd"
               clip-rule="evenodd"
               d="M21 5C19.974 5 19 5.974 19 7C19 5.974 18.026 5 17 5C18.026 5 19 4.026 19 3C19 4.026 19.974 5 21 5Z"
               style={{ stroke: "var(--less-white)" }}
@@ -788,13 +788,13 @@ export const sortSvg = (state) => {
           xmlns="http://www.w3.org/2000/svg"
         >
           <path
-            fill-rule="evenodd"
+            fillRule="evenodd"
             clip-rule="evenodd"
             d="M21.707 14.2862C21.316 13.8952 20.684 13.8952 20.293 14.2862L19 15.5792V5.99316C19 5.44016 18.553 4.99316 18 4.99316C17.447 4.99316 17 5.44016 17 5.99316V15.5792L15.707 14.2862C15.316 13.8952 14.684 13.8952 14.293 14.2862C13.902 14.6772 13.902 15.3092 14.293 15.7002L17.292 18.6992C17.384 18.7922 17.495 18.8652 17.618 18.9162C17.74 18.9672 17.87 18.9932 18 18.9932C18.13 18.9932 18.26 18.9672 18.382 18.9162C18.505 18.8652 18.616 18.7922 18.708 18.6992L21.707 15.7002C22.098 15.3092 22.098 14.6772 21.707 14.2862"
             style={{ fill: "var(--less-white)", opacity: ".3" }}
           />
           <path
-            fill-rule="evenodd"
+            fillRule="evenodd"
             clip-rule="evenodd"
             d="M4.29325 9.707C4.68425 10.098 5.31625 10.098 5.70725 9.707L7.00025 8.414L7.00025 18C7.00025 18.553 7.44725 19 8.00025 19C8.55325 19 9.00025 18.553 9.00025 18L9.00025 8.414L10.2933 9.707C10.6843 10.098 11.3163 10.098 11.7073 9.707C12.0983 9.316 12.0983 8.684 11.7073 8.293L8.70825 5.294C8.61625 5.201 8.50525 5.128 8.38225 5.077C8.26025 5.026 8.13025 5 8.00025 5C7.87025 5 7.74025 5.026 7.61825 5.077C7.49525 5.128 7.38425 5.201 7.29225 5.294L4.29325 8.293C3.90225 8.684 3.90225 9.316 4.29325 9.707"
             style={{ fill: "var(--less-white)", opacity: ".3" }}
@@ -934,6 +934,41 @@ export const adminSvg = () => {
   return(
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M12 22C12 22 20 18 20 12V5L12 2L4 5V12C4 18 12 22 12 22Z" stroke="#ff7b00" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+    </svg>
+  )
+}
+
+export const userReviewSvg = () => {
+  return(
+
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M12 21.25C16.5398 21.25 20.22 17.5698 20.22 13.03C20.22 8.49022 16.5398 4.81 12 4.81C7.46022 4.81 3.78 8.49022 3.78 13.03C3.78 17.5698 7.46022 21.25 12 21.25Z" stroke="#ff7b00" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+    <path d="M12 2.75V4.81" stroke="#ff7b00" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+    <path d="M4.73001 5.75999L5.82999 6.86" stroke="#ff7b00" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+    <path d="M19.27 5.75999L18.17 6.86" stroke="#ff7b00" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+    <path d="M12 14.06C12.5689 14.06 13.03 13.5989 13.03 13.03C13.03 12.4611 12.5689 12 12 12C11.4311 12 10.97 12.4611 10.97 13.03C10.97 13.5989 11.4311 14.06 12 14.06Z" stroke="#ff7b00" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+    <path d="M12 13.03L14.57 10.46" stroke="#ff7b00" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+    <path d="M10.97 2.75H13.03" stroke="#ff7b00" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+    </svg>
+  )
+}
+
+export const confirmedSvg = () => {
+  return(
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M12 21.25C6.89 21.25 2.75 17.11 2.75 12C2.75 6.89 6.89 2.75 12 2.75C17.11 2.75 21.25 6.89 21.25 12C21.25 17.11 17.11 21.25 12 21.25Z" stroke="#2cf21e" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+    <path d="M11.54 13.58L9.78 11.82" stroke="#2cf21e" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+    <path d="M15.06 10.06L11.54 13.58" stroke="#2cf21e" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+    </svg>
+  )
+}
+
+export const rejectedSvg = () => {
+  return(
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M12 21.25C6.89 21.25 2.75 17.11 2.75 12C2.75 6.89 6.89 2.75 12 2.75C17.11 2.75 21.25 6.89 21.25 12C21.25 17.11 17.11 21.25 12 21.25Z" stroke="#ff2049" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+    <path d="M13.89 10.08L10.11 13.92" stroke="#ff2049" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+    <path d="M10.11 10.08L13.89 13.92" stroke="#ff2049" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
     </svg>
   )
 }

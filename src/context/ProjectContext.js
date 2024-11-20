@@ -10,7 +10,6 @@ import {
 import { fetchChartData } from "utils/api";
 import { normalizeData } from "utils/jobNormalizer";
 import { phaseList, yearList } from "utils/modifiers";
-import { useModifiers } from "./ModifierContext";
 
 const ProjectContext = createContext();
 
@@ -58,14 +57,14 @@ export const ProjectProvider = ({ children }) => {
 
   const getPhaseById = useCallback(
     (phaseId) => {
-      return projects && projects.phases ? projects.phases[phaseId] : null;
+      return projects && projects.phases ? projects.phases[phaseId] : "";
     },
     [projects],
   );
 
   const getProjectByNum = useCallback(
     (jobNum) => {
-      return jobNum && projects && projects.jobs ? projects.jobs[jobNum] : null;
+      return jobNum && projects && projects.jobs ? projects.jobs[jobNum] : "";
     },
     [projects],
   );
@@ -80,7 +79,7 @@ export const ProjectProvider = ({ children }) => {
     (yearId) => {
       return projects && yearId && projects.years
         ? projects.years[yearId]
-        : null;
+        : "";
     },
     [projects],
   );
@@ -196,6 +195,18 @@ export const ProjectProvider = ({ children }) => {
     return str;
   };
 
+  const getJobStr = (jobNum) => {
+    return getProjectByNum(jobNum).name;
+  }
+
+  const getYearStr = (yearId) => {
+    return getYearById(yearId).year;
+  }
+
+  const getPhaseStr = (phaseId) => {
+    return getPhaseById(phaseId).name;
+  }
+
   const countActivePhases = useCallback(
     (jobNum) => {
       const phases = getPhasesForJob(jobNum);
@@ -286,6 +297,9 @@ export const ProjectProvider = ({ children }) => {
         sortedPhasesPerJob,
         getActivePhases,
         getClosedPhases,
+        getJobStr,
+        getYearStr,
+        getPhaseStr,
       }}
     >
       {children}

@@ -1,8 +1,7 @@
 const transformRevenueData = (data) => {
-  // Initialize the transformed data with the original data
   const transformedData = [...data];
+  console.log(transformedData)
 
-  // Calculate Budget Difference ($) and Budget Difference (%)
   if (
     data[0] &&
     data[1] &&
