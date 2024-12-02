@@ -8,7 +8,7 @@ function HomeToggle() {
     {
       id: "year",
       svg: calendarSvg,
-      title: "View year to date",
+      title: "View all projects",
     },
     {
       id: "user",
