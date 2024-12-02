@@ -59,7 +59,7 @@ export const JobDisplay = ({ open }) => {
     </button>
   );
 
-  if (!projects) return <div className="loading-widget" />;
+  if (!projects) return <div className="loading-widget" style={{marginTop: "-18%"}} />;
 
   if (singlePhaseData) {
     return <PhaseView singlePhaseData={singlePhaseData} />;

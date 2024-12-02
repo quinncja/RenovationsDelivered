@@ -1842,7 +1842,6 @@ span.grippy::after {
   height: fit-content;
   max-height: 135px !important;
   overflow-y: scroll;
-  margin-block: auto;
 }
 .item-button {
   border: none;
@@ -2589,8 +2588,8 @@ h1 {
 .home-widget-container {
   display: flex;
   flex-direction: row;
-  gap: 20px;
-  flex-wrap: nowrap;
+  gap: 10px;
+  flex-wrap: wrap;
   padding-bottom: 40px;
 }
 
@@ -2618,6 +2617,15 @@ h1 {
 .home-widget-m {
   width: 350px;
 }
+.home-widget-long {
+  display: flex;
+  flex-direction: row;
+  width: 600px;
+  padding-inline: 40px;
+  height: 120px;
+  gap: 50px;
+  margin-bottom: 10px;
+}
 
 .home-widget-title {
   color: var(--white);
@@ -2630,6 +2638,12 @@ h1 {
   color: var(--white);
   height: min-content;
   line-height: 4.5rem;
+}
+
+.smaller-num{
+  font-size: 2.5rem; 
+   line-height: 3rem;
+   text-align: right;
 }
 
 .home-widget-loading::before {

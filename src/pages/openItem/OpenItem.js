@@ -8,7 +8,6 @@ import { useSingle } from "utils/hooks/useSingle";
 import TransformLayer from "./TransformLayer";
 import PopulateChangeOrders from "./openItemDisplays/PopulateChangeOrders";
 import FinancialOverview from "./openItemDisplays/FinancialOverview";
-import ChangeOrders from "pages/changeOrders/ChangeOrders";
 
 function OpenItem() {
   const navigate = useNavigate();

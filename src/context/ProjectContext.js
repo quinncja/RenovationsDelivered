@@ -44,12 +44,12 @@ export const ProjectProvider = ({ children }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const getAllProjects = () => {
+  const getAllProjects = useCallback(() => {
     if (projects && projects.jobs) {
       return Object.values(projects.jobs);
     }
     return [];
-  };
+  }, [projects]);
 
   const getAllPhases = useCallback(() => {
     return projects && projects.phases ? Object.values(projects.phases) : [];
@@ -280,6 +280,23 @@ export const ProjectProvider = ({ children }) => {
     [getPhasesForJob],
   );
 
+  const getActiveJobs = useCallback(() => {
+    const activeJobs = [];
+    const allProjects = getAllProjects();
+    
+    if (!allProjects || allProjects.length === 0) return activeJobs;
+  
+    allProjects.forEach((project) => {
+      const jobNum = project.num;
+      const activePhaseCount = countActivePhases(jobNum);
+      if (activePhaseCount > 0) {
+        activeJobs.push(jobNum);
+      }
+    });
+  
+    return activeJobs;
+  }, [getAllProjects, countActivePhases]);
+
   return (
     <ProjectContext.Provider
       value={{
@@ -300,6 +317,7 @@ export const ProjectProvider = ({ children }) => {
         getJobStr,
         getYearStr,
         getPhaseStr,
+        getActiveJobs,
       }}
     >
       {children}

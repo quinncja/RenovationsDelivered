@@ -3,6 +3,7 @@ import ClosedPhases from "./ClosedPhases";
 import HomeToggle from "./HomeToggle";
 import OpenPhases from "./OpenPhases";
 import PendingCO from "./PendingCO";
+import Revenue from "./Revenue";
 
 function HomeWidgets() {
     const isAdmin = useIsAdmin();
@@ -10,7 +11,10 @@ function HomeWidgets() {
   return (
     <>
       {isAdmin && (
+        <> 
         <HomeToggle />
+        <Revenue/>
+        </>
       )}
       <div className="home-widget-container">
         <OpenPhases />

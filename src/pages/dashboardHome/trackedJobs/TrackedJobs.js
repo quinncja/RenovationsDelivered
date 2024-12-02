@@ -16,11 +16,18 @@ import {
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
 import { useState } from "react";
+import { useHome } from "context/HomeContext";
+import { useProjectContext } from "context/ProjectContext";
 
 function TrackedJobs({ jobs }) {
   const { openModal } = useModalContext();
   const { updateTrackedJobs } = useTrackedJobs();
   const [dragging, setDragging] = useState();
+  const { getActiveJobs } = useProjectContext();
+  const { homeState } = useHome();
+  const activeJobs = getActiveJobs();
+
+  const jobsToShow = homeState === "year" ? activeJobs : jobs;
 
   const handleClick = () => {
     openModal("addJobs");
@@ -64,9 +71,9 @@ function TrackedJobs({ jobs }) {
         sensors={sensors}
         collisionDetection={closestCenter}
       >
-        <SortableContext items={jobs} strategy={verticalListSortingStrategy}>
+        <SortableContext items={jobsToShow} strategy={verticalListSortingStrategy}>
           <div className="tracked-jobs">
-            {jobs.map((job) => (
+            {jobsToShow.map((job) => (
               <TrackedJob
                 current={dragging?.id === job ? true : false}
                 key={job}

@@ -14,6 +14,7 @@ import JobCost from "pages/jobcost/JobCost";
 import JobCostHeader from "modules/jobcostHeader/JobCostHeader";
 import Team from "pages/Users/Users";
 import ChangeOrders from "pages/changeOrders/ChangeOrders";
+import Revenue from "widgets/homeWidgets/Revenue";
 
 function RequireAuth({ children }) {
   let location = useLocation();
@@ -32,6 +33,22 @@ function Router() {
           <Route index element={<Home />} />
           <Route path="/*" element={<Home />} />
           <Route path="/home" element={<Home />} />
+          <Route
+            path="/test"
+            element={
+              <RequireAuth>
+                <div 
+                  style={{width: "100%",
+                  display: "flex", 
+                  justifyContent: "center",
+                  height: "100vh",
+                  alignItems: "center"}}
+                > 
+                <Revenue />
+                </div>
+              </RequireAuth>
+            }
+          />
           <Route
             path="/dashboard"
             element={
