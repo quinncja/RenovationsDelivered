@@ -28,6 +28,7 @@ function TrackedJobs({ jobs }) {
   const activeJobs = getActiveJobs();
 
   const jobsToShow = homeState === "year" ? activeJobs : jobs;
+  const jobHeader = homeState === "year" ? "Open Projects" : "Tracked Projects"
 
   const handleClick = () => {
     openModal("addJobs");
@@ -53,13 +54,16 @@ function TrackedJobs({ jobs }) {
   return (
     <>
       <div className="jobs-header">
-        <h2> Projects </h2>
-        <button
-          className="job-button add-new-button"
-          onClick={() => handleClick()}
-        >
-          + add new
-        </button>
+        <h2> {jobHeader} </h2>
+        {homeState !== "year" &&
+                <button
+                className="job-button add-new-button"
+                onClick={() => handleClick()}
+              >
+                + add new
+              </button>
+        }
+
       </div>
       <DndContext
         onDragStart={({ active }) => {

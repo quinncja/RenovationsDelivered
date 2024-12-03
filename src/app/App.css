@@ -2411,22 +2411,30 @@ h1 {
 .jobs-header {
   width: calc(100% + 10px);
   display: flex;
-  gap: 15px;
+  gap: 10px;
   align-items: baseline;
   color: var(--white);
   position: sticky;
   top: 0px;
   background-color: var(--background);
   box-sizing: border-box;
-
   z-index: 11;
+}
+
+.jobs-header h2{
+  margin-bottom: 10px;
 }
 
 .add-new-button {
   font-size: 1rem;
   width: fit-content;
   height: fit-content;
+  opacity: .4;
   background-color: var(--background);
+}
+
+.add-new-button:hover {
+  opacity: .7;
 }
 
 .tracked-jobs {
@@ -2441,7 +2449,7 @@ h1 {
 .tracked-job {
   background-color: var(--dark);
   border: 2px solid var(--fancy-border);
-  height: 200px;
+  height: 150px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -2596,12 +2604,13 @@ h1 {
 .home-widget {
   background-color: var(--dark);
   border: 2px solid var(--fancy-border);
-  height: 180px;
+  height: 160px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   gap: 10px;
+  box-sizing: border-box;
 }
 
 .clickable-home{
@@ -2612,7 +2621,7 @@ h1 {
   transform: scale(1.02);
 }
 .home-widget-sm {
-  width: 200px;
+  width: 180px;
 }
 .home-widget-m {
   width: 350px;
@@ -2620,11 +2629,13 @@ h1 {
 .home-widget-long {
   display: flex;
   flex-direction: row;
-  width: 600px;
-  padding-inline: 40px;
-  height: 120px;
+  justify-content: space-between;
+  width: 730px;
+  padding-inline: 35px;
+  height: 150px;
   gap: 50px;
   margin-bottom: 10px;
+  box-sizing: border-box;
 }
 
 .home-widget-title {
@@ -2668,36 +2679,48 @@ h1 {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 10px;
 }
 
 .home-toggle-wrapper {
   display: flex;
   flex-direction: row;
   justify-content: center;
-  background-color: var(--dark);
+  align-items: baseline;
   padding: 5px 5px;
+  padding-left: 0px;
   gap: 5px;
   height: fit-content;
-  border: 2px solid var(--fancy-border);
 }
 
 .home-toggle {
-  width: 40px;
-  background: var(--dark);
+  width: fit-content;
+  padding-inline: 10px;
+  background: none;
   height: 40px;
   border: none;
   border-radius: 2px;
   cursor: pointer;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--white);
+  opacity: .4;
 }
 
 .home-toggle:hover {
-  filter: brightness(var(--filter3));
+  opacity: .7;
 }
 
 .active-home-button {
-  background-color: var(--primary);
+  color: var(--white);
+  opacity: 1;
+  order: -1;
+  padding-left: 0px;
 }
+
+.active-home-button:hover {
+  opacity: 1;
+}
+
 
 .active-home-button svg path{
   stroke: var(--dark-white) !important;
