@@ -8,6 +8,7 @@ import { useSingle } from "utils/hooks/useSingle";
 import TransformLayer from "./TransformLayer";
 import PopulateChangeOrders from "./openItemDisplays/PopulateChangeOrders";
 import FinancialOverview from "./openItemDisplays/FinancialOverview";
+import { toast } from "sonner";
 
 function OpenItem() {
   const navigate = useNavigate();
@@ -35,7 +36,7 @@ function OpenItem() {
         if (error.name === "AbortError") {
           console.log("Fetch request aborted");
         } else {
-          console.error("Error fetching data:", error);
+          toast.error(`Error fetching ${type} data`, error);
         }
       }
     };

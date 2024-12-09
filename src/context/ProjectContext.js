@@ -64,7 +64,6 @@ export const ProjectProvider = ({ children }) => {
 
   const getProjectByNum = useCallback(
     (jobNum) => {
-      console.log(jobNum)
       return jobNum && projects && projects.jobs ? projects.jobs[jobNum] : "";
     },
     [projects],

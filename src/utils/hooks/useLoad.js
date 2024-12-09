@@ -74,12 +74,8 @@ const useLoad = (isAuthenticated) => {
       itemsToAdd = [...itemsToAdd, ...missingAdminItems];
     }
 
-    if (itemsToAdd.length > 0) {
-      setItems(itemsToAdd);
-      console.log("Added missing items:", itemsToAdd);
-    } else {
-      console.log("No new items to add.");
-    }
+    if (itemsToAdd.length > 0) setItems(itemsToAdd);
+    //eslint-disable-next-line
   }, [getMissingProjectItems, getMissingAdminItems, isAdmin, addMultItems]);
 
   useEffect(() => {

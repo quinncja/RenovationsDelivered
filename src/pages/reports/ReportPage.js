@@ -39,7 +39,6 @@ function ReportPage(){
         const fetchReports = async () => {
             try{
                 const response = await getReports(type);
-                console.log(response)
                 setRuns(response.data)
             } catch (error) {
                 toast.error(`Failed to load ${type} reports`)
@@ -47,6 +46,7 @@ function ReportPage(){
         }
 
         fetchReports();
+        //eslint-disable-next-line
     }, [])
 
     return(

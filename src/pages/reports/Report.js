@@ -1,4 +1,4 @@
-import { confirmedSvg, runSvg } from "business/svg";
+import { runSvg } from "business/svg";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { getLastRan, runReport } from "utils/api";
@@ -43,17 +43,15 @@ function Report(props){
         const loadLastRan = async () => {
             try{
                 const response = await getLastRan(type);
-                console.log(response)
                 setLastRan(response.data);
             } catch (error) {
-                console.log(error)
                 toast.error(`Failed to load last ${type} run`)
             }
         }
 
         loadLastRan();
 
-    }, [newRun])
+    }, [newRun, type])
 
     return(
         <div style={{display: "flex", flexDirection: "row", gap: "10px", alignItems: "center"}}> 

@@ -13,12 +13,10 @@ function Revenue(){
     const revAmounts = dataMap[id] || null;
     const yearSum = revAmounts?.[0]?.yearSum ?? null;
     const totalSum = revAmounts?.[0]?.totalSum + 20287424.35 ?? null;
-    console.log(yearSum, totalSum)
 
     const year = String(new Date().getFullYear())
     const yearNum = year.slice(-2);
 
-    console.log(revAmounts)
     useEffect(() => {
         const fetchData = async () => {
 

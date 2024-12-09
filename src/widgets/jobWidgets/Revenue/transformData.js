@@ -1,6 +1,5 @@
 const transformRevenueData = (data) => {
   const transformedData = [...data];
-  console.log(transformedData)
 
   if (
     data[0] &&

@@ -47,7 +47,6 @@ function ChangeOrderSelectors({modifiers, handleModifierChange}) {
   };
 
   const handlePhaseChange = (value) => {
-    console.log(value)
     const phaseId = value.length > 0 ? value[0].id : null;
 
     const newMods = {
@@ -62,7 +61,6 @@ function ChangeOrderSelectors({modifiers, handleModifierChange}) {
   
   const getFilteredPhases = (phases) => {
     const filtered = phases.filter((phase) => phase.status === 4);
-    console.log("filt", filtered)
     return filtered
   };
 

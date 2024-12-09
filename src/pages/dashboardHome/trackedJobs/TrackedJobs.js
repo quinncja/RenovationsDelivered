@@ -67,7 +67,6 @@ function TrackedJobs({ jobs }) {
       </div>
       <DndContext
         onDragStart={({ active }) => {
-          console.log(active);
           setDragging(active);
         }}
         onDragEnd={handleDragEnd}

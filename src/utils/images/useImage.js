@@ -35,7 +35,6 @@ function useImage(id) {
     };
 
     const onImageUpdate = () => {
-      console.log("image updated")
       loadImage();
     };
 

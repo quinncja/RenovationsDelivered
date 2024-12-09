@@ -83,9 +83,6 @@ export const parseFile = (file) => {
               rowIndex++;
             }
   
-            console.log('Parsed Excel Data:', excelData);
-            console.log('Row Objects:', rowObjects);
-  
             resolve({ excelData, rowObjects });
           } catch (error) {
             reject(new Error('Error parsing Excel file: ' + error.message));
