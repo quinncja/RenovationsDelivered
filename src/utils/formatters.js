@@ -486,3 +486,12 @@ const timeOptions = {
 export const dateTimeToString = (date) => {
   return date.toLocaleString("en-US", timeOptions);
 };
+
+export const formatSageUsername = (name) => {
+  const str = "AKTIONHOSTING\\ASilc.ren";
+  const match = str.match(/\\(.*?)\.ren/);
+  if (match && match[1]) {
+      return match[1];
+  } else return name;
+
+}

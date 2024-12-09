@@ -15,6 +15,9 @@ import JobCostHeader from "modules/jobcostHeader/JobCostHeader";
 import Team from "pages/Users/Users";
 import ChangeOrders from "pages/changeOrders/ChangeOrders";
 import Revenue from "widgets/homeWidgets/Revenue";
+import Reports from "pages/reports/Reports";
+import ReportPage from "pages/reports/ReportPage";
+import OpenReport from "pages/reports/OpenReport";
 
 function RequireAuth({ children }) {
   let location = useLocation();
@@ -75,6 +78,14 @@ function Router() {
             }
           />
           <Route
+            path="/reports"
+            element={
+              <RequireAuth>
+                <Reports />
+              </RequireAuth>
+            }
+          />
+          <Route
             path="/change-orders"
             element={
               <RequireAuth>
@@ -88,6 +99,22 @@ function Router() {
               <RequireAuth>
                 <JobCostHeader />
                 <OpenItem />
+              </RequireAuth>
+            }
+          />
+          <Route
+            path="/reports/:param"
+            element={
+              <RequireAuth>
+                <ReportPage />
+              </RequireAuth>
+            }
+          />
+          <Route
+            path="/reports/:param/:id"
+            element={
+              <RequireAuth>
+                <OpenReport />
               </RequireAuth>
             }
           />

@@ -25,7 +25,11 @@ function Logo({ expanded }) {
   const handleClick = () => {
     const currentPath = location.pathname;
 
-    if (currentPath === "/dashboard" && isAdmin) {
+    if (currentPath.startsWith("/reports/cogs/")) {
+      navigate("/reports/cogs");
+    } else if (currentPath === "/reports/cogs") {
+      navigate("/reports");
+    } else if (currentPath === "/dashboard" && isAdmin) {
       navigate("/jobcost");
     } else if (currentPath === "/jobcost") {
       navigate("/dashboard");

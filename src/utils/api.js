@@ -1,5 +1,6 @@
 import axios from "axios";
 import { apiUrl, ngrokHeaders } from "./config";
+import Userfront from "@userfront/toolkit";
 
 export async function fetchUserList(){
   try{
@@ -122,13 +123,11 @@ export async function sendChangeOrderEmail(changeObj) {
     );
     return response;
   } catch (error) {
-    console.log(error)
-    throw Error;
+    throw error;
   }
 }
 
 export async function sendChangeOrderCreatedEmail(emailObj) {
-  console.log(emailObj)
   try {
     const response = await axios.post(
       `${apiUrl}change-order-created/email`,
@@ -140,6 +139,58 @@ export async function sendChangeOrderCreatedEmail(emailObj) {
     return response;
   } catch (error) {
     console.log(error)
+  }
+}
+
+export async function deleteRun(id) {
+  try {
+    const response = await axios.delete(
+      `${apiUrl}report/cogs/${id}`,
+      {
+        ...ngrokHeaders,
+      }
+    );
+    return response;
+  } catch (error) {
+    throw error;
+  }
+}
+
+
+export async function patchRunItem(id, state) {
+  try {
+    const response = await axios.patch(
+      `${apiUrl}report/cogs/run`,
+      {
+        id: id,
+        state: Boolean(state),
+      },
+      {
+        ...ngrokHeaders,
+      }
+    );
+    return response;
+  } catch (error) {
+    throw error;
+  }
+}
+
+
+export async function patchCostItem(id, state) {
+  try {
+    const response = await axios.patch(
+      `${apiUrl}report/cogs/item`,
+      {
+        id: id,
+        state: Boolean(state),
+      },
+      {
+        ...ngrokHeaders,
+      }
+    );
+    return response;
+  } catch (error) {
+    throw error;
   }
 }
 
@@ -157,7 +208,64 @@ export async function patchChangeOrder(idnum, status) {
     );
     return response;
   } catch (error) {
-    console.log(error)
-    throw Error;
+    throw error;
   }
 }
+
+export async function getReports(type){
+  try {
+    const response = await axios.get(
+      `${apiUrl}report/${type}`,
+      {
+        ...ngrokHeaders,
+      }
+    );
+    return response;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function getReport(type, id){
+  try {
+    const response = await axios.get(
+      `${apiUrl}report/${type}/${id}`,
+      {
+        ...ngrokHeaders,
+      }
+    );
+    return response;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function getLastRan(type){
+  try {
+    const response = await axios.get(
+      `${apiUrl}last-ran/${type}`,
+      {
+        ...ngrokHeaders,
+      }
+    );
+    return response;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function runReport(type){
+  try {
+    const response = await axios.post(
+      `${apiUrl}report/${type}`,
+      {user: Userfront.user.name},
+      {
+        ...ngrokHeaders,
+      }
+    );
+    return response;
+  } catch (error) {
+    throw error;
+  }
+}
+

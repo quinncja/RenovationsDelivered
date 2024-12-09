@@ -33,7 +33,13 @@ function Dropdown({ toggleSelf }) {
   ];
 
   if(isAdmin){
-    dropdownOptions =[{
+    dropdownOptions =[
+      {
+        id: "5",
+        item: "Reports",
+        onClick: () => handleClick(() => navigate("/reports")),
+      },
+      {
       id: "2",
       item: "Users",
       onClick: () => handleClick(() => navigate("/users")),

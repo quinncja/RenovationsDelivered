@@ -94,7 +94,6 @@ function NewChangeOrderModal(props){
     const handleSubmit = async () => {
       try{
       const modifiers = modalData.pageModifiers ? formatCOModifiers(modalData.pageModifiers) : formatCOModifiers(coModifiers)
-      console.log("MODDYS",modifiers)
       const changeOrder = {
         ...modalData.excelData,
         rowObjects: modalData.changeOrder,

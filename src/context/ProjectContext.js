@@ -64,6 +64,7 @@ export const ProjectProvider = ({ children }) => {
 
   const getProjectByNum = useCallback(
     (jobNum) => {
+      console.log(jobNum)
       return jobNum && projects && projects.jobs ? projects.jobs[jobNum] : "";
     },
     [projects],
@@ -196,7 +197,10 @@ export const ProjectProvider = ({ children }) => {
   };
 
   const getJobStr = (jobNum) => {
-    return getProjectByNum(jobNum).name;
+    if(jobNum === "000999") return "Warranty"
+    if(jobNum === "000363") return "Mikes House"
+    const project = getProjectByNum(jobNum)
+    return project ? project.name : jobNum
   }
 
   const getYearStr = (yearId) => {

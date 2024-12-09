@@ -33,7 +33,6 @@ function ChangeOrders(){
     const [reload, setReload] = useState(false)
     const data =  dataMap[id] || null;
 
-    console.log(data)
     const [mouseOver, setMouseOver] = useState(false)
 
     const buildJobString = (jobnum) => {
