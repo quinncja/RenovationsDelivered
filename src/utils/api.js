@@ -75,6 +75,31 @@ export async function fetchChartData(modifiers, signal) {
   }
 }
 
+export async function fetchJobData(modifiers, signal) {
+  try {
+    const response = await axios.get(`${apiUrl}job-data`, {
+      params: { ...modifiers },
+      ...ngrokHeaders,
+      signal,
+    });
+    return response.data;
+  } catch (error) {
+    if (axios.isCancel(error)) {
+    } else if (
+      error.response &&
+      error.response.data &&
+      error.response.data.error
+    ) {
+      console.error(
+        `Error loading ${modifiers.type}:`,
+        error.response.data.error,
+      );
+    } else {
+      console.error(`Error loading ${modifiers.type}:`, error.message);
+    }
+  }
+}
+
 export async function changeUserRole(userId, newRole){
   try{
     const response = await axios.post(`${apiUrl}change-user-role`, { userId, newRole }, {
@@ -268,4 +293,3 @@ export async function runReport(type){
     throw error;
   }
 }
-

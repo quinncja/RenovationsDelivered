@@ -1,3 +1,5 @@
+import { hslToHex } from "./funcs";
+
 export const colorPalettes = {
   Tranquil: [
     {
@@ -283,9 +285,11 @@ export function getColorByID(id, palette) {
   return palette[index];
 }
 
-export function hashData(data, palette) {
-  const colorObj = getColorByID(data.id, palette);
-  const color = adjustColor(colorObj, data.id);
+export function hashData(data, palette, convert = false) {
+  const baseId = data.type === 'committed' ? data.id.replace(" - C", "") : data.id;
+  const colorObj = getColorByID(baseId, palette);
+  let color = adjustColor(colorObj, data.id);
+  if(convert) color = hslToHex(color);
   return {
     ...data,
     color,

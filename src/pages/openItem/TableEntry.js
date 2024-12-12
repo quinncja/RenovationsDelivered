@@ -5,11 +5,13 @@ import {
   costTypeFormatter,
   dateFormatter,
   dollarFormatter,
+  formatSageUsername,
   jobStatusFormatter,
   percentFomatter,
   phaseToMonth,
   statusFormatter,
 } from "utils/formatters";
+import { capitalizeFirstLetter } from "utils/funcs";
 
 function TableEntry({ headers, entry, currentId, nestingLevel = 0, color }) {
   const [showData, setShowData] = useState(false);
@@ -82,6 +84,11 @@ function TableEntry({ headers, entry, currentId, nestingLevel = 0, color }) {
     Cost: dollarFormatter,
     dueDate: dateFormatter,
     BudgetedAmount: dollarFormatter,
+    insdte: dateFormatter,
+    insusr: formatSageUsername,
+    upddte: dateFormatter,
+    updusr: formatSageUsername,
+    type: capitalizeFirstLetter,
   };
 
   const formatEntry = (item, header) => {
@@ -211,6 +218,7 @@ function TableEntry({ headers, entry, currentId, nestingLevel = 0, color }) {
 
   return (
     <button className="table-entry" onClick={handleClick}>
+      <div className="table-entry-left" style={{backgroundColor: color}}/>
       <div
         className={`table-entries ${showData ? `table-entries-open` : ""}  entry-nestlevel-${nestingLevel}`}
         style={showData && nestingLevel === 0 ? openStyle : {}}

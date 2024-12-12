@@ -12,6 +12,7 @@ import { HistoryProvider } from "context/HistoryContext";
 import { ItemsProvider } from "context/ItemsContext";
 import { TrackedJobProvider } from "context/TrackedJobContext";
 import { HomeProvider } from "context/HomeContext";
+import { JobDataProvider } from "context/JobDataContext";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -23,11 +24,13 @@ root.render(
             <ItemsProvider>
               <ModifierProvider>
                 <ProjectProvider>
-                  <HomeProvider>
-                    <UserProvider>
-                      <Router />
-                    </UserProvider>
-                  </HomeProvider>
+                    <HomeProvider>
+                      <UserProvider>
+                        <JobDataProvider> 
+                          <Router />
+                        </JobDataProvider>
+                      </UserProvider>
+                    </HomeProvider>
                 </ProjectProvider>
               </ModifierProvider>
             </ItemsProvider>

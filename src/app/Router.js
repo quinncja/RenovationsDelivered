@@ -10,14 +10,14 @@ import App from "./App";
 import Userfront from "@userfront/toolkit";
 import OpenItem from "pages/openItem/OpenItem";
 import DashboardHome from "pages/dashboardHome/DashboardHome";
-import JobCost from "pages/jobcost/JobCost";
 import JobCostHeader from "modules/jobcostHeader/JobCostHeader";
 import Team from "pages/Users/Users";
 import ChangeOrders from "pages/changeOrders/ChangeOrders";
-import Revenue from "widgets/homeWidgets/Revenue";
 import Reports from "pages/reports/Reports";
 import ReportPage from "pages/reports/ReportPage";
 import OpenReport from "pages/reports/OpenReport";
+import JobCostDashboard from "pages/jobcost/JobCostDashboard";
+import BreakdownOpen from "widgets/jobWidgets/Breakdown/BreakdownOpen";
 
 function RequireAuth({ children }) {
   let location = useLocation();
@@ -37,22 +37,6 @@ function Router() {
           <Route path="/*" element={<Home />} />
           <Route path="/home" element={<Home />} />
           <Route
-            path="/test"
-            element={
-              <RequireAuth>
-                <div 
-                  style={{width: "100%",
-                  display: "flex", 
-                  justifyContent: "center",
-                  height: "100vh",
-                  alignItems: "center"}}
-                > 
-                <Revenue />
-                </div>
-              </RequireAuth>
-            }
-          />
-          <Route
             path="/dashboard"
             element={
               <RequireAuth>
@@ -65,7 +49,7 @@ function Router() {
             element={
               <RequireAuth>
                 <JobCostHeader />
-                <JobCost />
+                <JobCostDashboard />
               </RequireAuth>
             }
           />
@@ -99,6 +83,15 @@ function Router() {
               <RequireAuth>
                 <JobCostHeader />
                 <OpenItem />
+              </RequireAuth>
+            }
+          />
+          <Route
+            path="/jobcost/breakdown/:param"
+            element={
+              <RequireAuth>
+                <JobCostHeader />
+                <BreakdownOpen />
               </RequireAuth>
             }
           />

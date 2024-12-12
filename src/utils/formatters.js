@@ -218,6 +218,7 @@ export const statusFormatter = (status) => {
 };
 
 export const dateFormatter = (dateInput) => {
+  if(!dateInput) return ""
   const date = new Date(dateInput);
   const month = String(date.getUTCMonth() + 1).padStart(2, "0");
   const day = String(date.getUTCDate()).padStart(2, "0");
@@ -484,10 +485,12 @@ const timeOptions = {
 };
 
 export const dateTimeToString = (date) => {
+  if(!date) return ""
   return date.toLocaleString("en-US", timeOptions);
 };
 
 export const formatSageUsername = (name) => {
+  if(!name) return ""
   const str = "AKTIONHOSTING\\ASilc.ren";
   const match = str.match(/\\(.*?)\.ren/);
   if (match && match[1]) {

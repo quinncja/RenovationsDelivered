@@ -25,7 +25,10 @@ function Logo({ expanded }) {
   const handleClick = () => {
     const currentPath = location.pathname;
 
-    if (currentPath.startsWith("/reports/cogs/")) {
+    if (currentPath.startsWith("/jobcost/breakdown/")) {
+      navigate("/jobcost/")
+    }
+    else if (currentPath.startsWith("/reports/cogs/")) {
       navigate("/reports/cogs");
     } else if (currentPath === "/reports/cogs") {
       navigate("/reports");

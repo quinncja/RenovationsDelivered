@@ -13,7 +13,7 @@ import {
 import { Droppable } from "./Droppable";
 import { DragOverlay } from "@dnd-kit/core";
 import debounce from "lodash/debounce";
-import DashboardItem from "./items/CostItem";
+import CostItem from "./items/CostItem";
 import _ from "lodash";
 import { useItems } from "context/ItemsContext";
 import EmptyDashboard from "./EmptyJobCost";
@@ -95,7 +95,7 @@ function JobCost() {
                   (item) =>
                     item &&
                     item.type && (
-                      <DashboardItem
+                      <CostItem
                         current={dragging?.id === item.id ? true : false}
                         dragging={dragging}
                         key={item.id}
