@@ -46,7 +46,7 @@ export const JobDataProvider = ({children}) => {
     const typeMap = {
         "Material": 1,
         "Labor": 2,
-        "Subcontracts": 4,
+        "Subcontractors": 4,
         "WTPM": 5,
     }
 
@@ -119,6 +119,7 @@ export const JobDataProvider = ({children}) => {
     }
 
     const getDataByType = useCallback((widgetType) => {
+        console.log(widgetType)
         if(!jobData) return null;
         let data = {
             updates: {},
