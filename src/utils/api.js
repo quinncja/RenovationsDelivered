@@ -75,6 +75,56 @@ export async function fetchChartData(modifiers, signal) {
   }
 }
 
+export async function fetchOpenJobData(modifiers, costType, signal) {
+  try {
+    const response = await axios.get(`${apiUrl}open-job-data`, {
+      params: { ...modifiers, costType},
+      ...ngrokHeaders,
+      signal,
+    });
+    return response.data;
+  } catch (error) {
+    if (axios.isCancel(error)) {
+    } else if (
+      error.response &&
+      error.response.data &&
+      error.response.data.error
+    ) {
+      console.error(
+        `Error loading ${modifiers.type}:`,
+        error.response.data.error,
+      );
+    } else {
+      console.error(`Error loading ${modifiers.type}:`, error.message);
+    }
+  }
+}
+
+export async function fetchAggrJobData(modifiers, signal) {
+  try {
+    const response = await axios.get(`${apiUrl}aggr-job-data`, {
+      params: { ...modifiers },
+      ...ngrokHeaders,
+      signal,
+    });
+    return response.data;
+  } catch (error) {
+    if (axios.isCancel(error)) {
+    } else if (
+      error.response &&
+      error.response.data &&
+      error.response.data.error
+    ) {
+      console.error(
+        `Error loading ${modifiers.type}:`,
+        error.response.data.error,
+      );
+    } else {
+      console.error(`Error loading ${modifiers.type}:`, error.message);
+    }
+  }
+}
+
 export async function fetchJobData(modifiers, signal) {
   try {
     const response = await axios.get(`${apiUrl}job-data`, {

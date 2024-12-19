@@ -19,8 +19,7 @@ function Breakdown(props){
             </div>
         </div>
     )
-    const {budget, spent, costItems, updates} = data;
-
+    const {budget, spent, costItems, updateCount} = data;
     const showGraph = costItems.posted.length !== 0 || costItems.committed.length !== 0;
 
     const handleClick = () => {
@@ -30,7 +29,7 @@ function Breakdown(props){
         <div className="breakdown-widget">
             <div className="breakdown-widget-header">
             <div className="breakdown-title"> {type} </div>
-                {updates > 0 && <div className="updates"> {updates} {updates === 1 ? "Update" : "Updates"} </div>}
+                {updateCount > 0 && <div className="updates"> {updateCount} {updateCount === 1 ? "Update" : "Updates"} </div>}
             </div>
             <div style={{display: "flex", justifyContent: "center", alignItems: "center", color: "var(--white)", fontWeight: "600", height: "100%"}}> 
                 No data
@@ -67,7 +66,7 @@ function Breakdown(props){
              style={{ position: "relative", height: "100%"}}
              variants={itemFadeIn}
              >
-            {updates.count > 0 && <div className="updates"> {updates.count} {updates.count === 1 ? "Update" : "Updates"} </div>}
+            {updateCount > 0 && <div className="updates"> {updateCount} {updateCount === 1 ? "Update" : "Updates"} </div>}
             <div style={{display: "flex", }}> 
                 <div className="breakdown-widget-left"> 
                     <CostBreakdown budget={budget} spent={spent} />

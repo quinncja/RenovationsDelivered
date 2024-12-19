@@ -4,17 +4,27 @@ import BreakdownOpenBar from "./BreakdownOpenBar";
 import { capitalizeFirstLetter } from "utils/funcs";
 import CostBreakdown from "./CostBreakdown";
 import BreakdownTable from "./BreakdownTable";
-import { useState } from "react";
+import { useState, useEffect} from "react";
+import { useModifiers } from "context/ModifierContext";
 
 function BreakdownOpen(){
     const { param } = useParams();
-    const { getDataByType } = useJobDataContext();
+    const { loadOpenData, getOpenDataByType } = useJobDataContext();
     const [focused, setFocused] = useState({ 
         id: null,
         color: null 
     })
     const type = param === "wtpm" ? param.toUpperCase() : capitalizeFirstLetter(param)
-    const data = getDataByType(type);
+    
+    const { pageModifiers } = useModifiers();
+ 
+    useEffect(() => {
+        if(pageModifiers) loadOpenData(type);
+
+        //eslint-disable-next-line
+    }, [pageModifiers])
+
+    const data = getOpenDataByType(type);
 
     if(!data) return (
         <div className="widget-background dashboard-widget-open">
@@ -58,7 +68,6 @@ function BreakdownOpen(){
 
     const updatedCount = filteredUpdates.committed.length + filteredUpdates.posted.length;
 
-    console.log(updates)
 
     return(
         <div className="widget-background dashboard-widget-open">
@@ -74,8 +83,18 @@ function BreakdownOpen(){
                  <BreakdownTable costItems={filteredUpdates} color={focused.color}/>
             </>
             }
-            <h2 style={{paddingTop: !updatedCount ? "30px" : "20px"}}> All Items </h2>
-            <BreakdownTable costItems={filteredItems} color={focused.color}/>
+            {(filteredItems.posted.length > 0 
+            || filteredItems.committed.length > 0)
+            ? 
+                <> 
+                <h2 style={{paddingTop: !updatedCount ? "30px" : "20px"}}> All Items </h2>
+                <BreakdownTable costItems={filteredItems} color={focused.color}/>
+                </>
+                :
+                <div style={{paddingTop: "30px"}}>
+                    No items to display
+                </div>
+            }
             </div>
         </div>
     )
