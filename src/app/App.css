@@ -415,6 +415,7 @@ h1 {
   margin-inline: auto;
 }
 
+
 @media (width > 1320px) {
   .dashboard-dropzone {
     width: 1270px;
@@ -424,6 +425,15 @@ h1 {
 @media (width <= 1320px) {
   .dashboard-dropzone {
     width: 1000px;
+  }
+}
+
+@media (width > 2322px) {
+  .dashboard-dropzone {
+    width: 2320px;
+    margin-inline: auto;
+    justify-content: center;
+    grid-template-columns: repeat(8, 310px);
   }
 }
 
