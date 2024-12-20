@@ -41,7 +41,7 @@ function Revenue(){
 
     if(!revAmounts){
         return (
-            <div className="home-widget home-widget-long">
+            <div className="home-widget home-widget-long-loading">
               <span
                 className={`home-widget-num ${"home-widget-loading"}`}
               >

@@ -2842,8 +2842,17 @@ h1 {
   gap: 50px;
   margin-bottom: 10px;
   box-sizing: border-box;
+
 }
 
+.home-widget-long-loading{
+  display: flex;
+  justify-content: center;
+  width: 730px;
+  height: 150px;
+  margin-bottom: 10px;
+  box-sizing: border-box;
+}
 .home-widget-title {
   color: var(--white);
   font-weight: 500;
@@ -2875,7 +2884,6 @@ h1 {
   animation: ripple 1.2s infinite ease-in-out;
   pointer-events: none;
 }
-
 .home-wrapper {
   display: flex;
   flex-direction: column;
