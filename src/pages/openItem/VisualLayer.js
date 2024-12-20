@@ -10,7 +10,7 @@ function VisualLayer(props) {
   const single = useSingle();
   const isEmpty = checkEmpty(data);
   const hideTable =
-    (single && !chartType === "Pie" && !chartType === "Bar") || isEmpty;
+    (single && !chartType === "Pie" && !chartType === "Bar") || isEmpty || (type === "Cost Analysis" && single);
   const showLegend =
     chartType !== "Text" && type !== "Margin" && chartType !== "Bar";
 
@@ -27,7 +27,7 @@ function VisualLayer(props) {
       </div>
 
       {!hideTable && chartType && (
-        <DataTable data={data} chartType={chartType} {...rest} />
+        <DataTable data={data} chartType={chartType} {...rest} oldStyle={true}/>
       )}
     </>
   );

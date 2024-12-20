@@ -22,7 +22,7 @@ function CostItem(props) {
   const toggleData = () => {};
   const { chartType } = chartObj;
   const loadData = useChartData();
-  const staticItem = chartType === "Text" && type !== "Change Orders" && type !== "Financial Overview";
+  const staticItem = (chartType === "Text" && type !== "Change Orders" && type !== "Financial Overview") || (type === "Cost Analysis" && single);
 
   const handleClick = (event) => {
     const interactiveElements = ['BUTTON', 'A', 'INPUT'];
@@ -102,7 +102,7 @@ function CostItem(props) {
         ${chartType === "Line" || chartType === "Bar" || type === "Margin" ? "wide-widget" : ""} 
         ${!data && !current ? "loading-widget" : ""} 
         ${chartType === "Text" ? "text-widget" : ""}
-        ${!staticItem ? "clickable-widget" : ""}`}
+        ${!staticItem ? "clickable-widget" : "no-click"}`}
       style={style}
       ref={setNodeRef}
       listeners={listeners}

@@ -13,7 +13,7 @@ import {
 } from "utils/formatters";
 import { capitalizeFirstLetter } from "utils/funcs";
 
-function TableEntry({ headers, entry, currentId, nestingLevel = 0, color }) {
+function TableEntry({ headers, entry, currentId, nestingLevel = 0, color, oldStyle}) {
   const [showData, setShowData] = useState(false);
   const [subSortConfig, setSubSortConfig] = useState({
     key: null,
@@ -49,10 +49,10 @@ function TableEntry({ headers, entry, currentId, nestingLevel = 0, color }) {
     marginPercentage: "Margin",
     totalCost: "COGS",
     contractValue: "Contract",
-    budgetedAmount: "Budget",
     dueDate: "Due Date",
     invoiceNum: "Invoice Num",
-    BudgetedAmount: "Budget"
+    BudgetedAmount: "Budget",
+    budgetedAmount: "Budget"
   };
 
   const formatFuncMap = {
@@ -184,6 +184,7 @@ function TableEntry({ headers, entry, currentId, nestingLevel = 0, color }) {
             currentId={currentId}
             key={index}
             color={color}
+            oldStyle={oldStyle}
           />
         );
       } else {
@@ -204,7 +205,7 @@ function TableEntry({ headers, entry, currentId, nestingLevel = 0, color }) {
     return (
       <div className="sub-data-container" onClick={(e) => e.stopPropagation()}>
         <div className="sub-arrow-wrapper">
-          <div className={`sub-arrow header-nestlevel-${nestingLevel}`}>
+          <div className={`sub-arrow header-nestlevel-0`}>
             {tableArrow(color)}
           </div>
         </div>
@@ -215,13 +216,13 @@ function TableEntry({ headers, entry, currentId, nestingLevel = 0, color }) {
       </div>
     );
   };
-
+  const hasSubData = subColumns !== null;
   return (
-    <button className="table-entry" onClick={handleClick}>
-      <div className="table-entry-left" style={{backgroundColor: color}}/>
+    <button className={`table-entry `} onClick={handleClick}>
+      {!oldStyle && <div className="table-entry-left" style={{backgroundColor: color}}/>}
       <div
-        className={`table-entries ${showData ? `table-entries-open` : ""}  entry-nestlevel-${nestingLevel}`}
-        style={showData && nestingLevel === 0 ? openStyle : {}}
+        className={`table-entries ${showData ? `table-entries-open` : ""}  entry-nestlevel-${nestingLevel}  ${hasSubData ? "hoverable-entry" : ""}`}
+        style={showData ? openStyle : {}}
       >
         {headers.map((header) => (
           <div className="table-entry-item" key={header}>

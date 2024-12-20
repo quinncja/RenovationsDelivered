@@ -1,6 +1,7 @@
 import axios from "axios";
 import { apiUrl, ngrokHeaders } from "./config";
 import Userfront from "@userfront/toolkit";
+import { toast } from "sonner";
 
 export async function fetchUserList(){
   try{
@@ -21,6 +22,9 @@ export async function fetchJobList() {
     });
     return response.data;
   } catch (error) {
+    if(error.response.status === 500){
+      toast.error("VPN connection error. Please wait a few minutes and try again")
+    }
     console.error("Error loading jobs:", error);
   }
 }
@@ -40,9 +44,11 @@ export async function fetchHomeData(id, body, signal){
       error.response.data &&
       error.response.data.error
     ) {
-      console.error(
-        `Error loading ${id}:`,
-        error.response.data.error,
+      if(error.response.status === 500){
+        toast.error("VPN connection error. Please wait a few minutes and try again")
+      }
+      console.log(
+        error.response.data.error
       );
     } else {
       throw Error
@@ -65,9 +71,11 @@ export async function fetchChartData(modifiers, signal) {
       error.response.data &&
       error.response.data.error
     ) {
+      if(error.response.status === 500){
+        toast.error("VPN connection error. Please wait a few minutes and try again")
+      }
       console.error(
-        `Error loading ${modifiers.type}:`,
-        error.response.data.error,
+        error.response.data.error
       );
     } else {
       console.error(`Error loading ${modifiers.type}:`, error.message);
@@ -90,6 +98,9 @@ export async function fetchOpenJobData(modifiers, costType, signal) {
       error.response.data &&
       error.response.data.error
     ) {
+      if(error.response.status === 500){
+        toast.error("VPN connection error. Please wait a few minutes and try again")
+      }
       console.error(
         `Error loading ${modifiers.type}:`,
         error.response.data.error,

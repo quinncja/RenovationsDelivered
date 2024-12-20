@@ -4,7 +4,7 @@ import TableEntry from "./TableEntry";
 import { hashData } from "utils/colors";
 import { useUserContext } from "context/UserContext";
 
-export function DataTable({ data, chartType, currentId }) {
+export function DataTable({ data, chartType, currentId, oldStyle }) {
   const [sortConfig, setSortConfig] = useState({ key: null, direction: null });
   const { getColorScheme } = useUserContext();
   const pallete = getColorScheme();
@@ -14,6 +14,7 @@ export function DataTable({ data, chartType, currentId }) {
     visualData = data.map((datum) => ({ ...datum, color: "var(--primary)" }));
   else visualData = data.map((datum) => hashData(datum, pallete));
 
+  console.log(visualData)
   const headerMap = {
     id: "Name",
     value: "Total",
@@ -25,6 +26,7 @@ export function DataTable({ data, chartType, currentId }) {
     totalCost: "COGS",
     contractValue: "Contract",
     BudgetedAmount: "Budget",
+    budgetedAmount: "Budget"
   };
   const subHeaderMap = {
     orderDate: "Order Date",
@@ -120,6 +122,7 @@ export function DataTable({ data, chartType, currentId }) {
               subInfo={subInfo}
               currentId={currentId}
               color={entry.color}
+              oldStyle={oldStyle}
             />
           );
         })}
@@ -132,8 +135,10 @@ export function DataTable({ data, chartType, currentId }) {
 
   return (
     <div className="data-display-wrapper">
+      <div className="data-table"> 
       {tableHeader(headers)}
       {tableBody(headers, visualData, subInfo)}
+      </div>
     </div>
   );
 }

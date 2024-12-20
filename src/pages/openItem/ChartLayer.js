@@ -14,6 +14,7 @@ function ChartLayer(props) {
     ...rest
   } = props;
   const { chartType, query } = chartObj;
+  const lineChart = query === "margin" || query === "revenue"
 
   let chartData = data;
   if (query === "margin")
@@ -25,7 +26,7 @@ function ChartLayer(props) {
   const allowToggle = chartType === "Pie";
 
   return (
-    <div className="chart-legend">
+    <div className={`${lineChart ? 'col-chart-legend' : `row-chart-legend`}`}>
       <BodyDisplay
         chartObj={chartObj}
         data={chartData}
