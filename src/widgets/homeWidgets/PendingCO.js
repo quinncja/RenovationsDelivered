@@ -56,7 +56,7 @@ function PendingCO(){
     )
     if(showCount >= 0)
     return (
-      <div className="home-widget home-widget-sm clickable-home" onClick={() => navigate('/change-orders')}>
+      <div className="home-widget home-widget-sm clickable-home" onClick={() => navigate('/change-orders/pending')}>
         <span
           className={`home-widget-num`}
         >

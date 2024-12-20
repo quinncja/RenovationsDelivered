@@ -40,9 +40,15 @@ function ChangeOrders(){
     const loadData = useHomeData()
     const fileInputRef = useRef(null);
     const [reload, setReload] = useState(false)
-    const data =  dataMap[id] || null;
+    const data =  dataMap[`${id}`] || null;
 
     const [mouseOver, setMouseOver] = useState(false)
+
+    //so hacky i hate it but its 4:08pm on friday
+    useEffect(() => {
+      updateDataMap(id, null)
+      //eslint-disable-next-line
+    }, [])
 
     const buildJobString = (jobnum) => {
         const job = getJobStr(destructureJobNumber(jobnum).jobNum)
@@ -68,7 +74,7 @@ function ChangeOrders(){
     const patchCO = async (idnum, status) => {
         try{
             await patchChangeOrder(idnum, status)
-            updateDataMap(id, data.filter((datum) => datum._idnum !== idnum));
+            updateDataMap(`${id}`, data.filter((datum) => datum._idnum !== idnum));
             toast.success(status === 1 ? "Change order confirmed" : status === 6 ? "Change order rejected" : "Change order reverted to pending");
 
         } catch (error) {
@@ -124,7 +130,7 @@ function ChangeOrders(){
 
     const changeView = (newView) => {
       if (newView !== view) {
-          updateDataMap(id, null);
+          updateDataMap(id, null)
           navigate(`/change-orders/${newView.toLowerCase()}`);
       }
     };
