@@ -21,7 +21,7 @@ function OpenItem() {
   const { dataMap } = useItems();
   const loadData = useChartData();
   const abortControllerRef = useRef(null);
-  const data = type === "Status" ? [] : dataMap["open"] || null;
+  const data = type === "Status" ? [] : dataMap[`open-${type}`] || null;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -31,7 +31,7 @@ function OpenItem() {
         }
         const controller = new AbortController();
         abortControllerRef.current = controller;
-        loadData("open", query + "-open", controller.signal);
+        loadData(`open-${type}`, query + "-open", controller.signal);
       } catch (error) {
         if (error.name === "AbortError") {
           console.log("Fetch request aborted");
