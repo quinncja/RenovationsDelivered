@@ -17,6 +17,7 @@ function Cost(props){
         update_by,
         update_date,
         vendor,
+        vndnum,
     } = cost;
     const [isOpen, setOpen] = useState(false);
     const [tooltip, setTooltip] = useState(null);
@@ -44,7 +45,7 @@ function Cost(props){
             <div className="home-widget-title copy-btn" onClick={(e) => handleClick(e, recnum,  "Record number")}> {recnum} </div>
             <div className="cost-bottom-right"> 
             <div className="home-widget-title"> {costTypeFormatter(type)} </div>
-            <div className="home-widget-title"> {vendor} </div>
+            <div className="home-widget-title copy-btn" onClick={(e) => handleClick(e, vndnum || "",  "Vendor number")}> {vendor} </div>
             </div>
             </div>
             </div>

@@ -37,6 +37,7 @@ function OpenReport(){
         }
 
         fetchReport();
+        //eslint-disable-next-line
     }, [])
 
     const [sortOrder, setSortOrder] = useState("none");

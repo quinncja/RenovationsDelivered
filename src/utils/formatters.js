@@ -491,8 +491,7 @@ export const dateTimeToString = (date) => {
 
 export const formatSageUsername = (name) => {
   if(!name) return ""
-  const str = "AKTIONHOSTING\\ASilc.ren";
-  const match = str.match(/\\(.*?)\.ren/);
+  const match = name.match(/\\(.*?)\.ren/);
   if (match && match[1]) {
       return match[1];
   } else return name;
