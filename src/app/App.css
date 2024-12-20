@@ -3726,6 +3726,9 @@ h1 {
   text-align: left;
   gap: 5px;
 }
+.copy-btn{
+  cursor: pointer;
+}
 
 .copy-btn:hover{
   text-decoration: underline;
@@ -3733,4 +3736,9 @@ h1 {
 
 .cost-item * {
   user-select: none;
+}
+.co-job{
+  background: none;
+  border: none;
+  color: var(--white);
 }

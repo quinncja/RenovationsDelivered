@@ -23,6 +23,9 @@ export const ModifierProvider = ({ children }) => {
   const { pushHistory } = useHistory();
 
   useEffect(() => {
+    console.log(pageModifiers)
+  }, [pageModifiers])
+  useEffect(() => {
     if (modTimeout) {
       setTimeout(() => {
         setModTimeout(false);

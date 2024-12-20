@@ -3,11 +3,14 @@ import { useProjectContext } from "context/ProjectContext";
 import { useState } from "react";
 import { dateTimeToString, destructureJobNumber, dollarFormatter } from "utils/formatters";
 import { AnimatePresence, motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
+import { useModifiers } from "context/ModifierContext";
 
 function ChangeOrder(props) {
     const { pageModifiers, excelData, changeOrder, newCO } = props;
+    const { updatePageModifiers } = useModifiers();
     const { getJobStr, getPhaseStr, getYearStr } = useProjectContext();
-
+    const navigate = useNavigate();
     const {
         labor,
         material,
@@ -21,12 +24,16 @@ function ChangeOrder(props) {
 
     const { rowObjects } = changeOrder || { rowObjects: [] };
 
+    const { jobNum, year, phase } = pageModifiers
+    ? { jobNum: pageModifiers.jobNum, year: pageModifiers.yearId, phase: pageModifiers.phaseId }
+    : destructureJobNumber(changeOrder.jobnum);
+
     const coJobNum = newCO
         ? pageModifiers
         ? getJobStr(pageModifiers.jobNum)
         : ""
         : changeOrder
-        ? getJobStr(destructureJobNumber(changeOrder.jobnum).jobNum)
+        ? getJobStr(jobNum)
         : "";
 
     const coYearId = newCO
@@ -34,7 +41,7 @@ function ChangeOrder(props) {
         ? getYearStr(pageModifiers.yearId)
         : ""
         : changeOrder
-        ? destructureJobNumber(changeOrder.jobnum).year
+        ? year
         : "";
 
     const coPhaseId = newCO
@@ -42,7 +49,7 @@ function ChangeOrder(props) {
         ? getPhaseStr(pageModifiers.phaseId)
         : ""
         : changeOrder
-        ? `P${destructureJobNumber(changeOrder.jobnum).phase}`
+        ? `P${phase}`
         : "";
 
     const coTotal = newCO
@@ -87,6 +94,15 @@ function ChangeOrder(props) {
         )
     }
 
+    const handleNav = () => {
+        if(newCO) return;
+        updatePageModifiers({
+            jobNum, 
+            yearId: `${jobNum}-${year.substr(2)}`, 
+            phaseId: `${jobNum}-${year.substr(2)}-${phase}`
+        })
+        navigate("/jobcost")
+    }
     const renderRowObj = (obj) => {
         const { budgets } = obj;
 
@@ -148,7 +164,7 @@ function ChangeOrder(props) {
                     <p style={{margin: "0px"}}> {coReason} </p>
                     <div style={{display: "flex", alignItems: "baseline", gap: "15px"}}> 
                     <div style={{margin: "0px", fontSize: '2rem', fontWeight: '600'}} className="coName"> {coName} </div>
-                    <p style={{margin: "0px"}}>{coJobNum} {coPhaseId} {coYearId} </p> 
+                    <button style={{margin: "0px"}} className={`p co-job ${newCO ? "" : "copy-btn"}`} title="View job" onClick={() => handleNav()}>{coJobNum} {coPhaseId} {coYearId} </button> 
                     </div>
                 </div>
                 <div style={{display: "flex", alignItems: "center", gap: "10px"}}>
