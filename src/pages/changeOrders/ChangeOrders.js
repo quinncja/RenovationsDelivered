@@ -14,10 +14,19 @@ import { parseFile } from "utils/changeOrderUtils";
 import { useModalContext } from "context/ModalContext";
 import { motion, AnimatePresence } from "framer-motion";
 import { destructureJobNumber } from "utils/formatters";
+import { useParams, useNavigate } from 'react-router-dom';
 
 function ChangeOrders(){
     const id = "change-orders"
-    const [ view, setView ] = useState("Pending");
+    const { view: routeView } = useParams();
+
+    function capitalizeFirstLetter(val) {
+      return String(val).charAt(0).toUpperCase() + String(val).slice(1);
+    }
+  
+    const view = capitalizeFirstLetter(routeView) || "Pending";
+    
+    const navigate = useNavigate();
     const [sortOrder, setSortOrder] = useState("none");
     const [groupBy, setGroupBy] = useState("none"); 
 
@@ -114,10 +123,11 @@ function ChangeOrders(){
     };
 
     const changeView = (newView) => {
-        if(newView === view) return;
-        updateDataMap(id, null)
-        setView(newView)
-    }
+      if (newView !== view) {
+          updateDataMap(id, null);
+          navigate(`/change-orders/${newView.toLowerCase()}`);
+      }
+    };
 
     const changeSortOrder = () => {
         if (sortOrder === "none") {
@@ -235,11 +245,6 @@ function ChangeOrders(){
 
     const itemVariants = {
         hidden: { opacity: 0, y: -20 },
-        visible: { opacity: 1, y: 0 }, 
-        exit: { opacity: 0, y: 20 },   
-    }
-    const headerVariants = {
-        hidden: { opacity: .5, y: -10 },
         visible: { opacity: 1, y: 0 }, 
         exit: { opacity: 0, y: 20 },   
     }
