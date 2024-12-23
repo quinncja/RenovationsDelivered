@@ -3,7 +3,7 @@ import { costTypeFormatter, dateTimeToString, dollarFormatter, formatSageUsernam
 import { motion, AnimatePresence } from "framer-motion";
 
 function Cost(props){
-    const {cost} = props;
+    const {item} = props;
     const {
         _id,
         amount,
@@ -18,7 +18,7 @@ function Cost(props){
         update_date,
         vendor,
         vndnum,
-    } = cost;
+    } = item;
     const [isOpen, setOpen] = useState(false);
     const [tooltip, setTooltip] = useState(null);
 

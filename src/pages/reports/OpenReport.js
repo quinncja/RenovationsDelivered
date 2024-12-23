@@ -78,9 +78,9 @@ function OpenReport(){
     const filterCostsByView = (items) => {
         if (!items) return [];
         if (view === "Confirmed") {
-            return items.filter((cost) => cost.confirmed === true);
+            return items.filter((item) => item.confirmed === true);
         } else {
-            return items.filter((cost) => cost.confirmed === false);
+            return items.filter((item) => item.confirmed === false);
         }
     };
 
@@ -105,19 +105,19 @@ function OpenReport(){
             return {"": items};
         }
 
-        return items.reduce((groups, cost) => {
+        return items.reduce((groups, item) => {
             let key = "";
             if (groupBy === "project") {
-                key = destructureJobNumber(cost.jobnum).jobNum;
+                key = destructureJobNumber(item.jobnum).jobNum;
             } else if (groupBy === "type") {
-                key = cost.type;
+                key = item.type;
             } else if (groupBy === "accounts payable") {
-                key = cost.vendor;
+                key = item.vendor;
             }
             if (!groups[key]) {
                 groups[key] = [];
             }
-            groups[key].push(cost);
+            groups[key].push(item);
             return groups;
         }, {});
     };
@@ -157,8 +157,8 @@ function OpenReport(){
             setReport((prevReport) => {
                 if (!prevReport) return prevReport;
           
-                const updatedCosts = prevReport.items.map((cost) =>
-                  cost._id === id ? { ...cost, confirmed: state } : cost
+                const updatedCosts = prevReport.items.map((item) =>
+                  item._id === id ? { ...item, confirmed: state } : item
                 );
           
                 return { ...prevReport, items: updatedCosts };
@@ -245,19 +245,19 @@ function OpenReport(){
                             <h2 className="group-header"> {groupBy === "project" ? getJobStr(groupKey) : groupBy === "type" ? costTypeFormatter(Number (groupKey)) : groupKey} </h2>
                         )}
                         <div className="cost-items">
-                        {grouped[groupKey].map((cost) => (
+                        {grouped[groupKey].map((item) => (
                             <motion.div
-                                key={cost._id}
+                                key={item._id}
                                 layout
                                 variants={itemVariants}
                                 initial="hidden"
                                 animate="visible"
                                 exit="exit"
                                 style={{ display: "flex", gap: "10px", zIndex: "1" }}
-                                onMouseEnter={() => setMouseOver(cost._id)}
+                                onMouseEnter={() => setMouseOver(item._id)}
                             >
-                            <Cost cost={cost} key={cost._id || cost.recnum} />
-                            {buttons(cost._id)}
+                            <Cost item={item} key={item._id || item.recnum} />
+                            {buttons(item._id)}
                             </motion.div>
                         ))}
                         </div>
