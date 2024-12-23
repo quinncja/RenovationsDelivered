@@ -16,7 +16,7 @@ function OpenReport(){
     const reportType = reportList.find((report) => report.type === param)
     const { text, type } = reportType;
     const [report, setReport] = useState();
-    const {run, costs} = report || {};
+    const {run, items} = report || {};
     const [updatingState, setUpdating] = useState();
     const ranOn = run ? run.ran_on : false;
     const ranBy = run ? run.ran_by : false;
@@ -75,18 +75,18 @@ function OpenReport(){
         }
     };
 
-    const filterCostsByView = (costs) => {
-        if (!costs) return [];
+    const filterCostsByView = (items) => {
+        if (!items) return [];
         if (view === "Confirmed") {
-            return costs.filter((cost) => cost.confirmed === true);
+            return items.filter((cost) => cost.confirmed === true);
         } else {
-            return costs.filter((cost) => cost.confirmed === false);
+            return items.filter((cost) => cost.confirmed === false);
         }
     };
 
-    const sortCosts = (costs) => {
-        if (sortOrder === "none") return costs;
-        return [...costs].sort((a, b) => {
+    const sortCosts = (items) => {
+        if (sortOrder === "none") return items;
+        return [...items].sort((a, b) => {
             const getDate = (c) => c.update_date ? new Date(c.update_date) : new Date(c.insert_date);
             const dateA = getDate(a);
             const dateB = getDate(b);
@@ -100,12 +100,12 @@ function OpenReport(){
         });
     };
 
-    const groupCosts = (costs) => {
+    const groupCosts = (items) => {
         if (groupBy === "none") {
-            return {"": costs};
+            return {"": items};
         }
 
-        return costs.reduce((groups, cost) => {
+        return items.reduce((groups, cost) => {
             let key = "";
             if (groupBy === "project") {
                 key = destructureJobNumber(cost.jobnum).jobNum;
@@ -157,11 +157,11 @@ function OpenReport(){
             setReport((prevReport) => {
                 if (!prevReport) return prevReport;
           
-                const updatedCosts = prevReport.costs.map((cost) =>
+                const updatedCosts = prevReport.items.map((cost) =>
                   cost._id === id ? { ...cost, confirmed: state } : cost
                 );
           
-                return { ...prevReport, costs: updatedCosts };
+                return { ...prevReport, items: updatedCosts };
               });
             } catch (error) {
                 toast.error("Failed to change item status");
@@ -222,7 +222,7 @@ function OpenReport(){
       };
 
     const renderBody = () => {
-        let filtered = filterCostsByView(costs);
+        let filtered = filterCostsByView(items);
 
         filtered = sortCosts(filtered);
 
@@ -274,7 +274,7 @@ function OpenReport(){
           <h1> {text} Report </h1> 
           <div className={`run-svg run-svg-button ${updatingState ? "loading-widget" : ""}`} title={title} onClick={handleReportPatch}> {btnText} {svg} </div>
         </div>
-        {costs ? renderBody() : ""}
+        {items ? renderBody() : ""}
         
         </div>
     )
