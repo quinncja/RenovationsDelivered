@@ -16,7 +16,7 @@ function DashboardHome() {
 
       <HomeWidgets />
       {trackedJobs ? (
-        trackedJobs.length > 0 || homeState === 'year' ? (
+        trackedJobs.length > 0 || homeState === "year" ? (
           <TrackedJobs jobs={trackedJobs} />
         ) : (
           <AddJobs />

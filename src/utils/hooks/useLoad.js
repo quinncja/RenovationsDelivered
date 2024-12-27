@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useCallback } from 'react';
+import { useEffect, useMemo, useCallback } from "react";
 import { useModifiers } from "context/ModifierContext";
 import { useUserContext } from "context/UserContext";
 import { useUserSettings } from "context/UserSettingsContext";
@@ -14,29 +14,29 @@ const useLoad = (isAuthenticated) => {
   const { setAppearance, setColorScheme, setLabel } = useUserContext();
   const { setTrackedJobs } = useTrackedJobs();
 
-  useEffect(() => {
-    const loadUser = async () => {
-      try {
-        const settings = await fetchCurrentUser();
+  useEffect(
+    () => {
+      const loadUser = async () => {
+        try {
+          const settings = await fetchCurrentUser();
 
-        setPageModifiers(settings.pageModifiers || { active: "Total" });
-        setLabel(settings.label || "always");
-        setAppearance(settings.appearance || "dark");
-        setColorScheme(settings.colorScheme || "Tranquil");
-        setTrackedJobs(settings.trackedJobs || []);
-      } catch (error) {
-        console.error("Failed to load user:", error);
+          setPageModifiers(settings.pageModifiers || { active: "Total" });
+          setLabel(settings.label || "always");
+          setAppearance(settings.appearance || "dark");
+          setColorScheme(settings.colorScheme || "Tranquil");
+          setTrackedJobs(settings.trackedJobs || []);
+        } catch (error) {
+          console.error("Failed to load user:", error);
+        }
+      };
+
+      if (isAuthenticated) {
+        loadUser();
       }
-    };
-
-    if (isAuthenticated) {
-      loadUser();
-    }
-  }, 
-  //eslint-disable-next-line
-  [
-    isAuthenticated,
-  ]);
+    },
+    //eslint-disable-next-line
+    [isAuthenticated],
+  );
 };
 
 export default useLoad;

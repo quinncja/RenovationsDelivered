@@ -21,26 +21,26 @@ function BodyDisplay(props) {
   );
 
   return (
-    <> 
-    {!dragging &&
+    <>
+      {!dragging && (
         <ChartBody
-        chartObj={chartObj}
-        data={data}
+          chartObj={chartObj}
+          data={data}
+          container={container}
+          size={chartSize}
+          id={id}
+          toggleData={toggleData}
+          open={open}
+        />
+      )}
+      <ImageBody
+        chartType={chartObj.chartType}
         container={container}
-        size={chartSize}
+        size={imageSize}
         id={id}
-        toggleData={toggleData}
-        open={open}
+        dragging={dragging}
       />
-    }
-    <ImageBody
-      chartType={chartObj.chartType}
-      container={container}
-      size={imageSize}
-      id={id}
-      dragging={dragging}
-    />
-  </>
+    </>
   );
 }
 

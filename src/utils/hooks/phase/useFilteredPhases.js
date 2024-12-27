@@ -49,11 +49,11 @@ const useFilteredPhases = (jobNum, yearId, phaseId, active, state, pm) => {
             if (phase.id !== phaseId) return false;
           }
         }
-        if(state){
-          if( phase.state !== state) return false;
+        if (state) {
+          if (phase.state !== state) return false;
         }
-        if(pm){
-          if( Number(phase.pm) !== pm) return false;
+        if (pm) {
+          if (Number(phase.pm) !== pm) return false;
         }
 
         return true;

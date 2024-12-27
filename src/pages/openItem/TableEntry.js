@@ -13,7 +13,14 @@ import {
 } from "utils/formatters";
 import { capitalizeFirstLetter } from "utils/funcs";
 
-function TableEntry({ headers, entry, currentId, nestingLevel = 0, color, oldStyle}) {
+function TableEntry({
+  headers,
+  entry,
+  currentId,
+  nestingLevel = 0,
+  color,
+  oldStyle,
+}) {
   const [showData, setShowData] = useState(false);
   const [subSortConfig, setSubSortConfig] = useState({
     key: null,
@@ -52,7 +59,7 @@ function TableEntry({ headers, entry, currentId, nestingLevel = 0, color, oldSty
     dueDate: "Due Date",
     invoiceNum: "Invoice Num",
     BudgetedAmount: "Budget",
-    budgetedAmount: "Budget"
+    budgetedAmount: "Budget",
   };
 
   const formatFuncMap = {
@@ -219,7 +226,9 @@ function TableEntry({ headers, entry, currentId, nestingLevel = 0, color, oldSty
   const hasSubData = subColumns !== null;
   return (
     <button className={`table-entry `} onClick={handleClick}>
-      {!oldStyle && <div className="table-entry-left" style={{backgroundColor: color}}/>}
+      {!oldStyle && (
+        <div className="table-entry-left" style={{ backgroundColor: color }} />
+      )}
       <div
         className={`table-entries ${showData ? `table-entries-open` : ""}  entry-nestlevel-${nestingLevel}  ${hasSubData ? "hoverable-entry" : ""}`}
         style={showData ? openStyle : {}}

@@ -26,11 +26,18 @@ function Logo({ expanded }) {
     const currentPath = location.pathname;
 
     if (currentPath.startsWith("/jobcost/breakdown/")) {
-      navigate("/jobcost/")
-    }
-    else if (currentPath.startsWith("/reports/cogs/")) {
+      navigate("/jobcost/");
+    } else if (currentPath.startsWith("/reports/cogs/")) {
       navigate("/reports/cogs");
+    } else if (currentPath.startsWith("/reports/data-validation/")) {
+      navigate("/reports/data-validation");
+    } else if (currentPath.startsWith("/reports/invoice-validation/")) {
+      navigate("/reports/invoice-validation");
     } else if (currentPath === "/reports/cogs") {
+      navigate("/reports");
+    } else if (currentPath === "/reports/data-validation") {
+      navigate("/reports");
+    } else if (currentPath === "/reports/invoice-validation") {
       navigate("/reports");
     } else if (currentPath === "/dashboard" && isAdmin) {
       navigate("/jobcost");

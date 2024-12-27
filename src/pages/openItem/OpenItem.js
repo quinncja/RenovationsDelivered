@@ -51,27 +51,31 @@ function OpenItem() {
   }, [type, loadData, query]);
 
   const body = () => {
-    if(!data) return (
-      <div style={{display: "flex", width: "100%", height: "50vh", justifyContent: 'center', alignItems: "center"}}>      
-          <span
-              className={`home-widget-num ${"home-widget-loading"}`}>
-          </span>
-      </div>
-    )  
+    if (!data)
+      return (
+        <div
+          style={{
+            display: "flex",
+            width: "100%",
+            height: "50vh",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <span className={`home-widget-num ${"home-widget-loading"}`}></span>
+        </div>
+      );
 
-    if(type === "Change Orders") return <PopulateChangeOrders data={data}/>
-    if(type === "Financial Overview") return <FinancialOverview data={data}/>
-    else return <TransformLayer data={data} chartObj={chartObj} />
-  }
+    if (type === "Change Orders") return <PopulateChangeOrders data={data} />;
+    if (type === "Financial Overview") return <FinancialOverview data={data} />;
+    else return <TransformLayer data={data} chartObj={chartObj} />;
+  };
 
   return (
-    <div
-      className="widget-background dashboard-widget-open"
-    >
+    <div className="widget-background dashboard-widget-open">
       <div className={`dashboard-welcome user-page open-widget-page`}>
-
-          <h1> {type} </h1>
-         {body()}
+        <h1> {type} </h1>
+        {body()}
       </div>
     </div>
   );

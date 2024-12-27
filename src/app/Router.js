@@ -69,10 +69,14 @@ function Router() {
               </RequireAuth>
             }
           />
-          <Route path="/change-orders/:view?" element={              
+          <Route
+            path="/change-orders/:view?"
+            element={
               <RequireAuth>
                 <ChangeOrders />
-              </RequireAuth>} />
+              </RequireAuth>
+            }
+          />
           <Route
             path="/jobcost/item/:param"
             element={

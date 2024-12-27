@@ -24,13 +24,13 @@ root.render(
             <ItemsProvider>
               <ModifierProvider>
                 <ProjectProvider>
-                    <HomeProvider>
-                      <UserProvider>
-                        <JobDataProvider> 
-                          <Router />
-                        </JobDataProvider>
-                      </UserProvider>
-                    </HomeProvider>
+                  <HomeProvider>
+                    <UserProvider>
+                      <JobDataProvider>
+                        <Router />
+                      </JobDataProvider>
+                    </UserProvider>
+                  </HomeProvider>
                 </ProjectProvider>
               </ModifierProvider>
             </ItemsProvider>

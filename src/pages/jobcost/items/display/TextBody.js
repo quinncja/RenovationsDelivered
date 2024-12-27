@@ -11,7 +11,7 @@ function TextBody(props) {
     case "ytd":
       return <YTDDisplay data={data} open={open} />;
     case "change-orders":
-      return <ChangeOrders data={data}/>
+      return <ChangeOrders data={data} />;
     default:
       return <JobDisplay open={open} />;
   }

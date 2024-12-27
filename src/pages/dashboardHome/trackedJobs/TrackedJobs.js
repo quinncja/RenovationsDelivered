@@ -28,7 +28,7 @@ function TrackedJobs({ jobs }) {
   const activeJobs = getActiveJobs();
 
   const jobsToShow = homeState === "year" ? activeJobs : jobs;
-  const jobHeader = homeState === "year" ? "Open Projects" : "Tracked Projects"
+  const jobHeader = homeState === "year" ? "Open Projects" : "Tracked Projects";
 
   const handleClick = () => {
     openModal("addJobs");
@@ -55,15 +55,14 @@ function TrackedJobs({ jobs }) {
     <>
       <div className="jobs-header">
         <h2> {jobHeader} </h2>
-        {homeState !== "year" &&
-                <button
-                className="job-button add-new-button"
-                onClick={() => handleClick()}
-              >
-                + add new
-              </button>
-        }
-
+        {homeState !== "year" && (
+          <button
+            className="job-button add-new-button"
+            onClick={() => handleClick()}
+          >
+            + add new
+          </button>
+        )}
       </div>
       <DndContext
         onDragStart={({ active }) => {
@@ -74,7 +73,10 @@ function TrackedJobs({ jobs }) {
         sensors={sensors}
         collisionDetection={closestCenter}
       >
-        <SortableContext items={jobsToShow} strategy={verticalListSortingStrategy}>
+        <SortableContext
+          items={jobsToShow}
+          strategy={verticalListSortingStrategy}
+        >
           <div className="tracked-jobs">
             {jobsToShow.map((job) => (
               <TrackedJob

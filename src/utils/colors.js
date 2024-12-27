@@ -286,10 +286,11 @@ export function getColorByID(id, palette) {
 }
 
 export function hashData(data, palette, convert = false) {
-  const baseId = data.type === 'committed' ? data.id.replace(" - C", "") : data.id;
+  const baseId =
+    data.type === "committed" ? data.id.replace(" - C", "") : data.id;
   const colorObj = getColorByID(baseId, palette);
   let color = adjustColor(colorObj, data.id);
-  if(convert) color = hslToHex(color);
+  if (convert) color = hslToHex(color);
   return {
     ...data,
     color,

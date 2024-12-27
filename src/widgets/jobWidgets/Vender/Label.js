@@ -14,11 +14,10 @@ export const venderMap = {
   "Kitchen Cabinets Deal": "KCD",
   "AAA Distributor, LLC": "AAA",
   Daltile: "DAL",
-  "Grand Appliance And TV": "Grand"
+  "Grand Appliance And TV": "Grand",
 };
 
 function getVenderLabel(datum) {
-
   return venderMap[datum.id] || datum.id;
 }
 

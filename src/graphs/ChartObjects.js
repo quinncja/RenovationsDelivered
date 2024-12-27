@@ -62,8 +62,7 @@ export const chartObjects = [
   {
     type: "Breakdown",
     breakdownType: "Material",
-    
-  }
+  },
 ];
 
 export const singleChartObjs = [

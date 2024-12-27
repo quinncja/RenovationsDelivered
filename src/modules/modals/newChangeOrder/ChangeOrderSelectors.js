@@ -1,7 +1,7 @@
 import Select from "react-dropdown-select";
 import { useProjectContext } from "context/ProjectContext";
 
-function ChangeOrderSelectors({modifiers, handleModifierChange}) {
+function ChangeOrderSelectors({ modifiers, handleModifierChange }) {
   const {
     projects,
     getAllProjects,
@@ -30,38 +30,35 @@ function ChangeOrderSelectors({modifiers, handleModifierChange}) {
       phaseId: null,
     };
 
-    handleModifierChange(newMods)
+    handleModifierChange(newMods);
   };
 
   const handleYearChange = (value) => {
     const yearId = value.length > 0 ? value[0].id : null;
 
     const newMods = {
-        ...modifiers,
+      ...modifiers,
       yearId: yearId,
       phaseId: null,
     };
 
-    handleModifierChange(newMods)
-
+    handleModifierChange(newMods);
   };
 
   const handlePhaseChange = (value) => {
     const phaseId = value.length > 0 ? value[0].id : null;
 
     const newMods = {
-        ...modifiers,
+      ...modifiers,
       phaseId: phaseId,
     };
 
-    handleModifierChange(newMods)
-
+    handleModifierChange(newMods);
   };
 
-  
   const getFilteredPhases = (phases) => {
     const filtered = phases.filter((phase) => phase.status === 4);
-    return filtered
+    return filtered;
   };
 
   return (
@@ -122,9 +119,8 @@ function ChangeOrderSelectors({modifiers, handleModifierChange}) {
         onChange={handlePhaseChange}
         dropdownPosition={"top"}
       />
-      </>
+    </>
   );
 }
-
 
 export default ChangeOrderSelectors;

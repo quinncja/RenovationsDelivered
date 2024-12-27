@@ -29,8 +29,6 @@ export default function PieChartToolTip({ datum, sum }) {
   );
 }
 
-
-
 export function BreakdownToolTip({ datum, sum }) {
   const getPercentage = () => {
     if (sum === 0) return "0%";

@@ -22,10 +22,14 @@ function CostItem(props) {
   const toggleData = () => {};
   const { chartType } = chartObj;
   const loadData = useChartData();
-  const staticItem = (chartType === "Text" && type !== "Change Orders" && type !== "Financial Overview") || (type === "Cost Analysis" && single);
+  const staticItem =
+    (chartType === "Text" &&
+      type !== "Change Orders" &&
+      type !== "Financial Overview") ||
+    (type === "Cost Analysis" && single);
 
   const handleClick = (event) => {
-    const interactiveElements = ['BUTTON', 'A', 'INPUT'];
+    const interactiveElements = ["BUTTON", "A", "INPUT"];
     if (interactiveElements.includes(event.target.tagName)) {
       return;
     }
@@ -133,7 +137,7 @@ function CostItem(props) {
               initial="hidden"
               animate="visible"
               exit="exit"
-              style={{ position: "relative", height: "100%"}}
+              style={{ position: "relative", height: "100%" }}
               variants={current ? {} : itemFadeIn}
             >
               <BodyDisplay

@@ -15,6 +15,7 @@ export const phaseList = [
 ];
 
 export const yearList = [
+  { num: "25", year: "2025", id: "xxxx-25" },
   { num: "24", year: "2024", id: "xxxx-24" },
   { num: "23", year: "2023", id: "xxxx-23" },
 ];

@@ -77,9 +77,7 @@ export const ProjectProvider = ({ children }) => {
 
   const getYearById = useCallback(
     (yearId) => {
-      return projects && yearId && projects.years
-        ? projects.years[yearId]
-        : "";
+      return projects && yearId && projects.years ? projects.years[yearId] : "";
     },
     [projects],
   );
@@ -196,19 +194,19 @@ export const ProjectProvider = ({ children }) => {
   };
 
   const getJobStr = (jobNum) => {
-    if(jobNum === "000999") return "Warranty"
-    if(jobNum === "000363") return "Mikes House"
-    const project = getProjectByNum(jobNum)
-    return project ? project.name : jobNum
-  }
+    if (jobNum === "000999") return "Warranty";
+    if (jobNum === "000363") return "Mikes House";
+    const project = getProjectByNum(jobNum);
+    return project ? project.name : jobNum;
+  };
 
   const getYearStr = (yearId) => {
     return getYearById(yearId).year;
-  }
+  };
 
   const getPhaseStr = (phaseId) => {
     return getPhaseById(phaseId).name;
-  }
+  };
 
   const countActivePhases = useCallback(
     (jobNum) => {
@@ -255,7 +253,7 @@ export const ProjectProvider = ({ children }) => {
       let closedPhases = [];
 
       if (jobNums.length === 0) {
-        return []
+        return [];
       } else {
         jobNums.forEach((jobNum) => {
           const jobPhases = getPhasesForJob(jobNum);
@@ -286,9 +284,9 @@ export const ProjectProvider = ({ children }) => {
   const getActiveJobs = useCallback(() => {
     const activeJobs = [];
     const allProjects = getAllProjects();
-    
+
     if (!allProjects || allProjects.length === 0) return activeJobs;
-  
+
     allProjects.forEach((project) => {
       const jobNum = project.num;
       const activePhaseCount = countActivePhases(jobNum);
@@ -296,7 +294,7 @@ export const ProjectProvider = ({ children }) => {
         activeJobs.push(jobNum);
       }
     });
-  
+
     return activeJobs;
   }, [getAllProjects, countActivePhases]);
 

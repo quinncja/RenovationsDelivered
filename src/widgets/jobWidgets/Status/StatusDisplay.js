@@ -12,7 +12,7 @@ export const JobDisplay = ({ open }) => {
   const { pageModifiers, updatePageModifiers } = useModifiers();
   const { projects } = useProjectContext();
   const selected = pageModifiers.active;
-  const { jobNum, yearId, phaseId, active, state, pm} = pageModifiers;
+  const { jobNum, yearId, phaseId, active, state, pm } = pageModifiers;
   const [itemView, setItemView] = useState({
     display: false,
     itemClick: () => {},
@@ -59,7 +59,8 @@ export const JobDisplay = ({ open }) => {
     </button>
   );
 
-  if (!projects) return <div className="loading-widget" style={{marginTop: "-18%"}} />;
+  if (!projects)
+    return <div className="loading-widget" style={{ marginTop: "-18%" }} />;
 
   if (singlePhaseData) {
     return <PhaseView singlePhaseData={singlePhaseData} />;

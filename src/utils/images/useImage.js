@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import { getImage, preloadImage, subscribe, unsubscribe} from "./imageStore";
+import { getImage, preloadImage, subscribe, unsubscribe } from "./imageStore";
 
 function useImage(id) {
   const [imageSrc, setImageSrc] = useState(() => {
     const initialImageData = getImage(id);
-    return initialImageData.image
+    return initialImageData.image;
   });
 
   useEffect(() => {

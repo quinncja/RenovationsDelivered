@@ -4,7 +4,10 @@ function ImageBody({ id, container, dragging, size }) {
   const imageSrc = useImage(id);
 
   return (
-    <div className={`${!dragging ? "invisible-container" : ""}`} style={container}>
+    <div
+      className={`${!dragging ? "invisible-container" : ""}`}
+      style={container}
+    >
       <img
         src={imageSrc}
         alt=""

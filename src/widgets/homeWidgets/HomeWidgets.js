@@ -6,20 +6,20 @@ import PendingCO from "./PendingCO";
 import Revenue from "./Revenue";
 
 function HomeWidgets() {
-    const isAdmin = useIsAdmin();
+  const isAdmin = useIsAdmin();
 
   return (
     <>
       {isAdmin && (
-        <> 
-        <HomeToggle />
-        <Revenue/>
+        <>
+          <HomeToggle />
+          <Revenue />
         </>
       )}
       <div className="home-widget-container">
         <OpenPhases />
         <ClosedPhases />
-        <PendingCO /> 
+        <PendingCO />
       </div>
     </>
   );

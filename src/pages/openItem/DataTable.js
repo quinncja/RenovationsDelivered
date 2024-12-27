@@ -14,7 +14,7 @@ export function DataTable({ data, chartType, currentId, oldStyle }) {
     visualData = data.map((datum) => ({ ...datum, color: "var(--primary)" }));
   else visualData = data.map((datum) => hashData(datum, pallete));
 
-  console.log(visualData)
+  console.log(visualData);
   const headerMap = {
     id: "Name",
     value: "Total",
@@ -26,7 +26,7 @@ export function DataTable({ data, chartType, currentId, oldStyle }) {
     totalCost: "COGS",
     contractValue: "Contract",
     BudgetedAmount: "Budget",
-    budgetedAmount: "Budget"
+    budgetedAmount: "Budget",
   };
   const subHeaderMap = {
     orderDate: "Order Date",
@@ -38,7 +38,7 @@ export function DataTable({ data, chartType, currentId, oldStyle }) {
     orderDesc: "Description",
     marginPercentage: "Margin",
     totalCost: "COGS",
-    BudgetedAmount: "Budget"
+    BudgetedAmount: "Budget",
   };
 
   const getSubInfo = (obj) => {
@@ -135,9 +135,9 @@ export function DataTable({ data, chartType, currentId, oldStyle }) {
 
   return (
     <div className="data-display-wrapper">
-      <div className="data-table"> 
-      {tableHeader(headers)}
-      {tableBody(headers, visualData, subInfo)}
+      <div className="data-table">
+        {tableHeader(headers)}
+        {tableBody(headers, visualData, subInfo)}
       </div>
     </div>
   );

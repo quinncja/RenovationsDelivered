@@ -218,7 +218,7 @@ export const statusFormatter = (status) => {
 };
 
 export const dateFormatter = (dateInput) => {
-  if(!dateInput) return ""
+  if (!dateInput) return "";
   const date = new Date(dateInput);
   const month = String(date.getUTCMonth() + 1).padStart(2, "0");
   const day = String(date.getUTCDate()).padStart(2, "0");
@@ -439,18 +439,15 @@ export function getFirstWord(str) {
   return words[0];
 }
 
-
 export function destructureJobNumber(jobNumber) {
-  const jobStr = jobNumber.toString().padStart(8, '0');
+  const jobStr = jobNumber.toString().padStart(8, "0");
 
   const jobNumberRegex = /^\d{8}$/;
   if (!jobNumberRegex.test(jobStr)) {
-    throw new Error(
-      'Invalid job number format. It must be exactly 8 digits.'
-    );
+    throw new Error("Invalid job number format. It must be exactly 8 digits.");
   }
 
-  const yearDigits = jobStr.slice(0, 2); 
+  const yearDigits = jobStr.slice(0, 2);
   const phaseDigits = jobStr.slice(6, 8);
 
   const year = `20${yearDigits}`;
@@ -458,8 +455,8 @@ export function destructureJobNumber(jobNumber) {
   const phaseNumber = parseInt(phaseDigits, 10);
   let jobNum;
 
-  if (phaseDigits === '00' || phaseNumber > 12) {
-    jobNum = jobStr.slice(2, 8); 
+  if (phaseDigits === "00" || phaseNumber > 12) {
+    jobNum = jobStr.slice(2, 8);
   } else {
     jobNum = jobStr.slice(2, 6);
   }
@@ -468,12 +465,10 @@ export function destructureJobNumber(jobNumber) {
 
   return {
     year,
-    jobNum, 
+    jobNum,
     phase,
   };
 }
-
-
 
 const timeOptions = {
   weekday: "short",
@@ -485,15 +480,14 @@ const timeOptions = {
 };
 
 export const dateTimeToString = (date) => {
-  if(!date) return ""
+  if (!date) return "";
   return date.toLocaleString("en-US", timeOptions);
 };
 
 export const formatSageUsername = (name) => {
-  if(!name) return ""
+  if (!name) return "";
   const match = name.match(/\\(.*?)\.ren/);
   if (match && match[1]) {
-      return match[1];
+    return match[1];
   } else return name;
-
-}
+};

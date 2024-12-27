@@ -57,10 +57,7 @@ export const ItemsProvider = ({ children }) => {
   const removeItemFn = removeItemAction(setItems, itemSaver);
   const reorderByIndexFn = reorderByIndexAction(setItems, itemSaver);
   const addMultItemsFn = addMultItemsAction(setItems, itemSaver);
-  const deleteMultItemsFn = deleteMultItemsAction(
-    setItems,
-    itemSaver,
-  );
+  const deleteMultItemsFn = deleteMultItemsAction(setItems, itemSaver);
 
   const addMultItems = async (itemList) => {
     let prevItems;

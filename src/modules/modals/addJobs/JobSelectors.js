@@ -4,7 +4,6 @@ import { useTrackedJobs } from "context/TrackedJobContext";
 import { useProjectContext } from "context/ProjectContext";
 import RecommendedJobs from "./ReccomendedJobs";
 
-
 function JobSelectors({ closeSelf }) {
   const { trackedJobs, updateTrackedJobs } = useTrackedJobs();
   const { getAllProjects } = useProjectContext();
@@ -13,7 +12,7 @@ function JobSelectors({ closeSelf }) {
   const [selectedRec, setSelectedRec] = useState([]);
 
   const handleChange = (values) => {
-    const jobNums = values.map((item) => item.num)
+    const jobNums = values.map((item) => item.num);
     setSelectedJobs(jobNums);
   };
 
@@ -53,11 +52,11 @@ function JobSelectors({ closeSelf }) {
           <h4 style={{ textAlign: "left", fontWeight: "500" }}>
             Select from list
           </h4>
-          <div className="job-selector-wrapper"> 
-              <JobSelector
-                  options={options}
-                  handleChange={(values) => handleChange(values)}
-                />
+          <div className="job-selector-wrapper">
+            <JobSelector
+              options={options}
+              handleChange={(values) => handleChange(values)}
+            />
           </div>
         </div>
         <button className="job-button add-job-button" onClick={handleSubmit}>

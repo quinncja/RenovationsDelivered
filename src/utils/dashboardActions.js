@@ -15,14 +15,13 @@ export const addItemAction = (setItems, itemSaver) => (newItem, newIndex) => {
   });
 };
 
-export const removeItemAction =
-  (setItems, itemSaver) => (itemToRemove) => {
-    setItems((prevItems) => {
-      const newItems = prevItems.filter((item) => item.id !== itemToRemove.id);
-      itemSaver(newItems);
-      return newItems;
-    });
-  };
+export const removeItemAction = (setItems, itemSaver) => (itemToRemove) => {
+  setItems((prevItems) => {
+    const newItems = prevItems.filter((item) => item.id !== itemToRemove.id);
+    itemSaver(newItems);
+    return newItems;
+  });
+};
 
 export const addMultItemsAction = (setItems, itemSaver) => (itemList) => {
   setItems((prevItems) => {
@@ -33,15 +32,13 @@ export const addMultItemsAction = (setItems, itemSaver) => (itemList) => {
   });
 };
 
-export const deleteMultItemsAction =
-  (setItems, itemSaver) => (itemList) => {
-
-    setItems((prevItems) => {
-      const newItems = prevItems.filter((item) => !itemList.includes(item));
-      itemSaver(newItems);
-      return newItems;
-    });
-  };
+export const deleteMultItemsAction = (setItems, itemSaver) => (itemList) => {
+  setItems((prevItems) => {
+    const newItems = prevItems.filter((item) => !itemList.includes(item));
+    itemSaver(newItems);
+    return newItems;
+  });
+};
 
 export const reorderByIndexAction =
   (setItems, itemSaver) => (index1, index2) => {

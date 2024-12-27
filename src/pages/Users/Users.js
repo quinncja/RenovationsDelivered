@@ -21,14 +21,14 @@ export function Users() {
 
   useEffect(() => {
     const loadUsers = async () => {
-      try{ 
+      try {
         const userData = await fetchUserList();
         const sortedUsers = userData.results.sort(
-          (a, b) => new Date(b.lastActiveAt) - new Date(a.lastActiveAt)
+          (a, b) => new Date(b.lastActiveAt) - new Date(a.lastActiveAt),
         );
         const admins = sortedUsers.filter((user) => hasAdmin(user));
         const normals = sortedUsers.filter((user) => !hasAdmin(user));
-  
+
         setItems({
           adminUsers: admins,
           normalUsers: normals,
@@ -37,8 +37,8 @@ export function Users() {
         setItems({
           adminUsers: -10,
           normalUsers: -10,
-        })
-        toast.error('Failed to load user data')
+        });
+        toast.error("Failed to load user data");
       }
     };
 
@@ -84,53 +84,53 @@ export function Users() {
 
   function handleDragEnd(event) {
     const { active, over } = event;
-  
+
     setActiveId(null);
     setHoveredContainer(null);
-  
+
     if (!over) {
       return;
     }
-  
+
     const activeContainer = findContainer(active.id);
     const overContainer =
       findContainer(over.id) ||
       (over.id === "adminUsers" || over.id === "normalUsers" ? over.id : null);
-  
+
     if (!activeContainer || !overContainer) {
       return;
     }
-  
+
     if (activeContainer !== overContainer) {
       const activeUser = findUserById(active.id);
       if (!activeUser) return;
-  
+
       const originalContainer = activeContainer;
       const originalRoles = [...activeUser.authorization.xbpwwqmn.roles];
       const newRole = overContainer === "adminUsers" ? "admin" : "member";
-  
+
       setItems((prevItems) => {
         const updatedOriginal = prevItems[originalContainer].filter(
-          (user) => user.userId !== active.id
+          (user) => user.userId !== active.id,
         );
         const updatedNew = sortUsersByLastActive([
           ...prevItems[overContainer],
           activeUser,
         ]);
-  
+
         return {
           ...prevItems,
           [originalContainer]: updatedOriginal,
           [overContainer]: updatedNew,
         };
       });
-  
+
       changeRole(
         active.id,
         newRole,
         originalContainer,
         originalRoles,
-        activeUser
+        activeUser,
       );
     } else {
       setItems((prevItems) => ({
@@ -139,7 +139,6 @@ export function Users() {
       }));
     }
   }
-  
 
   function handleDragCancel() {
     setHoveredContainer(null);
@@ -151,14 +150,15 @@ export function Users() {
     newRole,
     originalContainer,
     originalRoles,
-    userMoved
+    userMoved,
   ) {
     try {
       const response = await changeUserRole(userId, newRole);
       const updatedRoles = response.data.roles;
-  
+
       setItems((prevItems) => {
-        const targetContainer = newRole === "admin" ? "adminUsers" : "normalUsers";
+        const targetContainer =
+          newRole === "admin" ? "adminUsers" : "normalUsers";
         const updatedUsers = prevItems[targetContainer].map((user) =>
           user.userId === userId
             ? {
@@ -171,9 +171,9 @@ export function Users() {
                   },
                 },
               }
-            : user
+            : user,
         );
-  
+
         return {
           ...prevItems,
           [targetContainer]: sortUsersByLastActive(updatedUsers),
@@ -181,14 +181,15 @@ export function Users() {
       });
     } catch (error) {
       console.error("Error changing user role:", error);
-  
+
       setItems((prevItems) => {
-        const targetContainer = newRole === "admin" ? "adminUsers" : "normalUsers";
-  
+        const targetContainer =
+          newRole === "admin" ? "adminUsers" : "normalUsers";
+
         const updatedTarget = prevItems[targetContainer].filter(
-          (user) => user.userId !== userId
+          (user) => user.userId !== userId,
         );
-  
+
         const restoredUser = {
           ...userMoved,
           authorization: {
@@ -199,12 +200,12 @@ export function Users() {
             },
           },
         };
-  
+
         const updatedOriginal = sortUsersByLastActive([
           ...prevItems[originalContainer],
           restoredUser,
         ]);
-  
+
         return {
           ...prevItems,
           [targetContainer]: updatedTarget,
@@ -213,27 +214,21 @@ export function Users() {
       });
     }
   }
-  
 
   function sortUsersByLastActive(users) {
     return [...users].sort(
-      (a, b) => new Date(b.lastActiveAt) - new Date(a.lastActiveAt)
+      (a, b) => new Date(b.lastActiveAt) - new Date(a.lastActiveAt),
     );
   }
 
-  if (
-    items.adminUsers === -10 &&
-    items.normalUsers === -10
-  ) return(  
-    <div className="dashboard-welcome user-page">
-      <h1> Users </h1>
-    </div>
-    )
+  if (items.adminUsers === -10 && items.normalUsers === -10)
+    return (
+      <div className="dashboard-welcome user-page">
+        <h1> Users </h1>
+      </div>
+    );
 
-  if (
-    items.adminUsers.length === 0 &&
-    items.normalUsers.length === 0
-  ) {
+  if (items.adminUsers.length === 0 && items.normalUsers.length === 0) {
     return (
       <div className="dashboard-welcome">
         <h1> Users </h1>

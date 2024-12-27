@@ -9,13 +9,13 @@ function HomeToggle() {
       id: "year",
       svg: calendarSvg,
       title: "Admin View",
-      alt: "Admin View"
+      alt: "Admin View",
     },
     {
       id: "user",
       svg: personSvg,
       title: "PM View",
-      alt: "PM View"
+      alt: "PM View",
     },
   ];
 
@@ -30,7 +30,11 @@ function HomeToggle() {
               onClick={() => setHomeState(option.id)}
               title={option.title}
             >
-              {homeState !== option.id ? option.alt : <h2 style={{margin: 0}}> {option.title} </h2>} 
+              {homeState !== option.id ? (
+                option.alt
+              ) : (
+                <h2 style={{ margin: 0 }}> {option.title} </h2>
+              )}
             </button>
           );
         })}

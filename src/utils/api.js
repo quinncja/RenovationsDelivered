@@ -3,14 +3,13 @@ import { apiUrl, ngrokHeaders } from "./config";
 import Userfront from "@userfront/toolkit";
 import { toast } from "sonner";
 
-export async function fetchUserList(){
-  try{
+export async function fetchUserList() {
+  try {
     const response = await axios.get(`${apiUrl}user-list`, {
-
       ...ngrokHeaders,
     });
     return response.data;
-  }  catch (error) {
+  } catch (error) {
     console.error("Error loading Users:", error);
   }
 }
@@ -22,14 +21,16 @@ export async function fetchJobList() {
     });
     return response.data;
   } catch (error) {
-    if(error.response.status === 500){
-      toast.error("VPN connection error. Please wait a few minutes and try again")
+    if (error.response.status === 500) {
+      toast.error(
+        "VPN connection error. Please wait a few minutes and try again",
+      );
     }
     console.error("Error loading jobs:", error);
   }
 }
 
-export async function fetchHomeData(id, body, signal){
+export async function fetchHomeData(id, body, signal) {
   try {
     const response = await axios.get(`${apiUrl}${id}`, {
       params: body,
@@ -44,14 +45,14 @@ export async function fetchHomeData(id, body, signal){
       error.response.data &&
       error.response.data.error
     ) {
-      if(error.response.status === 500){
-        toast.error("VPN connection error. Please wait a few minutes and try again")
+      if (error.response.status === 500) {
+        toast.error(
+          "VPN connection error. Please wait a few minutes and try again",
+        );
       }
-      console.log(
-        error.response.data.error
-      );
+      console.log(error.response.data.error);
     } else {
-      throw Error
+      throw Error;
     }
   }
 }
@@ -71,12 +72,12 @@ export async function fetchChartData(modifiers, signal) {
       error.response.data &&
       error.response.data.error
     ) {
-      if(error.response.status === 500){
-        toast.error("VPN connection error. Please wait a few minutes and try again")
+      if (error.response.status === 500) {
+        toast.error(
+          "VPN connection error. Please wait a few minutes and try again",
+        );
       }
-      console.error(
-        error.response.data.error
-      );
+      console.error(error.response.data.error);
     } else {
       console.error(`Error loading ${modifiers.type}:`, error.message);
     }
@@ -86,7 +87,7 @@ export async function fetchChartData(modifiers, signal) {
 export async function fetchOpenJobData(modifiers, costType, signal) {
   try {
     const response = await axios.get(`${apiUrl}open-job-data`, {
-      params: { ...modifiers, costType},
+      params: { ...modifiers, costType },
       ...ngrokHeaders,
       signal,
     });
@@ -98,8 +99,10 @@ export async function fetchOpenJobData(modifiers, costType, signal) {
       error.response.data &&
       error.response.data.error
     ) {
-      if(error.response.status === 500){
-        toast.error("VPN connection error. Please wait a few minutes and try again")
+      if (error.response.status === 500) {
+        toast.error(
+          "VPN connection error. Please wait a few minutes and try again",
+        );
       }
       console.error(
         `Error loading ${modifiers.type}:`,
@@ -161,21 +164,24 @@ export async function fetchJobData(modifiers, signal) {
   }
 }
 
-export async function changeUserRole(userId, newRole){
-  try{
-    const response = await axios.post(`${apiUrl}change-user-role`, { userId, newRole }, {
-      ...ngrokHeaders,
-    });
+export async function changeUserRole(userId, newRole) {
+  try {
+    const response = await axios.post(
+      `${apiUrl}change-user-role`,
+      { userId, newRole },
+      {
+        ...ngrokHeaders,
+      },
+    );
     return response;
   } catch (error) {
     console.error("Error initializing user", error);
   }
 }
 
-export async function initializeUserRole(userId){
-  try{
-    await axios.get(`${apiUrl}initialize-user?userId=${userId}`, 
-    {
+export async function initializeUserRole(userId) {
+  try {
+    await axios.get(`${apiUrl}initialize-user?userId=${userId}`, {
       ...ngrokHeaders,
     });
   } catch (error) {
@@ -185,13 +191,9 @@ export async function initializeUserRole(userId){
 
 export async function submitChangeOrder(changeObj) {
   try {
-    const response = await axios.post(
-      `${apiUrl}change-order`,
-      changeObj,
-      {
-        ...ngrokHeaders,
-      }
-    );
+    const response = await axios.post(`${apiUrl}change-order`, changeObj, {
+      ...ngrokHeaders,
+    });
     return response;
   } catch (error) {
     console.error("Error submitting change order", error);
@@ -205,7 +207,7 @@ export async function sendChangeOrderEmail(changeObj) {
       changeObj,
       {
         ...ngrokHeaders,
-      }
+      },
     );
     return response;
   } catch (error) {
@@ -220,40 +222,36 @@ export async function sendChangeOrderCreatedEmail(emailObj) {
       emailObj,
       {
         ...ngrokHeaders,
-      }
+      },
     );
     return response;
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
 }
 
 export async function deleteRun(id) {
   try {
-    const response = await axios.delete(
-      `${apiUrl}report/cogs/${id}`,
-      {
-        ...ngrokHeaders,
-      }
-    );
+    const response = await axios.delete(`${apiUrl}report/cogs/${id}`, {
+      ...ngrokHeaders,
+    });
     return response;
   } catch (error) {
     throw error;
   }
 }
-
 
 export async function patchRunItem(id, state) {
   try {
     const response = await axios.patch(
-      `${apiUrl}report/cogs/run`,
+      `${apiUrl}report/run`,
       {
         id: id,
         state: Boolean(state),
       },
       {
         ...ngrokHeaders,
-      }
+      },
     );
     return response;
   } catch (error) {
@@ -261,18 +259,18 @@ export async function patchRunItem(id, state) {
   }
 }
 
-
-export async function patchCostItem(id, state) {
+export async function patchReportItem(type, id, state) {
   try {
     const response = await axios.patch(
-      `${apiUrl}report/cogs/item`,
+      `${apiUrl}report/item`,
       {
         id: id,
+        type: type,
         state: Boolean(state),
       },
       {
         ...ngrokHeaders,
-      }
+      },
     );
     return response;
   } catch (error) {
@@ -290,7 +288,7 @@ export async function patchChangeOrder(idnum, status) {
       },
       {
         ...ngrokHeaders,
-      }
+      },
     );
     return response;
   } catch (error) {
@@ -298,56 +296,47 @@ export async function patchChangeOrder(idnum, status) {
   }
 }
 
-export async function getReports(type){
+export async function getReports(type) {
   try {
-    const response = await axios.get(
-      `${apiUrl}report/${type}`,
-      {
-        ...ngrokHeaders,
-      }
-    );
+    const response = await axios.get(`${apiUrl}report/${type}`, {
+      ...ngrokHeaders,
+    });
     return response;
   } catch (error) {
     throw error;
   }
 }
 
-export async function getReport(type, id){
+export async function getReport(type, id) {
   try {
-    const response = await axios.get(
-      `${apiUrl}report/${type}/${id}`,
-      {
-        ...ngrokHeaders,
-      }
-    );
+    const response = await axios.get(`${apiUrl}report/${type}/${id}`, {
+      ...ngrokHeaders,
+    });
     return response;
   } catch (error) {
     throw error;
   }
 }
 
-export async function getLastRan(type){
+export async function getLastRan(type) {
   try {
-    const response = await axios.get(
-      `${apiUrl}last-ran/${type}`,
-      {
-        ...ngrokHeaders,
-      }
-    );
+    const response = await axios.get(`${apiUrl}last-ran/${type}`, {
+      ...ngrokHeaders,
+    });
     return response;
   } catch (error) {
     throw error;
   }
 }
 
-export async function runReport(type){
+export async function runReport(type) {
   try {
     const response = await axios.post(
       `${apiUrl}report/${type}`,
-      {user: Userfront.user.name},
+      { user: Userfront.user.name },
       {
         ...ngrokHeaders,
-      }
+      },
     );
     return response;
   } catch (error) {

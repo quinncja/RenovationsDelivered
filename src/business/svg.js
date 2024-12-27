@@ -931,59 +931,176 @@ export const personSvg = () => {
 };
 
 export const adminSvg = () => {
-  return(
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M12 22C12 22 20 18 20 12V5L12 2L4 5V12C4 18 12 22 12 22Z" stroke="#ff7b00" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+  return (
+    <svg
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M12 22C12 22 20 18 20 12V5L12 2L4 5V12C4 18 12 22 12 22Z"
+        stroke="#ff7b00"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
     </svg>
-  )
-}
+  );
+};
 
 export const userReviewSvg = () => {
-  return(
-
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M12 21.25C16.5398 21.25 20.22 17.5698 20.22 13.03C20.22 8.49022 16.5398 4.81 12 4.81C7.46022 4.81 3.78 8.49022 3.78 13.03C3.78 17.5698 7.46022 21.25 12 21.25Z" stroke="#ff7b00" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-    <path d="M12 2.75V4.81" stroke="#ff7b00" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-    <path d="M4.73001 5.75999L5.82999 6.86" stroke="#ff7b00" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-    <path d="M19.27 5.75999L18.17 6.86" stroke="#ff7b00" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-    <path d="M12 14.06C12.5689 14.06 13.03 13.5989 13.03 13.03C13.03 12.4611 12.5689 12 12 12C11.4311 12 10.97 12.4611 10.97 13.03C10.97 13.5989 11.4311 14.06 12 14.06Z" stroke="#ff7b00" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-    <path d="M12 13.03L14.57 10.46" stroke="#ff7b00" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-    <path d="M10.97 2.75H13.03" stroke="#ff7b00" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+  return (
+    <svg
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M12 21.25C16.5398 21.25 20.22 17.5698 20.22 13.03C20.22 8.49022 16.5398 4.81 12 4.81C7.46022 4.81 3.78 8.49022 3.78 13.03C3.78 17.5698 7.46022 21.25 12 21.25Z"
+        stroke="#ff7b00"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M12 2.75V4.81"
+        stroke="#ff7b00"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M4.73001 5.75999L5.82999 6.86"
+        stroke="#ff7b00"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M19.27 5.75999L18.17 6.86"
+        stroke="#ff7b00"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M12 14.06C12.5689 14.06 13.03 13.5989 13.03 13.03C13.03 12.4611 12.5689 12 12 12C11.4311 12 10.97 12.4611 10.97 13.03C10.97 13.5989 11.4311 14.06 12 14.06Z"
+        stroke="#ff7b00"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M12 13.03L14.57 10.46"
+        stroke="#ff7b00"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M10.97 2.75H13.03"
+        stroke="#ff7b00"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
     </svg>
-  )
-}
+  );
+};
 
 export const confirmedSvg = () => {
-  return(
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M12 21.25C6.89 21.25 2.75 17.11 2.75 12C2.75 6.89 6.89 2.75 12 2.75C17.11 2.75 21.25 6.89 21.25 12C21.25 17.11 17.11 21.25 12 21.25Z" stroke="#2cf21e" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-    <path d="M11.54 13.58L9.78 11.82" stroke="#2cf21e" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-    <path d="M15.06 10.06L11.54 13.58" stroke="#2cf21e" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+  return (
+    <svg
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M12 21.25C6.89 21.25 2.75 17.11 2.75 12C2.75 6.89 6.89 2.75 12 2.75C17.11 2.75 21.25 6.89 21.25 12C21.25 17.11 17.11 21.25 12 21.25Z"
+        stroke="#2cf21e"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M11.54 13.58L9.78 11.82"
+        stroke="#2cf21e"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M15.06 10.06L11.54 13.58"
+        stroke="#2cf21e"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
     </svg>
-  )
-}
+  );
+};
 
 export const rejectedSvg = () => {
-  return(
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M12 21.25C6.89 21.25 2.75 17.11 2.75 12C2.75 6.89 6.89 2.75 12 2.75C17.11 2.75 21.25 6.89 21.25 12C21.25 17.11 17.11 21.25 12 21.25Z" stroke="#ff2049" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-    <path d="M13.89 10.08L10.11 13.92" stroke="#ff2049" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-    <path d="M10.11 10.08L13.89 13.92" stroke="#ff2049" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+  return (
+    <svg
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M12 21.25C6.89 21.25 2.75 17.11 2.75 12C2.75 6.89 6.89 2.75 12 2.75C17.11 2.75 21.25 6.89 21.25 12C21.25 17.11 17.11 21.25 12 21.25Z"
+        stroke="#ff2049"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M13.89 10.08L10.11 13.92"
+        stroke="#ff2049"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M10.11 10.08L13.89 13.92"
+        stroke="#ff2049"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
     </svg>
-  )
-}
+  );
+};
 
 export const cogSvg = () => {
-  return(
-    <svg style={{ fill: "var(--less-white)" }} height="800px" width="800px" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" 
-	 viewBox="0 0 397.516 397.516">
-<g>
-	<g id="Layer_5_36_">
-		<g>
-			<path d="M126.32,156.454c-37.993,0-68.901,30.911-68.901,68.905c0,37.991,30.909,68.9,68.901,68.9s68.9-30.909,68.9-68.9
+  return (
+    <svg
+      style={{ fill: "var(--less-white)" }}
+      height="800px"
+      width="800px"
+      version="1.1"
+      id="Capa_1"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 397.516 397.516"
+    >
+      <g>
+        <g id="Layer_5_36_">
+          <g>
+            <path
+              d="M126.32,156.454c-37.993,0-68.901,30.911-68.901,68.905c0,37.991,30.909,68.9,68.901,68.9s68.9-30.909,68.9-68.9
 				C195.22,187.365,164.311,156.454,126.32,156.454z M126.32,279.641c-29.932,0-54.283-24.351-54.283-54.281
-				c0-29.934,24.352-54.286,54.283-54.286s54.282,24.353,54.282,54.286C180.602,255.29,156.251,279.641,126.32,279.641z"/>
-			<path d="M241.133,193.697l-9.568-2.638c-1.085-0.299-2.955-2.038-3.333-3.102l-2.717-6.683l-0.152-0.346
+				c0-29.934,24.352-54.286,54.283-54.286s54.282,24.353,54.282,54.286C180.602,255.29,156.251,279.641,126.32,279.641z"
+            />
+            <path
+              d="M241.133,193.697l-9.568-2.638c-1.085-0.299-2.955-2.038-3.333-3.102l-2.717-6.683l-0.152-0.346
 				c-0.483-1.028-0.382-3.607,0.179-4.597l4.819-8.491c3.36-5.921,2.264-14.015-2.549-18.824l-23.776-23.779
 				c-2.852-2.848-6.952-4.482-11.248-4.482c-2.723,0-5.341,0.669-7.57,1.935l-8.038,4.561c-0.324,0.184-1.251,0.458-2.478,0.458
 				c-1.061,0-1.766-0.207-1.991-0.316l-8.275-3.484l-0.348-0.136c-1.068-0.385-2.818-2.276-3.121-3.375l-2.719-9.851
@@ -1018,8 +1135,10 @@ export const cogSvg = () => {
 				c2.975,1.39,6.073,1.686,8.17,1.686c3.568,0,7.012-0.84,9.694-2.363l7.995-4.538c0.036-0.015,0.176-0.051,0.396-0.051
 				c0.48,0,0.853,0.161,0.914,0.202l23.744,23.744c0.203,0.267,0.306,1.032,0.201,1.304l-4.819,8.493
 				c-2.868,5.056-3.189,12.511-0.79,17.823l2.489,6.102c2.034,5.487,7.535,10.562,13.154,12.11l9.523,2.623
-				c0.309,0.132,0.777,0.748,0.82,1.036l0.002,33.581C237.98,242.726,237.511,243.342,237.247,243.459z"/>
-			<path d="M393.377,112.81l-6.573-1.953c-2.321-0.688-4.846-3.132-5.611-5.428l-1.713-4.439c-0.983-2.211-0.778-5.725,0.459-7.805
+				c0.309,0.132,0.777,0.748,0.82,1.036l0.002,33.581C237.98,242.726,237.511,243.342,237.247,243.459z"
+            />
+            <path
+              d="M393.377,112.81l-6.573-1.953c-2.321-0.688-4.846-3.132-5.611-5.428l-1.713-4.439c-0.983-2.211-0.778-5.725,0.459-7.805
 				l3.443-5.806c1.236-2.08,0.875-5.212-0.8-6.958L366.48,63.675c-1.679-1.746-4.794-2.232-6.922-1.076l-5.609,3.038
 				c-2.13,1.154-5.636,1.198-7.793,0.097l-5.418-2.399c-2.262-0.866-4.599-3.496-5.199-5.843l-1.745-6.844
 				c-0.598-2.345-3.066-4.304-5.487-4.352l-23.232-0.457c-2.42-0.048-4.965,1.814-5.654,4.133l-2.013,6.77
@@ -1036,18 +1155,211 @@ export const cogSvg = () => {
 				c0.86-2.266,3.482-4.609,5.829-5.206l6.645-1.693c2.343-0.599,4.305-3.066,4.352-5.488l0.457-23.229
 				C397.557,116.047,395.695,113.5,393.377,112.81z M314.236,170.826c-23.495-0.462-42.171-19.886-41.709-43.381
 				c0.462-23.5,19.886-42.176,43.381-41.715c23.497,0.463,42.172,19.889,41.71,43.387
-				C357.156,152.614,337.733,171.288,314.236,170.826z"/>
-		</g>
-	</g>
-</g>
-</svg>
-  )
-}
+				C357.156,152.614,337.733,171.288,314.236,170.826z"
+            />
+          </g>
+        </g>
+      </g>
+    </svg>
+  );
+};
 
 export const runSvg = () => {
-  return(
-    <svg width="24" height="24" viewBox="-1 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M5 3L19 12L5 21V3Z" style={{ stroke: "var(--green)" }} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+  return (
+    <svg
+      width="24"
+      height="24"
+      viewBox="-1 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M5 3L19 12L5 21V3Z"
+        style={{ stroke: "var(--green)" }}
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
     </svg>
-  )
-}
+  );
+};
+
+export const validationSvg = () => {
+  return (
+    <svg
+      style={{ stroke: "var(--less-white)" }}
+      width="31"
+      height="28"
+      fill="none"
+      viewBox="-3 02 34 28"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M1.6694 8.80169V23.1983"
+        strokeWidth="1"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M11.8235 12.395C17.4315 12.395 21.9776 10.7862 21.9776 8.80169C21.9776 6.81715 17.4315 5.20834 11.8235 5.20834C6.21556 5.20834 1.6694 6.81715 1.6694 8.80169C1.6694 10.7862 6.21556 12.395 11.8235 12.395Z"
+        strokeWidth="1"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M21.9776 13.5967C21.9776 15.58 17.4318 17.19 11.8235 17.19C6.21529 17.19 1.6694 15.58 1.6694 13.5967"
+        strokeWidth="1"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M21.9776 18.4033C21.9776 20.3867 17.4318 21.9967 11.8235 21.9967C6.21529 21.9967 1.6694 20.3867 1.6694 18.4033"
+        strokeWidth="1"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M21.9776 23.1983C21.9776 25.1817 17.4318 26.7917 11.8235 26.7917C6.21529 26.7917 1.6694 25.1817 1.6694 23.1983"
+        strokeWidth="1"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M21.9777 8.80169V23.1983"
+        strokeWidth="1"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M20 15C16.1338 15 13 11.8662 13 8C13 4.13382 16.1338 1 20 1C23.8662 1 27 4.13382 27 8C27 11.8662 23.8662 15 20 15Z"
+        style={{ fill: "var(--dark)" }}
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M29.5 17.5L25.39 13.39"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+};
+
+export const wrongSvg = () => {
+  return (
+    <svg
+      fill="#ff2049"
+      height="600px"
+      width="600px"
+      version="1.1"
+      id="Capa_1"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 -120 700 700"
+    >
+      <path
+        d="M285.08,230.397L456.218,59.27c6.076-6.077,6.076-15.911,0-21.986L423.511,4.565c-2.913-2.911-6.866-4.55-10.992-4.55
+   c-4.127,0-8.08,1.639-10.993,4.55l-171.138,171.14L59.25,4.565c-2.913-2.911-6.866-4.55-10.993-4.55
+   c-4.126,0-8.08,1.639-10.992,4.55L4.558,37.284c-6.077,6.075-6.077,15.909,0,21.986l171.138,171.128L4.575,401.505
+   c-6.074,6.077-6.074,15.911,0,21.986l32.709,32.719c2.911,2.911,6.865,4.55,10.992,4.55c4.127,0,8.08-1.639,10.994-4.55
+   l171.117-171.12l171.118,171.12c2.913,2.911,6.866,4.55,10.993,4.55c4.128,0,8.081-1.639,10.992-4.55l32.709-32.719
+   c6.074-6.075,6.074-15.909,0-21.986L285.08,230.397z"
+      />
+    </svg>
+  );
+};
+
+export const openSvg = () => {
+  return (
+    <svg
+      width="800px"
+      height="800px"
+      viewBox="60 0 512 512"
+      xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
+      role="img"
+      class="iconify iconify--fxemoji"
+      preserveAspectRatio="xMidYMid meet"
+    >
+      <path
+        fill="#ff7b00"
+        d="M225.023 406.129c0 26.571-21.257 48.36-48.36 48.36s-48.36-21.789-48.36-48.36s21.257-48.36 48.36-48.36s48.36 21.789 48.36 48.36zm-35.491-96.721H163.31c-11.857 0-21.617-9.324-22.159-21.168l-8.598-187.871c-.578-12.636 9.51-23.197 22.159-23.197h43.849c12.669 0 22.765 10.593 22.157 23.247L211.69 288.29c-.569 11.824-10.321 21.118-22.158 21.118z"
+      ></path>
+      <path
+        fill="#ff7b00"
+        d="M379.135 406.129c0 26.571-21.258 48.36-48.361 48.36c-27.103 0-48.36-21.789-48.36-48.36s21.258-48.36 48.36-48.36c27.103 0 48.361 21.789 48.361 48.36zm-35.492-96.721h-26.222c-11.857 0-21.617-9.324-22.159-21.168l-8.598-187.871c-.578-12.636 9.51-23.196 22.159-23.196h43.848c12.669 0 22.765 10.593 22.157 23.247L365.8 288.291c-.568 11.823-10.32 21.117-22.157 21.117z"
+      ></path>
+    </svg>
+  );
+};
+
+export const missingSvg = () => {
+  return (
+    <svg
+      height="800px"
+      width="800px"
+      version="1.1"
+      id="_x32_"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 650 650"
+      fill="#ffcf20"
+    >
+      <g>
+        <path
+          class="st0"
+          d="M396.138,85.295c-13.172-25.037-33.795-45.898-59.342-61.03C311.26,9.2,280.435,0.001,246.98,0.001
+        c-41.238-0.102-75.5,10.642-101.359,25.521c-25.962,14.826-37.156,32.088-37.156,32.088c-4.363,3.786-6.824,9.294-6.721,15.056
+        c0.118,5.77,2.775,11.186,7.273,14.784l35.933,28.78c7.324,5.864,17.806,5.644,24.875-0.518c0,0,4.414-7.978,18.247-15.88
+        c13.91-7.85,31.945-14.173,58.908-14.258c23.517-0.051,44.022,8.725,58.016,20.717c6.952,5.941,12.145,12.594,15.328,18.68
+        c3.208,6.136,4.379,11.5,4.363,15.574c-0.068,13.766-2.742,22.77-6.603,30.442c-2.945,5.729-6.789,10.813-11.738,15.744
+        c-7.384,7.384-17.398,14.207-28.634,20.479c-11.245,6.348-23.365,11.932-35.612,18.68c-13.978,7.74-28.77,18.858-39.701,35.544
+        c-5.449,8.249-9.71,17.686-12.416,27.641c-2.742,9.964-3.98,20.412-3.98,31.071c0,11.372,0,20.708,0,20.708
+        c0,10.719,8.69,19.41,19.41,19.41h46.762c10.719,0,19.41-8.691,19.41-19.41c0,0,0-9.336,0-20.708c0-4.107,0.467-6.755,0.917-8.436
+        c0.773-2.512,1.206-3.14,2.47-4.668c1.29-1.452,3.895-3.674,8.698-6.331c7.019-3.946,18.298-9.276,31.07-16.176
+        c19.121-10.456,42.367-24.646,61.972-48.062c9.752-11.686,18.374-25.758,24.323-41.968c6.001-16.21,9.242-34.431,9.226-53.96
+        C410.243,120.761,404.879,101.971,396.138,85.295z"
+        />
+        <path
+          class="st0"
+          d="M228.809,406.44c-29.152,0-52.788,23.644-52.788,52.788c0,29.136,23.637,52.772,52.788,52.772
+        c29.136,0,52.763-23.636,52.763-52.772C281.572,430.084,257.945,406.44,228.809,406.44z"
+        />
+      </g>
+    </svg>
+  );
+};
+
+export const invoiceSvg = () => {
+  return (
+    <svg
+      width="24"
+      height="24"
+      viewBox=".5 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M3.78 19.19V4.79999C3.78 3.65999 4.7 2.73999 5.84 2.73999H18.17C19.31 2.73999 20.23 3.65999 20.23 4.79999V15.08C20.23 16.22 19.31 17.14 18.17 17.14H5.84C4.7 17.14 3.78 18.06 3.78 19.19ZM3.78 19.19C3.78 20.33 4.7 21.25 5.84 21.25H18.17C19.31 21.25 20.23 20.33 20.23 19.19V15.08"
+        style={{ stroke: "var(--less-white)" }}
+        strokeWidth="1"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M8.92001 5.83002H15.08"
+        style={{ stroke: "var(--less-white)" }}
+        strokeWidth="1"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M14.06 8.91998H9.94"
+        style={{ stroke: "var(--less-white)" }}
+        strokeWidth="1"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+};

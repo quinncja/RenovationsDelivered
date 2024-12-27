@@ -8,7 +8,7 @@ import AddJobModal from "./addJobs/AddJobModal";
 import NewChangeOrderModal from "./newChangeOrder/NewChangeOrderModal";
 
 const Modal = () => {
-  const { modalType, closeModal, modalData} = useModalContext();
+  const { modalType, closeModal, modalData } = useModalContext();
 
   const renderModalContent = () => {
     switch (modalType) {
@@ -19,7 +19,13 @@ const Modal = () => {
       case "addJobs":
         return <AddJobModal closeSelf={closeModal} key="addJobsModal" />;
       case "changeOrder":
-        return <NewChangeOrderModal data={modalData} closeSelf={closeModal} key="newChangeOrderModal" />;
+        return (
+          <NewChangeOrderModal
+            data={modalData}
+            closeSelf={closeModal}
+            key="newChangeOrderModal"
+          />
+        );
       default:
         return null;
     }
