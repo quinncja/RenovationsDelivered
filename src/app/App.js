@@ -8,6 +8,7 @@ import "./App.css";
 import useScrollToTop from "utils/hooks/useScrollToTop";
 import useRoles from "utils/hooks/useRoles";
 import { Toaster } from "sonner";
+import Footer from "modules/footer/Footer";
 
 function App() {
   const isAuthenticated = useAuth();
@@ -17,13 +18,16 @@ function App() {
   useScrollToTop();
 
   return (
-    <div className="App">
-      {isAuthenticated && <Navbar />}
-      <Outlet />
-      <Modal />
-      <Toaster richColors position="top-center" />
-      <SystemMessage />
-    </div>
+    <>
+      <div className="App">
+        {isAuthenticated && <Navbar />}
+        <Outlet />
+        <Modal />
+        <Toaster richColors position="top-center" />
+        <SystemMessage />
+      </div>
+      <Footer />
+    </>
   );
 }
 

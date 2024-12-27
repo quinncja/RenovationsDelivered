@@ -6,6 +6,7 @@ import NewWidgetPopup from "modules/modals/newWidget/NewWidgetPopup";
 import Overlay from "modules/modals/Overlay";
 import AddJobModal from "./addJobs/AddJobModal";
 import NewChangeOrderModal from "./newChangeOrder/NewChangeOrderModal";
+import FeedbackModal from "./feedback/FeedbackModal";
 
 const Modal = () => {
   const { modalType, closeModal, modalData } = useModalContext();
@@ -18,6 +19,8 @@ const Modal = () => {
         return <NewWidgetPopup closeSelf={closeModal} key="newWidgetModal" />;
       case "addJobs":
         return <AddJobModal closeSelf={closeModal} key="addJobsModal" />;
+      case "feedback":
+        return <FeedbackModal closeSelf={closeModal} key="feedbackModal" />;
       case "changeOrder":
         return (
           <NewChangeOrderModal

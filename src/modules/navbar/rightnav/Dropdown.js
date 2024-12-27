@@ -4,6 +4,7 @@ import { dropDownFadeIn } from "utils/animations";
 import { motion } from "framer-motion";
 import useIsAdmin from "utils/hooks/useIsAdmin";
 import { useNavigate } from "react-router-dom";
+import { useMemo } from "react";
 
 Userfront.init("xbpwwqmn");
 
@@ -15,6 +16,13 @@ function Dropdown({ toggleSelf }) {
     toggleSelf();
     func();
   };
+
+  const isOwner = useMemo(() => {
+    if (Userfront && Userfront.user) {
+      return Userfront.user.hasRole("owner");
+    }
+    return false;
+  }, []);
 
   let dropdownOptions = [
     {
@@ -31,6 +39,17 @@ function Dropdown({ toggleSelf }) {
       ),
     },
   ];
+
+  if (isOwner) {
+    dropdownOptions = [
+      {
+        id: "6",
+        item: "Feedback",
+        onClick: () => handleClick(() => navigate("/feedback")),
+      },
+      ...dropdownOptions,
+    ];
+  }
 
   if (isAdmin) {
     dropdownOptions = [

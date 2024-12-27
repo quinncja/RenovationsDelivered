@@ -18,6 +18,7 @@ import ReportPage from "pages/reports/ReportPage";
 import OpenReport from "pages/reports/OpenReport";
 import JobCostDashboard from "pages/jobcost/JobCostDashboard";
 import BreakdownOpen from "widgets/jobWidgets/Breakdown/BreakdownOpen";
+import Feedback from "pages/feedback/Feedbacks";
 
 function RequireAuth({ children }) {
   let location = useLocation();
@@ -66,6 +67,14 @@ function Router() {
             element={
               <RequireAuth>
                 <Reports />
+              </RequireAuth>
+            }
+          />
+          <Route
+            path="/feedback"
+            element={
+              <RequireAuth>
+                <Feedback />
               </RequireAuth>
             }
           />

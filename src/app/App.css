@@ -819,6 +819,9 @@ h1 {
 .tracked-job:hover .x-button {
   opacity: 0.4;
 }
+.feedback-card:hover .x-button {
+  opacity: 0.4;
+}
 
 .dashboard-widget-open .widget-top {
   z-index: 10;
@@ -1690,7 +1693,7 @@ span.grippy::after {
   align-items: center;
   width: 100vw;
   height: 100vh;
-  z-index: 15;
+  z-index: 215;
   pointer-events: none;
 }
 .new-widget-popup {
@@ -3767,6 +3770,14 @@ h2 {
   padding-right: 2rem;
   align-items: center;
 }
+.feedback-card {
+  padding-inline: 4rem;
+  width: 50%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
 .cost-bottom-item {
   display: flex;
   flex-direction: column;
@@ -3800,4 +3811,94 @@ h2 {
 
 .invoice-body {
   padding-right: 4rem;
+}
+
+.App {
+  min-height: 100vh;
+}
+
+.footer {
+  position: relative;
+  bottom: 0;
+  height: 50px;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  background-color: var(--dark);
+  color: var(--less-white);
+  border-top: 2px solid var(--fancy-border);
+  justify-content: center;
+  align-items: center;
+  font-weight: 500;
+}
+
+.submission-form-button {
+  justify-self: flex-end;
+  background: var(--dark);
+  border: none;
+  outline: none;
+  color: var(--less-white);
+  font-weight: 500;
+  font-size: 16px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  border-radius: 5px;
+  height: fit-content;
+  padding: 5px 15 px;
+}
+
+.submission-form-button:hover {
+  cursor: pointer;
+  filter: brightness(var(--filter3));
+}
+
+.new-widget-top h2 {
+  padding-top: 20px;
+}
+
+.feedback-top {
+  flex-direction: column;
+  align-items: flex-start;
+  margin-bottom: -20px;
+}
+.feedback-input-group {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  gap: 8px;
+  padding: 10px;
+}
+
+.feedback-button {
+  background-color: var(--mid);
+  border-radius: 2px;
+  outline: none;
+  border: none;
+  padding: 12px 25px;
+  width: 160px;
+  color: var(--white);
+  font-size: 16px;
+}
+.feedback-textarea {
+  background-color: var(--mid);
+  color: var(--white);
+  border: 2px solid var(--mid);
+  outline: none;
+  border-radius: 2px;
+  resize: none;
+  line-height: 16px;
+  height: calc(16px * 6);
+  padding: 15px 20px;
+  font-size: 16px;
+  font-family: unset;
+}
+
+.feedback-textarea:focus {
+  border: 2px solid var(--primary);
+}
+
+.feedback-active {
+  background-color: var(--primary);
 }
