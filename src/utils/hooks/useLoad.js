@@ -1,12 +1,8 @@
-import { useEffect, useMemo, useCallback } from "react";
+import { useEffect } from "react";
 import { useModifiers } from "context/ModifierContext";
 import { useUserContext } from "context/UserContext";
 import { useUserSettings } from "context/UserSettingsContext";
-import { useItems } from "context/ItemsContext";
 import { useTrackedJobs } from "context/TrackedJobContext";
-import { chartObjects } from "graphs/ChartObjects";
-import { generateRandomId } from "utils/funcs";
-import useIsAdmin from "./useIsAdmin";
 
 const useLoad = (isAuthenticated) => {
   const { setPageModifiers } = useModifiers();

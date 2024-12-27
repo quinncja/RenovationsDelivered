@@ -205,8 +205,8 @@ export const JobDataProvider = ({ children }) => {
       data.spent = getSpent(data.costItems.posted, data.costItems.committed);
       data.updateCount = jobData.updates[widgetType];
       return data;
-      //eslint-disable-next-line
     },
+    //eslint-disable-next-line
     [jobData],
   );
 
@@ -234,8 +234,8 @@ export const JobDataProvider = ({ children }) => {
         data.updates.updateItems.committed.length +
         data.updates.updateItems.posted.length;
       return data;
-      //eslint-disable-next-line
     },
+    //eslint-disable-next-line
     [openData],
   );
 

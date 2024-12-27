@@ -9,7 +9,6 @@ import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import User from "./User";
 import { toast } from "sonner";
-import { set } from "lodash";
 
 export function Users() {
   const [items, setItems] = useState({
