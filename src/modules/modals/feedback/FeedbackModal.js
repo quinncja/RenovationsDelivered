@@ -85,7 +85,7 @@ function FeedbackModal({ closeSelf }) {
       <div className="new-widget-popup" onClick={(e) => e.stopPropagation()}>
         <div className="widget-top new-widget-top feedback-top">
           <h2>Submit Feedback</h2>
-          <label> How your dashboard can be improved? </label>
+          <label> How can your dashboard can be improved? </label>
           <button className="x-button widget-item" onClick={closeSelf}>
             {close()}
           </button>
