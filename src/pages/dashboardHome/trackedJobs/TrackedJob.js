@@ -1,9 +1,8 @@
 import { chevronRight, gridSvg } from "business/svg";
 import { useTrackedJobs } from "context/TrackedJobContext";
 import { getBaseJobName } from "pages/openItem/transformData";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { dollarFormatter, strToMods } from "utils/formatters";
-import { useJobData } from "utils/hooks/useJobData";
 import { useModifiers } from "context/ModifierContext";
 import { useNavigate } from "react-router-dom";
 import { calculateMargin, displayMargin, getMarginClass } from "utils/funcs";
@@ -27,7 +26,6 @@ function TrackedJob(props) {
     }
   };
   const data = accessJobData();
-  const loadData = useJobData();
   const abortControllerRef = useRef(null);
 
   const fetchPhaseData = async () => {
@@ -94,37 +92,6 @@ function TrackedJob(props) {
       </div>
     );
   };
-
-  useEffect(() => {
-    const fetchData = async () => {
-      if (data) {
-        return;
-      }
-      try {
-        if (abortControllerRef.current) {
-          abortControllerRef.current.abort();
-        }
-        const controller = new AbortController();
-        abortControllerRef.current = controller;
-        loadData(job, controller.signal);
-      } catch (error) {
-        if (error.name === "AbortError") {
-          console.log("Fetch request aborted");
-        } else {
-          console.error("Error fetching data:", error);
-        }
-      }
-    };
-
-    fetchData();
-
-    return () => {
-      if (abortControllerRef.current) {
-        abortControllerRef.current.abort();
-      }
-    };
-    //eslint-disable-next-line
-  }, [job]);
 
   const renderPhaseEntries = () => {
     if (!isOpen) return null;

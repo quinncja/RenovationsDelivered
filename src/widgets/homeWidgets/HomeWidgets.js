@@ -1,7 +1,5 @@
 import useIsAdmin from "utils/hooks/useIsAdmin";
 import ClosedPhases from "./ClosedPhases";
-import HomeToggle from "./HomeToggle";
-import OpenPhases from "./OpenPhases";
 import PendingCO from "./PendingCO";
 import Revenue from "./Revenue";
 
@@ -10,14 +8,10 @@ function HomeWidgets() {
 
   return (
     <>
+    <div className="home-widget-container">
       {isAdmin && (
-        <>
-          <HomeToggle />
           <Revenue />
-        </>
       )}
-      <div className="home-widget-container">
-        <OpenPhases />
         <ClosedPhases />
         <PendingCO />
       </div>

@@ -10,7 +10,8 @@ export const useTrackedJobs = () => useContext(TrackedJobContext);
 export const TrackedJobProvider = ({ children }) => {
   const { pushHistory } = useHistory();
   const { saveTrackedJobs } = useUserSettings();
-  const [trackedJobs, setTrackedJobs] = useState(undefined);
+  const [ trackedJobs, setTrackedJobs] = useState(undefined);
+  const [ loadingMap, setLoadingMap] = useState(true)
   const [dataMap, setDataMap] = useState({});
 
   const updateTrackedJobsFn = updateTrackedJobsAction(
@@ -33,7 +34,7 @@ export const TrackedJobProvider = ({ children }) => {
     };
     pushHistory(historyObj);
   };
-
+  
   const updateDataMap = (id, data, phase = false) => {
     if (phase) {
       setDataMap((prev) => {
@@ -57,14 +58,67 @@ export const TrackedJobProvider = ({ children }) => {
     }
   };
 
+  const [marginFilter, setMarginFilter] = useState(false);
+  const [searchFilter, setSearchFilter] = useState("");
+
+  const filterJobs = (jobArray) => {
+    if (!jobArray || jobArray.length === 0) return [];
+    
+    return jobArray.filter(jobNum => {
+      if(Object.keys(dataMap).length === 0) return true;
+
+      const job = dataMap[jobNum];
+      
+      if (!job || job.length === 0) return false;
+      
+      const jobData = job[0];
+      
+      const searchMatch = !searchFilter || 
+        (jobData.JobName && jobData.JobName.toLowerCase().includes(searchFilter.toLowerCase())) ||
+        (jobData.ClientName && jobData.ClientName.toLowerCase().includes(searchFilter.toLowerCase())) ||
+        (jobData.ProjectManager && jobData.ProjectManager.toLowerCase().includes(searchFilter.toLowerCase()));
+      
+      if (!searchMatch) return false;
+      
+      if (!marginFilter) return true;
+      
+      const totalContract = jobData.TotalContract || 0;
+      const totalCost = jobData.TotalCost || 0;
+    
+      if (totalContract === 0) return false;
+      
+      const marginPercent = ((totalContract - totalCost) / totalContract) * 100;
+      
+      switch (marginFilter) {
+        case "high": 
+          return marginPercent > 25;
+        case "target": 
+          return marginPercent <= 25 && marginPercent > 20;
+        case "under": 
+          return marginPercent <= 20 && marginPercent > 0;
+        case "critical": 
+          return marginPercent <= 0;
+        default:
+          return true;
+      }
+    });
+  };
+
   return (
     <TrackedJobContext.Provider
       value={{
         trackedJobs,
+        setDataMap,
         setTrackedJobs,
         updateTrackedJobs,
         dataMap,
         updateDataMap,
+        filterJobs,
+        marginFilter,
+        setMarginFilter,
+        setSearchFilter,
+        loadingMap, 
+        setLoadingMap
       }}
     >
       {children}

@@ -57,6 +57,38 @@ export async function fetchHomeData(id, body, signal) {
   }
 }
 
+export async function fetchJobListData(joblist, signal) {
+  try {
+    const url = new URL(`${apiUrl}joblist-data`);
+    joblist.forEach(job => {
+      url.searchParams.append('jobs', job);
+    });
+    const response = await axios.get(url.toString(), {
+      ...ngrokHeaders,
+      signal
+    });
+    
+    return response.data;
+  } catch (error) {
+    if (axios.isCancel(error)) {
+    } else if (
+      error.response &&
+      error.response.data &&
+      error.response.data.error
+    ) {
+      if (error.response.status === 500) {
+        toast.error(
+          "VPN connection error. Please wait a few minutes and try again",
+        );
+      }
+      console.error(error.response.data.error);
+    } else {
+      console.error(`Error loading job list data:`, error.message);
+    }
+    return null;
+  }
+}
+
 export async function fetchChartData(modifiers, signal) {
   try {
     const response = await axios.get(`${apiUrl}chart-data`, {

@@ -230,6 +230,30 @@ export const ProjectProvider = ({ children }) => {
     [getPhasesForJob],
   );
 
+  const getActivePhasesForHome = useCallback(
+    (jobNums = []) => {
+      let count = 0;
+
+      if (jobNums.length === 0) {
+        return 0;
+      } else {
+        jobNums.forEach((jobNum) => {
+          const jobPhases = getPhasesForJob(jobNum);
+          if (jobPhases && jobPhases.length > 0) {
+            jobPhases.forEach((phase) => {
+              if (phase.status === 4) {
+                count += 1;
+              }
+            });
+          }
+        });
+      }
+
+      return count;
+    },
+    [getAllPhases, getPhasesForJob],
+  );
+
   const getActivePhases = useCallback(
     (jobNums = []) => {
       let count = 0;
@@ -325,6 +349,7 @@ export const ProjectProvider = ({ children }) => {
         countActivePhases,
         countClosedPhases,
         sortedPhasesPerJob,
+        getActivePhasesForHome,
         getActivePhases,
         getClosedPhases,
         getJobStr,

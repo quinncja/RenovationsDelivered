@@ -860,7 +860,7 @@ export const calendarSvg = () => {
     <svg
       width="24"
       height="24"
-      viewBox="0 0 24 24"
+      viewBox="0 0 24 22"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
@@ -1400,5 +1400,17 @@ export const gridSvg = () => {
     <path d="M8.67999 20.36H5.32001C4.39001 20.36 3.64 19.61 3.64 18.68V15.32C3.64 14.39 4.39001 13.64 5.32001 13.64H8.67999C9.60999 13.64 10.36 14.39 10.36 15.32V18.68C10.36 19.61 9.60999 20.36 8.67999 20.36Z" style={{ stroke: "var(--less-white)" }} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
     <path d="M18.68 20.36H15.32C14.39 20.36 13.64 19.61 13.64 18.68V15.32C13.64 14.39 14.39 13.64 15.32 13.64H18.68C19.61 13.64 20.36 14.39 20.36 15.32V18.68C20.36 19.61 19.61 20.36 18.68 20.36Z" style={{ stroke: "var(--less-white)" }}  strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
     </svg>
+  )
+}
+
+export const buildingSvg = () => {
+  return(
+    <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 22" fill="none" style={{ stroke: "var(--less-white)" }} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" class="lucide lucide-building-icon lucide-building"><rect width="16" height="20" x="4" y="2" rx="2" ry="2"/><path d="M9 22v-4h6v4"/><path d="M8 6h.01"/><path d="M16 6h.01"/><path d="M12 6h.01"/><path d="M12 10h.01"/><path d="M12 14h.01"/><path d="M16 10h.01"/><path d="M16 14h.01"/><path d="M8 10h.01"/><path d="M8 14h.01"/></svg>
+  )
+}
+
+export const searchSvg = () => {
+  return(
+    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" style={{ stroke: "var(--less-white)" }} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" class="lucide lucide-search-icon lucide-search"><path d="m21 21-4.34-4.34"/><circle cx="11" cy="11" r="8"/></svg>
   )
 }

@@ -100,6 +100,7 @@ h2{
 h3{
   font-size: 18px;
   margin: 0;
+  color: var(--white);
 }
 h4 {
   font-size: 14px;
@@ -1846,10 +1847,24 @@ span.grippy::after {
   color: var(--green);
 }
 .semi-good {
-  color: var(--yellow)
+  color: var(--yellow);
 }
 .semi-bad {
-  color: var(--accent)
+  color: var(--accent);
+}
+
+
+.over-dot {
+  background-color: var(--red);
+}
+.under-dot {
+  background-color: var(--green);
+}
+.semi-good-dot {
+  background-color: var(--yellow)
+}
+.semi-bad-dot {
+  background-color: var(--accent);
 }
 
 .light-red {
@@ -2111,6 +2126,7 @@ span.grippy::after {
 .phase-dot-small{ 
   width: 8px;
   height: 8px;
+  border-radius: 50%;
 }
 
 .job-buttons {
@@ -2739,6 +2755,47 @@ h1 {
   overflow: hidden;
   padding-inline: 5px;
 }
+.tracked-jobs-header{
+  display: flex;
+  gap: 10px;
+  padding-bottom: 10px;
+  width: 100%;
+}
+
+.tjh-searchbar-container{
+  height: 100%;
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  background-color: var(--dark);
+  border: 1px solid var(--fancy-border);
+  border-radius: 5px;
+  gap: 10px;
+  padding-inline: 12px;
+  align-items: center;
+  padding-block: 8px;
+}
+.tjh-searchbar{
+  box-sizing: border-box;
+  background: none;
+  height: 100%;
+  width: 100%;
+  border-radius: 5px;
+  color: var(--white);
+  border: none;
+  font-size: 14px;
+}
+
+.tjh-searchbar-container:focus-within{
+  outline: none;
+  border: 1px solid var(--primary);
+  filter: brightness(1.05);
+}
+.tjh-searchbar:focus{
+  outline: none;
+  filter: brightness(1.05);
+}
+
 
 .tracked-job:hover {
   filter: brightness(1.2);
@@ -2770,6 +2827,37 @@ h1 {
   background-color: #394050;
   padding: 10px;
   border-radius: 5px;
+}
+
+.tjh-box{
+  background-color: #394050;
+  padding: 6px;
+  border-radius: 5px;
+  width: 28px;
+  height: 28px;
+}
+
+.margin-filter{
+  background-color: var(--dark);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--white) !important;
+  padding: 5px 15px;
+  height: fit-content;
+  border-radius: 15px;
+  border: 1px solid var(--fancy-border);
+  align-self: flex-end;
+  cursor: pointer;
+}
+
+.margin-filter-active{
+    background: var(--primary);
+    border: 1px solid var(--primary);
+
+}
+.margin-filter h4{
+  color: var(--white) !important;
 }
 
 .phase-box h3{
@@ -2905,6 +2993,24 @@ h1 {
   flex-wrap: wrap;
   padding-bottom: 40px;
 }
+.tjh-widget{
+  position: relative;
+  display: flex;
+  background-color: var(--dark);
+  border: 1px solid var(--fancy-border);
+
+  padding-left: 15px;
+  align-items: center;
+  gap: 15px;
+  width: 220px !important;
+  border-radius: 5px;
+  box-sizing: border-box;
+  flex-shrink: 0;
+}
+.tjh-widget .h4{
+  font-weight: 400 !important;
+}
+
 
 .home-widget {
   background-color: var(--dark);
@@ -3023,21 +3129,27 @@ h1 {
 }
 .home-widget-long {
   display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  width: 730px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 20px;
+  width: 460px;
   padding-inline: 35px;
-  height: 150px;
-  gap: 50px;
+  height: 160px;
   margin-bottom: 10px;
   box-sizing: border-box;
 }
 
+.thisyear{
+  color: var(--green) !important;
+  font-size: 14px !important;
+  font-weight: 500;
+}
 .home-widget-long-loading {
   display: flex;
   justify-content: center;
-  width: 730px;
-  height: 150px;
+  width: 460px;
+  height: 160px;
   margin-bottom: 10px;
   box-sizing: border-box;
 }
@@ -3598,6 +3710,10 @@ p {
   filter: none !important;
 }
 
+.dashboard-welcome h1{
+  margin-bottom: 0;
+  padding-bottom: 20px;
+}
 .user-page h1 {
   margin-bottom: 1rem;
 }

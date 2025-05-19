@@ -16,7 +16,7 @@ function Revenue() {
 
   const year = String(new Date().getFullYear());
   const yearNum = year.slice(-2);
-
+  
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -45,25 +45,31 @@ function Revenue() {
       </div>
     );
   }
+  const percentageOfAllTime = (yearSum / totalSum) * 100;
+
+
   return (
     <div className="home-widget home-widget-long">
       <div
         style={{ display: "flex", flexDirection: "column", textAlign: "left" }}
       >
-        <span className="home-widget-title"> {year} Revenue</span>
-        <span className={`home-widget-num smaller-num`}>
+        <h4> {year} Revenue</h4>
+        <h2 style={{fontSize: '28px'}}>
           {" "}
           {dollarFormatter(yearSum)}{" "}
-        </span>
+        </h2>
       </div>
       <div
         style={{ display: "flex", flexDirection: "column", textAlign: "left" }}
       >
-        <span className="home-widget-title"> All Time</span>
-        <span className={`home-widget-num smaller-num`}>
+        <h4> All Time</h4>
+        <div style={{display: "flex", flexDirection: "row", gap: "15px", alignItems: "baseline"}}> 
+        <h2 style={{fontSize: '28px'}}>
           {" "}
           {dollarFormatter(totalSum)}{" "}
-        </span>
+        </h2>
+        <span className="thisyear"> + {percentageOfAllTime.toFixed(1)}% this year </span>
+        </div>
       </div>
     </div>
   );
