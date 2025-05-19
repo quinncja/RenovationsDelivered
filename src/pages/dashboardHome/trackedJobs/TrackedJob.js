@@ -1,4 +1,4 @@
-import { chevronRight, close, gridSvg, personSvg } from "business/svg";
+import { chevronRight, gridSvg } from "business/svg";
 import { useTrackedJobs } from "context/TrackedJobContext";
 import { getBaseJobName } from "pages/openItem/transformData";
 import { useEffect, useRef, useState } from "react";
@@ -94,25 +94,6 @@ function TrackedJob(props) {
       </div>
     );
   };
-
-  const openJobBody = () => {
-    return(
-      <div> 
-        <div>
-          <h4> Project Manager </h4>
-          <div> {personSvg()} {data.ProjectManager} </div>
-        </div>
-        <div>
-          <h4> Total </h4>
-          <div> {personSvg()} {data.ProjectManager} </div>
-        </div>
-        <div>
-          <h4> Project Manager </h4>
-         <div> {personSvg()} {data.ProjectManager} </div>
-        </div>
-      </div>
-    )
-  }
 
   useEffect(() => {
     const fetchData = async () => {
