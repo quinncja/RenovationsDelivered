@@ -2695,6 +2695,9 @@ h1 {
   box-sizing: border-box;
   padding-block: 15px;
 }
+.hover-sub:hover{
+  text-decoration: underline;
+}
 .job-body {
   display: flex;
   justify-content: space-between;

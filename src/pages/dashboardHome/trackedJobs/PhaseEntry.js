@@ -35,7 +35,7 @@ function PhaseEntry(props){
                 </div>
                 </div>
                 <div className="phase-right">
-                <div onClick={(e) => onSubClick(e)} style={{display: "flex", gap: "7px", alignItems: "baseline"}}> <h4> <strong style={{ color: "var(--white)" }}> {SubAmount} </strong> {SubAmount === 1 ? "sub contract" : "sub contracts"} </h4> </div>
+                <div className={SubAmount > 0 ? "hover-sub" : ""} onClick={(e) => onSubClick(e)} style={{display: "flex", gap: "7px", alignItems: "baseline"}}> <h4> <strong style={{ color: "var(--white)" }}> {SubAmount} </strong> {SubAmount === 1 ? "sub contract" : "sub contracts"} </h4> </div>
                 <h3 style={{justifySelf: "end"}} className={`${getMarginClass(margin)}`}> {displayMargin(margin)} </h3>
                 </div>
             </div>
