@@ -1,4 +1,5 @@
 import { dollarFormatter } from "utils/formatters";
+import { getMarginClass } from "utils/funcs";
 import useIsAdmin from "utils/hooks/useIsAdmin";
 import { useSingle } from "utils/hooks/useSingle";
 
@@ -14,7 +15,7 @@ export const YTDDisplay = ({ data, open }) => {
     <div className={` ${open ? "ytd-open" : ""} ytd-display `}>
       {single && (
         <div className={`ytd-no-admin ytd-single`}>
-          <h2 className={`${underBudget ? "under" : "over"}`}> {text} </h2>
+          <h2 className={`${getMarginClass(margin)}`}> {text} </h2>
         </div>
       )}
       {isAdmin && (

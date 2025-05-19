@@ -87,6 +87,7 @@ export const formatPhase = (phase) => {
 };
 
 export const phaseNumToMonth = (phase) => {
+  console.log(phase)
   let phaseMap = {
     "00": "January",
     "01": "January",
@@ -98,6 +99,23 @@ export const phaseNumToMonth = (phase) => {
     "07": "July",
     "08": "August",
     "09": "September",
+    "10": "October",
+    "11": "November",
+    "12": "December",
+    "13": "Extra Work",
+    "14": "Extra Work",
+    "15": "Extra Work",
+    "16": "Extra Work",
+    0: "January",
+    1: "January",
+    2: "February",
+    3: "March",
+    4: "April",
+    5: "May",
+    6: "June",
+    7: "July",
+    8: "August",
+    9: "September",
     10: "October",
     11: "November",
     12: "December",

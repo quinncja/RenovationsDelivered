@@ -41,14 +41,14 @@ export const close = () => {
       <path
         d="M18 5.91L6 18.09"
         style={{ stroke: "var(--less-white)" }}
-        strokeWidth="2"
+        strokeWidth="1.5"
         strokeLinecap="round"
         strokeLinejoin="round"
       />
       <path
         d="M6 5.91L18 18.09"
         style={{ stroke: "var(--less-white)" }}
-        strokeWidth="2"
+        strokeWidth="1.5"
         strokeLinecap="round"
         strokeLinejoin="round"
       />
@@ -1383,3 +1383,22 @@ export const submissionSvg = () => {
     </svg>
   );
 };
+
+export const chevronRight = () => {
+  return(
+    <svg width="10" height="15" viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M1 13L7 7L1 1" style={{ stroke: "var(--less-white)" }}  strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+    </svg>
+  )
+}
+
+export const gridSvg = () => {
+  return(
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M8.67999 10.36H5.32001C4.39001 10.36 3.64 9.60999 3.64 8.67999V5.32001C3.64 4.39001 4.39001 3.64001 5.32001 3.64001H8.67999C9.60999 3.64001 10.36 4.39001 10.36 5.32001V8.67999C10.36 9.60999 9.60999 10.36 8.67999 10.36Z" style={{ stroke: "var(--less-white)" }}  strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+    <path d="M18.68 10.36H15.32C14.39 10.36 13.64 9.60999 13.64 8.67999V5.32001C13.64 4.39001 14.39 3.64001 15.32 3.64001H18.68C19.61 3.64001 20.36 4.39001 20.36 5.32001V8.67999C20.36 9.60999 19.61 10.36 18.68 10.36Z" style={{ stroke: "var(--less-white)" }}  strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+    <path d="M8.67999 20.36H5.32001C4.39001 20.36 3.64 19.61 3.64 18.68V15.32C3.64 14.39 4.39001 13.64 5.32001 13.64H8.67999C9.60999 13.64 10.36 14.39 10.36 15.32V18.68C10.36 19.61 9.60999 20.36 8.67999 20.36Z" style={{ stroke: "var(--less-white)" }} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+    <path d="M18.68 20.36H15.32C14.39 20.36 13.64 19.61 13.64 18.68V15.32C13.64 14.39 14.39 13.64 15.32 13.64H18.68C19.61 13.64 20.36 14.39 20.36 15.32V18.68C20.36 19.61 19.61 20.36 18.68 20.36Z" style={{ stroke: "var(--less-white)" }}  strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+    </svg>
+  )
+}

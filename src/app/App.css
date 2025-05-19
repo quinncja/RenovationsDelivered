@@ -15,7 +15,7 @@
   --dark-button-filter: 180%;
   --dark-light: #72777f;
   --dark-border-color: var(--activePrimary);
-  --dark-border: 2px solid var(--border-color);
+  --dark-border: 1px solid var(--border-color);
   --dark-less-white: #d2d1d1;
   --dark-white: #f3f3f3;
   --dark-fancy-border: #3e444cae;
@@ -38,7 +38,7 @@
   --light-button-filter: 90%;
   --light-light: #f4f4f9;
   --light-border-color: var(--activePrimary);
-  --light-border: 2px solid var(--border-color);
+  --light-border: 1px solid var(--border-color);
   --light-less-white: #929292;
   --light-white: #616060;
   --light-fancy-border: rgba(96, 96, 96, 0.143);
@@ -91,6 +91,21 @@
 }
 button {
   font-size: 13px;
+}
+
+h2{
+  font-size: 22px;
+  margin: 0;
+}
+h3{
+  font-size: 18px;
+  margin: 0;
+}
+h4 {
+  font-size: 14px;
+  font-weight: 500;
+    margin: 0;
+  color: #acadae;
 }
 
 *::-webkit-scrollbar {
@@ -222,7 +237,7 @@ h1 {
   background-color: var(--fancy-border);
   content: "";
   height: calc(100%);
-  width: calc(100% + 2px);
+  width: calc(100% + 1px);
   position: absolute;
   clip-path: polygon(
     evenodd,
@@ -232,9 +247,9 @@ h1 {
     0% 100%,
     0% 0%,
     0px 0px,
-    calc(100% - 2px) 0px,
-    calc(100% - 2px) calc(100% - 2px),
-    0px calc(100% - 2px),
+    calc(100% - 1px) 0px,
+    calc(100% - 1px) calc(100% - 1px),
+    0px calc(100% - 1px),
     0px 0px
   );
 }
@@ -254,23 +269,23 @@ h1 {
 .nc-right::before {
   background-color: var(--fancy-border);
   content: "";
-  height: calc(100% + 2px);
-  width: calc(100% + 2px);
+  height: calc(100% + 1px);
+  width: calc(100% + 1px);
   position: absolute;
   backdrop-filter: blur(500px);
   -webkit-backdrop-filter: blur(500px);
   clip-path: polygon(
     evenodd,
-    2px 0%,
+    1px 0%,
     100% 0%,
     100% 100%,
     0% 100%,
     0% 0%,
     0px 0px,
     100% 0px,
-    100% calc(100% - 2px),
-    2px calc(100% - 2px),
-    2px 2px
+    100% calc(100% - 1px),
+    1px calc(100% - 1px),
+    1px 1px
   );
 }
 .btn-wrapper {
@@ -491,7 +506,7 @@ h1 {
 .breakdown-widget {
   position: relative;
   background-color: var(--dark);
-  border: 2px solid var(--fancy-border);
+  border: 1px solid var(--fancy-border);
   box-sizing: border-box;
   border-radius: 2px;
   grid-column: span 2;
@@ -607,7 +622,7 @@ h1 {
   width: 310px;
   height: 310px;
   background-color: var(--dark);
-  border: 2px solid var(--fancy-border);
+  border: 1px solid var(--fancy-border);
   box-sizing: border-box;
   border-radius: 2px;
 }
@@ -681,12 +696,13 @@ h1 {
 }
 
 .context-menu {
-  border: 2px solid var(--fancy-border);
+  border: 1px solid var(--fancy-border);
   background-color: var(--mid);
   display: flex;
   flex-direction: column;
 }
 .context-menu button {
+  
   width: 100%;
   border-radius: 0;
   padding: 20px;
@@ -847,7 +863,7 @@ h1 {
   cursor: unset;
   border-radius: 0px;
   background-color: var(--dark);
-  border: 2px solid var(--fancy-border);
+  border: 1px solid var(--fancy-border);
   box-sizing: border-box;
 }
 .settings {
@@ -1588,8 +1604,8 @@ span.grippy::after {
   transition: background-color 0.3s ease-in-out;
   z-index: 1;
   background-color: var(--dark);
-  border-bottom: 2px solid var(--fancy-border) !important;
-  border-right: 2px solid var(--fancy-border) !important;
+  border-bottom: 1px solid var(--fancy-border) !important;
+  border-right: 1px solid var(--fancy-border) !important;
   box-sizing: border-box;
   margin-left: -1.8px;
 }
@@ -1705,7 +1721,7 @@ span.grippy::after {
   padding-bottom: 20px;
   box-sizing: border-box;
   background-color: var(--dark);
-  border: 2px solid var(--fancy-border);
+  border: 1px solid var(--fancy-border);
   color: var(--less-white);
   pointer-events: auto;
   position: relative;
@@ -1791,7 +1807,7 @@ span.grippy::after {
   margin-top: 20px;
   font-size: 14px;
   font-weight: 500;
-  border: 2px solid var(--fancy-border);
+  border: 1px solid var(--fancy-border);
   background-color: var(--dark);
   padding: 8px 12px;
   color: var(--less-white);
@@ -1829,9 +1845,22 @@ span.grippy::after {
 .under {
   color: var(--green);
 }
+.semi-good {
+  color: var(--yellow)
+}
+.semi-bad {
+  color: var(--accent)
+}
 
 .light-red {
   background-color: #ff204995;
+}
+
+.green{
+  color: var(--green)
+}
+.orange{
+  color: var(--accent)
 }
 .ytd-display {
   position: relative;
@@ -2078,6 +2107,10 @@ span.grippy::after {
 }
 .phase-dot-Complete {
   background-color: var(--accent);
+}
+.phase-dot-small{ 
+  width: 8px;
+  height: 8px;
 }
 
 .job-buttons {
@@ -2386,7 +2419,7 @@ span.grippy::after {
 
 .addjobs-button {
   position: relative;
-  border: 2px solid var(--fancy-border);
+  border: 1px solid var(--fancy-border);
   background-color: var(--dark);
   width: calc(var(--widget-size) / 0.5);
   height: calc(var(--widget-size) / 1.6);
@@ -2604,48 +2637,153 @@ h1 {
   flex-direction: column;
   width: 100%;
   padding-top: 10px;
-  gap: 15px;
+  gap: 10px;
   padding-bottom: 180px;
+  
+}
+
+.tracked-job-container{
+  border: 1px solid var(--fancy-border);
+  border-radius: 5px;
+  background-color: var(--background);
 }
 
 .tracked-job {
   background-color: var(--dark);
-  border: 2px solid var(--fancy-border);
-  height: 150px;
+  height: 80px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   padding-inline: 20px;
   position: relative;
-  gap: 20px;
+  gap: 5px;
+  border-radius: 5px;
+}
+.tracked-job-open{
+  border-radius: 5px 5px 0px 0px;
 }
 
 .tracked-job .x-button {
   justify-self: flex-end;
+}
+.phases-container{
+  color: var(--white);
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  justify-content: flex-start;
+  text-align: left;
+  width: 95%;
+  margin-inline: auto;
+  padding-top: 20px;
+  padding-bottom: 30px;
+}
+.admin-job-details{
+  margin-top: 20px;
+  color: var(--white);
+  display: flex;
+  flex-direction: row;
+  gap: 50px;
+  justify-content: flex-start;
+  text-align: left;
+  width: 95%;
+  margin-inline: auto;
+  background-color: var(--dark);
+  border-radius: 5px;
+  align-items: center;
+  padding-inline: 25px;
+  box-sizing: border-box;
+  padding-block: 15px;
 }
 .job-body {
   display: flex;
   justify-content: space-between;
   width: 100%;
   overflow: hidden;
+  padding-inline: 10px;
+  padding-left: 15px;
 }
 
 .job-left {
   display: flex;
   flex-direction: column;
   color: var(--white);
-  justify-content: center;
   text-align: left;
-  height: 100%;
-  gap: 10px;
+  justify-content: center;
+  gap: 5px
 }
 
 .job-right {
-  display: flex;
-  justify-content: center;
+  width: clamp(250px, 30%, 400px);
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
   align-items: center;
+  margin-block: auto;
+  gap: 10px;
+  color: var(--white);
+  align-self: flex-end;
+}
+
+.phase-job{
+  min-height: 60px;
+  height: max-content;
+}
+
+.phase-body {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  overflow: hidden;
+  padding-inline: 5px;
+}
+
+.tracked-job:hover {
+  filter: brightness(1.2);
+  cursor: pointer;
+}
+
+.admin-info{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  background-color: var(--background);
+  padding: 12px;
+  border-radius: 5px;
+}
+.admin-info h4 {
+  font-weight: 400;
+}
+
+.phase-left {
+  display: flex;
+  flex-direction: row;
+  color: var(--white);
+  align-items: center;
+  justify-content: baseline;
   gap: 10px;
 }
+
+.phase-box{
+  background-color: #394050;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.phase-box h3{
+  font-size: 16px
+}
+
+.phase-right {
+  width: clamp(200px, 20%, 300px);
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  align-items: center;
+  margin-block: auto;
+  gap: 20px;
+  color: var(--white);
+  align-self: flex-end;
+}
+
 
 .hl-jobline {
   width: 2px;
@@ -2678,7 +2816,7 @@ h1 {
 }
 .switch-button-container {
   background-color: var(--dark);
-  border: 2px solid var(--fancy-border);
+  border: 1px solid var(--fancy-border);
   border-top: none;
   display: flex;
   justify-content: center;
@@ -2754,7 +2892,9 @@ h1 {
     text-align: center !important;
   }
 }
-
+.widget-item:hover{
+  opacity: .8 !important;
+}
 .home-widget-container {
   display: flex;
   flex-direction: row;
@@ -2765,7 +2905,7 @@ h1 {
 
 .home-widget {
   background-color: var(--dark);
-  border: 2px solid var(--fancy-border);
+  border: 1px solid var(--fancy-border);
   height: 160px;
   display: flex;
   flex-direction: column;
@@ -2785,7 +2925,7 @@ h1 {
 
 .report-card {
   background-color: var(--dark);
-  border: 2px solid var(--fancy-border);
+  border: 1px solid var(--fancy-border);
   height: 160px;
   box-sizing: border-box;
   color: var(--white);
@@ -2836,7 +2976,7 @@ h1 {
   height: 55px;
   background-color: var(--dark);
   color: white;
-  border: 2px solid var(--fancy-border);
+  border: 1px solid var(--fancy-border);
   cursor: pointer;
 }
 .run-button-wide {
@@ -3062,7 +3202,7 @@ h1 {
 }
 .user-card {
   background-color: var(--dark);
-  border: 2px solid var(--fancy-border);
+  border: 1px solid var(--fancy-border);
   height: 100px;
   display: flex;
   flex-direction: row;
@@ -3162,7 +3302,7 @@ p {
   display: flex;
   flex-direction: column;
   color: var(--less-white);
-  border: 2px solid var(--fancy-border);
+  border: 1px solid var(--fancy-border);
   gap: 2rem;
   width: 100%;
   z-index: 3;
@@ -3343,7 +3483,7 @@ p {
   padding: 5px 8px;
   padding-top: 6px;
   border-radius: 2px;
-  border: 2px solid var(--fancy-border);
+  border: 1px solid var(--fancy-border);
 }
 .co-button:hover {
   cursor: pointer;
@@ -3596,7 +3736,7 @@ p {
 
 .run-item {
   background-color: var(--dark);
-  border: 2px solid var(--fancy-border);
+  border: 1px solid var(--fancy-border);
   height: 150px;
   display: flex;
   flex-direction: row;
@@ -3638,7 +3778,7 @@ p {
 
 .cost-item {
   background-color: var(--dark);
-  border: 2px solid var(--fancy-border);
+  border: 1px solid var(--fancy-border);
   display: flex;
   flex-direction: column;
   position: relative;
@@ -3884,7 +4024,7 @@ h2 {
 .feedback-textarea {
   background-color: var(--mid);
   color: var(--white);
-  border: 2px solid var(--mid);
+  border: 1px solid var(--mid);
   outline: none;
   border-radius: 2px;
   resize: none;
@@ -3896,7 +4036,7 @@ h2 {
 }
 
 .feedback-textarea:focus {
-  border: 2px solid var(--primary);
+  border: 1px solid var(--primary);
 }
 
 .feedback-active {

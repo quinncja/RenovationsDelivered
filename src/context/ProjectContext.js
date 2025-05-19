@@ -219,6 +219,17 @@ export const ProjectProvider = ({ children }) => {
     [getPhasesForJob],
   );
 
+  const countClosedPhases = useCallback(
+    (jobNum) => {
+      const phases = getPhasesForJob(jobNum);
+      if (!phases) return 0;
+
+      const count = phases.filter((phase) => phase.status > 4).length;
+      return count;
+    },
+    [getPhasesForJob],
+  );
+
   const getActivePhases = useCallback(
     (jobNums = []) => {
       let count = 0;
@@ -312,6 +323,7 @@ export const ProjectProvider = ({ children }) => {
         getPhasesByYear,
         getLastPhaseForJob,
         countActivePhases,
+        countClosedPhases,
         sortedPhasesPerJob,
         getActivePhases,
         getClosedPhases,

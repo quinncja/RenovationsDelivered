@@ -164,3 +164,21 @@ export function hslToHex(hslString) {
   const toHex = (num) => num.toString(16).padStart(2, "0");
   return `#${toHex(r)}${toHex(g)}${toHex(b)}`;
 }
+
+export const calculateMargin = (contract, cogs) => {
+  if (!contract || !cogs) return "-- %";
+  return (100 * (contract - cogs) / contract)
+}
+
+export const getMarginClass = (margin) => {
+  if(margin === "-- %") return ""
+  else if(margin < 0) return "over"
+  else if(margin > 25) return ""
+  else if(margin > 20) return "semi-good"
+  else return "semi-bad"
+}
+
+export const displayMargin = (margin) => {
+  if(margin === "-- %") return margin;
+  return `${(margin).toFixed(2)}%`
+}

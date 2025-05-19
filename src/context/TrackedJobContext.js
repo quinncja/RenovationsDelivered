@@ -34,13 +34,27 @@ export const TrackedJobProvider = ({ children }) => {
     pushHistory(historyObj);
   };
 
-  const updateDataMap = (id, data) => {
-    setDataMap((prev) => {
-      return {
-        ...prev,
-        [id]: data,
-      };
-    });
+  const updateDataMap = (id, data, phase = false) => {
+    if (phase) {
+      setDataMap((prev) => {
+        const existingData = prev[id] || {};
+        
+        return {
+          ...prev,
+          [id]: {
+            ...existingData,
+            phases: data 
+          }
+        };
+      });
+    } else {
+      setDataMap((prev) => {
+        return {
+          ...prev,
+          [id]: data
+        };
+      });
+    }
   };
 
   return (

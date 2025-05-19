@@ -47,15 +47,8 @@ function ProjectTabs({ isAdmin }) {
     };
   }, [trackedJobs, dataMap, loadData]);
 
-  const handleTabClick = (job, jobData, activeTab) => {
-    let phaseObj;
-    if (jobData.openPhases.length > 0) {
-      phaseObj = jobData.openPhases[0];
-    } else {
-      phaseObj = jobData.closedPhase;
-    }
-    const { phase, year } = phaseObj;
-    const mods = strToMods(job, year, phase);
+  const handleTabClick = (job,) => {
+    const mods = strToMods(job, null, null);
     updatePageModifiers(mods);
   };
 

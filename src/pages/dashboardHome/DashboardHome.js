@@ -22,7 +22,7 @@ function DashboardHome() {
           <AddJobs />
         )
       ) : (
-        <div className="loading-widget" />
+        <div/>
       )}
     </div>
   );

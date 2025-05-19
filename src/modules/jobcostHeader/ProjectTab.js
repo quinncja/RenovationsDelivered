@@ -18,6 +18,7 @@ function ProjectTab({
   });
   const contextMenuRef = useRef(null);
 
+  console.log(jobData)
   useEffect(() => {
     if (contextMenu.visible) {
       const handleClickOutside = (event) => {
@@ -49,7 +50,7 @@ function ProjectTab({
         onClick={() => onTabClick(job, jobData, activeTab)}
         onContextMenu={handleContextMenu}
       >
-        {getBaseJobName(jobData.jobnme)}
+        {getBaseJobName(jobData[0].JobName)}
       </button>
       {contextMenu.visible && (
         <ContextMenu

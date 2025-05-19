@@ -8,9 +8,15 @@ export function SingleMargin(props) {
     currMargin = data[0]?.data[1]?.y.toFixed(2) || "";
     prevMargin = data[0]?.data[0]?.y.toFixed(2) || "";
   } else currMargin = data[0]?.data[0]?.y.toFixed(2) || "";
-
+  console.log(currMargin)
   let text;
-  if (!prevMargin) {
+  if (currMargin === "100.00") {
+    text = (
+      <>
+      </>
+    )
+  }
+  else if (!prevMargin) {
     text = (
       <>
         {" "}
@@ -30,7 +36,7 @@ export function SingleMargin(props) {
 
   return (
     <div className="single-margin-container">
-      <div className="big-margin-text">{currMargin}%</div>
+      <div className="big-margin-text">{currMargin === "100.00" ? "-- " : currMargin}%</div>
       <div className="last-phase">
         <span>{text}</span>
       </div>
