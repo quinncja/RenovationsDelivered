@@ -7,6 +7,7 @@ import Overlay from "modules/modals/Overlay";
 import AddJobModal from "./addJobs/AddJobModal";
 import NewChangeOrderModal from "./newChangeOrder/NewChangeOrderModal";
 import FeedbackModal from "./feedback/FeedbackModal";
+import AttachmentViewer from "./attachementViewer/AttachmentViewer";
 
 const Modal = () => {
   const { modalType, closeModal, modalData } = useModalContext();
@@ -21,6 +22,8 @@ const Modal = () => {
         return <AddJobModal closeSelf={closeModal} key="addJobsModal" />;
       case "feedback":
         return <FeedbackModal closeSelf={closeModal} key="feedbackModal" />;
+      case "attachment":
+        return <AttachmentViewer closeSelf={closeModal} data={modalData} key="feedbackModal" />;
       case "changeOrder":
         return (
           <NewChangeOrderModal
@@ -38,10 +41,8 @@ const Modal = () => {
 
   return (
     <>
-      <AnimatePresence>
         <Overlay isVisible={isVisible} onClick={closeModal} />
         {isVisible && renderModalContent()}
-      </AnimatePresence>
     </>
   );
 };

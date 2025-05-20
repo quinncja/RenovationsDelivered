@@ -1,5 +1,5 @@
 import React from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { overlayVariants } from "utils/animations";
 import { useCSSVariable } from "utils/hooks/useCSSVariable";
 
@@ -7,8 +7,7 @@ const Overlay = ({ isVisible, onClick, zIndex = 15 }) => {
   const color = useCSSVariable("--overlay");
 
   return (
-    <AnimatePresence>
-      {isVisible && (
+      isVisible && (
         <motion.div
           key="overlay"
           initial="hidden"
@@ -19,8 +18,7 @@ const Overlay = ({ isVisible, onClick, zIndex = 15 }) => {
           style={{ zIndex: zIndex }}
           onClick={onClick}
         />
-      )}
-    </AnimatePresence>
+      )
   );
 };
 

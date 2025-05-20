@@ -53,8 +53,8 @@ export const itemFadeIn = {
 export function overlayVariants(color, open) {
   return {
     hidden: { backgroundColor: "#00000000" },
-    visible: { backgroundColor: color, transition: { duration: open ?? 0.3 } },
-    exit: { backgroundColor: "#00000000", transition: { duration: 0.4 } },
+    visible: { backgroundColor: color, transition: { duration: open ?? 0 } },
+    exit: { backgroundColor: "#00000000", transition: { duration: 0 } },
   };
 }
 

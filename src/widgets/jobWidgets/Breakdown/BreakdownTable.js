@@ -9,7 +9,7 @@ function BreakdownTable(props) {
 
   const flattenCostItems = ({ posted, committed }) => {
     const processItem = (item, type) => {
-      const { dscrpt, value, id, insdte, insusr, upddte, updusr, recnum } =
+      const { dscrpt, value, id, insdte, insusr, upddte, updusr, recnum, imagePath, imageName, imageUser  } =
         item;
 
       return {
@@ -22,6 +22,9 @@ function BreakdownTable(props) {
         upddte,
         updusr,
         recnum,
+        imagePath,   
+        imageName,  
+        imageUser 
       };
     };
     let postedWithType = [];
@@ -48,7 +51,7 @@ function BreakdownTable(props) {
     upddte: "Date updated",
     updusr: "Updated by",
     recnum: "Record Number",
-    type: "Type",
+    type: "Status",
   };
 
   const handleSort = (key) => {
@@ -63,8 +66,9 @@ function BreakdownTable(props) {
   };
 
   const getColumnHeaders = (data) => {
+    const excludedKeys = ['imagePath', 'imageName', 'imageUser'];
     let keys = Object.keys(data[0]);
-    return keys;
+    return keys.filter(key => !excludedKeys.includes(key));
   };
 
   const tableHeader = (headers) => {

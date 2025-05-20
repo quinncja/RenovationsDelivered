@@ -28,7 +28,7 @@
   --dark-filter4: 0.8;
   --dark-filter5: 1.9;
   --dark-filter6: 0.5;
-
+  --color: #161b2218;
   --light-background: #faf8f5;
   --light-dropdown-background: #f3f3f3;
   --light-dark: #fefefe;
@@ -626,6 +626,38 @@ h1 {
   border: 1px solid var(--fancy-border);
   box-sizing: border-box;
   border-radius: 2px;
+}
+.table-entry-image-icon {
+  position: absolute;
+  left: 0;
+  margin-left: 3px;
+  height: 100%;
+  width: 50px;
+  z-index: 100;
+  transform: translateY(33%);
+}
+.attachment-button{
+  position: relative;
+  background: none;
+  opacity: .8;
+  padding: 20px;
+  width: 80px;
+  height: 100%;
+  outline: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  border-radius: 10px;
+  color: white;
+  cursor: pointer;
+}
+.attachment-button:hover{
+  opacity: 1;
+  filter: brightness(1.05);
+}
+.attachment-button svg path {
+  stroke: var(--white);
 }
 .table-entry-left {
   position: absolute;
@@ -1702,6 +1734,10 @@ span.grippy::after {
   filter: brightness(var(--filter4));
 }
 
+body.overlay-open {
+  overflow: hidden;
+}
+
 .popup-wrapper {
   position: fixed;
   top: 0;
@@ -1709,10 +1745,17 @@ span.grippy::after {
   justify-content: center;
   align-items: center;
   width: 100vw;
-  height: 100vh;
+  min-height: 100vh;
   z-index: 215;
   pointer-events: none;
 }
+.bigger-svg svg{
+  width: 38px !important;
+  height: 38px !important;
+  margin-top: 5px;
+  margin-left: -7px;
+}
+
 .new-widget-popup {
   min-width: 600px;
   width: fit-content;
@@ -2265,6 +2308,8 @@ span.grippy::after {
   height: 60px;
   width: fit-content;
   min-width: 100%;
+  padding-left: 50px;
+  gap: 6px
 }
 
 .no-click {
@@ -2313,6 +2358,7 @@ span.grippy::after {
   justify-content: space-between;
   z-index: 11;
   min-width: 100%;
+  padding-left: 50px;
   background-color: var(--more-mid);
 }
 
@@ -2410,10 +2456,17 @@ span.grippy::after {
   flex-direction: row;
   width: fit-content;
   min-width: 100%;
+  padding-left: 50px;
   justify-content: space-between;
   background-color: var(--more-mid);
 }
 
+.clickable-entry{
+  cursor: pointer;
+}
+.clickable-entry:hover {
+  filter: brightness(.90);
+}
 .dashboard-welcome {
   width: clamp(300px, 80vw, 1200px);
   margin-inline: auto;

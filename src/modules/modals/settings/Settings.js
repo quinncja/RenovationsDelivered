@@ -35,6 +35,7 @@ function Settings({ closeSelf }) {
           {close()}
         </button>
       </div>
+    
       <div className="settings">
         <ToggleColorMode item={settings[0]} />
         {/* <ToggleLabels item={settings[2]} /> */}

@@ -1,4 +1,5 @@
-import { sortSvg, tableArrow } from "business/svg";
+import { fileSvg, sortSvg, tableArrow } from "business/svg";
+import { useModalContext } from "context/ModalContext";
 import { useState, useEffect } from "react";
 
 import {
@@ -33,6 +34,8 @@ function TableEntry({
   const openStyle = {
     borderBottom: `2px solid ${color}`,
   };
+
+  const { openModalWithData } = useModalContext();
 
   useEffect(() => {
     if (currentId && nestingLevel === 0) setShowData(true);
@@ -106,7 +109,8 @@ function TableEntry({
   };
 
   const handleClick = () => {
-    toggleData();
+    if(entry.imagePath) openModalWithData("attachment", {path: entry.imagePath, name: entry.imageName, user: entry.imageUser})
+    else toggleData();
   };
 
   const handleSubSort = (key) => {
@@ -225,12 +229,13 @@ function TableEntry({
   };
   const hasSubData = subColumns !== null;
   return (
-    <button className={`table-entry `} onClick={handleClick}>
+    <button className={`table-entry`} onClick={handleClick}>
+      {entry.imagePath && <div className="table-entry-image-icon"> {fileSvg()} </div>}
       {!oldStyle && (
         <div className="table-entry-left" style={{ backgroundColor: color }} />
       )}
       <div
-        className={`table-entries ${showData ? `table-entries-open` : ""}  entry-nestlevel-${nestingLevel}  ${hasSubData ? "hoverable-entry" : ""}`}
+        className={`table-entries ${showData ? `table-entries-open` : ""}  ${entry.imagePath && "clickable-entry"} entry-nestlevel-${nestingLevel}  ${hasSubData ? "hoverable-entry" : ""}`}
         style={showData ? openStyle : {}}
       >
         {headers.map((header) => (
