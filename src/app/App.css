@@ -774,7 +774,7 @@ h1 {
   position: relative;
   color: var(--less-white);
   width: 100vw !important;
-  height: 70px;
+  height: fit-content;
   z-index: 11;
   opacity: 1;
   cursor: unset;
