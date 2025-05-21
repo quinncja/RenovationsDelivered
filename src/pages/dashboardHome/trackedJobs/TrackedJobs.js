@@ -14,15 +14,15 @@ function TrackedJobs({ jobs }) {
   const { homeState } = useHome();
   const activeJobs = useMemo(() => getActiveJobs(), [getActiveJobs]);
 
-   const jobsToShow = useMemo(() => 
+  console.log("j", jobs, "aj", activeJobs)
+
+  const jobsToShow = useMemo(() => 
     homeState === "year" ? activeJobs : jobs, 
     [homeState, activeJobs, jobs]
   );
   useEffect(() => {
     const controller = new AbortController();
     const signal = controller.signal;
-    
-    setLoadingMap(true);
     
     const loadJobListData = async () => {
       if (!jobsToShow || jobsToShow.length === 0) {
@@ -48,7 +48,7 @@ function TrackedJobs({ jobs }) {
     return () => {
       controller.abort();
     };
-  }, [jobsToShow, setDataMap, setLoadingMap]);
+  }, [jobsToShow]);
   
   const filteredJobsToShow = filterJobs(jobsToShow);
 

@@ -82,8 +82,8 @@ export const TrackedJobProvider = ({ children }) => {
       
       if (!marginFilter) return true;
       
-      const totalContract = jobData.TotalContract || 0;
-      const totalCost = jobData.TotalCost || 0;
+      const totalContract = jobData.ClosedContract || 0;
+      const totalCost = jobData.ClosedCost || 0;
     
       if (totalContract === 0) return false;
       

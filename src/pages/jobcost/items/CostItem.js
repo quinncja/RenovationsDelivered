@@ -121,15 +121,8 @@ function CostItem(props) {
           <div className="widget-titles" {...listeners} {...attributes}>
             <div className="widget-title">{type}</div>
           </div>
-          <button
-            className="x-button widget-item"
-            onClick={(e) => {
-              e.stopPropagation();
-              deleteSelf(id);
-            }}
-          >
-            {close()}
-          </button>
+          <div className="drag-handle-wrapper"></div>
+
         </div>
         {data && (
           <AnimatePresence>

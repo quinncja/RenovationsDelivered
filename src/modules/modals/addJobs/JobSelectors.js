@@ -48,18 +48,13 @@ function JobSelectors({ closeSelf }) {
     <>
       <RecommendedJobs selected={selectedRec} updateSelected={updateSelected} />
       <div className="job-selector-body">
-        <div>
-          <h4 style={{ textAlign: "left", fontWeight: "500" }}>
-            Select from list
-          </h4>
           <div className="job-selector-wrapper">
             <JobSelector
               options={options}
               handleChange={(values) => handleChange(values)}
             />
           </div>
-        </div>
-        <button className="job-button add-job-button" onClick={handleSubmit}>
+        <button style={{position: "absolute", top: '0', right: '0', marginTop: "-65px"}} className={`job-button add-job-button ${selectedJobs.length > 0 ? "add-job-button-active" : "add-job-button-disabled"}`} onClick={handleSubmit}>
           {" "}
           Save{" "}
         </button>

@@ -1,4 +1,4 @@
-import { chevronRight, gridSvg } from "business/svg";
+import { chevronRight, close, gridSvg, trashSvg } from "business/svg";
 import { useTrackedJobs } from "context/TrackedJobContext";
 import { getBaseJobName } from "pages/openItem/transformData";
 import { useRef, useState } from "react";
@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { calculateMargin, displayMargin, getMarginClass } from "utils/funcs";
 import { fetchChartData } from "utils/api";
 import PhaseEntry from "./PhaseEntry";
+import useIsAdmin from "utils/hooks/useIsAdmin";
 
 function TrackedJob(props) {
   const { job, deleteSelf } = props;
@@ -17,6 +18,7 @@ function TrackedJob(props) {
   const { updatePageModifiers } = useModifiers();
   const navigate = useNavigate();
   const dataArray = props.data || dataMap[job] || null;
+  const isAdmin = useIsAdmin();
   const accessJobData = () => {
     if (!dataArray) return;
     if (dataArray.length > 1) {
@@ -74,8 +76,11 @@ function TrackedJob(props) {
     navigate("/jobcost/breakdown/subcontractors");
   };
 
+
   const jobBody = () => {
     const margin = calculateMargin(data.TotalContract, data.TotalCost)
+    const closedMargin = calculateMargin(data.ClosedContract, data.ClosedCost)
+
     return (
       <div className="job-body">
         <div className="job-left">
@@ -83,11 +88,16 @@ function TrackedJob(props) {
           <h4> {data.ClientName} </h4>
         </div>
         <div className="job-right">
-          <div style={{display: "flex", gap: "7px", alignItems: "baseline"}}> <span className="phase-dot phase-dot-Complete phase-dot-small"> </span> <h4> <strong style={{ color: "var(--white)" }}> {data.OpenPhases} </strong> open </h4> </div>
-          <div style={{display: "flex", gap: "7px", alignItems: "baseline"}}> <span className="phase-dot phase-dot-small"> </span> <h4> <strong style={{ color: "var(--white)" }}> {data.ClosedPhases} </strong> closed </h4> </div>
-
+          <div style={{display: "flex", gap: "7px", alignItems: "baseline", justifyContent: "right"}}> <span className="phase-dot phase-dot-Complete phase-dot-small"> </span> <h4> <strong style={{ color: "var(--white)" }}> {data.OpenPhases} </strong> open </h4> </div>
+          <div style={{display: "flex", gap: "7px", alignItems: "baseline", justifyContent: "right"}}> <span className="phase-dot phase-dot-small"> </span> <h4> <strong style={{ color: "var(--white)" }}> {data.ClosedPhases} </strong> closed </h4> </div>
+        <div style={{display: 'flex', flexDirection: "column", gap: "3px", textAlign: "right"}} title="Margin on all phases"> 
+          <h4> Current</h4>
           <h3 style={{justifySelf: "end"}} className={`${getMarginClass(margin)}`}> {displayMargin(margin)} </h3>
-
+        </div>
+        <div style={{display: 'flex', flexDirection: "column", gap: "3px", textAlign: "right"}}  title="Margin on closed phases"> 
+          <h4> Closed</h4>
+          <h3 style={{justifySelf: "end"}} className={`${getMarginClass(closedMargin)}`}> {displayMargin(closedMargin)} </h3>
+      </div>
         </div>
       </div>
     );
@@ -146,24 +156,34 @@ function TrackedJob(props) {
     );
   };
 
-  const renderAdminData = () => {
+  const renderJobSubData = () => {
     if (!isOpen) return null;
-    
+
     return (
      <div className="admin-job-details">
+      <div style={{display: 'flex', flexDirection: "row", gap: "50px"}}> 
         <div style={{display: 'flex', flexDirection: "column", gap: "3px"}}> 
           <h4> Project Manager</h4>
           <h3> {data.ProjectManager} </h3>
         </div>
+        {isAdmin &&
+          <div style={{display: 'flex', flexDirection: "column", gap: "3px"}}> 
+            <h4> Total Contract</h4>
+            <h3> {dollarFormatter(data.TotalContract)} </h3>
+          </div>
+        }
         <div style={{display: 'flex', flexDirection: "column", gap: "3px"}}> 
-          <h4> Total Contract</h4>
-          <h3> {dollarFormatter(data.TotalContract)} </h3>
+          <h4> Total Budget</h4>
+          <h3> {dollarFormatter(data.TotalBudget)} </h3>
         </div>
         <div style={{display: 'flex', flexDirection: "column", gap: "3px"}}> 
           <h4> Total Spent</h4>
           <h3> {dollarFormatter(data.TotalCost)} </h3>
         </div>
-
+      </div>
+      <button className="x-button" title="Remove tracked project" onClick={() => deleteSelf(job)}>
+        {trashSvg()}
+      </button>
      </div>
     );
   };
@@ -206,7 +226,7 @@ function TrackedJob(props) {
         {close()}
       </button> */}
     </div>
-    {renderAdminData()}
+    {renderJobSubData()}
     {renderPhaseEntries()}
     </div>
   );

@@ -1,5 +1,4 @@
 import React from "react";
-import { AnimatePresence } from "framer-motion";
 import { useModalContext } from "context/ModalContext";
 import Settings from "modules/modals/settings/Settings";
 import NewWidgetPopup from "modules/modals/newWidget/NewWidgetPopup";

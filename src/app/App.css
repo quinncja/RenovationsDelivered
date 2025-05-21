@@ -473,6 +473,7 @@ h1 {
   box-sizing: border-box;
   justify-content: space-between;
 }
+
 .setting-top {
   padding-inline: 40px;
 }
@@ -865,9 +866,10 @@ h1 {
   opacity: 0.8;
 }
 
-.tracked-job:hover .x-button {
-  opacity: 0.4;
+.x-button {
+  opacity: 0.8 !important;
 }
+
 .feedback-card:hover .x-button {
   opacity: 0.4;
 }
@@ -1674,6 +1676,24 @@ span.grippy::after {
   overflow: hidden;
 }
 
+.react-dropdown-select-content span{
+ background: #394050 !important;
+}
+.react-dropdown-select-content:hover span{
+  background: #394050 !important;
+  filter: none !important;
+ }
+ .react-dropdown-select-option-remove{
+  height: 20px !important;
+  width: 30px !important;
+  font-size: 20px !important;
+  margin-top: -1px !important;
+ }
+
+ .react-dropdown-select-option-remove:hover{
+  color: var(--dark) !important;
+ }
+
 .react-dropdown-select-type-single:focus-within {
   outline: none;
   box-shadow: none !important;
@@ -1687,9 +1707,10 @@ span.grippy::after {
 }
 
 .react-dropdown-select-dropdown {
-  background-color: var(--mid) !important;
+  background-color: var(--background) !important;
   text-align: left;
   border: none !important;
+  border-radius: 5px !important;
 }
 
 .react-dropdown-select-dropdown:focus-within {
@@ -1699,20 +1720,22 @@ span.grippy::after {
 .react-dropdown-select-item {
   padding-block: 13px !important;
   border: none !important;
+  background-color: var(--background);
   font-size: 14px !important;
+  padding-left: 20px !important;
 }
 .react-dropdown-select-item:hover {
-  filter: brightness(var(--filter5));
-  background-color: var(--mid) !important;
+  filter: brightness(1.65);
+  background-color: var(--background) !important;
 }
 
 .react-dropdown-select-item-selected {
   filter: brightness(var(--filter4)) !important;
-  background-color: var(--primary) !important;
+  background-color: #394050 !important;
 }
 .react-dropdown-select-item-selected:hover {
   filter: brightness(var(--filter4)) !important;
-  background-color: var(--primary) !important;
+  background-color: #394050 !important;
 }
 
 .react-dropdown-select-no-data {
@@ -1757,18 +1780,25 @@ body.overlay-open {
 }
 
 .new-widget-popup {
+  display: flex;
+  flex-direction: column;
   min-width: 600px;
   width: fit-content;
   min-height: 450px;
   height: fit-content;
-  padding-inline: 20px;
-  padding-bottom: 20px;
+  padding: 20px;
   box-sizing: border-box;
   background-color: var(--dark);
   border: 1px solid var(--fancy-border);
   color: var(--less-white);
   pointer-events: auto;
   position: relative;
+  border-radius: 5px;
+  gap: 20px;
+}
+
+.new-widget-popup .widget-top{
+  padding: 0px;
 }
 
 .new-widget-button-row {
@@ -2575,15 +2605,17 @@ body.overlay-open {
   stroke: var(--shadow) !important;
 }
 
+.job-selector-wrapper{
+  width: 570px;
+}
 .job-selector-body {
   position: relative;
   display: flex;
   height: 100%;
   margin-inline: auto;
-  flex-direction: column;
-  justify-content: space-between;
   gap: 20px;
   min-height: 350px;
+  width: 100%;
 }
 .job-selector-row {
   display: grid;
@@ -2625,22 +2657,23 @@ h1 {
 .co-select-dropdown:focus-within {
   outline: none;
   box-shadow: none !important;
-  background-color: var(--mid);
+  background-color: var(--background);
 }
 
 .job-selector-item .job-select-dropdown {
-  background-color: var(--mid);
+  background-color: var(--background);
   border-radius: 2px !important;
   padding-block: 25px !important;
   justify-content: center !important;
 }
+
 .job-select-dropdown {
   position: relative !important;
   padding-left: 10px !important;
   height: 40px;
   border-radius: 0px !important;
   color: var(--white) !important;
-  background-color: var(--more-mid);
+  background-color: var(--background);
   border: none !important;
   box-sizing: border-box;
   width: 250px !important;
@@ -2650,27 +2683,50 @@ h1 {
 .job-select-dropdown:focus-within {
   outline: none;
   box-shadow: none !important;
-  background-color: var(--mid);
+  background-color: var(--background);
 }
 
 .job-select-dropdown .react-dropdown-select-option {
-  padding: 5px 10px;
+  padding: 10px 10px;
 }
 .active-job-select .job-select-dropdown {
-  background-color: var(--primary) !important;
+  background-color: #394050 !important;
+  position: relative;
 }
 
 .job-select-dropdown.react-dropdown-select {
-  width: 500px !important;
+  position: relative;
+  width: 100% !important;
   height: unset !important;
-  padding: 10px 5px !important;
+  padding: 10px 10px !important;
+  border-radius: 5px !important; 
+  min-height: 68px;
 }
 
 .add-job-button {
   align-self: center;
   justify-self: flex-end;
   font-size: 14px;
+  background-color: var(--primary);
+  border: 1px solid var(--primary);
+  width: 60px;
+  transition: all .2s ease-in-out;
+  height: 40px;
+  opacity: 1 !important;
 }
+
+.add-job-button-disabled{
+  pointer-events: none;
+}
+.add-job-button-disabled:hover {
+  filter: none !important;
+  cursor: unset;
+}
+
+.add-job-button-active {
+  opacity: 1 !important;
+}
+
 
 .jobs-header {
   width: calc(100% + 10px);
@@ -2692,9 +2748,9 @@ h1 {
 .add-new-button {
   font-size: 1rem;
   width: fit-content;
-  height: fit-content;
   opacity: 0.4;
-  background-color: var(--background);
+  padding: 0px;
+  background: none !important;
 }
 
 .add-new-button:hover {
@@ -2753,7 +2809,7 @@ h1 {
   display: flex;
   flex-direction: row;
   gap: 50px;
-  justify-content: flex-start;
+  justify-content: space-between;
   text-align: left;
   width: 95%;
   margin-inline: auto;
@@ -2786,9 +2842,9 @@ h1 {
 }
 
 .job-right {
-  width: clamp(250px, 30%, 400px);
+  width: clamp(250px, 50%, 450px);
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 1.5fr 1.5fr 1.5fr 1.5fr;
   align-items: center;
   margin-block: auto;
   gap: 10px;
