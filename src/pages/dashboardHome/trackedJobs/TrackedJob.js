@@ -181,9 +181,11 @@ function TrackedJob(props) {
           <h3> {dollarFormatter(data.TotalCost)} </h3>
         </div>
       </div>
-      <button className="x-button" title="Remove tracked project" onClick={() => deleteSelf(job)}>
-        {trashSvg()}
-      </button>
+      {!isAdmin &&
+        <button className="x-button" title="Remove tracked project" onClick={() => deleteSelf(job)}>
+          {trashSvg()}
+        </button>
+      }
      </div>
     );
   };
