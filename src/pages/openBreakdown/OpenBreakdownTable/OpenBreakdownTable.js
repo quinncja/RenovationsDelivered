@@ -26,9 +26,11 @@ function OpenBreakdownTable(props) {
 
     return () => {
       if (headerRef.current) {
+        //eslint-disable-next-line
         observer.unobserve(headerRef.current);
       }
     };
+  //eslint-disable-next-line
   }, []);
 
   return (

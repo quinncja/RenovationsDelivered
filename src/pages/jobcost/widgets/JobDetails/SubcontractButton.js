@@ -1,4 +1,4 @@
-import { filePenSvg, hardHatSvg } from "business/svg";
+import { hardHatSvg } from "business/svg";
 import { useJobCostContext } from "context/JobCostContext";
 import { useNavigate } from "react-router-dom";
 

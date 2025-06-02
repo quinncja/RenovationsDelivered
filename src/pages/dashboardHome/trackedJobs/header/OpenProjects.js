@@ -7,7 +7,22 @@ function OpenProjects(props) {
   let activeProjects;
   if (!filteredJobsToShow) activeProjects = undefined;
   else activeProjects = filteredJobsToShow.length;
-
+  if (activeProjects === 0)
+    return (
+      <div className="tjh-widget">
+        <div className="tjh-box"> {buildingSvg()} </div>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "flex-start",
+          }}
+        >
+          <h2> - </h2>
+          <h4> {"Active Projects"} </h4>
+        </div>
+      </div>
+    );
   if (loadingMap)
     return (
       <div className="tjh-widget">
@@ -23,7 +38,7 @@ function OpenProjects(props) {
         </div>
       </div>
     );
-  if (activeProjects >= 0)
+  else 
     return (
       <div className="tjh-widget">
         <div className="tjh-box"> {buildingSvg()} </div>

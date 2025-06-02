@@ -1,4 +1,4 @@
-import { chevronRight, close, gridSvg, trashSvg } from "business/svg";
+import { chevronRight, gridSvg } from "business/svg";
 import { useTrackedJobs } from "context/TrackedJobContext";
 import { useRef, useState } from "react";
 import { dollarFormatter, getBaseJobName, strToMods } from "utils/formatters";
@@ -351,7 +351,7 @@ function TrackedJob(props) {
             title="Remove tracked project"
             onClick={() => deleteSelf(job)}
           >
-            {trashSvg()}
+            <h4> Remove tracked job </h4>
           </button>
         )}
       </div>

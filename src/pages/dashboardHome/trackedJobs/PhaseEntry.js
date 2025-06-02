@@ -1,38 +1,13 @@
-import { dollarFormatter, phaseNumToMonth } from "utils/formatters";
+import { phaseNumToMonth } from "utils/formatters";
 import { calculateMargin, displayMargin, getMarginClass } from "utils/funcs";
-import useIsAdmin from "utils/hooks/useIsAdmin";
 
 function PhaseEntry(props) {
   const { data, handleClick, handleSubClick } = props;
   const { YearNum, PhaseNum, TotalContract, TotalCost, SubAmount } = data || {};
 
-  const isAdmin = useIsAdmin();
   const onSubClick = (e) => {
     e.stopPropagation();
     if (SubAmount > 0) handleSubClick(YearNum, PhaseNum);
-  };
-
-  const phaseAdminData = () => {
-    return (
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "row",
-          width: "100%",
-          gap: "5px",
-        }}
-      >
-        <div>
-          {" "}
-          <h4> Contract {dollarFormatter(TotalContract)} </h4>{" "}
-        </div>
-        |
-        <div>
-          {" "}
-          <h4> COGS {dollarFormatter(TotalCost)} </h4>{" "}
-        </div>
-      </div>
-    );
   };
 
   const phaseBody = () => {

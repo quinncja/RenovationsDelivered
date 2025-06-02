@@ -3,7 +3,7 @@ import { useProjectContext } from "context/ProjectContext";
 import { useJobCostContext } from "context/JobCostContext";
 
 function YearSelector() {
-  const { getProjectByNum, getYearById, getYearsByJob } = useProjectContext();
+  const { getProjectByNum, getYearsByJob } = useProjectContext();
   const { pageModifiers, modTimeout, updatePageModifiers } =
     useJobCostContext();
 

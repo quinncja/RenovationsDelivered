@@ -25,6 +25,7 @@ function TrackedJobs({ jobs }) {
 
   const abortControllerRef = useRef(null);
 
+  console.log(jobsToShow)
   useEffect(() => {
     const loadJobListData = async () => {
       if (!jobsToShow || jobsToShow.length === 0) {
@@ -128,6 +129,7 @@ function TrackedJobs({ jobs }) {
   return (
     <>
       <div className="jobs-header">
+        <div style={{display: 'flex', alignItems: "baseline", gap: "15px"}}> 
         <h2> Projects </h2>
         {!isAdmin && (
           <button
@@ -137,12 +139,15 @@ function TrackedJobs({ jobs }) {
             + add new
           </button>
         )}
+        </div>
       </div>
       <TrackedJobsHeader filteredJobsToShow={filteredJobsToShow} />
       <div className="tracked-jobs">
-        {filteredJobsToShow.map((job) => (
+        {filteredJobsToShow.length > 0 ? filteredJobsToShow.map((job) => (
           <TrackedJob key={job} job={job} id={job} deleteSelf={handleDelete} />
-        ))}
+        )) : <h4 style={{color: "white", fontWeight: "500", paddingTop: "20px"}}> No projects to display </h4>
+      
+      }
       </div>
     </>
   );
