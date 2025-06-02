@@ -1,6 +1,10 @@
 import React, { useState } from "react";
 import { ResponsiveBar } from "@nivo/bar";
-import { formatNumberShort, phaseToMonth, phaseToShortMonth } from "utils/formatters";
+import {
+  formatNumberShort,
+  phaseToMonth,
+  phaseToShortMonth,
+} from "utils/formatters";
 import { useHome } from "context/HomeContext";
 
 function PhaseCountChart({ id, data }) {
@@ -9,14 +13,16 @@ function PhaseCountChart({ id, data }) {
   const itemsPerPage = 8;
 
   const phaseData = data
-    .filter(item => item.phase !== "total")
-    .filter(item => item.current_year_open > 0 || item.current_year_closed > 0)
-    .map(item => ({
+    .filter((item) => item.phase !== "total")
+    .filter(
+      (item) => item.current_year_open > 0 || item.current_year_closed > 0,
+    )
+    .map((item) => ({
       phase: item.phase,
       phaseNum: parseInt(item.phase),
       current_year_open: item.current_year_open,
       current_year_closed: item.current_year_closed,
-      total: item.current_year_open + item.current_year_closed
+      total: item.current_year_open + item.current_year_closed,
     }))
     .sort((a, b) => a.phaseNum - b.phaseNum);
 
@@ -27,12 +33,12 @@ function PhaseCountChart({ id, data }) {
 
   const goToPrevPage = (e) => {
     e.stopPropagation();
-    setCurrentPage(prev => Math.max(0, prev - 1));
+    setCurrentPage((prev) => Math.max(0, prev - 1));
   };
 
   const goToNextPage = (e) => {
     e.stopPropagation();
-    setCurrentPage(prev => Math.min(totalPages - 1, prev + 1));
+    setCurrentPage((prev) => Math.min(totalPages - 1, prev + 1));
   };
 
   const canGoPrev = currentPage > 0;
@@ -43,53 +49,51 @@ function PhaseCountChart({ id, data }) {
   const displayCounter = phaseData.length > itemsPerPage;
 
   const CustomTooltip = ({ id, value, color, data }) => (
-    <div
-    className="tooltip"
-    >
-      <div style={{ fontWeight: 'bold', marginBottom: '4px' }}>
+    <div className="tooltip">
+      <div style={{ fontWeight: "bold", marginBottom: "4px" }}>
         {phaseToMonth(data.phase)}
       </div>
-      <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+      <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
         <div
           style={{
-            width: '12px',
-            height: '12px',
+            width: "12px",
+            height: "12px",
             backgroundColor: color,
-            borderRadius: '2px'
+            borderRadius: "2px",
           }}
         />
-        <span style={{ textTransform: 'capitalize', fontWeight: '500' }}>
-            {value} {id === 'current_year_open' ? 'Active' : 'Completed'}
+        <span style={{ textTransform: "capitalize", fontWeight: "500" }}>
+          {value} {id === "current_year_open" ? "Active" : "Completed"}
         </span>
       </div>
-      <h4>
-        Total: {data.total} jobs
-      </h4>
+      <h4>Total: {data.total} jobs</h4>
     </div>
   );
 
   const handleClick = (e) => {
-    const textStatus = e.id.split("_")[2]
-    const status = textStatus === "closed" ? 5 : 4
+    const textStatus = e.id.split("_")[2];
+    const status = textStatus === "closed" ? 5 : 4;
     const phase = e.data.phaseNum;
-    openPage(id, {status, phase, textStatus})
- }
+    openPage(id, { status, phase, textStatus });
+  };
 
   return (
-    <> 
+    <>
       {displayCounter && (
-        <div style={{
-          position: 'absolute',
-          top: '15px',
-          right: '15px',
-          zIndex: 10,
-          background: 'var(--terciary)',
-          padding: '5px 10px',
-          borderRadius: '3px',
-          fontSize: '12px',
-          fontWeight: '500'
-        }}>
-          <h4 style={{color: "var(--white)", margin: 0}}> 
+        <div
+          style={{
+            position: "absolute",
+            top: "15px",
+            right: "15px",
+            zIndex: 10,
+            background: "var(--terciary)",
+            padding: "5px 10px",
+            borderRadius: "3px",
+            fontSize: "12px",
+            fontWeight: "500",
+          }}
+        >
+          <h4 style={{ color: "var(--white)", margin: 0 }}>
             {displayStart}-{displayEnd} of {phaseData.length}
           </h4>
         </div>
@@ -99,23 +103,23 @@ function PhaseCountChart({ id, data }) {
         <button
           onClick={goToPrevPage}
           style={{
-            position: 'absolute',
-            left: '15px',
-            top: '52%',
-            transform: 'translateY(-50%)',
+            position: "absolute",
+            left: "15px",
+            top: "52%",
+            transform: "translateY(-50%)",
             zIndex: 10,
-            background: 'var(--terciary)',
-            color: 'white',
-            border: 'none',
-            borderRadius: '50%',
-            width: '32px',
-            height: '32px',
-            cursor: 'pointer',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            fontSize: '16px',
-            transition: 'all 0.2s ease'
+            background: "var(--terciary)",
+            color: "white",
+            border: "none",
+            borderRadius: "50%",
+            width: "32px",
+            height: "32px",
+            cursor: "pointer",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            fontSize: "16px",
+            transition: "all 0.2s ease",
           }}
         >
           ←
@@ -126,23 +130,23 @@ function PhaseCountChart({ id, data }) {
         <button
           onClick={goToNextPage}
           style={{
-            position: 'absolute',
-            right: '15px',
-            top: '52%',
-            transform: 'translateY(-50%)',
+            position: "absolute",
+            right: "15px",
+            top: "52%",
+            transform: "translateY(-50%)",
             zIndex: 10,
-            background: 'var(--terciary)',
-            color: 'white',
-            border: 'none',
-            borderRadius: '50%',
-            width: '32px',
-            height: '32px',
-            cursor: 'pointer',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            fontSize: '16px',
-            transition: 'all 0.2s ease'
+            background: "var(--terciary)",
+            color: "white",
+            border: "none",
+            borderRadius: "50%",
+            width: "32px",
+            height: "32px",
+            cursor: "pointer",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            fontSize: "16px",
+            transition: "all 0.2s ease",
           }}
         >
           →
@@ -159,7 +163,7 @@ function PhaseCountChart({ id, data }) {
         valueScale={{ type: "linear" }}
         indexScale={{ type: "band", round: true }}
         colors={({ id }) => {
-          return id === 'current_year_open' ? 'var(--open)' : 'var(--closed)'; 
+          return id === "current_year_open" ? "var(--open)" : "var(--closed)";
         }}
         enableGridY={true}
         gridYValues={5}
@@ -182,12 +186,12 @@ function PhaseCountChart({ id, data }) {
         }}
         tooltip={CustomTooltip}
         enableLabel={true}
-        label={(d) => d.value > 0 ? d.value : ''}
+        label={(d) => (d.value > 0 ? d.value : "")}
         labelSkipWidth={12}
         labelSkipHeight={12}
         labelTextColor="#ffffff"
         theme={{
-          background: 'transparent',
+          background: "transparent",
           grid: {
             line: {
               stroke: "#acadae",
@@ -198,28 +202,28 @@ function PhaseCountChart({ id, data }) {
             ticks: {
               line: {
                 strokeWidth: 1,
-                stroke: '#acadae'
+                stroke: "#acadae",
               },
               text: {
                 fontSize: 12,
-                fill: '#acadae',
-                fontWeight: '500'
+                fill: "#acadae",
+                fontWeight: "500",
               },
             },
             legend: {
               text: {
                 fontSize: 14,
                 fontWeight: 600,
-                fill: "#acadae", 
+                fill: "#acadae",
               },
             },
           },
           labels: {
             text: {
               fontSize: 12,
-              fontWeight: '600'
-            }
-          }
+              fontWeight: "600",
+            },
+          },
         }}
         animate={false}
         motionConfig="gentle"

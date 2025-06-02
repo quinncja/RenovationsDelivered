@@ -3,30 +3,31 @@ import { useProjectContext } from "context/ProjectContext";
 import { useJobCostContext } from "context/JobCostContext";
 
 function PhaseSelector() {
-  const { getProjectByNum, getYearById, getYearsByJob,  getPhasesByYear } = useProjectContext();
-  const { pageModifiers, modTimeout, updatePageModifiers } = useJobCostContext();
+  const { getProjectByNum, getYearById, getYearsByJob, getPhasesByYear } =
+    useProjectContext();
+  const { pageModifiers, modTimeout, updatePageModifiers } =
+    useJobCostContext();
 
   const selectedJobNum = pageModifiers.jobNum;
   let selectedYearId = pageModifiers.yearId;
 
-
   let selectedPhaseId = pageModifiers.phaseId;
-   
+
   const selectedJob = getProjectByNum(selectedJobNum);
   const selectedJobYears = getYearsByJob(selectedJob);
-  if(selectedJobYears.length === 1){
-    selectedYearId = selectedJobYears[0].id 
+  if (selectedJobYears.length === 1) {
+    selectedYearId = selectedJobYears[0].id;
   }
 
   let selectedYearPhases;
-  if(selectedJobNum === "none") {
+  if (selectedJobNum === "none") {
     selectedYearPhases = [];
   } else {
     const selectedYear = getYearById(selectedYearId);
     selectedYearPhases = getPhasesByYear(selectedYear, selectedJob);
-      if(selectedYearPhases.length === 1){
-        selectedPhaseId = selectedYearPhases[0].id
-      }
+    if (selectedYearPhases.length === 1) {
+      selectedPhaseId = selectedYearPhases[0].id;
+    }
   }
 
   const active = pageModifiers.phaseId;
@@ -54,7 +55,7 @@ function PhaseSelector() {
 
   return (
     <div
-     className={`project-select-wrapper ${active && 'project-select-wrapper-active'} `}
+      className={`project-select-wrapper ${active && "project-select-wrapper-active"} `}
       title="Change year"
       style={{
         display: "flex",

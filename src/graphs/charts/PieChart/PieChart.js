@@ -2,12 +2,8 @@ import { Pie } from "@nivo/pie";
 import getVenderLabel from "widgets/jobWidgets/Vender/Label";
 import { trimLabel } from "./TrimLabel";
 
-function PieChart({
-  data,
-  tooltip,
-}) {
-
-  if(!data) return;
+function PieChart({ data, tooltip }) {
+  if (!data) return;
 
   const slicedData = data.slice(0, 20);
 

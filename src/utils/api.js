@@ -3,54 +3,60 @@ import { apiUrl, ngrokHeaders } from "./config";
 import Userfront from "@userfront/toolkit";
 import { toast } from "sonner";
 
-
 export async function loadUserData() {
   try {
-    const userData = localStorage.getItem('userData');
-    
+    const userData = localStorage.getItem("userData");
+
     if (userData === null) {
       return {
         data: null,
         status: 404,
-        statusText: 'Not Found'
+        statusText: "Not Found",
       };
     }
-    
+
     return {
       data: JSON.parse(userData),
       status: 200,
-      statusText: 'OK'
+      statusText: "OK",
     };
   } catch (error) {
-    throw new Error('Failed to load user data from localStorage: ' + error.message);
+    throw new Error(
+      "Failed to load user data from localStorage: " + error.message,
+    );
   }
 }
 
 export async function saveUserData(userData, objectName) {
   try {
-    const existingDataString = localStorage.getItem('userData');
+    const existingDataString = localStorage.getItem("userData");
     let existingData = {};
-    
+
     if (existingDataString) {
       try {
         existingData = JSON.parse(existingDataString);
       } catch (parseError) {
-        console.warn('Could not parse existing userData, starting fresh:', parseError);
+        console.warn(
+          "Could not parse existing userData, starting fresh:",
+          parseError,
+        );
         existingData = {};
       }
     }
-    
+
     existingData[objectName] = userData;
-    
-    localStorage.setItem('userData', JSON.stringify(existingData));
-    
+
+    localStorage.setItem("userData", JSON.stringify(existingData));
+
     return {
       data: existingData,
       status: 200,
-      statusText: 'OK'
+      statusText: "OK",
     };
   } catch (error) {
-    throw new Error('Failed to save user data to localStorage: ' + error.message);
+    throw new Error(
+      "Failed to save user data to localStorage: " + error.message,
+    );
   }
 }
 export async function fetchUserList() {
@@ -68,18 +74,17 @@ export async function loadProjectList(signal) {
   try {
     const response = await axios.get(`${apiUrl}job-list-new`, {
       ...ngrokHeaders,
-      signal: signal 
+      signal: signal,
     });
     return response;
   } catch (error) {
-
-    if (error.name === 'AbortError' || error.code === 'ERR_CANCELED') {
+    if (error.name === "AbortError" || error.code === "ERR_CANCELED") {
       throw error;
     }
-    
+
     if (error.response?.status === 500) {
       toast.error(
-        "VPN connection error. Please wait a few minutes and try again"
+        "VPN connection error. Please wait a few minutes and try again",
       );
     }
     console.error("Error loading jobs:", error);

@@ -1,38 +1,59 @@
 import { useJobCostContext } from "context/JobCostContext";
 import { useNavigate } from "react-router-dom";
-import { destructureJobNumber, dollarFormatter, getBaseJobName, phaseNumToMonth, strToMods } from "utils/formatters";
+import {
+  destructureJobNumber,
+  dollarFormatter,
+  getBaseJobName,
+  phaseNumToMonth,
+  strToMods,
+} from "utils/formatters";
 import { calculateMargin, displayMargin, getMarginClass } from "utils/funcs";
 
 function Phase(props) {
   const { data } = props;
-  const { year_num, phase_num, Status, jobnme, recnum, TotalContract, TotalCost, SubAmount } = data || {};
+  const {
+    year_num,
+    phase_num,
+    Status,
+    jobnme,
+    recnum,
+    TotalContract,
+    TotalCost,
+    SubAmount,
+  } = data || {};
 
   const navigate = useNavigate();
   const { updatePageModifiers } = useJobCostContext();
 
-    const handlePhaseClick = () => {
-        const {jobNum, year, phase} = destructureJobNumber(recnum)
-        const mods = strToMods(jobNum, year, phase);
-        updatePageModifiers(mods);
-        navigate("/jobcost");
-    };
+  const handlePhaseClick = () => {
+    const { jobNum, year, phase } = destructureJobNumber(recnum);
+    const mods = strToMods(jobNum, year, phase);
+    updatePageModifiers(mods);
+    navigate("/jobcost");
+  };
 
-    const handleSubClick = (e) => {
-        e.stopPropagation();
-        const {jobNum, year, phase} = destructureJobNumber(recnum)
-        const mods = strToMods(jobNum, year, phase);
-        updatePageModifiers(mods);
-        navigate("/jobcost/breakdown/subcontractors");
-    };
-    
+  const handleSubClick = (e) => {
+    e.stopPropagation();
+    const { jobNum, year, phase } = destructureJobNumber(recnum);
+    const mods = strToMods(jobNum, year, phase);
+    updatePageModifiers(mods);
+    navigate("/jobcost/breakdown/subcontractors");
+  };
 
   const phaseAdminData = () => {
     return (
-        <div style={{display: "flex", flexDirection: "row", textAlign: 'right', gap: "5px"}}>
-          {" "}
-          <h4 style={{color: "white"}}> {dollarFormatter(TotalContract)} </h4>
-          <h4> Contract </h4>{" "}
-        </div>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          textAlign: "right",
+          gap: "5px",
+        }}
+      >
+        {" "}
+        <h4 style={{ color: "white" }}> {dollarFormatter(TotalContract)} </h4>
+        <h4> Contract </h4>{" "}
+      </div>
     );
   };
 
@@ -42,11 +63,24 @@ function Phase(props) {
     return (
       <div className="phase-body">
         <div className="phase-left">
-          <div className="phase-box" style={{background: Status === 4 ? 'var(--open)' : 'var(--closed)'}}>
+          <div
+            className="phase-box"
+            style={{
+              background: Status === 4 ? "var(--open)" : "var(--closed)",
+            }}
+          >
             {" "}
             <h3> P{phase_num} </h3>{" "}
           </div>
-          <div style={{ display: "flex", flexDirection: "column", gap: "0px", width: "300px", textAlign: "left"}}>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              gap: "0px",
+              width: "300px",
+              textAlign: "left",
+            }}
+          >
             <h3> {getBaseJobName(jobnme)} </h3>
             <h4>
               {" "}
@@ -55,8 +89,18 @@ function Phase(props) {
           </div>
         </div>
 
-        <div style={{display: "grid", gridTemplateColumns: "2fr 1.2fr 1fr", alignItems: "center", marginBlock: "auto", gap: "20px", textAlign: "right", width: "480px"}}>
-            {phaseAdminData()}
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "2fr 1.2fr 1fr",
+            alignItems: "center",
+            marginBlock: "auto",
+            gap: "20px",
+            textAlign: "right",
+            width: "480px",
+          }}
+        >
+          {phaseAdminData()}
           <div
             className={SubAmount > 0 ? "hover-sub" : ""}
             onClick={(e) => handleSubClick(e)}

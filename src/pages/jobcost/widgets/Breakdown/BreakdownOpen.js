@@ -49,7 +49,6 @@ function BreakdownOpen() {
   const { budget, spent, costItems, updates } = data;
   const { updateItems } = updates;
 
-
   const clearFocused = () => {
     setFocused({
       id: null,

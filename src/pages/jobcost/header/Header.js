@@ -9,10 +9,9 @@ import YearSelector from "./YearSelector";
 import { close } from "business/svg";
 import { useJobCostContext } from "context/JobCostContext";
 
-function Header({setIsVisible}) {
+function Header({ setIsVisible }) {
   const headerRef = useRef(null);
   const { isEmpty, clearPageModifiers } = useJobCostContext();
-
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -21,8 +20,8 @@ function Header({setIsVisible}) {
       },
       {
         threshold: 0,
-        rootMargin: '-50px 0px 0px 0px'
-      }
+        rootMargin: "-50px 0px 0px 0px",
+      },
     );
 
     if (headerRef.current) {
@@ -47,7 +46,7 @@ function Header({setIsVisible}) {
           flexDirection: "row",
           alignItems: "center",
           position: "relative",
-          width: "100%"
+          width: "100%",
         }}
       >
         <ProjectStatus />
@@ -56,12 +55,17 @@ function Header({setIsVisible}) {
         <PhaseSelector />
         <ClientSelector />
         <StateSelector />
-        <ProjectManagerSelector /> 
-        {!isEmpty &&
-          <button onClick={clearPageModifiers} title="Clear values" className="x-button-header clickable-widget header-button" style={{marginLeft: "auto", width: "50px", height: '50px'}}>
-          {close()}
-        </button> 
-        }
+        <ProjectManagerSelector />
+        {!isEmpty && (
+          <button
+            onClick={clearPageModifiers}
+            title="Clear values"
+            className="x-button-header clickable-widget header-button"
+            style={{ marginLeft: "auto", width: "50px", height: "50px" }}
+          >
+            {close()}
+          </button>
+        )}
       </div>
     </div>
   );

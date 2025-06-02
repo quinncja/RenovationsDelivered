@@ -7,7 +7,7 @@ function AddJobs() {
   const handleClick = () => {
     openModal("addJobs");
   };
-  
+
   return (
     <div className="addjobs-wrapper">
       <button className="addjobs-button" onClick={() => handleClick()}>

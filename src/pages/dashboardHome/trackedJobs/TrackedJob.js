@@ -95,7 +95,14 @@ function TrackedJob(props) {
             }}
           >
             {" "}
-            <div style={{width: "10px", height: "10px", borderRadius: "50px", backgroundColor: "var(--open)"}}/>
+            <div
+              style={{
+                width: "10px",
+                height: "10px",
+                borderRadius: "50px",
+                backgroundColor: "var(--open)",
+              }}
+            />
             <h4>
               {" "}
               <strong style={{ color: "var(--white)" }}>
@@ -113,8 +120,14 @@ function TrackedJob(props) {
               justifyContent: "right",
             }}
           >
-            <div style={{width: "10px", height: "10px", borderRadius: "50px", backgroundColor: "var(--closed)"}}/>
-            {" "}
+            <div
+              style={{
+                width: "10px",
+                height: "10px",
+                borderRadius: "50px",
+                backgroundColor: "var(--closed)",
+              }}
+            />{" "}
             <h4>
               {" "}
               <strong style={{ color: "var(--white)" }}>
@@ -181,9 +194,14 @@ function TrackedJob(props) {
                   paddingBottom: "5px",
                 }}
               >
-              <div style={{width: "10px", height: "10px", borderRadius: "50px", backgroundColor: "var(--open)"}}/>
-
-                {" "}
+                <div
+                  style={{
+                    width: "10px",
+                    height: "10px",
+                    borderRadius: "50px",
+                    backgroundColor: "var(--open)",
+                  }}
+                />{" "}
                 <h3> Open Phases ({data.OpenPhases})</h3>{" "}
               </div>
               {Array(data.OpenPhases)
@@ -207,8 +225,14 @@ function TrackedJob(props) {
                 }}
               >
                 {" "}
-                <div style={{width: "10px", height: "10px", borderRadius: "50px", backgroundColor: "var(--closed)"}}/>
-
+                <div
+                  style={{
+                    width: "10px",
+                    height: "10px",
+                    borderRadius: "50px",
+                    backgroundColor: "var(--closed)",
+                  }}
+                />
                 <h3> Closed Phases ({data.ClosedPhases})</h3>{" "}
               </div>
               {Array(data.ClosedPhases)
@@ -237,7 +261,14 @@ function TrackedJob(props) {
                 paddingBottom: "5px",
               }}
             >
-            <div style={{width: "10px", height: "10px", borderRadius: "50px", backgroundColor: "var(--open)"}}/>
+              <div
+                style={{
+                  width: "10px",
+                  height: "10px",
+                  borderRadius: "50px",
+                  backgroundColor: "var(--open)",
+                }}
+              />
               <h3> Open Phases ({openPhases.length})</h3>{" "}
             </div>
             {openPhases.map((item, index) => (
@@ -263,8 +294,14 @@ function TrackedJob(props) {
                 paddingBottom: "5px",
               }}
             >
-            <div style={{width: "10px", height: "10px", borderRadius: "50px", backgroundColor: "var(--closed)"}}/>
-
+              <div
+                style={{
+                  width: "10px",
+                  height: "10px",
+                  borderRadius: "50px",
+                  backgroundColor: "var(--closed)",
+                }}
+              />
               <h3> Closed Phases ({closedPhases.length})</h3>{" "}
             </div>
             {closedPhases.map((item, index) => (

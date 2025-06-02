@@ -14,12 +14,16 @@ function JobCostDashboard() {
   return (
     <div className="job-cost-dashboard">
       <div className="jobs-header">
-        <h2> Job Costing  {!isVisible && ` - ${pageModifierToString(pageModifiers)}`} </h2>
+        <h2>
+          {" "}
+          Job Costing{" "}
+          {!isVisible && ` - ${pageModifierToString(pageModifiers)}`}{" "}
+        </h2>
       </div>
       <Header setIsVisible={setIsVisible} />
       <div id="dashboard" className={`job-cost-widgets`}>
-        <JobDetails/>
-        <Margin/>
+        <JobDetails />
+        <Margin />
         <Breakdown type={"Material"} />
         <Breakdown type={"Labor"} />
         <Breakdown type={"Subcontractors"} />

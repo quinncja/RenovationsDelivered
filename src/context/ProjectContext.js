@@ -1,9 +1,4 @@
-import {
-  createContext,
-  useCallback,
-  useContext,
-  useState,
-} from "react";
+import { createContext, useCallback, useContext, useState } from "react";
 import { phaseList, yearList } from "utils/modifiers";
 
 const ProjectContext = createContext();
@@ -59,12 +54,11 @@ export const ProjectProvider = ({ children }) => {
         : phaseList;
   };
 
-
   const getPhasesByYearNum = (yearNum) => {
     if (!projects?.phases) return [];
-    
+
     return Object.values(projects.phases).filter(
-      phase => phase.yearNum === yearNum
+      (phase) => phase.yearNum === yearNum,
     );
   };
 
@@ -72,7 +66,7 @@ export const ProjectProvider = ({ children }) => {
     const yearNum = String(fullYear).slice(-2);
     return getPhasesByYearNum(yearNum);
   };
-  
+
   const getPhasesForJob = useCallback(
     (jobNum) => {
       const job = getProjectByNum(jobNum);
@@ -129,8 +123,8 @@ export const ProjectProvider = ({ children }) => {
 
   const getPhaseStr = (phaseId) => {
     const phase = getPhaseById(phaseId);
-    if(phase) return phase.name;
-    else return ""
+    if (phase) return phase.name;
+    else return "";
   };
 
   const countActivePhases = useCallback(
@@ -263,28 +257,28 @@ export const ProjectProvider = ({ children }) => {
 
     return Object.values(projects.states).sort();
   };
-  
+
   const getStateInfo = (state) => {
     if (!projects?.states?.[state]) return null;
     return projects.states[state];
   };
-  
+
   const getJobsByState = (state) => {
     if (!projects?.states?.[state]) return [];
     const stateData = projects.states[state];
     return stateData.jobIds
-      .map(jobId => projects.jobs[jobId])
+      .map((jobId) => projects.jobs[jobId])
       .filter(Boolean);
   };
-  
+
   const getPhasesByState = (state) => {
     if (!projects?.states?.[state]) return [];
     const stateData = projects.states[state];
     return stateData.phaseIds
-      .map(phaseId => projects.phases[phaseId])
+      .map((phaseId) => projects.phases[phaseId])
       .filter(Boolean);
   };
-  
+
   const getStateByPhase = (phaseId) => {
     if (!projects?.states) return [];
 
@@ -296,7 +290,7 @@ export const ProjectProvider = ({ children }) => {
     }
     return [];
   };
-  
+
   const getStateByJob = (jobId) => {
     if (!projects || !projects?.states) return null;
 
@@ -308,7 +302,7 @@ export const ProjectProvider = ({ children }) => {
     }
     return null;
   };
-  
+
   const getJobCountByState = () => {
     if (!projects?.states) return {};
     return Object.entries(projects.states).reduce((acc, [state, data]) => {
@@ -316,7 +310,7 @@ export const ProjectProvider = ({ children }) => {
       return acc;
     }, {});
   };
-  
+
   const getPhaseCountByState = () => {
     if (!projects?.states) return {};
     return Object.entries(projects.states).reduce((acc, [state, data]) => {
@@ -324,270 +318,268 @@ export const ProjectProvider = ({ children }) => {
       return acc;
     }, {});
   };
-  
-const getAllSupervisors = () => {
-  if (!projects?.supervisors) return [];
-  return Object.values(projects.supervisors).sort((a, b) => 
-    a.name.localeCompare(b.name)
-  );
-};
 
-const getSupervisorById = (supervisorId) => {
-  return projects.supervisors?.[supervisorId] || null;
-};
-
-const getJobsBySupervisor = (supervisorId) => {
-  const supervisor = projects.supervisors?.[supervisorId];
-  if (!supervisor) return [];
-  return supervisor.jobs
-    .map(jobId => projects.jobs[jobId])
-    .filter(Boolean);
-};
-
-const getPhasesBySupervisor = (supervisorId) => {
-  if (!projects?.phases) return [];
-  return Object.values(projects.phases).filter(
-    phase => phase.pmId === supervisorId
-  );
-};
-
-const getSupervisorByPhase = (phaseId) => {
-  if (!projects) return [];
-  const phase = projects.phases?.[phaseId];
-  if (!phase?.pmId) return [];
-  return projects.supervisors[phase.pmId] || null;
-};
-
-const getSupervisorName = (supervisorId) => {
-  console.log(projects)
-  if (!projects) return [];
-  return projects.supervisors?.[supervisorId]?.name || 'Unknown';
-};
-
-const getJobCountBySupervisor = () => {
-  if (!projects?.supervisors) return {};
-  return Object.entries(projects.supervisors).reduce((acc, [id, supervisor]) => {
-    acc[id] = {
-      name: supervisor.name,
-      count: supervisor.jobs.length
-    };
-    return acc;
-  }, {});
-};
-
-const getPhaseCountBySupervisor = () => {
-  if (!projects?.phases || !projects?.supervisors) return {};
-  
-  const counts = {};
-  Object.values(projects.supervisors).forEach(supervisor => {
-    counts[supervisor.id] = {
-      name: supervisor.name,
-      count: 0
-    };
-  });
-
-  Object.values(projects.phases).forEach(phase => {
-    if (phase.pmId && counts[phase.pmId]) {
-      counts[phase.pmId].count++;
-    }
-  });
-
-  return counts;
-};
-
-const getAllStatuses = () => {
-  if (!projects?.statuses) return [];
-  return Object.keys(projects.statuses)
-    .map(s => parseInt(s, 10))
-    .sort((a, b) => a - b);
-};
-
-const getStatusInfo = (status) => {
-  if (!projects?.statuses?.[status]) return null;
-  return projects.statuses[status];
-};
-
-const getJobsByStatus = (status) => {
-  if (!projects?.statuses?.[status]) return [];
-  const statusData = projects.statuses[status];
-  return statusData.jobIds
-    .map(jobId => projects.jobs[jobId])
-    .filter(Boolean);
-};
-
-const getPhasesByStatus = (status) => {
-  if (!projects?.statuses?.[status]) return [];
-  const statusData = projects.statuses[status];
-  return statusData.phaseIds
-    .map(phaseId => projects.phases[phaseId])
-    .filter(Boolean);
-};
-
-const getStatusByPhase = (phaseId) => {
-  if (!projects) return null;
-  const phase = projects.phases?.[phaseId];
-  return phase?.status || null;
-};
-
-const getJobCountByStatus = () => {
-  if (!projects?.statuses) return {};
-  return Object.entries(projects.statuses).reduce((acc, [status, data]) => {
-    acc[status] = data.jobIds.length;
-    return acc;
-  }, {});
-};
-
-const getPhaseCountByStatus = () => {
-  if (!projects?.statuses) return {};
-  return Object.entries(projects.statuses).reduce((acc, [status, data]) => {
-    acc[status] = data.phaseIds.length;
-    return acc;
-  }, {});
-};
-
-const getAllClients = () => {
-  if(!projects) return []
-  if (!projects?.clients) return [];
-  return Object.values(projects.clients).sort((a, b) => 
-    a.name.localeCompare(b.name)
-  );
-};
-
-const getClientById = (clientId) => {
-  return projects.clients?.[clientId] || null;
-};
-
-const getJobsByClient = (clientId) => {
-  const client = projects.clients?.[clientId];
-  if (!client) return [];
-  return client.jobs
-    .map(jobId => projects.jobs[jobId])
-    .filter(Boolean);
-};
-
-const getClientByPhase = (phaseId) => {
-  if(!projects) return []
-  const phase = projects.phases?.[phaseId];
-  if (!phase?.clientId) return [];
-  return projects.clients[phase.clientId] || null;
-};
-
-const getClientByJob = (jobId) => {
-  if(!projects) return [];
-  const job = projects.jobs?.[jobId];
-  if (!job?.clientId) return null;
-  return projects.clients[job.clientId] || [];
-};
-
-const getJobPhasesByStatus = (jobId, status) => {
-  const job = projects.jobs?.[jobId];
-  if (!job) return [];
-
-  const allPhases = [];
-  job.years.forEach(yearId => {
-    const year = projects.years[yearId];
-    if (year?.phases) {
-      year.phases.forEach(phaseId => {
-        const phase = projects.phases[phaseId];
-        if (phase && phase.status === status) {
-          allPhases.push(phase);
-        }
-      });
-    }
-  });
-
-  return allPhases;
-};
-
-const getJobsBySupervisorAndState = (supervisorId, state) => {
-  const supervisorJobs = getJobsBySupervisor(supervisorId);
-  const stateJobs = getJobsByState(state);
-  
-  const stateJobIds = new Set(stateJobs.map(j => j.num));
-  return supervisorJobs.filter(job => stateJobIds.has(job.num));
-};
-
-const getPhasesBySupervisorAndStatus = (supervisorId, status) => {
-  const supervisorPhases = getPhasesBySupervisor(supervisorId);
-  return supervisorPhases.filter(phase => phase.status === status);
-};
-
-const getSupervisorsByState = () => {
-  const matrix = {};
-  
-  if (!projects?.phases) return matrix;
-
-  Object.values(projects.phases).forEach(phase => {
-    const state = phase.state;
-    const pmId = phase.pmId;
-    
-    if (!matrix[state]) {
-      matrix[state] = new Set();
-    }
-    
-    if (pmId) {
-      matrix[state].add(pmId);
-    }
-  });
-
-  Object.keys(matrix).forEach(state => {
-    matrix[state] = Array.from(matrix[state]).map(pmId => ({
-      id: pmId,
-      name: getSupervisorName(pmId)
-    }));
-  });
-
-  return matrix;
-};
-
-const pageModifierToString = (modifiers) => {
-  const { jobNum, yearId, phaseId, state, pm, client } = modifiers;
-  const parts = [];
-
-  const getDisplayValue = (id, getByIdFn, listFallback, property) => {
-    if (!id) return "";
-    
-    if (id.substring(0, 4) === "xxxx") {
-      const item = listFallback.find((item) => item.id === id);
-      return item ? item[property] : "";
-    }
-    
-    const item = getByIdFn(id);
-    return item ? item[property] : "";
+  const getAllSupervisors = () => {
+    if (!projects?.supervisors) return [];
+    return Object.values(projects.supervisors).sort((a, b) =>
+      a.name.localeCompare(b.name),
+    );
   };
 
-  const jobStr = jobNum ? getProjectByNum(jobNum)?.name || "" : "";
-  const yearStr = getDisplayValue(yearId, getYearById, yearList, "year");
-  const phaseStr = getDisplayValue(phaseId, getPhaseById, phaseList, "name");
-  const stateStr = state || "";
-  const pmStr = pm ? getSupervisorById(pm)?.name || "" : "";
-  const clientStr = client ? getClientById(client)?.name || "" : "";
+  const getSupervisorById = (supervisorId) => {
+    return projects.supervisors?.[supervisorId] || null;
+  };
 
-  if (jobStr) {
-    parts.push(jobStr);
-  } else {
-    parts.push("All Projects");
-  }
+  const getJobsBySupervisor = (supervisorId) => {
+    const supervisor = projects.supervisors?.[supervisorId];
+    if (!supervisor) return [];
+    return supervisor.jobs.map((jobId) => projects.jobs[jobId]).filter(Boolean);
+  };
 
-  const filters = [
-    clientStr && `Client: ${clientStr}`,
-    stateStr && `State: ${stateStr}`,
-    pmStr && `PM: ${pmStr}`,
-    yearStr && `Year: ${yearStr}`,
-    phaseStr && `Phase: ${phaseStr}`
-  ].filter(Boolean); 
+  const getPhasesBySupervisor = (supervisorId) => {
+    if (!projects?.phases) return [];
+    return Object.values(projects.phases).filter(
+      (phase) => phase.pmId === supervisorId,
+    );
+  };
 
-  if (filters.length > 0) {
+  const getSupervisorByPhase = (phaseId) => {
+    if (!projects) return [];
+    const phase = projects.phases?.[phaseId];
+    if (!phase?.pmId) return [];
+    return projects.supervisors[phase.pmId] || null;
+  };
+
+  const getSupervisorName = (supervisorId) => {
+    console.log(projects);
+    if (!projects) return [];
+    return projects.supervisors?.[supervisorId]?.name || "Unknown";
+  };
+
+  const getJobCountBySupervisor = () => {
+    if (!projects?.supervisors) return {};
+    return Object.entries(projects.supervisors).reduce(
+      (acc, [id, supervisor]) => {
+        acc[id] = {
+          name: supervisor.name,
+          count: supervisor.jobs.length,
+        };
+        return acc;
+      },
+      {},
+    );
+  };
+
+  const getPhaseCountBySupervisor = () => {
+    if (!projects?.phases || !projects?.supervisors) return {};
+
+    const counts = {};
+    Object.values(projects.supervisors).forEach((supervisor) => {
+      counts[supervisor.id] = {
+        name: supervisor.name,
+        count: 0,
+      };
+    });
+
+    Object.values(projects.phases).forEach((phase) => {
+      if (phase.pmId && counts[phase.pmId]) {
+        counts[phase.pmId].count++;
+      }
+    });
+
+    return counts;
+  };
+
+  const getAllStatuses = () => {
+    if (!projects?.statuses) return [];
+    return Object.keys(projects.statuses)
+      .map((s) => parseInt(s, 10))
+      .sort((a, b) => a - b);
+  };
+
+  const getStatusInfo = (status) => {
+    if (!projects?.statuses?.[status]) return null;
+    return projects.statuses[status];
+  };
+
+  const getJobsByStatus = (status) => {
+    if (!projects?.statuses?.[status]) return [];
+    const statusData = projects.statuses[status];
+    return statusData.jobIds
+      .map((jobId) => projects.jobs[jobId])
+      .filter(Boolean);
+  };
+
+  const getPhasesByStatus = (status) => {
+    if (!projects?.statuses?.[status]) return [];
+    const statusData = projects.statuses[status];
+    return statusData.phaseIds
+      .map((phaseId) => projects.phases[phaseId])
+      .filter(Boolean);
+  };
+
+  const getStatusByPhase = (phaseId) => {
+    if (!projects) return null;
+    const phase = projects.phases?.[phaseId];
+    return phase?.status || null;
+  };
+
+  const getJobCountByStatus = () => {
+    if (!projects?.statuses) return {};
+    return Object.entries(projects.statuses).reduce((acc, [status, data]) => {
+      acc[status] = data.jobIds.length;
+      return acc;
+    }, {});
+  };
+
+  const getPhaseCountByStatus = () => {
+    if (!projects?.statuses) return {};
+    return Object.entries(projects.statuses).reduce((acc, [status, data]) => {
+      acc[status] = data.phaseIds.length;
+      return acc;
+    }, {});
+  };
+
+  const getAllClients = () => {
+    if (!projects) return [];
+    if (!projects?.clients) return [];
+    return Object.values(projects.clients).sort((a, b) =>
+      a.name.localeCompare(b.name),
+    );
+  };
+
+  const getClientById = (clientId) => {
+    return projects.clients?.[clientId] || null;
+  };
+
+  const getJobsByClient = (clientId) => {
+    const client = projects.clients?.[clientId];
+    if (!client) return [];
+    return client.jobs.map((jobId) => projects.jobs[jobId]).filter(Boolean);
+  };
+
+  const getClientByPhase = (phaseId) => {
+    if (!projects) return [];
+    const phase = projects.phases?.[phaseId];
+    if (!phase?.clientId) return [];
+    return projects.clients[phase.clientId] || null;
+  };
+
+  const getClientByJob = (jobId) => {
+    if (!projects) return [];
+    const job = projects.jobs?.[jobId];
+    if (!job?.clientId) return null;
+    return projects.clients[job.clientId] || [];
+  };
+
+  const getJobPhasesByStatus = (jobId, status) => {
+    const job = projects.jobs?.[jobId];
+    if (!job) return [];
+
+    const allPhases = [];
+    job.years.forEach((yearId) => {
+      const year = projects.years[yearId];
+      if (year?.phases) {
+        year.phases.forEach((phaseId) => {
+          const phase = projects.phases[phaseId];
+          if (phase && phase.status === status) {
+            allPhases.push(phase);
+          }
+        });
+      }
+    });
+
+    return allPhases;
+  };
+
+  const getJobsBySupervisorAndState = (supervisorId, state) => {
+    const supervisorJobs = getJobsBySupervisor(supervisorId);
+    const stateJobs = getJobsByState(state);
+
+    const stateJobIds = new Set(stateJobs.map((j) => j.num));
+    return supervisorJobs.filter((job) => stateJobIds.has(job.num));
+  };
+
+  const getPhasesBySupervisorAndStatus = (supervisorId, status) => {
+    const supervisorPhases = getPhasesBySupervisor(supervisorId);
+    return supervisorPhases.filter((phase) => phase.status === status);
+  };
+
+  const getSupervisorsByState = () => {
+    const matrix = {};
+
+    if (!projects?.phases) return matrix;
+
+    Object.values(projects.phases).forEach((phase) => {
+      const state = phase.state;
+      const pmId = phase.pmId;
+
+      if (!matrix[state]) {
+        matrix[state] = new Set();
+      }
+
+      if (pmId) {
+        matrix[state].add(pmId);
+      }
+    });
+
+    Object.keys(matrix).forEach((state) => {
+      matrix[state] = Array.from(matrix[state]).map((pmId) => ({
+        id: pmId,
+        name: getSupervisorName(pmId),
+      }));
+    });
+
+    return matrix;
+  };
+
+  const pageModifierToString = (modifiers) => {
+    const { jobNum, yearId, phaseId, state, pm, client } = modifiers;
+    const parts = [];
+
+    const getDisplayValue = (id, getByIdFn, listFallback, property) => {
+      if (!id) return "";
+
+      if (id.substring(0, 4) === "xxxx") {
+        const item = listFallback.find((item) => item.id === id);
+        return item ? item[property] : "";
+      }
+
+      const item = getByIdFn(id);
+      return item ? item[property] : "";
+    };
+
+    const jobStr = jobNum ? getProjectByNum(jobNum)?.name || "" : "";
+    const yearStr = getDisplayValue(yearId, getYearById, yearList, "year");
+    const phaseStr = getDisplayValue(phaseId, getPhaseById, phaseList, "name");
+    const stateStr = state || "";
+    const pmStr = pm ? getSupervisorById(pm)?.name || "" : "";
+    const clientStr = client ? getClientById(client)?.name || "" : "";
+
     if (jobStr) {
-      parts.push(`(${filters.join(", ")})`);
+      parts.push(jobStr);
     } else {
-      parts.push(`- ${filters.join(", ")}`);
+      parts.push("All Projects");
     }
-  }
 
-  return parts.join(" ");
-};
+    const filters = [
+      clientStr && `Client: ${clientStr}`,
+      stateStr && `State: ${stateStr}`,
+      pmStr && `PM: ${pmStr}`,
+      yearStr && `Year: ${yearStr}`,
+      phaseStr && `Phase: ${phaseStr}`,
+    ].filter(Boolean);
 
+    if (filters.length > 0) {
+      if (jobStr) {
+        parts.push(`(${filters.join(", ")})`);
+      } else {
+        parts.push(`- ${filters.join(", ")}`);
+      }
+    }
+
+    return parts.join(" ");
+  };
 
   return (
     <ProjectContext.Provider
@@ -621,7 +613,7 @@ const pageModifierToString = (modifiers) => {
         getStateByJob,
         getJobCountByState,
         getPhaseCountByState,
-        
+
         getAllSupervisors,
         getSupervisorById,
         getJobsBySupervisor,
@@ -630,7 +622,7 @@ const pageModifierToString = (modifiers) => {
         getSupervisorName,
         getJobCountBySupervisor,
         getPhaseCountBySupervisor,
-        
+
         getAllStatuses,
         getStatusInfo,
         getJobsByStatus,
@@ -638,18 +630,18 @@ const pageModifierToString = (modifiers) => {
         getStatusByPhase,
         getJobCountByStatus,
         getPhaseCountByStatus,
-        
+
         getAllClients,
         getClientById,
         getJobsByClient,
         getClientByPhase,
         getClientByJob,
-        
+
         getJobPhasesByStatus,
         getJobsBySupervisorAndState,
         getPhasesBySupervisorAndStatus,
         getSupervisorsByState,
-        getPhasesByFullYear
+        getPhasesByFullYear,
       }}
     >
       {children}

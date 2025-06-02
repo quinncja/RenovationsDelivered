@@ -236,11 +236,24 @@ function TableEntry({
   const hasSubData = subColumns !== null;
   return (
     <button className={`table-entry`} onClick={handleClick}>
-        <div className="table-entry-image-icon">       
-        {entry.imagePath ? 
-        <div className="tooltip-cube bigger-cube cube-svg"> {fileSvg( getColor(entry.id, "Tranquil"))} </div> 
-      : <span className={`tooltip-cube bigger-cube table-entry-cube ${entry?.type === "committed" ? "committed-cube" : ""}`} style={{ backgroundColor: getColor(entry.id, "Tranquil"), position: "fixed", marginLeft: "-20px", zIndex: 1}}>
-      </span> } </div>
+      <div className="table-entry-image-icon">
+        {entry.imagePath ? (
+          <div className="tooltip-cube bigger-cube cube-svg">
+            {" "}
+            {fileSvg(getColor(entry.id, "Tranquil"))}{" "}
+          </div>
+        ) : (
+          <span
+            className={`tooltip-cube bigger-cube table-entry-cube ${entry?.type === "committed" ? "committed-cube" : ""}`}
+            style={{
+              backgroundColor: getColor(entry.id, "Tranquil"),
+              position: "fixed",
+              marginLeft: "-20px",
+              zIndex: 1,
+            }}
+          ></span>
+        )}{" "}
+      </div>
       {!oldStyle && (
         <div className="table-entry-left" style={{ backgroundColor: color }} />
       )}

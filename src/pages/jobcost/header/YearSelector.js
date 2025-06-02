@@ -4,21 +4,22 @@ import { useJobCostContext } from "context/JobCostContext";
 
 function YearSelector() {
   const { getProjectByNum, getYearById, getYearsByJob } = useProjectContext();
-  const { pageModifiers, modTimeout, updatePageModifiers } = useJobCostContext();
+  const { pageModifiers, modTimeout, updatePageModifiers } =
+    useJobCostContext();
 
   const selectedJobNum = pageModifiers.jobNum;
   let selectedYearId = pageModifiers.yearId;
   let selectedJobYears;
-  if(selectedJobNum === "none") {
+  if (selectedJobNum === "none") {
     selectedJobYears = [];
   } else {
     const selectedJob = getProjectByNum(selectedJobNum);
     selectedJobYears = getYearsByJob(selectedJob);
-    if(selectedJobYears.length === 1){
-      selectedYearId = selectedJobYears[0].id 
+    if (selectedJobYears.length === 1) {
+      selectedYearId = selectedJobYears[0].id;
     }
   }
-  
+
   const active = pageModifiers.yearId;
 
   const handleYearChange = (value) => {
@@ -44,7 +45,7 @@ function YearSelector() {
 
   return (
     <div
-      className={`project-select-wrapper ${active && 'project-select-wrapper-active'} `}
+      className={`project-select-wrapper ${active && "project-select-wrapper-active"} `}
       title="Change year"
       style={{
         display: "flex",

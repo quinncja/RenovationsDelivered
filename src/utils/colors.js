@@ -330,7 +330,7 @@ export function getColorByID(id, palette) {
   return palette[index];
 }
 
-export function getColor(id){
+export function getColor(id) {
   const colorObj = getColorByID(id, colorPalettes["Tranquil"]);
   return adjustColor(colorObj, id);
 }

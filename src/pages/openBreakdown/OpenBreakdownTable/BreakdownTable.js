@@ -18,7 +18,7 @@ function BreakdownTable(props) {
     upddte: "Date updated",
     updusr: "Updated by",
     recnum: "Record Number",
-    costType: "Cost Type"
+    costType: "Cost Type",
   };
 
   const handleSort = (key) => {
@@ -36,9 +36,13 @@ function BreakdownTable(props) {
   const getColumnHeaders = (data) => {
     const excludedKeys = ["imagePath", "imageName", "imageUser"];
     if (!data || data.length === 0) return [];
-    let keys = Object.keys(data[0]).filter((key) => !excludedKeys.includes(key));
-    const orderedKeys = Object.keys(headerMap).filter(key => keys.includes(key));
-    const remainingKeys = keys.filter(key => !headerMap.hasOwnProperty(key));
+    let keys = Object.keys(data[0]).filter(
+      (key) => !excludedKeys.includes(key),
+    );
+    const orderedKeys = Object.keys(headerMap).filter((key) =>
+      keys.includes(key),
+    );
+    const remainingKeys = keys.filter((key) => !headerMap.hasOwnProperty(key));
     return [...orderedKeys, ...remainingKeys];
   };
 
@@ -89,7 +93,7 @@ function BreakdownTable(props) {
     const totalPages = Math.ceil(totalItems / itemsPerPage);
     const startItem = (currentPage - 1) * itemsPerPage + 1;
     const endItem = Math.min(currentPage * itemsPerPage, totalItems);
-    
+
     return { totalPages, startItem, endItem };
   };
 
@@ -111,20 +115,20 @@ function BreakdownTable(props) {
 
   const renderPagination = (totalItems) => {
     const { totalPages, startItem, endItem } = getPaginationInfo(totalItems);
-    
+
     if (totalPages <= 1) return null;
 
     const getVisiblePages = () => {
       if (totalPages <= 5) {
         return Array.from({ length: totalPages }, (_, i) => i + 1);
       }
-      
+
       const pages = [];
-      
+
       pages.push(1);
-      
+
       let middle1, middle2, middle3;
-      
+
       if (currentPage <= 3) {
         middle1 = 2;
         middle2 = 3;
@@ -138,15 +142,15 @@ function BreakdownTable(props) {
         middle2 = currentPage;
         middle3 = currentPage + 1;
       }
-      
-      [middle1, middle2, middle3].forEach(page => {
+
+      [middle1, middle2, middle3].forEach((page) => {
         if (page > 1 && page < totalPages && !pages.includes(page)) {
           pages.push(page);
         }
       });
-      
+
       pages.push(totalPages);
-      
+
       return pages;
     };
 
@@ -155,25 +159,25 @@ function BreakdownTable(props) {
     return (
       <div className="pagination-wrapper">
         <div className="pagination-controls">
-          <button 
+          <button
             onClick={handlePrevious}
             disabled={currentPage === 1}
             className="pagination-btn"
           >
             Previous
           </button>
-          
+
           {visiblePages.map((page) => (
             <button
               key={page}
               onClick={() => handlePageChange(page)}
-              className={`pagination-btn ${currentPage === page ? 'active' : ''}`}
+              className={`pagination-btn ${currentPage === page ? "active" : ""}`}
             >
               {page}
             </button>
           ))}
-          
-          <button 
+
+          <button
             onClick={() => handleNext(totalPages)}
             disabled={currentPage === totalPages}
             className="pagination-btn"
@@ -181,7 +185,7 @@ function BreakdownTable(props) {
             Next
           </button>
         </div>
-        <h4 style={{fontWeight: '400'}}>
+        <h4 style={{ fontWeight: "400" }}>
           Showing {startItem}-{endItem} of {totalItems} items
         </h4>
       </div>
@@ -195,33 +199,41 @@ function BreakdownTable(props) {
     return (
       <div className="table-body">
         {paginatedData.map((entry, index) => {
-          return <TableEntry headers={headers} entry={entry} color={color} key={index} />;
+          return (
+            <TableEntry
+              headers={headers}
+              entry={entry}
+              color={color}
+              key={index}
+            />
+          );
         })}
       </div>
     );
   };
 
-  if (!data) return <div className="data-display loading-widget"/>
-  
-  if (data.length === 0) return (
-    <div className="data-display">
-      <div className="empty-breakdown">
-        {underConstructionSvg()}
-        <h4> No data </h4>
+  if (!data) return <div className="data-display loading-widget" />;
+
+  if (data.length === 0)
+    return (
+      <div className="data-display">
+        <div className="empty-breakdown">
+          {underConstructionSvg()}
+          <h4> No data </h4>
+        </div>
       </div>
-    </div>
-  )
+    );
 
   const headers = getColumnHeaders(data);
   const sortedData = getSortedData(data);
 
   return (
     <>
-    <div className="data-display-wrapper">
-      {tableHeader(headers)}
-      {tableBody(headers, data)}
-    </div>
-    {renderPagination(sortedData.length)}
+      <div className="data-display-wrapper">
+        {tableHeader(headers)}
+        {tableBody(headers, data)}
+      </div>
+      {renderPagination(sortedData.length)}
     </>
   );
 }

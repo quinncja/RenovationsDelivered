@@ -14,7 +14,7 @@ export function dollarFormatter(input) {
 }
 
 export function percentFomatter(input) {
-  if(!input) return "$0.00"
+  if (!input) return "$0.00";
   return `${input.toFixed(2)}%`;
 }
 
@@ -89,7 +89,7 @@ export const formatPhase = (phase) => {
 export const yearPhaseToStr = (yearPhase) => {
   const year = yearPhase.slice(1, 3);
   const phase = yearPhase.slice(3, 5);
-  
+
   const phaseMap = {
     "00": "Ex.",
     "01": "Jan",
@@ -101,22 +101,22 @@ export const yearPhaseToStr = (yearPhase) => {
     "07": "July",
     "08": "Aug",
     "09": "Sept",
-    "10": "Oct",
-    "11": "Nov",
-    "12": "Dec",
-    "13": "Ex.",
-    "14": "Ex.",
-    "15": "Ex.",
-    "16": "Ex."
+    10: "Oct",
+    11: "Nov",
+    12: "Dec",
+    13: "Ex.",
+    14: "Ex.",
+    15: "Ex.",
+    16: "Ex.",
   };
-  
+
   return `${phaseMap[String(phase)]} ${year}`;
 };
 
 export const phaseNumToMonth = (phase) => {
   const phaseMap = {
     "00": "January",
-    "01": "January", 
+    "01": "January",
     "02": "February",
     "03": "March",
     "04": "April",
@@ -125,16 +125,16 @@ export const phaseNumToMonth = (phase) => {
     "07": "July",
     "08": "August",
     "09": "September",
-    "10": "October",
-    "11": "November",
-    "12": "December",
-    "13": "Extra Work",
-    "14": "Extra Work",
-    "15": "Extra Work",
-    "16": "Extra Work"
+    10: "October",
+    11: "November",
+    12: "December",
+    13: "Extra Work",
+    14: "Extra Work",
+    15: "Extra Work",
+    16: "Extra Work",
   };
-  
-  const key = String(phase).padStart(2, '0');
+
+  const key = String(phase).padStart(2, "0");
   return phaseMap[key];
 };
 export const phaseToMonth = (phase, optional) => {
@@ -180,9 +180,9 @@ export const modifierFormatter = (mods, prevPhase) => {
     prevPhase: "",
     state: mods.state || "",
     pm: mods.pm || "",
-    client: mods.client || ""
+    client: mods.client || "",
   };
-  
+
   if (mods.jobNum && mods.jobNum.length === 6) {
     formatted.job = mods.jobNum.slice(0, 4);
     formatted.phase = mods.jobNum.slice(-2);
@@ -192,11 +192,11 @@ export const modifierFormatter = (mods, prevPhase) => {
       formatted.phase = mods.phaseId.slice(-2);
     }
   }
-  
+
   if (mods.yearId && mods.yearId.length >= 5) {
     formatted.year = mods.yearId.slice(-2);
   }
-  
+
   if (prevPhase && prevPhase.id.length >= 7) {
     formatted.prevYear = prevPhase.yearNum;
     formatted.prevPhase = prevPhase.id.slice(-2);
@@ -204,7 +204,7 @@ export const modifierFormatter = (mods, prevPhase) => {
     formatted.prevYear = "";
     formatted.prevPhase = "";
   }
-  
+
   return formatted;
 };
 
@@ -257,7 +257,7 @@ export const jobStatusFormatter = (status) => {
   if (status === 4) return "Active";
   if (status === 5) return "Closed";
   if (status === 6) return "Closed";
-  else return "Mixed"
+  else return "Mixed";
 };
 
 export const costTypeFormatter = (costCode) => {
@@ -515,8 +515,20 @@ export const formatSageUsername = (name) => {
 
 export const phaseToShortMonth = (month) => {
   if (month === 13 || month === "13") return "Extra";
-  const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", 
-                     "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+  const monthNames = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
+  ];
   return monthNames[month - 1];
 };
 
@@ -539,13 +551,12 @@ export const getBaseJobName = (jobName) => {
 };
 
 export function kebabToNormal(kebabCase) {
-  if (!kebabCase || typeof kebabCase !== 'string') {
-    return '';
+  if (!kebabCase || typeof kebabCase !== "string") {
+    return "";
   }
-  
-  return kebabCase
-    .split('-')
-    .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
-    .join(' ');
-}
 
+  return kebabCase
+    .split("-")
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+    .join(" ");
+}

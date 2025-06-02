@@ -1,18 +1,14 @@
-import { useEffect, useCallback, useRef } from 'react';
-import { useLoading } from './LoadingContext';
-import { loadProjectList, loadUserData } from 'utils/api';
-import { useTrackedJobs } from 'context/TrackedJobContext';
-import { useJobCostContext } from 'context/JobCostContext';
-import { normalizeData } from 'utils/jobNormalizer';
-import { useProjectContext } from 'context/ProjectContext';
+import { useEffect, useCallback, useRef } from "react";
+import { useLoading } from "./LoadingContext";
+import { loadProjectList, loadUserData } from "utils/api";
+import { useTrackedJobs } from "context/TrackedJobContext";
+import { useJobCostContext } from "context/JobCostContext";
+import { normalizeData } from "utils/jobNormalizer";
+import { useProjectContext } from "context/ProjectContext";
 
 export const useAppInitializer = (isAuthenticated) => {
-  const {
-    phase,
-    updateLoadingState,
-    setCriticalDataLoaded,
-    isAppReady
-  } = useLoading();
+  const { phase, updateLoadingState, setCriticalDataLoaded, isAppReady } =
+    useLoading();
   const { setTrackedJobs } = useTrackedJobs();
   const { setPageModifiers } = useJobCostContext();
   const { setProjects } = useProjectContext();
@@ -22,7 +18,7 @@ export const useAppInitializer = (isAuthenticated) => {
   const initializeCriticalData = useCallback(async () => {
     if (!isAuthenticated || initRef.current) return;
     initRef.current = true;
-    
+
     const maxRetries = 5;
     let retryCount = 0;
 
@@ -35,58 +31,67 @@ export const useAppInitializer = (isAuthenticated) => {
         controller = new AbortController();
         abortControllerRef.current = controller;
 
-        updateLoadingState({ phase: 'loading-critical' });
+        updateLoadingState({ phase: "loading-critical" });
 
         const [userResult, projectsResult] = await Promise.allSettled([
           loadUserData(controller.signal),
-          loadProjectList(controller.signal)
+          loadProjectList(controller.signal),
         ]);
 
-        if (userResult.status === 'fulfilled') {
+        if (userResult.status === "fulfilled") {
           setPageModifiers(userResult.value?.data?.pageModifiers || {});
           setTrackedJobs(userResult.value?.data?.trackedJobs || []);
-          setCriticalDataLoaded('user');
+          setCriticalDataLoaded("user");
         } else {
-          throw new Error('Failed to load user data');
+          throw new Error("Failed to load user data");
         }
 
-        if (projectsResult.status === 'fulfilled') {
+        if (projectsResult.status === "fulfilled") {
           const normalizedProjects = normalizeData(projectsResult.value.data);
           setProjects(normalizedProjects);
-          setCriticalDataLoaded('projects');
+          setCriticalDataLoaded("projects");
         } else {
-          throw new Error('Failed to load projects');
+          throw new Error("Failed to load projects");
         }
 
-        updateLoadingState({ phase: 'ready' });
-
+        updateLoadingState({ phase: "ready" });
       } catch (error) {
-        console.log('Critical initialization error details:', {
+        console.log("Critical initialization error details:", {
           name: error.name,
           message: error.message,
           isAborted: controller?.signal?.aborted,
-          retryCount: retryCount
+          retryCount: retryCount,
         });
 
-        const isRealAbortError = error.name === 'AbortError' && controller?.signal?.aborted;
+        const isRealAbortError =
+          error.name === "AbortError" && controller?.signal?.aborted;
         if (isRealAbortError) {
-          console.log('Aborting due to explicit abort signal');
+          console.log("Aborting due to explicit abort signal");
           throw error;
         }
 
         retryCount++;
-        console.log(`Critical initialization error on attempt ${retryCount}/${maxRetries}:`, error.message);
-        
+        console.log(
+          `Critical initialization error on attempt ${retryCount}/${maxRetries}:`,
+          error.message,
+        );
+
         if (retryCount <= maxRetries) {
-          console.log(`Retrying critical initialization (attempt ${retryCount}/${maxRetries})`);
-          updateLoadingState({ 
-            phase: 'loading-critical',
-            error: `Retrying... (${retryCount}/${maxRetries})`
+          console.log(
+            `Retrying critical initialization (attempt ${retryCount}/${maxRetries})`,
+          );
+          updateLoadingState({
+            phase: "loading-critical",
+            error: `Retrying... (${retryCount}/${maxRetries})`,
           });
-          await new Promise(resolve => setTimeout(resolve, 1000 * retryCount));
+          await new Promise((resolve) =>
+            setTimeout(resolve, 1000 * retryCount),
+          );
           return await attemptInit();
         } else {
-          console.log('Max retries reached for critical initialization, giving up');
+          console.log(
+            "Max retries reached for critical initialization, giving up",
+          );
           throw error;
         }
       }
@@ -95,15 +100,25 @@ export const useAppInitializer = (isAuthenticated) => {
     try {
       await attemptInit();
     } catch (error) {
-      if (error.name !== 'AbortError' && !abortControllerRef.current?.signal?.aborted) {
-        console.error('Critical initialization failed after retries:', error);
+      if (
+        error.name !== "AbortError" &&
+        !abortControllerRef.current?.signal?.aborted
+      ) {
+        console.error("Critical initialization failed after retries:", error);
         updateLoadingState({
-          phase: 'error',
-          error: error.message
+          phase: "error",
+          error: error.message,
         });
       }
     }
-  }, [isAuthenticated, updateLoadingState, setCriticalDataLoaded, setPageModifiers, setTrackedJobs, setProjects]);
+  }, [
+    isAuthenticated,
+    updateLoadingState,
+    setCriticalDataLoaded,
+    setPageModifiers,
+    setTrackedJobs,
+    setProjects,
+  ]);
 
   useEffect(() => {
     return () => {
@@ -114,7 +129,7 @@ export const useAppInitializer = (isAuthenticated) => {
   }, []);
 
   useEffect(() => {
-    if (isAuthenticated && phase === 'initializing') {
+    if (isAuthenticated && phase === "initializing") {
       initializeCriticalData();
     }
   }, [isAuthenticated, phase, initializeCriticalData]);

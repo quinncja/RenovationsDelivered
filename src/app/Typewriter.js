@@ -10,7 +10,7 @@ const Typewriter = ({ text, style, onComplete }) => {
   useEffect(() => {
     if (currentIndex < text.length) {
       const randomDelay = Math.random() * 120 + 80;
-      
+
       const timer = setTimeout(() => {
         setDisplayedText(text.slice(0, currentIndex + 1));
         setCurrentIndex(currentIndex + 1);
@@ -42,15 +42,15 @@ const Typewriter = ({ text, style, onComplete }) => {
       transition: {
         duration: 1.2,
         repeat: Infinity,
-        ease: "easeInOut"
+        ease: "easeInOut",
       },
     },
   };
 
   return (
     <motion.h3
-      style={{ 
-        ...style, 
+      style={{
+        ...style,
       }}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
@@ -61,12 +61,12 @@ const Typewriter = ({ text, style, onComplete }) => {
         variants={cursor}
         initial="hidden"
         animate="visible"
-        style={{ 
-          display: "inline-block", 
-          backgroundColor: "currentColor", 
-          width: "2px", 
+        style={{
+          display: "inline-block",
+          backgroundColor: "currentColor",
+          width: "2px",
           height: "1.1em",
-          marginLeft: "3px"
+          marginLeft: "3px",
         }}
       />
     </motion.h3>

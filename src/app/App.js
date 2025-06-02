@@ -17,11 +17,12 @@ function App() {
   const isAuthenticated = useAuth();
   const { phase } = useAppInitializer(isAuthenticated);
   const [typingComplete, setTypingComplete] = useState(false);
-  
-  const shouldShowApp = phase === 'ready' && typingComplete;
-  const shouldShowLoading = isAuthenticated && (phase === 'loading-critical' || !typingComplete);
-  const shouldShowError = isAuthenticated && phase === 'error';
-  
+
+  const shouldShowApp = phase === "ready" && typingComplete;
+  const shouldShowLoading =
+    isAuthenticated && (phase === "loading-critical" || !typingComplete);
+  const shouldShowError = isAuthenticated && phase === "error";
+
   useScrollToTop();
 
   const loadingScreenStyle = {
@@ -30,14 +31,14 @@ function App() {
     height: "100vh",
     display: "flex",
     gap: "10px",
-    flexDirection: 'column',
+    flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
     position: "fixed",
     top: 0,
     left: 0,
     zIndex: 9999,
-    backgroundColor: "var(--background)"
+    backgroundColor: "var(--background)",
   };
 
   if (!isAuthenticated) {
@@ -58,10 +59,14 @@ function App() {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3, ease: "easeOut" }}
           >
-            <img style={{height: "150px", width: "150px"}} alt="Logo" src={logo}/>
+            <img
+              style={{ height: "150px", width: "150px" }}
+              alt="Logo"
+              src={logo}
+            />
             <Typewriter
               text="Initializing ..."
-              style={{color: "white"}}
+              style={{ color: "white" }}
               onComplete={() => setTypingComplete(true)}
             />
           </motion.div>
@@ -73,8 +78,12 @@ function App() {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.5, ease: "easeOut" }}
           >
-            <img style={{height: "150px", width: "150px"}} alt="Logo" src={logo}/>
-            <h3 style={{color: 'var(--red)'}}> Error initializing </h3>
+            <img
+              style={{ height: "150px", width: "150px" }}
+              alt="Logo"
+              src={logo}
+            />
+            <h3 style={{ color: "var(--red)" }}> Error initializing </h3>
           </motion.div>
         )}
       </AnimatePresence>

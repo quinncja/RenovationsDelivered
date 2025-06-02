@@ -50,9 +50,7 @@ function Logo({ expanded }) {
       onClick={() => handleClick()}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      src={hovered || expanded
-            ? whiteLogoHover
-            : whiteLogo}
+      src={hovered || expanded ? whiteLogoHover : whiteLogo}
       className="logo nav-logo"
       alt="Renovations Delivered"
     />

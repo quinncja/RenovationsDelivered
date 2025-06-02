@@ -16,24 +16,24 @@ import { BrowserRouter } from "react-router-dom";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <BrowserRouter>
-    <LoadingProvider> 
+    <LoadingProvider>
       <SystemMessageProvider>
         <ModalProvider>
-            <HistoryProvider>
+          <HistoryProvider>
             <ProjectProvider>
               <TrackedJobProvider>
                 <ItemsProvider>
                   <JobCostProvider>
-                      <HomeProvider>
-                        <Router />
-                      </HomeProvider>
+                    <HomeProvider>
+                      <Router />
+                    </HomeProvider>
                   </JobCostProvider>
                 </ItemsProvider>
               </TrackedJobProvider>
-              </ProjectProvider>
-            </HistoryProvider>
+            </ProjectProvider>
+          </HistoryProvider>
         </ModalProvider>
       </SystemMessageProvider>
     </LoadingProvider>
-  </BrowserRouter>
+  </BrowserRouter>,
 );

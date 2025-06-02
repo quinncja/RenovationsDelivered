@@ -5,7 +5,14 @@ import useIsAdmin from "utils/hooks/useIsAdmin";
 import { useJobCostContext } from "context/JobCostContext";
 
 function ProjectSelector() {
-  const { projects, getAllProjects, getProjectByNum, getYearsByJob, getYearById, getPhasesByYear} = useProjectContext();
+  const {
+    projects,
+    getAllProjects,
+    getProjectByNum,
+    getYearsByJob,
+    getYearById,
+    getPhasesByYear,
+  } = useProjectContext();
   const { trackedJobs } = useTrackedJobs();
   const isAdmin = useIsAdmin();
   const { pageModifiers, modTimeout, updatePageModifiers } =
@@ -24,33 +31,32 @@ function ProjectSelector() {
   const getJobMods = (jobNum) => {
     const selectedJob = getProjectByNum(jobNum);
     const selectedJobYears = getYearsByJob(selectedJob);
-    if(selectedJobYears.length === 1){
-      const selectedYearId = selectedJobYears[0].id 
+    if (selectedJobYears.length === 1) {
+      const selectedYearId = selectedJobYears[0].id;
       const selectedYear = getYearById(selectedYearId);
-      const selectedYearPhases = getPhasesByYear(selectedYear, selectedJob)
-        if(selectedYearPhases.length === 1){
-          return {
-            jobNum: jobNum,
-            yearId: null,
-            phaseId: null,
-          }
-        }
-        else return{
-            jobNum: jobNum,
-            yearId: null,
-        }
-    }
-    else return { jobNum: jobNum }
-  }
-  
+      const selectedYearPhases = getPhasesByYear(selectedYear, selectedJob);
+      if (selectedYearPhases.length === 1) {
+        return {
+          jobNum: jobNum,
+          yearId: null,
+          phaseId: null,
+        };
+      } else
+        return {
+          jobNum: jobNum,
+          yearId: null,
+        };
+    } else return { jobNum: jobNum };
+  };
+
   const handleJobChange = (value) => {
     if (modTimeout) return;
     let jobNum;
-    if (!isAdmin && value.length === 0) jobNum = "none"
+    if (!isAdmin && value.length === 0) jobNum = "none";
     else jobNum = value.length > 0 ? value[0].num : null;
-    
+
     const newMods = getJobMods(jobNum);
-    console.log(newMods)
+    console.log(newMods);
     updatePageModifiers(newMods);
   };
 
@@ -66,7 +72,7 @@ function ProjectSelector() {
 
   return (
     <div
-      className={`project-select-wrapper ${active && 'project-select-wrapper-active'} psd-left`}
+      className={`project-select-wrapper ${active && "project-select-wrapper-active"} psd-left`}
       title="Change project"
       style={{
         display: "flex",
@@ -74,8 +80,8 @@ function ProjectSelector() {
         width: "fit-content",
         alignItems: "flex-start",
         paddingRight: "25px",
-        borderRadius: '0px',
-        paddingLeft: "22px"
+        borderRadius: "0px",
+        paddingLeft: "22px",
       }}
       onClick={handleWrapperClick}
     >

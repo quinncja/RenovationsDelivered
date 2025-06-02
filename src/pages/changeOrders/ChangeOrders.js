@@ -44,8 +44,8 @@ function ChangeOrders() {
 
   const [mouseOver, setMouseOver] = useState(false);
 
-  const loadData = () => {}
-   //so hacky i hate it but its 4:08pm on friday
+  const loadData = () => {};
+  //so hacky i hate it but its 4:08pm on friday
   useEffect(() => {
     updateDataMap(id, null);
     //eslint-disable-next-line

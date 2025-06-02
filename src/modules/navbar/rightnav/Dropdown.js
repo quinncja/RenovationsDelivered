@@ -49,7 +49,7 @@ function Dropdown({ toggleSelf }) {
   //   item: "Reports",
   //   onClick: () => handleClick(() => navigate("/reports")),
   // },
-  
+
   if (isAdmin) {
     dropdownOptions = [
       {

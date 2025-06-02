@@ -22,11 +22,11 @@ export const useJobCostContext = () => useContext(JobCostContext);
 export const JobCostProvider = ({ children }) => {
   const isAdmin = useIsAdmin();
   const { isAppReady } = useLoading();
-  const [ jobData, setJobData ] = useState(undefined)
+  const [jobData, setJobData] = useState(undefined);
   const [breakdown, setBreakdown] = useState({
     type: null,
     focused: null,
-  })
+  });
 
   const [typeFilter, setTypeFilter] = useState(false);
   const [searchFilter, setSearchFilter] = useState("");
@@ -36,10 +36,10 @@ export const JobCostProvider = ({ children }) => {
     Labor: null,
     Subcontractors: null,
     WTPM: null,
-  })
-    
+  });
+
   const navigate = useNavigate();
-  
+
   const savePageModifiers = async (modifiers) => {
     await saveUserData(modifiers, "pageModifiers");
   };
@@ -54,28 +54,32 @@ export const JobCostProvider = ({ children }) => {
   });
 
   const isEmpty = useMemo(() => {
-    return Object.values(pageModifiers).every(value => value === null || value === "none");
+    return Object.values(pageModifiers).every(
+      (value) => value === null || value === "none",
+    );
   }, [pageModifiers]);
-  
+
   const clearPageModifiers = () => {
-    if(!isAdmin) setPageModifiers({
-      jobNum: "none",
-      yearId: null,
-      phaseId: null,
-      state: null,
-      pm: null,
-      client: null,
-    })
-    else setPageModifiers({
+    if (!isAdmin)
+      setPageModifiers({
+        jobNum: "none",
+        yearId: null,
+        phaseId: null,
+        state: null,
+        pm: null,
+        client: null,
+      });
+    else
+      setPageModifiers({
         jobNum: null,
         yearId: null,
         phaseId: null,
         state: null,
         pm: null,
         client: null,
-    })
-  }
-  
+      });
+  };
+
   const [modTimeout, setModTimeout] = useState(true);
   const { pushHistory } = useHistory();
 
@@ -89,7 +93,7 @@ export const JobCostProvider = ({ children }) => {
 
   const clearJobCostData = () => {
     setJobData(undefined);
-  }
+  };
 
   const updatePageModifiers = (newMods, flag = false) => {
     setModTimeout(true);
@@ -98,7 +102,7 @@ export const JobCostProvider = ({ children }) => {
       Labor: null,
       Subcontractors: null,
       WTPM: null,
-    })
+    });
     const oldMods = { ...pageModifiers };
     const newModObj = {
       ...pageModifiers,
@@ -154,73 +158,88 @@ export const JobCostProvider = ({ children }) => {
           }
           controller = new AbortController();
           abortControllerRef.current = controller;
-          
+
           const mods = {
             ...formattedModifiers,
             type: "job-data",
           };
-          
+
           const aggrJobData = await fetchAggrJobData(mods, controller.signal);
           setJobData(aggrJobData);
           lastLoadedModifiersRef.current = JSON.stringify(formattedModifiers);
-          
         } catch (error) {
-          console.log('Error details:', {
+          console.log("Error details:", {
             name: error.name,
             message: error.message,
             isAborted: controller?.signal?.aborted,
-            retryCount: retryCount
+            retryCount: retryCount,
           });
-          
-          const isRealAbortError = error.name === 'AbortError' && controller?.signal?.aborted;
-          
+
+          const isRealAbortError =
+            error.name === "AbortError" && controller?.signal?.aborted;
+
           if (isRealAbortError) {
-            console.log('Aborting due to explicit abort signal');
+            console.log("Aborting due to explicit abort signal");
             throw error;
           }
-          
+
           retryCount++;
-          console.log(`Error on attempt ${retryCount}/${maxRetries}:`, error.message);
-          
+          console.log(
+            `Error on attempt ${retryCount}/${maxRetries}:`,
+            error.message,
+          );
+
           if (retryCount <= maxRetries) {
-            console.log(`Retrying job data fetch (attempt ${retryCount}/${maxRetries})`);
-            await new Promise(resolve => setTimeout(resolve, 1000 * retryCount));
+            console.log(
+              `Retrying job data fetch (attempt ${retryCount}/${maxRetries})`,
+            );
+            await new Promise((resolve) =>
+              setTimeout(resolve, 1000 * retryCount),
+            );
             return await attemptLoad();
           } else {
-            console.log('Max retries reached, giving up');
+            console.log("Max retries reached, giving up");
             throw error;
           }
         }
       };
-  
+
       try {
         await attemptLoad();
       } catch (error) {
-        if (error.name !== 'AbortError' && !abortControllerRef.current?.signal?.aborted) {
+        if (
+          error.name !== "AbortError" &&
+          !abortControllerRef.current?.signal?.aborted
+        ) {
           console.error("Failed to load job data after retries:", error);
           toast.error("Failed to load job data");
         }
       }
     };
-  
+
     const shouldLoadData = () => {
-      if (!isAppReady || !currentPath.startsWith("/jobcost") || !pageModifiers) {
+      if (
+        !isAppReady ||
+        !currentPath.startsWith("/jobcost") ||
+        !pageModifiers
+      ) {
         return false;
       }
       const currentModifiersString = JSON.stringify(formattedModifiers);
       return currentModifiersString !== lastLoadedModifiersRef.current;
     };
-  
-    const pathParts = currentPath.split('/');
+
+    const pathParts = currentPath.split("/");
     const typeFromPath = pathParts[3];
     if (typeFromPath) {
       let capitalizedType;
-      if(typeFromPath === 'wtpm') capitalizedType = "WTPM"
-      else capitalizedType = typeFromPath.charAt(0).toUpperCase() + typeFromPath.slice(1);
-      setBreakdown(prev => ({ ...prev, type: capitalizedType }));
+      if (typeFromPath === "wtpm") capitalizedType = "WTPM";
+      else
+        capitalizedType =
+          typeFromPath.charAt(0).toUpperCase() + typeFromPath.slice(1);
+      setBreakdown((prev) => ({ ...prev, type: capitalizedType }));
     }
-  
-    
+
     if (shouldLoadData()) {
       loadJobData();
     }
@@ -237,7 +256,6 @@ export const JobCostProvider = ({ children }) => {
         sum += Number(obj.value) || 0;
       }
 
-    
     if (posted)
       for (const obj of posted) {
         sum += Number(obj.value) || 0;
@@ -283,8 +301,8 @@ export const JobCostProvider = ({ children }) => {
   const getDataByType = useCallback(
     (widgetType) => {
       if (!jobData) return null;
-      if ( widgetType === "margin" ) return jobData.margin || undefined;
-      if ( widgetType === "details" ) return jobData.details || undefined;
+      if (widgetType === "margin") return jobData.margin || undefined;
+      if (widgetType === "details") return jobData.details || undefined;
       let data = {
         costItems: {},
         budget: "",
@@ -293,36 +311,42 @@ export const JobCostProvider = ({ children }) => {
       data.type = widgetType;
       data.costItems.posted = getPostedCosts(type);
       data.costItems.committed = getCommittedCosts(type) || [];
-      data.recentItems = jobData.recentItems.filter((item) => item.category === widgetType)
+      data.recentItems = jobData.recentItems.filter(
+        (item) => item.category === widgetType,
+      );
 
       data.budget = getBudget(type);
-      if(type === 4) data.spent = getSubSpent(data.costItems.posted, data.costItems.committed)
-      else data.spent = getSpent(data.costItems.posted, data.costItems.committed);
+      if (type === 4)
+        data.spent = getSubSpent(
+          data.costItems.posted,
+          data.costItems.committed,
+        );
+      else
+        data.spent = getSpent(data.costItems.posted, data.costItems.committed);
       return data;
     },
     //eslint-disable-next-line
     [jobData],
   );
 
-
   const getTotalCost = () => {
     const types = [1, 2, 4, 5];
     let accumulator = 0;
-    
+
     for (const type of types) {
       const posted = getPostedCosts(type);
       const committed = getCommittedCosts(type);
-      
+
       let spent;
       if (type === 4) {
         spent = getSpent(posted, []);
       } else {
         spent = getSpent(posted, committed);
       }
-      
+
       accumulator += spent;
     }
-    
+
     return accumulator;
   };
 
@@ -330,20 +354,20 @@ export const JobCostProvider = ({ children }) => {
     const types = [1, 2, 4, 5];
     let accumulator = 0;
     for (const type of types) {
-      const budget = getBudget(type)
+      const budget = getBudget(type);
       accumulator += budget;
     }
     return accumulator;
-  }
+  };
 
   const getJobDetails = () => {
-    if(!jobData) return;
+    if (!jobData) return;
     const details = {
       cost: getTotalCost(),
       budget: getTotalBudget(),
-    }
+    };
     return details;
-  }
+  };
 
   const abortControllerRef2 = useRef(null);
 
@@ -351,7 +375,7 @@ export const JobCostProvider = ({ children }) => {
     const loadItems = async () => {
       const maxRetries = 3;
       let retryCount = 0;
-      
+
       const attemptLoad = async () => {
         let controller;
         try {
@@ -360,110 +384,132 @@ export const JobCostProvider = ({ children }) => {
           }
           controller = new AbortController();
           abortControllerRef2.current = controller;
-          
+
           const mods = {
             ...formattedModifiers,
             type: "job-data",
           };
 
           const typeNum = typeMap[breakdown.type];
-          const items = await fetchBreakdownItems(mods, typeNum, controller.signal);
-          setBreakdownItems(prev => ({ ...prev, [breakdown.type]: items }));
+          const items = await fetchBreakdownItems(
+            mods,
+            typeNum,
+            controller.signal,
+          );
+          setBreakdownItems((prev) => ({ ...prev, [breakdown.type]: items }));
           lastLoadedModifiersRef.current = JSON.stringify(formattedModifiers);
-          
         } catch (error) {
-          console.log('Error details:', {
+          console.log("Error details:", {
             name: error.name,
             message: error.message,
             isAborted: controller?.signal?.aborted,
-            retryCount: retryCount
+            retryCount: retryCount,
           });
-          
-          const isRealAbortError = error.name === 'AbortError' && controller?.signal?.aborted;
-          
+
+          const isRealAbortError =
+            error.name === "AbortError" && controller?.signal?.aborted;
+
           if (isRealAbortError) {
-            console.log('Aborting due to explicit abort signal');
+            console.log("Aborting due to explicit abort signal");
             throw error;
           }
-          
+
           retryCount++;
-          console.log(`Error on attempt ${retryCount}/${maxRetries}:`, error.message);
-          
+          console.log(
+            `Error on attempt ${retryCount}/${maxRetries}:`,
+            error.message,
+          );
+
           if (retryCount <= maxRetries) {
-            console.log(`Retrying job data fetch (attempt ${retryCount}/${maxRetries})`);
-            await new Promise(resolve => setTimeout(resolve, 1000 * retryCount));
+            console.log(
+              `Retrying job data fetch (attempt ${retryCount}/${maxRetries})`,
+            );
+            await new Promise((resolve) =>
+              setTimeout(resolve, 1000 * retryCount),
+            );
             return await attemptLoad();
           } else {
-            console.log('Max retries reached, giving up');
+            console.log("Max retries reached, giving up");
             throw error;
           }
         }
       };
-  
+
       try {
         await attemptLoad();
       } catch (error) {
-        if (error.name !== 'AbortError' && !abortControllerRef.current?.signal?.aborted) {
+        if (
+          error.name !== "AbortError" &&
+          !abortControllerRef.current?.signal?.aborted
+        ) {
           console.error("Failed to load job data after retries:", error);
           toast.error("Failed to load job data");
         }
       }
     };
-  
+
     const shouldLoadData = () => {
-      if (!isAppReady || !currentPath.startsWith("/jobcost/breakdown") || !pageModifiers || !breakdown.type) {
+      if (
+        !isAppReady ||
+        !currentPath.startsWith("/jobcost/breakdown") ||
+        !pageModifiers ||
+        !breakdown.type
+      ) {
         return false;
       }
       if (breakdownItems[breakdown.type]) return false;
       return true;
     };
-    
+
     if (shouldLoadData()) {
       loadItems();
     }
-    
+
     // eslint-disable-next-line
   }, [isAppReady, currentPath, pageModifiers, breakdown.type]);
 
-  const currentBreakdownData = breakdown.type ? getDataByType(breakdown.type) : null;
-  
+  const currentBreakdownData = breakdown.type
+    ? getDataByType(breakdown.type)
+    : null;
+
   const breakdownData = {
     type: breakdown.type,
     focused: breakdown.focused,
     data: currentBreakdownData,
-  }
+  };
 
   const updateFocusedId = (newId) => {
-    if(newId === breakdown.focused) setBreakdown((prev) => ({...prev, focused: null}))
-    else setBreakdown((prev) => ({...prev, focused: newId}))
-  }
+    if (newId === breakdown.focused)
+      setBreakdown((prev) => ({ ...prev, focused: null }));
+    else setBreakdown((prev) => ({ ...prev, focused: newId }));
+  };
 
   const openBreakdownPage = (type, focused = null) => {
-    setBreakdown({type, focused})
+    setBreakdown({ type, focused });
     navigate(`/jobcost/breakdown/${type.toLowerCase()}`);
-  }
+  };
 
   const getBreakdownItems = () => {
     const items = breakdownItems[breakdown.type] || null;
-    if(!items) return null;
-    
-    let filteredItems = breakdown.focused 
-      ? items.filter(item => item.id === breakdown.focused) 
+    if (!items) return null;
+
+    let filteredItems = breakdown.focused
+      ? items.filter((item) => item.id === breakdown.focused)
       : items;
-    
+
     if (typeFilter) {
-      filteredItems = filteredItems.filter(item => item.type === typeFilter);
+      filteredItems = filteredItems.filter((item) => item.type === typeFilter);
     }
-    
+
     if (searchFilter) {
       const searchTerm = searchFilter.toLowerCase();
-      filteredItems = filteredItems.filter(item => 
-        Object.values(item).some(value => 
-          String(value).toLowerCase().includes(searchTerm)
-        )
+      filteredItems = filteredItems.filter((item) =>
+        Object.values(item).some((value) =>
+          String(value).toLowerCase().includes(searchTerm),
+        ),
       );
     }
-    
+
     return filteredItems;
   };
 
@@ -490,7 +536,7 @@ export const JobCostProvider = ({ children }) => {
         typeFilter,
         setTypeFilter,
         searchFilter,
-        setSearchFilter
+        setSearchFilter,
       }}
     >
       {children}

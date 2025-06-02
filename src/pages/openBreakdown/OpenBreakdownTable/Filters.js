@@ -2,7 +2,8 @@ import { useJobCostContext } from "context/JobCostContext";
 import { getColor } from "utils/colors";
 
 function Filters() {
-  const { breakdownData, updateFocusedId, typeFilter, setTypeFilter } = useJobCostContext();
+  const { breakdownData, updateFocusedId, typeFilter, setTypeFilter } =
+    useJobCostContext();
   const { focused } = breakdownData;
 
   const toggleFilter = (filterValue) => {
@@ -17,15 +18,20 @@ function Filters() {
         width: "100%",
         gap: "5px",
       }}
-    > {focused &&
-      <div
-        className={`margin-filter margin-filter-active`}
-        onClick={() => updateFocusedId(focused)}
-      >
-        <span className="phase-dot-small under-dot " style={{background: getColor(focused, "Tranquil")}}></span> 
-        <h4>{focused}</h4>
-      </div>
-       }
+    >
+      {" "}
+      {focused && (
+        <div
+          className={`margin-filter margin-filter-active`}
+          onClick={() => updateFocusedId(focused)}
+        >
+          <span
+            className="phase-dot-small under-dot "
+            style={{ background: getColor(focused, "Tranquil") }}
+          ></span>
+          <h4>{focused}</h4>
+        </div>
+      )}
       <div
         className={`margin-filter ${typeFilter === "committed" ? "margin-filter-active" : ""}`}
         onClick={() => toggleFilter("committed")}

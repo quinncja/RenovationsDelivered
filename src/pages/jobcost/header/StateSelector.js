@@ -6,10 +6,11 @@ import useIsAdmin from "utils/hooks/useIsAdmin";
 function StateSelector() {
   const { modTimeout, pageModifiers, updatePageModifiers } =
     useJobCostContext();
-  const isAdmin = useIsAdmin(); 
+  const isAdmin = useIsAdmin();
   const { getAllStates, getStateByJob } = useProjectContext();
-    
-  const selectedState = pageModifiers.state || getStateByJob(pageModifiers.jobNum)?.id;
+
+  const selectedState =
+    pageModifiers.state || getStateByJob(pageModifiers.jobNum)?.id;
   const active = pageModifiers.state;
   const stateList = getAllStates();
 
@@ -36,7 +37,7 @@ function StateSelector() {
 
   return (
     <div
-      className={`project-select-wrapper ${active && 'project-select-wrapper-active'} ${!isAdmin && "inactive-project-select-wrapper"}`}
+      className={`project-select-wrapper ${active && "project-select-wrapper-active"} ${!isAdmin && "inactive-project-select-wrapper"}`}
       title="Change State"
       style={{
         display: "flex",
@@ -47,19 +48,21 @@ function StateSelector() {
       }}
       onClick={handleWrapperClick}
     >
-      {isAdmin ?
-            <>
-            <h4> State </h4>
-            <Select
+      {isAdmin ? (
+        <>
+          <h4> State </h4>
+          <Select
             labelField="name"
             valueField="id"
             options={stateList}
             values={
               selectedState
-                    ? [stateList.find((state) => state.id === selectedState)].filter(Boolean)
-                    : []
+                ? [
+                    stateList.find((state) => state.id === selectedState),
+                  ].filter(Boolean)
+                : []
             }
-            placeholder={'-'}
+            placeholder={"-"}
             className="project-select-dropdown project-select-dropdown-smaller"
             dropdownGap={-3}
             dropdownHandle={false}
@@ -67,15 +70,22 @@ function StateSelector() {
             sortBy="name"
             onChange={handlePMChange}
           />
-          </>
-          : 
-          <div style={{display: "flex", flexDirection: "column", textAlign: 'left', gap: "5px"}}> 
+        </>
+      ) : (
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            textAlign: "left",
+            gap: "5px",
+          }}
+        >
           <h4> State </h4>
-          <h2 style={{ paddingBottom: "1px", height: "30px"}}>
-            {selectedState || '-'}
+          <h2 style={{ paddingBottom: "1px", height: "30px" }}>
+            {selectedState || "-"}
           </h2>
-          </div>
-      }
+        </div>
+      )}
     </div>
   );
 }
