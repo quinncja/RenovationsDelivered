@@ -7,8 +7,8 @@ import {
 } from "@dnd-kit/sortable";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import User from "./User";
 import { toast } from "sonner";
+import User from "./User";
 
 export function Users() {
   const [items, setItems] = useState({

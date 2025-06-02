@@ -3,7 +3,6 @@ import Home from "pages/welcome/welcome";
 import App from "./App";
 import Userfront from "@userfront/toolkit";
 import DashboardHome from "pages/dashboardHome/DashboardHome";
-import Team from "pages/users/Users";
 import ChangeOrders from "pages/changeOrders/ChangeOrders";
 import Reports from "pages/reports/Reports";
 import ReportPage from "pages/reports/ReportPage";
@@ -12,6 +11,7 @@ import JobCostDashboard from "pages/jobcost/JobCostDashboard";
 import Feedback from "pages/feedback/Feedbacks";
 import OpenBreakdown from "pages/openBreakdown/OpenBreakdown";
 import DashboardOpen from "pages/dashboardOpen/DashboardOpen";
+import Users from "pages/users/Users";
 
 function RequireAuth({ children }) {
   let location = useLocation();
@@ -73,7 +73,7 @@ function Router() {
           path="/users"
           element={
             <RequireAuth>
-              <Team />
+              <Users />
             </RequireAuth>
           }
         />
