@@ -150,8 +150,10 @@ export const labelVariants = {
 
 export const dropdownVariants = {
   initial: {
-    width: "59px",
-    height: "56px",
+    width: "40px",
+    height: "40px",
+    background: "var(--background)",
+    opacity: 1,
     transition: { duration: 0.4, ease: "easeInOut" },
   },
   expanded: {
@@ -159,6 +161,9 @@ export const dropdownVariants = {
     height: "max-content",
     paddingBottom: "20px",
     opacity: 1,
+    background: "var(--dark)",
+    borderLeft: "1px solid var(--fancy-border)",
+    borderBottom: "1px solid var(--fancy-border)",
     transition: { duration: 0.4, ease: "easeInOut" },
   },
 };

@@ -3,7 +3,6 @@ import Header from "./Header";
 import { toast } from "sonner";
 import useIsAdmin from "utils/hooks/useIsAdmin";
 import { useTrackedJobs } from "context/TrackedJobContext";
-import { useHomeData } from "utils/hooks/useHomeData";
 import { useHome } from "context/HomeContext";
 import { useProjectContext } from "context/ProjectContext";
 import ChangeOrder from "./ChangeOrder";
@@ -39,13 +38,13 @@ function ChangeOrders() {
     ? ""
     : projects && trackedJobs && trackedJobs.join(",");
   const abortControllerRef = useRef(null);
-  const loadData = useHomeData();
   const fileInputRef = useRef(null);
   const [reload, setReload] = useState(false);
   const data = dataMap[`${id}`] || null;
 
   const [mouseOver, setMouseOver] = useState(false);
 
+  const loadData = () => {};
   //so hacky i hate it but its 4:08pm on friday
   useEffect(() => {
     updateDataMap(id, null);

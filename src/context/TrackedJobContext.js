@@ -1,7 +1,7 @@
 import { createContext, useContext, useState } from "react";
 import { updateTrackedJobsAction } from "utils/dashboardActions";
 import { useHistory } from "./HistoryContext";
-import { useUserSettings } from "./UserSettingsContext";
+import { saveUserData } from "utils/api";
 
 const TrackedJobContext = createContext();
 
@@ -9,9 +9,13 @@ export const useTrackedJobs = () => useContext(TrackedJobContext);
 
 export const TrackedJobProvider = ({ children }) => {
   const { pushHistory } = useHistory();
-  const { saveTrackedJobs } = useUserSettings();
-  const [ trackedJobs, setTrackedJobs] = useState(undefined);
-  const [ loadingMap, setLoadingMap] = useState(true)
+
+  const saveTrackedJobs = (jobs) => {
+    saveUserData(jobs, "trackedJobs");
+  };
+
+  const [trackedJobs, setTrackedJobs] = useState(undefined);
+  const [loadingMap, setLoadingMap] = useState(true);
   const [dataMap, setDataMap] = useState({});
 
   const updateTrackedJobsFn = updateTrackedJobsAction(
@@ -34,25 +38,25 @@ export const TrackedJobProvider = ({ children }) => {
     };
     pushHistory(historyObj);
   };
-  
+
   const updateDataMap = (id, data, phase = false) => {
     if (phase) {
       setDataMap((prev) => {
         const existingData = prev[id] || {};
-        
+
         return {
           ...prev,
           [id]: {
             ...existingData,
-            phases: data 
-          }
+            phases: data,
+          },
         };
       });
     } else {
       setDataMap((prev) => {
         return {
           ...prev,
-          [id]: data
+          [id]: data,
         };
       });
     }
@@ -63,40 +67,48 @@ export const TrackedJobProvider = ({ children }) => {
 
   const filterJobs = (jobArray) => {
     if (!jobArray || jobArray.length === 0) return [];
-    
-    return jobArray.filter(jobNum => {
-      if(Object.keys(dataMap).length === 0) return true;
+
+    return jobArray.filter((jobNum) => {
+      if (Object.keys(dataMap).length === 0) return true;
 
       const job = dataMap[jobNum];
-      
+
       if (!job || job.length === 0) return false;
-      
+
       const jobData = job[0];
-      
-      const searchMatch = !searchFilter || 
-        (jobData.JobName && jobData.JobName.toLowerCase().includes(searchFilter.toLowerCase())) ||
-        (jobData.ClientName && jobData.ClientName.toLowerCase().includes(searchFilter.toLowerCase())) ||
-        (jobData.ProjectManager && jobData.ProjectManager.toLowerCase().includes(searchFilter.toLowerCase()));
-      
+
+      const searchMatch =
+        !searchFilter ||
+        (jobData.JobName &&
+          jobData.JobName.toLowerCase().includes(searchFilter.toLowerCase())) ||
+        (jobData.ClientName &&
+          jobData.ClientName.toLowerCase().includes(
+            searchFilter.toLowerCase(),
+          )) ||
+        (jobData.ProjectManager &&
+          jobData.ProjectManager.toLowerCase().includes(
+            searchFilter.toLowerCase(),
+          ));
+
       if (!searchMatch) return false;
-      
+
       if (!marginFilter) return true;
-      
+
       const totalContract = jobData.ClosedContract || 0;
       const totalCost = jobData.ClosedCost || 0;
-    
+
       if (totalContract === 0) return false;
-      
+
       const marginPercent = ((totalContract - totalCost) / totalContract) * 100;
-      
+
       switch (marginFilter) {
-        case "high": 
+        case "high":
           return marginPercent > 25;
-        case "target": 
+        case "target":
           return marginPercent <= 25 && marginPercent > 20;
-        case "under": 
+        case "under":
           return marginPercent <= 20 && marginPercent > 0;
-        case "critical": 
+        case "critical":
           return marginPercent <= 0;
         default:
           return true;
@@ -117,8 +129,8 @@ export const TrackedJobProvider = ({ children }) => {
         marginFilter,
         setMarginFilter,
         setSearchFilter,
-        loadingMap, 
-        setLoadingMap
+        loadingMap,
+        setLoadingMap,
       }}
     >
       {children}

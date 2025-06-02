@@ -1,55 +1,120 @@
 import { useModalContext } from "context/ModalContext";
 import TrackedJob from "./TrackedJob";
 import { useTrackedJobs } from "context/TrackedJobContext";
-import { useHome } from "context/HomeContext";
 import { useProjectContext } from "context/ProjectContext";
 import TrackedJobsHeader from "./header/TrackedJobsHeader";
-import { useEffect, useMemo} from "react";
+import { useEffect, useMemo, useRef } from "react";
 import { fetchJobListData } from "utils/api";
+import useIsAdmin from "utils/hooks/useIsAdmin";
+import { useLoading } from "app/LoadingContext";
+import { toast } from "sonner";
 
 function TrackedJobs({ jobs }) {
   const { openModal } = useModalContext();
-  const { updateTrackedJobs, setDataMap, filterJobs, setLoadingMap } = useTrackedJobs();
+  const { updateTrackedJobs, setDataMap, filterJobs, setLoadingMap } =
+    useTrackedJobs();
   const { getActiveJobs } = useProjectContext();
-  const { homeState } = useHome();
+  const isAdmin = useIsAdmin();
   const activeJobs = useMemo(() => getActiveJobs(), [getActiveJobs]);
+  const { isAppReady } = useLoading();
 
-  console.log("j", jobs, "aj", activeJobs)
-
-  const jobsToShow = useMemo(() => 
-    homeState === "year" ? activeJobs : jobs, 
-    [homeState, activeJobs, jobs]
+  const jobsToShow = useMemo(
+    () => (isAdmin ? activeJobs : jobs),
+    [activeJobs, jobs, isAdmin],
   );
+
+  const abortControllerRef = useRef(null);
+
+  console.log(jobsToShow);
   useEffect(() => {
-    const controller = new AbortController();
-    const signal = controller.signal;
-    
     const loadJobListData = async () => {
       if (!jobsToShow || jobsToShow.length === 0) {
         setDataMap({});
         setLoadingMap(true);
         return;
       }
-      
-      try {
-        const result = await fetchJobListData(jobsToShow, signal);
-        if (result) {
-          setDataMap(result);
+
+      const maxRetries = 5;
+      let retryCount = 0;
+
+      const attemptLoad = async () => {
+        let controller;
+        try {
+          if (abortControllerRef.current) {
+            abortControllerRef.current.abort();
+          }
+
+          controller = new AbortController();
+          abortControllerRef.current = controller;
+
+          const result = await fetchJobListData(jobsToShow, controller.signal);
+          if (result) {
+            setDataMap(result);
+          }
+        } catch (error) {
+          console.log("Error details:", {
+            name: error.name,
+            message: error.message,
+            isAborted: controller?.signal?.aborted,
+            retryCount: retryCount,
+          });
+
+          const isRealAbortError =
+            error.name === "AbortError" && controller?.signal?.aborted;
+          if (isRealAbortError) {
+            console.log("Aborting due to explicit abort signal");
+            throw error;
+          }
+
+          retryCount++;
+          console.log(
+            `Error on attempt ${retryCount}/${maxRetries}:`,
+            error.message,
+          );
+
+          if (retryCount <= maxRetries) {
+            console.log(
+              `Retrying job list data fetch (attempt ${retryCount}/${maxRetries})`,
+            );
+            await new Promise((resolve) =>
+              setTimeout(resolve, 1000 * retryCount),
+            );
+            return await attemptLoad();
+          } else {
+            console.log("Max retries reached, giving up");
+            throw error;
+          }
         }
+      };
+
+      try {
+        await attemptLoad();
       } catch (error) {
-        setDataMap({});
+        if (
+          error.name !== "AbortError" &&
+          !abortControllerRef.current?.signal?.aborted
+        ) {
+          console.error("Failed to load job list data after retries:", error);
+          setDataMap({});
+          toast.error("Failed to load job data");
+        }
       } finally {
         setLoadingMap(false);
       }
     };
-  
-    loadJobListData();
-    
+
+    if (isAppReady) {
+      loadJobListData();
+    }
+
     return () => {
-      controller.abort();
+      if (abortControllerRef.current) {
+        abortControllerRef.current.abort();
+      }
     };
-  }, [jobsToShow]);
-  
+    // eslint-disable-next-line
+  }, [jobsToShow, isAppReady]);
+
   const filteredJobsToShow = filterJobs(jobsToShow);
 
   const handleClick = () => {
@@ -64,27 +129,36 @@ function TrackedJobs({ jobs }) {
   return (
     <>
       <div className="jobs-header">
-        <h2> Projects </h2>
-        {homeState !== "year" && (
-          <button
-            className="job-button add-new-button"
-            onClick={() => handleClick()}
-          >
-            + add new
-          </button>
+        <div style={{ display: "flex", alignItems: "baseline", gap: "15px" }}>
+          <h2> Projects </h2>
+          {!isAdmin && (
+            <button
+              className="job-button add-new-button"
+              onClick={() => handleClick()}
+            >
+              + add new
+            </button>
+          )}
+        </div>
+      </div>
+      <TrackedJobsHeader filteredJobsToShow={filteredJobsToShow} />
+      <div className="tracked-jobs">
+        {filteredJobsToShow.length > 0 ? (
+          filteredJobsToShow.map((job) => (
+            <TrackedJob
+              key={job}
+              job={job}
+              id={job}
+              deleteSelf={handleDelete}
+            />
+          ))
+        ) : (
+          <h4 style={{ color: "white", fontWeight: "500", paddingTop: "20px" }}>
+            {" "}
+            No projects to display{" "}
+          </h4>
         )}
       </div>
-      <TrackedJobsHeader filteredJobsToShow={filteredJobsToShow}/>
-          <div className="tracked-jobs">
-            {filteredJobsToShow.map((job) => (
-              <TrackedJob
-                key={job}
-                job={job}
-                id={job}
-                deleteSelf={handleDelete}
-              />
-            ))}
-          </div>   
     </>
   );
 }

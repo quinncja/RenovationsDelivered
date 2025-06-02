@@ -860,7 +860,7 @@ export const calendarSvg = () => {
     <svg
       width="24"
       height="24"
-      viewBox="0 0 24 22"
+      viewBox="0 2 24 22"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
@@ -1279,7 +1279,7 @@ export const openSvg = () => {
       xmlns="http://www.w3.org/2000/svg"
       aria-hidden="true"
       role="img"
-      class="iconify iconify--fxemoji"
+      className="iconify iconify--fxemoji"
       preserveAspectRatio="xMidYMid meet"
     >
       <path
@@ -1307,7 +1307,7 @@ export const missingSvg = () => {
     >
       <g>
         <path
-          class="st0"
+          className="st0"
           d="M396.138,85.295c-13.172-25.037-33.795-45.898-59.342-61.03C311.26,9.2,280.435,0.001,246.98,0.001
         c-41.238-0.102-75.5,10.642-101.359,25.521c-25.962,14.826-37.156,32.088-37.156,32.088c-4.363,3.786-6.824,9.294-6.721,15.056
         c0.118,5.77,2.775,11.186,7.273,14.784l35.933,28.78c7.324,5.864,17.806,5.644,24.875-0.518c0,0,4.414-7.978,18.247-15.88
@@ -1321,7 +1321,7 @@ export const missingSvg = () => {
         C410.243,120.761,404.879,101.971,396.138,85.295z"
         />
         <path
-          class="st0"
+          className="st0"
           d="M228.809,406.44c-29.152,0-52.788,23.644-52.788,52.788c0,29.136,23.637,52.772,52.788,52.772
         c29.136,0,52.763-23.636,52.763-52.772C281.572,430.084,257.945,406.44,228.809,406.44z"
         />
@@ -1385,44 +1385,395 @@ export const submissionSvg = () => {
 };
 
 export const chevronRight = () => {
-  return(
-    <svg width="10" height="15" viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M1 13L7 7L1 1" style={{ stroke: "var(--less-white)" }}  strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+  return (
+    <svg
+      width="10"
+      height="15"
+      viewBox="0 0 8 14"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M1 13L7 7L1 1"
+        style={{ stroke: "var(--less-white)" }}
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
     </svg>
-  )
-}
+  );
+};
 
 export const gridSvg = () => {
-  return(
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M8.67999 10.36H5.32001C4.39001 10.36 3.64 9.60999 3.64 8.67999V5.32001C3.64 4.39001 4.39001 3.64001 5.32001 3.64001H8.67999C9.60999 3.64001 10.36 4.39001 10.36 5.32001V8.67999C10.36 9.60999 9.60999 10.36 8.67999 10.36Z" style={{ stroke: "var(--less-white)" }}  strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-    <path d="M18.68 10.36H15.32C14.39 10.36 13.64 9.60999 13.64 8.67999V5.32001C13.64 4.39001 14.39 3.64001 15.32 3.64001H18.68C19.61 3.64001 20.36 4.39001 20.36 5.32001V8.67999C20.36 9.60999 19.61 10.36 18.68 10.36Z" style={{ stroke: "var(--less-white)" }}  strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-    <path d="M8.67999 20.36H5.32001C4.39001 20.36 3.64 19.61 3.64 18.68V15.32C3.64 14.39 4.39001 13.64 5.32001 13.64H8.67999C9.60999 13.64 10.36 14.39 10.36 15.32V18.68C10.36 19.61 9.60999 20.36 8.67999 20.36Z" style={{ stroke: "var(--less-white)" }} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-    <path d="M18.68 20.36H15.32C14.39 20.36 13.64 19.61 13.64 18.68V15.32C13.64 14.39 14.39 13.64 15.32 13.64H18.68C19.61 13.64 20.36 14.39 20.36 15.32V18.68C20.36 19.61 19.61 20.36 18.68 20.36Z" style={{ stroke: "var(--less-white)" }}  strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+  return (
+    <svg
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M8.67999 10.36H5.32001C4.39001 10.36 3.64 9.60999 3.64 8.67999V5.32001C3.64 4.39001 4.39001 3.64001 5.32001 3.64001H8.67999C9.60999 3.64001 10.36 4.39001 10.36 5.32001V8.67999C10.36 9.60999 9.60999 10.36 8.67999 10.36Z"
+        style={{ stroke: "var(--less-white)" }}
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M18.68 10.36H15.32C14.39 10.36 13.64 9.60999 13.64 8.67999V5.32001C13.64 4.39001 14.39 3.64001 15.32 3.64001H18.68C19.61 3.64001 20.36 4.39001 20.36 5.32001V8.67999C20.36 9.60999 19.61 10.36 18.68 10.36Z"
+        style={{ stroke: "var(--less-white)" }}
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M8.67999 20.36H5.32001C4.39001 20.36 3.64 19.61 3.64 18.68V15.32C3.64 14.39 4.39001 13.64 5.32001 13.64H8.67999C9.60999 13.64 10.36 14.39 10.36 15.32V18.68C10.36 19.61 9.60999 20.36 8.67999 20.36Z"
+        style={{ stroke: "var(--less-white)" }}
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M18.68 20.36H15.32C14.39 20.36 13.64 19.61 13.64 18.68V15.32C13.64 14.39 14.39 13.64 15.32 13.64H18.68C19.61 13.64 20.36 14.39 20.36 15.32V18.68C20.36 19.61 19.61 20.36 18.68 20.36Z"
+        style={{ stroke: "var(--less-white)" }}
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
     </svg>
-  )
-}
+  );
+};
 
 export const buildingSvg = () => {
-  return(
-    <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 22" fill="none" style={{ stroke: "var(--less-white)" }} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" class="lucide lucide-building-icon lucide-building"><rect width="16" height="20" x="4" y="2" rx="2" ry="2"/><path d="M9 22v-4h6v4"/><path d="M8 6h.01"/><path d="M16 6h.01"/><path d="M12 6h.01"/><path d="M12 10h.01"/><path d="M12 14h.01"/><path d="M16 10h.01"/><path d="M16 14h.01"/><path d="M8 10h.01"/><path d="M8 14h.01"/></svg>
-  )
-}
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="26"
+      height="26"
+      viewBox="0 0 24 22"
+      fill="none"
+      style={{ stroke: "var(--less-white)" }}
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className="lucide lucide-building-icon lucide-building"
+    >
+      <rect width="16" height="20" x="4" y="2" rx="2" ry="2" />
+      <path d="M9 22v-4h6v4" />
+      <path d="M8 6h.01" />
+      <path d="M16 6h.01" />
+      <path d="M12 6h.01" />
+      <path d="M12 10h.01" />
+      <path d="M12 14h.01" />
+      <path d="M16 10h.01" />
+      <path d="M16 14h.01" />
+      <path d="M8 10h.01" />
+      <path d="M8 14h.01" />
+    </svg>
+  );
+};
 
 export const searchSvg = () => {
-  return(
-    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" style={{ stroke: "var(--less-white)" }} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" class="lucide lucide-search-icon lucide-search"><path d="m21 21-4.34-4.34"/><circle cx="11" cy="11" r="8"/></svg>
-  )
-}
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="20"
+      height="20"
+      viewBox="0 0 24 24"
+      fill="none"
+      style={{ stroke: "var(--less-white)" }}
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className="lucide lucide-search-icon lucide-search"
+    >
+      <path d="m21 21-4.34-4.34" />
+      <circle cx="11" cy="11" r="8" />
+    </svg>
+  );
+};
 
-export const fileSvg = () => {
-  return(
-    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="-2 0 24 24" fill="none" style={{ stroke: "var(--less-white)" }} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" class="lucide lucide-file-text-icon lucide-file-text"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/></svg>
-  )
-}
+export const fileSvg = (color) => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="20"
+      height="20"
+      viewBox="-2 0 24 24"
+      fill="none"
+      style={{ stroke: color ? color : "var(--less-white)" }}
+      strokeWidth="1.3"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className="lucide lucide-file-text-icon lucide-file-text"
+    >
+      <path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z" />
+      <path d="M14 2v4a2 2 0 0 0 2 2h4" />
+      <path d="M10 9H8" />
+      <path d="M16 13H8" />
+      <path d="M16 17H8" />
+    </svg>
+  );
+};
 
+export const filePenSvg = () => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      style={{ stroke: "var(--less-white)" }}
+      strokeWidth="1.3"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className="lucide lucide-file-pen-icon lucide-file-pen"
+    >
+      <path d="M12.5 22H18a2 2 0 0 0 2-2V7l-5-5H6a2 2 0 0 0-2 2v9.5" />
+      <path d="M14 2v4a2 2 0 0 0 2 2h4" />
+      <path d="M13.378 15.626a1 1 0 1 0-3.004-3.004l-5.01 5.012a2 2 0 0 0-.506.854l-.837 2.87a.5.5 0 0 0 .62.62l2.87-.837a2 2 0 0 0 .854-.506z" />
+    </svg>
+  );
+};
 export const trashSvg = () => {
-  return(
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" style={{ stroke: "var(--less-white)" }} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" class="lucide lucide-trash-icon lucide-trash"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/></svg>
-  )
-}
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      style={{ stroke: "var(--less-white)" }}
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className="lucide lucide-trash-icon lucide-trash"
+    >
+      <path d="M3 6h18" />
+      <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" />
+      <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" />
+    </svg>
+  );
+};
+
+export const hammerSvg = () => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      style={{ stroke: "var(--less-white)" }}
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className="lucide lucide-hammer-icon lucide-hammer"
+    >
+      <path d="m15 12-8.373 8.373a1 1 0 1 1-3-3L12 9" />
+      <path d="m18 15 4-4" />
+      <path d="m21.5 11.5-1.914-1.914A2 2 0 0 1 19 8.172V7l-2.26-2.26a6 6 0 0 0-4.202-1.756L9 2.96l.92.82A6.18 6.18 0 0 1 12 8.4V10l2 2h1.172a2 2 0 0 1 1.414.586L18.5 14.5" />
+    </svg>
+  );
+};
+
+export const boxSvg = () => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 1 24 24"
+      fill="none"
+      style={{ stroke: "var(--less-white)" }}
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className="lucide lucide-box-icon lucide-box"
+    >
+      <path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z" />
+      <path d="m3.3 7 8.7 5 8.7-5" />
+      <path d="M12 22V12" />
+    </svg>
+  );
+};
+
+export const hardHatSvg = () => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      style={{ stroke: "var(--less-white)" }}
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className="lucide lucide-hard-hat-icon lucide-hard-hat"
+    >
+      <path d="M10 10V5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v5" />
+      <path d="M14 6a6 6 0 0 1 6 6v3" />
+      <path d="M4 15v-3a6 6 0 0 1 6-6" />
+      <rect x="2" y="15" width="20" height="4" rx="1" />
+    </svg>
+  );
+};
+
+export const piggyBankSvg = () => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      style={{ stroke: "var(--less-white)" }}
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className="lucide lucide-piggy-bank-icon lucide-piggy-bank"
+    >
+      <path d="M11 17h3v2a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1v-3a3.16 3.16 0 0 0 2-2h1a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1h-1a5 5 0 0 0-2-4V3a4 4 0 0 0-3.2 1.6l-.3.4H11a6 6 0 0 0-6 6v1a5 5 0 0 0 2 4v3a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1z" />
+      <path d="M16 10h.01" />
+      <path d="M2 8v1a2 2 0 0 0 2 2h1" />
+    </svg>
+  );
+};
+
+export const clockSvg = () => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="44"
+      height="30"
+      viewBox="0 0 24 24"
+      fill="none"
+      style={{ stroke: "var(--less-white)" }}
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className="lucide lucide-clock-icon lucide-clock"
+    >
+      <circle cx="12" cy="12" r="10" />
+      <polyline points="12 6 12 12 16 14" />
+    </svg>
+  );
+};
+
+export const pieSvg = () => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      style={{ stroke: "var(--less-white)" }}
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className="lucide lucide-chart-pie-icon lucide-chart-pie"
+    >
+      <path d="M21 12c.552 0 1.005-.449.95-.998a10 10 0 0 0-8.953-8.951c-.55-.055-.998.398-.998.95v8a1 1 0 0 0 1 1z" />
+      <path d="M21.21 15.89A10 10 0 1 1 8 2.83" />
+    </svg>
+  );
+};
+
+export const listSvg = () => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="30"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      style={{ stroke: "var(--less-white)" }}
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className="lucide lucide-rows3-icon lucide-rows-3"
+    >
+      <rect width="18" height="18" x="3" y="3" rx="2" />
+      <path d="M21 9H3" />
+      <path d="M21 15H3" />
+    </svg>
+  );
+};
+
+export const underConstructionSvg = () => {
+  return (
+    <svg version="1.1" x="0px" y="0px" viewBox="0 0 122.88 98.02">
+      <g>
+        <path d="M63.44,5.11c-0.17-0.27-0.38-0.46-0.64-0.59c-0.34-0.16-0.79-0.24-1.36-0.24c-0.57,0-1.02,0.08-1.36,0.24 c-0.26,0.13-0.48,0.33-0.64,0.59c-0.02,0.02-0.03,0.05-0.05,0.07L5.73,89.36l0,0c-0.3,0.49-0.57,1.06-0.79,1.7 c-0.24,0.69-0.44,1.47-0.6,2.32c-0.02,0.13-0.04,0.25-0.05,0.36l114.31,0c-0.01-0.12-0.03-0.24-0.05-0.36 c-0.16-0.86-0.36-1.63-0.6-2.32c-0.23-0.65-0.49-1.22-0.79-1.7l-0.01-0.02L63.46,5.14L63.44,5.11L63.44,5.11L63.44,5.11L63.44,5.11 z M60.88,69.82c0.84,1.13,1.58,2.34,2.06,3.75l-0.4,11.88h-5.89l0.34-10.1c0.04-1.05,0.04-0.9-0.45-1.83L52.7,66.2L60.88,69.82 L60.88,69.82z M62.99,31.76c3.35,0,6.06,2.71,6.06,6.06c0,3.35-2.71,6.06-6.06,6.06c-3.35,0-6.06-2.71-6.06-6.06 C56.92,34.47,59.64,31.76,62.99,31.76L62.99,31.76z M70.46,82.85c1.86-3.4,3.4-6.2,6.23-9.35L34.4,54.79l1.86-4.22l2.65,1.17 l3.12-5.51c0.45-0.8,1.22-1.3,2.06-1.45l0,0l8.72-1.5c0.63-0.11,1.24-0.01,1.77,0.25l10.71,4.56c0.91,0.39,1.53,1.19,1.72,2.09l0,0 l3.21,14.75c0.05,0.23,0.07,0.47,0.07,0.7l9.61,4.25l-0.2,0.45l6.53-6.84l11.91,17.47c3.52,5.17,1.31,4.85-4.91,4.92 c-6.58,0.07-14.28-0.02-20.37-0.31C68.83,85.37,68.67,86.13,70.46,82.85L70.46,82.85z M44.31,54.14l4.17,1.85l3.12-6.51l-5.16,0.89 L44.31,54.14L44.31,54.14z M59.35,60.79l4.37,1.93l-1.85-8.51L59.35,60.79L59.35,60.79z M51.15,65.51l-4.31,19.81l-5.74,0.06 l4.55-22.24l0.3,0.07L51.15,65.51L51.15,65.51z M64.65,0.68c1.01,0.49,1.81,1.22,2.41,2.2l0,0l53.66,84.18 c0.02,0.02,0.03,0.05,0.05,0.07c0.47,0.76,0.87,1.6,1.2,2.54c0.31,0.89,0.57,1.88,0.77,2.96c0.1,0.52,0.14,0.98,0.14,1.38 c0,0.98-0.24,1.81-0.72,2.49c-0.55,0.78-1.33,1.26-2.33,1.45c-0.3,0.06-0.59,0.08-0.87,0.08H3.92c-0.28,0-0.57-0.03-0.87-0.08 c-1-0.19-1.78-0.67-2.33-1.45C0.24,95.81,0,94.98,0,94c0-0.4,0.05-0.87,0.15-1.38c0.2-1.08,0.45-2.06,0.77-2.96 c0.33-0.94,0.73-1.78,1.2-2.54l0,0l0.02-0.03l53.68-84.2l0.01-0.02c0.6-0.98,1.41-1.71,2.41-2.2c0.93-0.45,2-0.68,3.21-0.68 C62.65,0,63.72,0.23,64.65,0.68L64.65,0.68L64.65,0.68z" />
+      </g>
+    </svg>
+  );
+};
+
+export const handshakeSvg = () => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 -1 24 24"
+      fill="none"
+      style={{ stroke: "var(--less-white)" }}
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className="lucide lucide-handshake-icon lucide-handshake"
+    >
+      <path d="m11 17 2 2a1 1 0 1 0 3-3" />
+      <path d="m14 14 2.5 2.5a1 1 0 1 0 3-3l-3.88-3.88a3 3 0 0 0-4.24 0l-.88.88a1 1 0 1 1-3-3l2.81-2.81a5.79 5.79 0 0 1 7.06-.87l.47.28a2 2 0 0 0 1.42.25L21 4" />
+      <path d="m21 3 1 11h-2" />
+      <path d="M3 3 2 14l6.5 6.5a1 1 0 1 0 3-3" />
+      <path d="M3 4h8" />
+    </svg>
+  );
+};
+
+export const lockSvg = () => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 1 24 24"
+      fill="none"
+      style={{ stroke: "var(--less-white)" }}
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className="lucide lucide-lock-icon lucide-lock"
+    >
+      <rect width="18" height="11" x="3" y="11" rx="2" ry="2" />
+      <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+    </svg>
+  );
+};
+export const scrollSvg = () => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      style={{ stroke: "var(--less-white)" }}
+      strokeWidth="1"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className="lucide lucide-scroll-text-icon lucide-scroll-text"
+    >
+      <path d="M15 12h-5" />
+      <path d="M15 8h-5" />
+      <path d="M19 17V5a2 2 0 0 0-2-2H4" />
+      <path d="M8 21h12a2 2 0 0 0 2-2v-1a1 1 0 0 0-1-1H11a1 1 0 0 0-1 1v1a2 2 0 1 1-4 0V5a2 2 0 1 0-4 0v2a1 1 0 0 0 1 1h3" />
+    </svg>
+  );
+};

@@ -1,7 +1,5 @@
 import React from "react";
 import { useModalContext } from "context/ModalContext";
-import Settings from "modules/modals/settings/Settings";
-import NewWidgetPopup from "modules/modals/newWidget/NewWidgetPopup";
 import Overlay from "modules/modals/Overlay";
 import AddJobModal from "./addJobs/AddJobModal";
 import NewChangeOrderModal from "./newChangeOrder/NewChangeOrderModal";
@@ -13,16 +11,18 @@ const Modal = () => {
 
   const renderModalContent = () => {
     switch (modalType) {
-      case "settings":
-        return <Settings closeSelf={closeModal} key="settingsModal" />;
-      case "newWidget":
-        return <NewWidgetPopup closeSelf={closeModal} key="newWidgetModal" />;
       case "addJobs":
         return <AddJobModal closeSelf={closeModal} key="addJobsModal" />;
       case "feedback":
         return <FeedbackModal closeSelf={closeModal} key="feedbackModal" />;
       case "attachment":
-        return <AttachmentViewer closeSelf={closeModal} data={modalData} key="feedbackModal" />;
+        return (
+          <AttachmentViewer
+            closeSelf={closeModal}
+            data={modalData}
+            key="feedbackModal"
+          />
+        );
       case "changeOrder":
         return (
           <NewChangeOrderModal
@@ -40,8 +40,8 @@ const Modal = () => {
 
   return (
     <>
-        <Overlay isVisible={isVisible} onClick={closeModal} />
-        {isVisible && renderModalContent()}
+      <Overlay isVisible={isVisible} onClick={closeModal} />
+      {isVisible && renderModalContent()}
     </>
   );
 };

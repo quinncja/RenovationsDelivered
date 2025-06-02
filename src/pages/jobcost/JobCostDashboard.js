@@ -1,111 +1,34 @@
-import Breakdown from "widgets/jobWidgets/Breakdown/Breakdown";
-import CostItem from "./items/CostItem";
-import useIsAdmin from "utils/hooks/useIsAdmin";
-import { useEffect, useState } from "react";
-
-const { useSingle } = require("utils/hooks/useSingle");
+import { useState } from "react";
+import Header from "./header/Header";
+import Breakdown from "./widgets/Breakdown/Breakdown";
+import JobDetails from "./widgets/JobDetails/JobDetails";
+import Margin from "./widgets/Margin/Margin";
+import { useProjectContext } from "context/ProjectContext";
+import { useJobCostContext } from "context/JobCostContext";
 
 function JobCostDashboard() {
-  const single = useSingle();
-  const isAdmin = useIsAdmin();
+  const [isVisible, setIsVisible] = useState(true);
+  const { pageModifiers } = useJobCostContext();
+  const { pageModifierToString } = useProjectContext();
 
-  const [isWide, setIsWide] = useState(window.innerWidth > 2320);
-
-  useEffect(() => {
-    const handleResize = () => {
-      setIsWide(window.innerWidth > 2320);
-    };
-
-    window.addEventListener("resize", handleResize);
-
-    handleResize();
-
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
-
-  if (isWide) {
-    return (
-      <div id="dashboard" className={`dashboard-dropzone`}>
-        <CostItem
-          key={"Status"}
-          id={"Status"}
-          type={"Status"}
-          single={single}
-        />
-        {isAdmin && (
-          <CostItem
-            key={"Client Breakdown"}
-            id={"Client Breakdown"}
-            type={"Client Breakdown"}
-            single={single}
-          />
-        )}
-        <CostItem
-          key={"Cost Analysis"}
-          id={"Cost Analysis"}
-          type={"Cost Analysis"}
-          single={single}
-        />
-        <CostItem
-          key={"Margin"}
-          id={"Margin"}
-          type={"Margin"}
-          single={single}
-        />
-        <CostItem
-          key={"Change Orders"}
-          id={"Change Orders"}
-          type={"Change Orders"}
-          single={single}
-        />
-        <CostItem
-          key={"Financial Overview"}
-          id={"Financial Overview"}
-          type={"Financial Overview"}
-          single={single}
-        />
+  return (
+    <div className="job-cost-dashboard">
+      <div className="jobs-header">
+        <h2>
+          {" "}
+          Job Costing{" "}
+          {!isVisible && ` - ${pageModifierToString(pageModifiers)}`}{" "}
+        </h2>
+      </div>
+      <Header setIsVisible={setIsVisible} />
+      <div id="dashboard" className={`job-cost-widgets`}>
+        <JobDetails />
+        <Margin />
         <Breakdown type={"Material"} />
         <Breakdown type={"Labor"} />
         <Breakdown type={"Subcontractors"} />
         <Breakdown type={"WTPM"} />
       </div>
-    );
-  }
-
-  return (
-    <div id="dashboard" className={`dashboard-dropzone`}>
-      <CostItem key={"Status"} id={"Status"} type={"Status"} single={single} />
-      <CostItem key={"Margin"} id={"Margin"} type={"Margin"} single={single} />
-      <CostItem
-        key={"Financial Overview"}
-        id={"Financial Overview"}
-        type={"Financial Overview"}
-        single={single}
-      />
-      <Breakdown type={"Material"} />
-      <Breakdown type={"Labor"} />
-      <Breakdown type={"Subcontractors"} />
-      <Breakdown type={"WTPM"} />
-      {isAdmin && (
-        <CostItem
-          key={"Client Breakdown"}
-          id={"Client Breakdown"}
-          type={"Client Breakdown"}
-          single={single}
-        />
-      )}
-      <CostItem
-        key={"Cost Analysis"}
-        id={"Cost Analysis"}
-        type={"Cost Analysis"}
-        single={single}
-      />
-      <CostItem
-        key={"Change Orders"}
-        id={"Change Orders"}
-        type={"Change Orders"}
-        single={single}
-      />
     </div>
   );
 }
