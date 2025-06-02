@@ -1,4 +1,4 @@
-import { getBaseJobName } from "pages/openItem/transformData";
+import { getBaseJobName } from "utils/formatters";
 import useReccomendedJobs from "utils/hooks/useRecommendedJobs";
 
 function RecommendedJobs({ selected, updateSelected }) {

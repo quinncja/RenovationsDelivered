@@ -8,8 +8,15 @@ function MarginFilters() {
   };
 
   return (
-    <div style={{display: "flex", flexDirection: "row", width: '100%', gap: "5px"}}>
-      <div 
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "row",
+        width: "100%",
+        gap: "5px",
+      }}
+    >
+      <div
         className={`margin-filter ${marginFilter === "high" ? "margin-filter-active" : ""}`}
         onClick={() => toggleFilter("high")}
       >
@@ -17,7 +24,7 @@ function MarginFilters() {
         <span className="phase-dot-small under-dot"></span>
         <h4>High Performing</h4>
       </div>
-      <div 
+      <div
         className={`margin-filter ${marginFilter === "target" ? "margin-filter-active" : ""}`}
         onClick={() => toggleFilter("target")}
       >
@@ -25,7 +32,7 @@ function MarginFilters() {
         <span className="phase-dot-small semi-good-dot"></span>
         <h4>Target Performing</h4>
       </div>
-      <div 
+      <div
         className={`margin-filter ${marginFilter === "under" ? "margin-filter-active" : ""}`}
         onClick={() => toggleFilter("under")}
       >
@@ -33,7 +40,7 @@ function MarginFilters() {
         <span className="phase-dot-small semi-bad-dot"></span>
         <h4>Under Performing</h4>
       </div>
-      <div 
+      <div
         className={`margin-filter ${marginFilter === "critical" ? "margin-filter-active" : ""}`}
         onClick={() => toggleFilter("critical")}
       >
@@ -42,7 +49,7 @@ function MarginFilters() {
         <h4>Critical</h4>
       </div>
     </div>
-  )
+  );
 }
 
 export default MarginFilters;

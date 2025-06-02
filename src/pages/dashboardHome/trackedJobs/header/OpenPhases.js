@@ -9,16 +9,23 @@ function OpenPhases(props) {
 
   let activePhases;
   if (!projects) activePhases = undefined;
-  activePhases = getActivePhasesForHome(filteredJobsToShow)
+  activePhases = getActivePhasesForHome(filteredJobsToShow);
 
-  if(loadingMap) return (
-    <div className="tjh-widget">
-    <div className="tjh-box "> {calendarSvg()} </div>
-    <div style={{display: "flex", flexDirection: "column", alignItems: "flex-start"}}>
-    <div className="loading-widget"/>
-    </div>
-  </div>
-  );
+  if (loadingMap)
+    return (
+      <div className="tjh-widget">
+        <div className="tjh-box "> {calendarSvg()} </div>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "flex-start",
+          }}
+        >
+          <div className="loading-widget" />
+        </div>
+      </div>
+    );
   if (activePhases === -1)
     return (
       <div className="tjh-widget">
@@ -29,9 +36,15 @@ function OpenPhases(props) {
     return (
       <div className="tjh-widget">
         <div className="tjh-box "> {calendarSvg()} </div>
-        <div style={{display: "flex", flexDirection: "column", alignItems: "flex-start"}}>
-        <h2> {activePhases} </h2>
-        <h4> {"Open Phases"} </h4>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "flex-start",
+          }}
+        >
+          <h2> {activePhases} </h2>
+          <h4> {"Open Phases"} </h4>
         </div>
       </div>
     );

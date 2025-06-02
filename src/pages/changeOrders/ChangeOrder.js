@@ -8,11 +8,11 @@ import {
 } from "utils/formatters";
 import { AnimatePresence, motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
-import { useModifiers } from "context/ModifierContext";
+import { useJobCostContext } from "context/JobCostContext";
 
 function ChangeOrder(props) {
   const { pageModifiers, excelData, changeOrder, newCO } = props;
-  const { updatePageModifiers } = useModifiers();
+  const { updatePageModifiers } = useJobCostContext();
   const { getJobStr, getPhaseStr, getYearStr } = useProjectContext();
   const navigate = useNavigate();
   const { labor, material, subs, wtpm } = newCO

@@ -9,11 +9,11 @@ export const ModalProvider = ({ children }) => {
   const [modalData, setModalData] = useState({});
 
   useEffect(() => {
-    if(modalType !== null) document.body.classList.add('overlay-open');
-    else document.body.classList.remove('overlay-open');
+    if (modalType !== null) document.body.classList.add("overlay-open");
+    else document.body.classList.remove("overlay-open");
 
     return () => {
-      document.body.classList.remove('overlay-open');
+      document.body.classList.remove("overlay-open");
     };
   }, [modalType]);
 

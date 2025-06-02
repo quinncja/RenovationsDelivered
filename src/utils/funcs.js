@@ -1,3 +1,5 @@
+import { boxSvg, hammerSvg, hardHatSvg, piggyBankSvg } from "business/svg";
+
 export function generateRandomId(length = 8) {
   const characters =
     "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
@@ -167,18 +169,44 @@ export function hslToHex(hslString) {
 
 export const calculateMargin = (contract, cogs) => {
   if (!contract || !cogs) return "-- %";
-  return (100 * (contract - cogs) / contract)
-}
+  return (100 * (contract - cogs)) / contract;
+};
 
 export const getMarginClass = (margin) => {
-  if(margin === "-- %") return ""
-  else if(margin < 0) return "over"
-  else if(margin > 25) return ""
-  else if(margin > 20) return "semi-good"
-  else return "semi-bad"
-}
+  if (margin === "-- %") return "";
+  else if (margin < 0) return "over";
+  else if (margin > 25) return "under";
+  else if (margin > 20) return "semi-good";
+  else return "semi-bad";
+};
+
+export const getMarginColor = (margin) => {
+  if (margin === "-- %") return "";
+  else if (margin < 0) return "var(--red)";
+  else if (margin > 25) return "var(--green)";
+  else if (margin > 20) return "var(--yellow)";
+  else return "var(--orange)";
+};
 
 export const displayMargin = (margin) => {
-  if(margin === "-- %") return margin;
-  return `${(margin).toFixed(2)}%`
+  if (margin === "-- %") return margin;
+  return `${margin.toFixed(2)}%`;
+};
+
+export const getBreakdownIconByType = (type) => {
+  if (type === "Material") return boxSvg();
+  else if (type === "Labor") return hammerSvg();
+  else if (type === "Subcontractors") return hardHatSvg();
+  else return piggyBankSvg();
+};
+
+
+export const getStatusColor = (budget, spent) => {
+  if(budget > spent) return "var(--green)";
+  else return "var(--red)"
+}
+
+export const getIconBackground = (budget, spent) => {
+if(budget > spent) return "linear-gradient(135deg, var(--green) 0%, #20692e 100%)"
+else return "linear-gradient(135deg, #ff4757 0%, var(--red) 100%)"
 }

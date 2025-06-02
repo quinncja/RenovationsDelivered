@@ -1,4 +1,3 @@
-import { useModalContext } from "context/ModalContext";
 import Userfront, { LogoutButton } from "@userfront/toolkit/react";
 import { dropDownFadeIn } from "utils/animations";
 import { motion } from "framer-motion";
@@ -11,7 +10,6 @@ Userfront.init("xbpwwqmn");
 function Dropdown({ toggleSelf }) {
   const isAdmin = useIsAdmin();
   const navigate = useNavigate();
-  const { openModal } = useModalContext();
   const handleClick = (func) => {
     toggleSelf();
     func();
@@ -25,11 +23,6 @@ function Dropdown({ toggleSelf }) {
   }, []);
 
   let dropdownOptions = [
-    {
-      id: "3",
-      item: "Settings",
-      onClick: () => handleClick(() => openModal("settings")),
-    },
     {
       id: "4",
       item: (
@@ -51,13 +44,14 @@ function Dropdown({ toggleSelf }) {
     ];
   }
 
+  //{
+  //   id: "5",
+  //   item: "Reports",
+  //   onClick: () => handleClick(() => navigate("/reports")),
+  // },
+  
   if (isAdmin) {
     dropdownOptions = [
-      {
-        id: "5",
-        item: "Reports",
-        onClick: () => handleClick(() => navigate("/reports")),
-      },
       {
         id: "2",
         item: "Users",

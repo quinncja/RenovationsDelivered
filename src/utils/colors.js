@@ -3,29 +3,74 @@ import { hslToHex } from "./funcs";
 export const colorPalettes = {
   Tranquil: [
     {
-      color: "hsl(210, 50%, 40%)",
+      color: "hsl(210, 60%, 48%)",
       lighter: true,
       darker: true,
     },
     {
-      color: "hsl(220, 34%, 30%)",
+      color: "hsl(220, 45%, 38%)",
       lighter: true,
       darker: true,
     },
     {
-      color: "hsl(25, 70%, 45%)",
+      color: "hsl(340, 35%, 52%)",
+      lighter: true,
+      darker: true,
+    },
+    {
+      color: "hsl(25, 75%, 50%)",
       lighter: true,
       darker: false,
     },
     {
-      color: "hsl(234, 20%, 39%)",
+      color: "hsl(234, 30%, 46%)",
       lighter: true,
       darker: true,
     },
     {
-      color: "hsl(120, 15%, 55%)",
+      color: "hsl(120, 25%, 60%)",
       lighter: true,
       darker: true,
+    },
+    {
+      color: "hsl(180, 30%, 42%)",
+      lighter: true,
+      darker: true,
+    },
+    {
+      color: "hsl(45, 40%, 55%)",
+      lighter: true,
+      darker: true,
+    },
+    {
+      color: "hsl(200, 35%, 40%)",
+      lighter: true,
+      darker: true,
+    },
+    {
+      color: "hsl(15, 45%, 45%)",
+      lighter: true,
+      darker: true,
+    },
+    {
+      color: "hsl(195, 55%, 32%)",
+      lighter: true,
+      darker: false,
+    },
+    {
+      color: "hsl(280, 25%, 48%)",
+      lighter: true,
+      darker: true,
+    },
+    {
+      color: "hsl(20, 65%, 42%)",
+      lighter: true,
+      darker: true,
+    },
+    {
+      color: "hsl(260, 40%, 35%)",
+      lighter: true,
+      darker: false,
     },
   ],
   Vibrant: [
@@ -285,10 +330,15 @@ export function getColorByID(id, palette) {
   return palette[index];
 }
 
-export function hashData(data, palette, convert = false) {
+export function getColor(id){
+  const colorObj = getColorByID(id, colorPalettes["Tranquil"]);
+  return adjustColor(colorObj, id);
+}
+
+export function hashData(data, convert = false) {
   const baseId =
     data.type === "committed" ? data.id.replace(" - C", "") : data.id;
-  const colorObj = getColorByID(baseId, palette);
+  const colorObj = getColorByID(baseId, colorPalettes["Tranquil"]);
   let color = adjustColor(colorObj, data.id);
   if (convert) color = hslToHex(color);
   return {

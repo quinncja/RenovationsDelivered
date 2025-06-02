@@ -7,18 +7,18 @@ const Overlay = ({ isVisible, onClick, zIndex = 15 }) => {
   const color = useCSSVariable("--overlay");
 
   return (
-      isVisible && (
-        <motion.div
-          key="overlay"
-          initial="hidden"
-          animate="visible"
-          exit="exit"
-          variants={overlayVariants(color, 0)}
-          className="open-widget-overlay"
-          style={{ zIndex: zIndex }}
-          onClick={onClick}
-        />
-      )
+    isVisible && (
+      <motion.div
+        key="overlay"
+        initial="hidden"
+        animate="visible"
+        exit="exit"
+        variants={overlayVariants(color, 0)}
+        className="open-widget-overlay"
+        style={{ zIndex: zIndex }}
+        onClick={onClick}
+      />
+    )
   );
 };
 

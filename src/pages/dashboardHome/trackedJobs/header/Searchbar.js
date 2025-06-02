@@ -7,7 +7,9 @@ function Searchbar() {
   return (
     <div
       className="tjh-searchbar-container"
-      onClick={() => {document.getElementById("tjh-searchbar").focus()}}
+      onClick={() => {
+        document.getElementById("tjh-searchbar").focus();
+      }}
     >
       {searchSvg()}
       <input
@@ -18,7 +20,7 @@ function Searchbar() {
         onChange={(e) => setSearchFilter(e.target.value)}
       />
     </div>
-  )
+  );
 }
 
 export default Searchbar;
