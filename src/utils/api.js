@@ -191,14 +191,14 @@ export async function fetchFileFromSMB(filePath, signal) {
 export async function fetchJobListData(joblist, signal) {
   try {
     const url = new URL(`${apiUrl}joblist-data`);
-    
+
     // Ensure joblist is an array
     const jobsArray = Array.isArray(joblist) ? joblist : [joblist];
-    
+
     jobsArray.forEach((job) => {
       url.searchParams.append("jobs", job);
     });
-    
+
     const response = await axios.get(url.toString(), {
       ...ngrokHeaders,
       signal,
@@ -213,7 +213,7 @@ export async function fetchJobListData(joblist, signal) {
     ) {
       if (error.response.status === 500) {
         toast.error(
-          "VPN connection error. Please wait a few minutes and try again"
+          "VPN connection error. Please wait a few minutes and try again",
         );
       }
       console.error(error.response.data.error);

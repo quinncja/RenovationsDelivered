@@ -38,7 +38,7 @@ function OpenProjects(props) {
         </div>
       </div>
     );
-  else 
+  else
     return (
       <div className="tjh-widget">
         <div className="tjh-box"> {buildingSvg()} </div>

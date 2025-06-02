@@ -30,7 +30,7 @@ function OpenBreakdownTable(props) {
         observer.unobserve(headerRef.current);
       }
     };
-  //eslint-disable-next-line
+    //eslint-disable-next-line
   }, []);
 
   return (
