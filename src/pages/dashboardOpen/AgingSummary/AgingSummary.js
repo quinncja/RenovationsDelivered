@@ -6,7 +6,7 @@ function AgingSummary({data}){
     const { focused } = openData;
 
     if(!data) return(
-        <div className="home-agingsummary-widget" style={{height: "380px"}}>
+        <div className="home-agingsummary-widget">
             <div className="loading-widget"/>
         </div>
     )

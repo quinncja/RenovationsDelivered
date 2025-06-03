@@ -65,8 +65,6 @@ function AgingSummary(){
                     {data.slice(0,4).map((item) => singleItem(item))}
                 </div>
             </div>
-        </div> 
-        <div className="home-agingsummary-widget clickable-widget" onClick={() => openPage(id)}>
             <div style={{display: 'flex', flexDirection: "column", gap: "10px"}}>
                 <div style={{display: "flex", flexDirection: "row", alignItems: 'center', gap: "15px" }}> 
                     <div style={{height: "10px", width: "10px", display: "flex", justifyContent: "center", alignItems: "center", background: "var(--green)", padding: "10px", borderRadius: '5px'}}> 
