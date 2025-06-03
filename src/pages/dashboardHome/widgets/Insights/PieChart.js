@@ -74,7 +74,7 @@ function PieChart({ data, type }) {
         }}
         onMouseLeave={() => setTooltip(null)}
         margin={{ left: 10, top: 10, bottom: 10, right: 10 }}
-        colors={(datum) => getColor(datum.id)}
+        colors={(datum) => getColor(getName(datum))}
         innerRadius={0.5}
         padAngle={0.7}
         cornerRadius={2}
