@@ -19,7 +19,6 @@ function Phase(props) {
     recnum,
     TotalContract,
     TotalCost,
-    SubAmount,
   } = data || {};
 
   const navigate = useNavigate();
@@ -32,97 +31,106 @@ function Phase(props) {
     navigate("/jobcost");
   };
 
-  const handleSubClick = (e) => {
-    e.stopPropagation();
-    const { jobNum, year, phase } = destructureJobNumber(recnum);
-    const mods = strToMods(jobNum, year, phase);
-    updatePageModifiers(mods);
-    navigate("/jobcost/breakdown/subcontractors");
-  };
-
-  const phaseAdminData = () => {
-    return (
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "row",
-          textAlign: "right",
-          gap: "5px",
-        }}
-      >
-        {" "}
-        <h4 style={{ color: "white" }}> {dollarFormatter(TotalContract)} </h4>
-        <h4> Contract </h4>{" "}
-      </div>
-    );
-  };
-
   const phaseBody = () => {
     const margin = calculateMargin(TotalContract, TotalCost);
 
     return (
       <div className="phase-body">
-        <div className="phase-left">
+        <div style={{
+          display: "grid",
+          gridTemplateColumns: "40px 1fr 140px 140px 140px 100px", 
+          alignItems: "center",
+          gap: "20px",
+          width: "100%"
+        }}>
+          
           <div
             className="phase-box"
             style={{
               background: Status === 4 ? "var(--open)" : "var(--closed)",
             }}
           >
-            {" "}
-            <h3> P{phase_num} </h3>{" "}
+            <h3> P{phase_num} </h3>
           </div>
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              gap: "0px",
-              width: "300px",
-              textAlign: "left",
-            }}
-          >
-            <h3> {getBaseJobName(jobnme)} </h3>
-            <h4>
-              {" "}
-              {phaseNumToMonth(phase_num)} 20{year_num}{" "}
+
+          <div style={{
+            display: "flex",
+            flexDirection: "column",
+            gap: "0px",
+            textAlign: "left",
+            minWidth: 0, 
+          }}>
+            <h4 style={{
+              color: "white", 
+              margin: 0,
+              overflow: "hidden",
+              textOverflow: "ellipsis",
+              whiteSpace: "nowrap"
+            }}> 
+              {getBaseJobName(jobnme)} 
+            </h4>
+            <h4 style={{
+              margin: 0,
+              overflow: "hidden",
+              textOverflow: "ellipsis",
+              whiteSpace: "nowrap"
+            }}>
+              {phaseNumToMonth(phase_num)} 20{year_num}
             </h4>
           </div>
-        </div>
 
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "2fr 1.2fr 1fr",
-            alignItems: "center",
-            marginBlock: "auto",
-            gap: "20px",
+          <div style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "flex-end",
             textAlign: "right",
-            width: "480px",
-          }}
-        >
-          {phaseAdminData()}
-          <div
-            className={SubAmount > 0 ? "hover-sub" : ""}
-            onClick={(e) => handleSubClick(e)}
-            style={{ display: "flex", gap: "7px", alignItems: "baseline" }}
-          >
-            {" "}
-            <h4>
-              {" "}
-              <strong style={{ color: "var(--white)" }}>
-                {" "}
-                {SubAmount}{" "}
-              </strong>{" "}
-              {SubAmount === 1 ? "sub contract" : "sub contracts"}{" "}
-            </h4>{" "}
+            gap: "2px"
+          }}>
+            <h4 style={{ margin: 0 }}> Contract </h4>
+            <h4 style={{ color: "white", margin: 0 }}> 
+              {dollarFormatter(TotalContract)} 
+            </h4>
           </div>
-          <h3
-            style={{ justifySelf: "end" }}
-            className={`${getMarginClass(margin)}`}
-          >
-            {" "}
-            {displayMargin(margin)}{" "}
-          </h3>
+
+          <div style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "flex-end",
+            textAlign: "right",
+            gap: "2px"
+          }}>
+            <h4 style={{ margin: 0 }}> Cost </h4>
+            <h4 style={{ color: "white", margin: 0 }}> 
+              {dollarFormatter(TotalCost)} 
+            </h4>
+          </div>
+
+          <div style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "flex-end",
+            textAlign: "right",
+            gap: "2px"
+          }}>
+                        <h4 style={{ margin: 0 }}> Profit </h4>
+
+            <h4 style={{ color: "white", margin: 0 }}> 
+              {dollarFormatter(TotalContract - TotalCost)} 
+            </h4>
+          </div>
+
+          <div style={{
+            display: "flex",
+            justifyContent: "flex-end",
+            alignItems: "center"
+          }}>
+            <h3
+              className={`${getMarginClass(margin)}`}
+              style={{ margin: 0 }}
+            >
+              {displayMargin(margin)}
+            </h3>
+          </div>
         </div>
       </div>
     );

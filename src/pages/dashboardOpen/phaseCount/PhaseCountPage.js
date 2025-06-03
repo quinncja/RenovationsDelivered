@@ -166,14 +166,7 @@ function PhaseCountPage({ focused, data }) {
           )}
         </div>
       </div>
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          gap: "0px",
-          width: "100%",
-        }}
-      >
+      <div style={{width: '100%', boxSizing: "border-box"}}>
         {filteredPhases ? (
           filteredPhases.map((phase) => <Phase data={phase} />)
         ) : (

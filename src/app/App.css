@@ -3605,6 +3605,18 @@ h1 {
   width: 100%;
   overflow: hidden;
   padding-inline: 5px;
+  padding-block: 20px;
+  position: relative;
+}
+.phase-job:before{
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 1px;
+  width: 100%;
+  background-color: var(--background);
+  z-index: 500;
 }
 .standalone-body {
   border-left: 1px solid var(--fancy-border);
