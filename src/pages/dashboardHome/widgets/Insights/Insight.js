@@ -129,20 +129,7 @@ function Insight(props) {
           {showList ? pieSvg() : listSvg()}{" "}
         </button>
       </div>
-      <div
-        className="insight-chart"
-        onClick={(e) => e.stopPropagation()}
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          gap: "0px",
-          justifyContent: "space-between",
-          flex: 1,
-          boxSizing: "border-box",
-          height: "100%",
-          width: "100%",
-        }}
-      >
+      <div>
         {showList ? renderList() : <PieChart data={data} type={type} />}
       </div>
     </div>

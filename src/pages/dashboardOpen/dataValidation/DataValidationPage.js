@@ -70,21 +70,21 @@ function DataValidationPage({ data, id }) {
           style={{ display: "flex", flexDirection: "column" }}
           onClick={(e) => copyJobNumber(item.JobNumber, e)}
         >
-          <h3>
+          <h4>
             {" "}
-            {getBaseJobName(item.jobnme)}{" "}
+            <span style={{fontWeight: "600", color: "white"}}> {getBaseJobName(item.jobnme)}{" "} </span>
             <span
               style={{
                 fontWeight: "500",
                 fontColor: "var(--secondary-font)",
                 fontSize: "14px",
-                opacity: 0.8,
+                opacity: 0.9,
               }}
             >
               {" "}
               P{phase} {year}{" "}
             </span>{" "}
-          </h3>
+          </h4>
           <h4> {item.JobNumber} </h4>
         </div>
         <div
