@@ -3702,6 +3702,8 @@ h1 {
   background-color: var(--terciary);
   padding: 10px;
   border-radius: 5px;
+  display: flex;
+  justify-content: center;
 }
 
 .tjh-box {
