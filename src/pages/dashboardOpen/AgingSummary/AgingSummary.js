@@ -6,7 +6,7 @@ function AgingSummary({data}){
     const { focused } = openData;
 
     if(!data) return(
-        <div className="home-agingsummary-widget">
+        <div className="home-agingsummary-widget" style={{height: "380px"}}>
             <div className="loading-widget"/>
         </div>
     )
@@ -49,7 +49,7 @@ function AgingSummary({data}){
     }
     
     return(
-        <div className="home-agingsummary-widget">
+        <div className="home-agingsummary-widget" style={{height: "380px"}}>
             <div className="border-after" style={{ display: 'flex', flexDirection: "column", gap: "10px"}}>
                 <div style={{display: "flex", flexDirection: "row", alignItems: 'center', gap: "15px" }}> 
                     <div style={{height: "10px", width: "10px", display: "flex", justifyContent: "center", alignItems: "center", background: "var(--red)", padding: "10px", borderRadius: '5px'}}> 
