@@ -405,16 +405,6 @@ function TrackedJob(props) {
         >
           {gridSvg()}
         </button>
-
-        {/* <button
-        className="x-button widget-item"
-        onClick={(e) => {
-          e.stopPropagation();
-          deleteSelf(job);
-        }}
-      >
-        {close()}
-      </button> */}
       </div>
       {renderJobSubData()}
       {renderPhaseEntries()}

@@ -1231,6 +1231,9 @@ h1 {
 .clickable-widget:has(.insight-button:hover) {
   filter: none;
 }
+.clickable-widget:has(.aging-box:hover) {
+  filter: none;
+}
 .phase-chart {
   transition: all 0.3s ease-in-out;
   background: var(--dark);
@@ -1280,7 +1283,9 @@ h1 {
 .left-border {
   position: relative;
   padding-left: 25px !important;
+  transition: all .3 ease-in-out;
 }
+
 .left-border::before {
   position: absolute;
   content: "";
@@ -1289,6 +1294,7 @@ h1 {
   width: 1px;
   background: var(--secondary-border);
 }
+
 
 .open-insight-chart-wrapper {
   background: var(--dark);
@@ -4192,6 +4198,68 @@ h1 {
   justify-content: space-between;
   text-align: left;
 }
+.home-agingsummary-widget {
+  background-color: var(--dark);
+  border: 1px solid var(--fancy-border);
+  border-radius: 5px;
+  width: 100%;
+  height: 370px;
+  box-sizing: border-box;
+  position: relative;
+  padding-top: 0px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  text-align: left;
+  padding: 25px;
+  gap: 25px;
+}
+.active-aging{
+  background: var(--terciary) !important;
+}
+.aging-item{
+  background: var(--dark);
+  padding-inline: 25px;
+  padding-block: 20px;
+  box-sizing: border-box;
+  border-left: 1px solid var(--fancy-border);
+  border-right: 1px solid var(--fancy-border);
+  position: relative;
+  overflow: visible !important;
+}
+
+.aging-item::before{
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 1px;
+  width: 100%;
+  background-color: var(--background);
+  z-index: 500;
+}
+
+.aging-item:first-child{
+  border-top: 1px solid var(--fancy-border);
+  border-radius: 5px 5px 0px 0px;
+}
+.aging-item:last-child{
+  border-bottom: 1px solid var(--fancy-border);
+  border-radius: 0px 0px 5px 5px;
+}
+.aging-item:only-child{
+  border-bottom: 1px solid var(--fancy-border);
+  border-radius: 5px 5px 5px 5px;
+}
+
+
+.aging-item:last-child:before{
+  opacity: 0;
+}
+.aging-item:only-child::before{
+  opacity: 0;
+}
+
 .open-phase-count-header {
   background-color: var(--dark);
   border: 1px solid var(--fancy-border);
@@ -4214,6 +4282,7 @@ h1 {
   flex-shrink: 0;
   padding-bottom: 0px;
   gap: 25px;
+  overflow: hidden;
 }
 .widget-wrapper {
   background-color: var(--dark);

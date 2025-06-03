@@ -4,6 +4,7 @@ import Margin from "./Margin/Margin";
 import YearRevenue from "./YearRevenue/YearRevenue";
 import PhaseCount from "./PhaseCount/PhaseCount";
 import DataValidation from "./DataValidation/DataValidation";
+import AgingSummary from "./AgingSummary/AgingSummary";
 
 function HomeWidgets() {
   return (
@@ -34,6 +35,7 @@ function HomeWidgets() {
               <PhaseCount />
             </div>
             <Margin />
+            <AgingSummary />
             <Insights />
             <DataValidation />
           </div>

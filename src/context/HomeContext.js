@@ -43,7 +43,7 @@ export const HomeProvider = ({ children }) => {
           const controller = new AbortController();
           abortControllerRef.current = controller;
           const homeData = await fetchHomeData(controller.signal);
-
+          console.log(homeData)
           setDataMap((prev) => {
             const currentData = prev || {};
             const result = { ...currentData };

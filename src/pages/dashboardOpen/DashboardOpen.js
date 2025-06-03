@@ -4,6 +4,7 @@ import PhaseCountPage from "./phaseCount/PhaseCountPage";
 import InsightPage from "./insights/InsightPage";
 import DataValidationPage from "./dataValidation/DataValidationPage";
 import { useNavigate, useParams } from "react-router-dom";
+import AgingSummaryPage from "./AgingSummary/AgingSummaryPage";
 
 function DashboardOpen() {
   const { openData, openPage } = useHome();
@@ -17,6 +18,8 @@ function DashboardOpen() {
   const renderBody = () => {
     if (type === "data-validation")
       return <DataValidationPage {...openData} id={currentType} />;
+    if (type === "aging-summary")
+      return <AgingSummaryPage {...openData} />;
     else if (type === "phase-overview") return <PhaseCountPage {...openData} />;
     else if (type && type.includes("insight"))
       return <InsightPage {...openData} />;

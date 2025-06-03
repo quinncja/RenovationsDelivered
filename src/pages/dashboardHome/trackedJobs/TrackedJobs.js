@@ -25,7 +25,6 @@ function TrackedJobs({ jobs }) {
 
   const abortControllerRef = useRef(null);
 
-  console.log(jobsToShow);
   useEffect(() => {
     const loadJobListData = async () => {
       if (!jobsToShow || jobsToShow.length === 0) {
