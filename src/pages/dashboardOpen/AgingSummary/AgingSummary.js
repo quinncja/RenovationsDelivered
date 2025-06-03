@@ -19,6 +19,23 @@ function AgingSummary({data}){
         "over90": "91+ days"
     }
 
+    const titleColor = {
+        "current": 'var(--secondary-font)',
+        "over": 'var(--secondary-font)',
+        "over30": 'var(--yellow)',
+        "over60": 'var(--orange)',
+        "over90": 'var(--red)'
+    }
+
+    const titleWeight = {
+        "current": '500',
+        "over": '500',
+        "over30": '600',
+        "over60": '600',
+        "over90": '600'
+    }
+
+
     const singleItem = (obj) => {
         const active = focused && focused === `${obj.type}-${obj.aging_category}`
         return(
@@ -35,7 +52,7 @@ function AgingSummary({data}){
             borderLeft: "none",
           }}
         >
-          <h4 style={{color: (obj.aging_category === "over30" || obj.aging_category === "over1") ? 'var(--red)' : "var(--secondary-font)", fontWeight:  (obj.aging_category === "over30" || obj.aging_category === "over1")  ? '500' : "400"}}> {titleMap[obj.aging_category]}</h4>
+          <h4 style={{color: titleColor[obj.aging_category], fontWeight:  titleWeight[obj.aging_category]}}> {titleMap[obj.aging_category]}</h4>
           <div style={{ display: "flex", flexDirection: "column", gap: "2px" }}>
             <h2 style={{ fontSize: "24px" }}>
               {dollarFormatter(obj.amount)}
