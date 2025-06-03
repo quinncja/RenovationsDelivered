@@ -69,7 +69,7 @@ function AgingSummary({data}){
     return(
         <> 
         <div className="home-agingsummary-widget clickable-widget">
-            <div className="border-after" style={{ display: 'flex', flexDirection: "column", gap: "25px"}}>
+            <div className="border-after" style={{ display: 'flex', flexDirection: "column", gap: "20px"}}>
                 <div style={{display: "flex", paddingLeft: '25px', flexDirection: "row", alignItems: 'center', gap: "15px" }}> 
                     <div style={{height: "10px", width: "10px", display: "flex", justifyContent: "center", alignItems: "center", background: "var(--red)", padding: "10px", borderRadius: '5px'}}> 
                         <h3 style={{fontSize: "12px"}}> AP </h3>
@@ -82,7 +82,7 @@ function AgingSummary({data}){
             </div>
         </div>
         <div className="home-agingsummary-widget clickable-widget">
-            <div style={{display: 'flex', flexDirection: "column", gap: "25px"}}>
+            <div style={{display: 'flex', flexDirection: "column", gap: "20px"}}>
                 <div style={{display: "flex", paddingLeft: '25px',  flexDirection: "row", alignItems: 'center', gap: "15px" }}> 
                     <div style={{height: "10px", width: "10px", display: "flex", justifyContent: "center", alignItems: "center", background: "var(--green)", padding: "10px", borderRadius: '5px'}}> 
                         <h3 style={{fontSize: "12px"}}> AR </h3>
