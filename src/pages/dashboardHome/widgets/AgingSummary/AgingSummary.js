@@ -23,7 +23,7 @@ function AgingSummary(){
     const titleColor = {
         "current": 'var(--secondary-font)',
         "over": 'var(--secondary-font)',
-        "over30": 'var(--yellow)',
+        "over30": 'var(--secondary-font)',
         "over60": 'var(--orange)',
         "over90": 'var(--red)'
     }
@@ -31,7 +31,7 @@ function AgingSummary(){
     const titleWeight = {
         "current": '500',
         "over": '500',
-        "over30": '600',
+        "over30": '500',
         "over60": '600',
         "over90": '600'
     }
