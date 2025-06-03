@@ -12,10 +12,11 @@ function AgingSummary({data}){
     )
 
     const titleMap = {
-        "under7": "Due in 7 days",
-        "under30": "Due in 30 days",
-        "over1": "Overdue 1 - 30 days",
-        "over30": "Overdue > 30 days"
+        "current": "Current",
+        "over": "1 - 30 days",
+        "over30": "31 - 60 days",
+        "over60": "61 - 90 days",
+        "over90": "91+ days"
     }
 
     const singleItem = (obj) => {
@@ -49,31 +50,34 @@ function AgingSummary({data}){
     }
     
     return(
-        <div className="home-agingsummary-widget" style={{height: "380px"}}>
-            <div className="border-after" style={{ display: 'flex', flexDirection: "column", gap: "10px"}}>
-                <div style={{display: "flex", flexDirection: "row", alignItems: 'center', gap: "15px" }}> 
+        <> 
+        <div className="home-agingsummary-widget clickable-widget">
+            <div className="border-after" style={{ display: 'flex', flexDirection: "column", gap: "25px"}}>
+                <div style={{display: "flex", paddingLeft: '25px', flexDirection: "row", alignItems: 'center', gap: "15px" }}> 
                     <div style={{height: "10px", width: "10px", display: "flex", justifyContent: "center", alignItems: "center", background: "var(--red)", padding: "10px", borderRadius: '5px'}}> 
                         <h3 style={{fontSize: "12px"}}> AP </h3>
                     </div>
                     <h3> Payables Aging </h3>
                 </div> 
-                <div style={{display: 'grid', gridTemplateColumns: "1fr 1fr 1fr 1fr"}}>
-                    {data.slice(0,4).map((item) => singleItem(item))}
+                <div style={{display: 'grid', gridTemplateColumns: "1fr 1fr 1fr 1fr 1fr"}}>
+                    {data.slice(0,5).map((item) => singleItem(item))}
                 </div>
             </div>
-
-            <div style={{display: 'flex', flexDirection: "column", gap: "10px"}}>
-                <div style={{display: "flex", flexDirection: "row", alignItems: 'center', gap: "15px" }}> 
+        </div>
+        <div className="home-agingsummary-widget clickable-widget">
+            <div style={{display: 'flex', flexDirection: "column", gap: "25px"}}>
+                <div style={{display: "flex", paddingLeft: '25px',  flexDirection: "row", alignItems: 'center', gap: "15px" }}> 
                     <div style={{height: "10px", width: "10px", display: "flex", justifyContent: "center", alignItems: "center", background: "var(--green)", padding: "10px", borderRadius: '5px'}}> 
                         <h3 style={{fontSize: "12px"}}> AR </h3>
                     </div>
                     <h3> Recievables Aging </h3>
                 </div> 
-                <div style={{display: 'grid', gridTemplateColumns: "1fr 1fr 1fr 1fr"}}>
-                    {data.slice(4,8).map((item) => singleItem(item))}
+                <div style={{display: 'grid', gridTemplateColumns: "1fr 1fr 1fr 1fr 1fr"}}>
+                    {data.slice(5,10).map((item) => singleItem(item))}
                 </div>
             </div>
         </div>
+        </>
     )
 }
 

@@ -1295,6 +1295,11 @@ h1 {
   background: var(--secondary-border);
 }
 
+.aging-item:first-child.left-border::before{
+  opacity: 0 !important;
+}
+
+
 
 .open-insight-chart-wrapper {
   background: var(--dark);
@@ -4229,7 +4234,7 @@ h1 {
   border: 1px solid var(--fancy-border);
   border-radius: 5px;
   width: 100%;
-  height: 380px;
+  height: 190px;
   box-sizing: border-box;
   position: relative;
   padding-top: 0px;
@@ -4237,8 +4242,9 @@ h1 {
   flex-direction: column;
   justify-content: space-between;
   text-align: left;
-  padding: 25px;
+  padding-top: 25px;
   gap: 25px;
+  overflow: hidden;
 }
 .active-aging{
   background: var(--terciary) !important;
@@ -4253,6 +4259,7 @@ h1 {
   position: relative;
   overflow: visible !important;
 }
+
 
 .aging-item::before{
   content: "";
@@ -4406,6 +4413,17 @@ h1 {
   justify-content: center;
   gap: 8px;
   padding-right: 40px;
+  border-left: 1px solid var(--secondary-border);
+  align-self: center;
+}
+.aging-box {
+  padding-left: 20px !important;
+  box-sizing: border-box;
+  border-radius: 0px;
+  justify-content: center;
+  gap: 8px;
+  padding-right: 20px !important;
+  padding-block: 20px !important;
   border-left: 1px solid var(--secondary-border);
   align-self: center;
 }
