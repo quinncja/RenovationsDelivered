@@ -44,7 +44,7 @@ function ChangeOrderButton() {
   };
 
   return (
-    <div className="jobcost-changeorder-button">
+    <div className="jobcost-changeorder-button" style={{overflow: "hidden"}}>
       <div
         className="clickable-co"
         style={{
