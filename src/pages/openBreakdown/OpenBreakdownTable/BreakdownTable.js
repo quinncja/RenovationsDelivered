@@ -3,16 +3,20 @@ import { sortSvg, underConstructionSvg } from "business/svg";
 import TableEntry from "./TableEntry";
 
 function BreakdownTable(props) {
-  const { data, color } = props;
+  const { data, color, type } = props;
   const [sortConfig, setSortConfig] = useState({ key: null, direction: null });
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 50;
 
+  console.log(data);
+  
   const headerMap = {
     id: "Vendor",
-    value: "Amount",
     dscrpt: "Description",
-    type: "Status",
+    value: "Amount ($)",
+    total: "Amount ($)",
+    remaining: "Remaining ($)",
+    invoices: "Invoices",
     insdte: "Date created",
     insusr: "Created by",
     upddte: "Date updated",
@@ -33,17 +37,145 @@ function BreakdownTable(props) {
     setCurrentPage(1);
   };
 
-  const getColumnHeaders = (data) => {
-    const excludedKeys = ["imagePath", "imageName", "imageUser"];
-    if (!data || data.length === 0) return [];
-    let keys = Object.keys(data[0]).filter(
+  const getAllData = () => {
+    if (!data) return [];
+    
+    if (Array.isArray(data)) {
+      return data;
+    }
+    
+    const allItems = [];
+    if (data.parent) allItems.push(...data.parent);
+    if (data.children) allItems.push(...data.children);
+    return allItems;
+  };
+
+  const hasParentsWithChildren = () => {
+    if (!data || Array.isArray(data)) return false;
+    
+    const parents = data.parent || [];
+    const children = data.children || [];
+    
+    return parents.some(parent => 
+      children.some(child => child.parent === parent.recnum)
+    );
+  };
+
+  // Helper function to calculate remaining amount for Material type
+  const calculateRemaining = (parentAmount, children) => {
+    if (!children || children.length === 0) {
+      return parentAmount;
+    }
+    
+    const childrenTotal = children.reduce((sum, child) => {
+      const childAmount = child.value || child.total || child.amount || 0;
+      return sum + (parseFloat(childAmount) || 0);
+    }, 0);
+    
+    return (parseFloat(parentAmount) || 0) - childrenTotal;
+  };
+
+  const processDataForRendering = () => {
+    if (!data) return [];
+    
+    if (Array.isArray(data)) {
+      return data;
+    }
+    
+    const parents = data.parent || [];
+    const children = data.children || [];
+    
+    if (type === "Material" || type === "Subcontractors") {
+      const parentsWithChildren = parents.map((parent) => {
+        const parentChildren = children.filter((child) => child.parent === parent.recnum);
+        
+        let processedParent = {
+          ...parent,
+          children: parentChildren,
+          invoices: parentChildren.length 
+        };
+        
+        // Calculate remaining amount for Material type
+        if (type === "Material") {
+          const parentAmount = parent.value || parent.total || parent.amount || 0;
+          processedParent.remaining = calculateRemaining(parentAmount, parentChildren);
+        }
+        
+        return processedParent;
+      });
+      
+      const orphanChildren = children.filter(child => 
+        !parents.some(parent => parent.recnum === child.parent)
+      ).map(child => {
+        let processedChild = {
+          ...child,
+          invoices: 0 
+        };
+        
+        // For orphan children in Material type, remaining is 0 since they have no sub-items
+        if (type === "Material") {
+          processedChild.remaining = 0;
+        }
+        
+        return processedChild;
+      });
+      
+      return [...parentsWithChildren, ...orphanChildren];
+    } else {
+      return children.map(child => ({
+        ...child,
+        invoices: 0
+      }));
+    }
+  };
+
+  const getColumnHeaders = () => {
+    const excludedKeys = ["imagePath", "imageName", "imageUser", "parent", "costType", "status", "type"];
+    const allData = getAllData();
+    
+    if (allData.length === 0) return [];    
+    const shouldShowInvoices = hasParentsWithChildren();
+    
+    let keys = Object.keys(allData[0]).filter(
       (key) => !excludedKeys.includes(key),
     );
+    
+    if (shouldShowInvoices && !keys.includes('invoices')) {
+      keys.push('invoices');
+    }
+    
+    // Add 'remaining' column for Material type if it doesn't exist
+    if (type === "Material" && !keys.includes('remaining')) {
+      keys.push('remaining');
+    }
+    
     const orderedKeys = Object.keys(headerMap).filter((key) =>
       keys.includes(key),
     );
     const remainingKeys = keys.filter((key) => !headerMap.hasOwnProperty(key));
     return [...orderedKeys, ...remainingKeys];
+  };
+
+  const sortData = (dataArray) => {
+    if (!sortConfig.key || !sortConfig.direction) return dataArray;
+    
+    return [...dataArray].sort((a, b) => {
+      const aValue = a[sortConfig.key];
+      const bValue = b[sortConfig.key];
+      if (aValue < bValue) {
+        return sortConfig.direction === "asc" ? -1 : 1;
+      }
+      if (aValue > bValue) {
+        return sortConfig.direction === "asc" ? 1 : -1;
+      }
+      return 0;
+    });
+  };
+
+  const paginateData = (dataArray) => {
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    return dataArray.slice(startIndex, endIndex);
   };
 
   const tableHeader = (headers) => {
@@ -65,35 +197,10 @@ function BreakdownTable(props) {
     );
   };
 
-  const getSortedData = (data) => {
-    let sortedData = [...data];
-    if (sortConfig.key && sortConfig.direction) {
-      sortedData.sort((a, b) => {
-        const aValue = a[sortConfig.key];
-        const bValue = b[sortConfig.key];
-        if (aValue < bValue) {
-          return sortConfig.direction === "asc" ? -1 : 1;
-        }
-        if (aValue > bValue) {
-          return sortConfig.direction === "asc" ? 1 : -1;
-        }
-        return 0;
-      });
-    }
-    return sortedData;
-  };
-
-  const getPaginatedData = (sortedData) => {
-    const startIndex = (currentPage - 1) * itemsPerPage;
-    const endIndex = startIndex + itemsPerPage;
-    return sortedData.slice(startIndex, endIndex);
-  };
-
   const getPaginationInfo = (totalItems) => {
     const totalPages = Math.ceil(totalItems / itemsPerPage);
     const startItem = (currentPage - 1) * itemsPerPage + 1;
     const endItem = Math.min(currentPage * itemsPerPage, totalItems);
-
     return { totalPages, startItem, endItem };
   };
 
@@ -124,7 +231,6 @@ function BreakdownTable(props) {
       }
 
       const pages = [];
-
       pages.push(1);
 
       let middle1, middle2, middle3;
@@ -150,7 +256,6 @@ function BreakdownTable(props) {
       });
 
       pages.push(totalPages);
-
       return pages;
     };
 
@@ -192,29 +297,11 @@ function BreakdownTable(props) {
     );
   };
 
-  const tableBody = (headers, data) => {
-    const sortedData = getSortedData(data);
-    const paginatedData = getPaginatedData(sortedData);
-
-    return (
-      <div className="table-body">
-        {paginatedData.map((entry, index) => {
-          return (
-            <TableEntry
-              headers={headers}
-              entry={entry}
-              color={color}
-              key={index}
-            />
-          );
-        })}
-      </div>
-    );
-  };
-
   if (!data) return <div className="data-display loading-widget" />;
 
-  if (data.length === 0)
+  const processedData = processDataForRendering();
+  
+  if (processedData.length === 0) {
     return (
       <div className="data-display">
         <div className="empty-breakdown">
@@ -223,15 +310,26 @@ function BreakdownTable(props) {
         </div>
       </div>
     );
+  }
 
-  const headers = getColumnHeaders(data);
-  const sortedData = getSortedData(data);
+  const headers = getColumnHeaders();
+  const sortedData = sortData(processedData);
+  const paginatedData = paginateData(sortedData);
 
   return (
     <>
       <div className="data-display-wrapper">
         {tableHeader(headers)}
-        {tableBody(headers, data)}
+        <div className="table-body">
+          {paginatedData.map((entry, index) => (
+            <TableEntry
+              headers={headers}
+              entry={entry}
+              color={color}
+              key={entry.recnum || index}
+            />
+          ))}
+        </div>
       </div>
       {renderPagination(sortedData.length)}
     </>

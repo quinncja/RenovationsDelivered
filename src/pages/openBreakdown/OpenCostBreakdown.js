@@ -23,15 +23,8 @@ function OpenCostBreakdown(props) {
   const postedSum = calculateTotalSum(posted);
   const committedSum = calculateTotalSum(committed);
 
-  let spent, actualCommittedAmount;
-
-  if (type === "Subcontractors") {
-    spent = committedSum > postedSum ? committedSum : postedSum;
-    actualCommittedAmount = committedSum - postedSum;
-  } else {
-    spent = postedSum + committedSum;
-    actualCommittedAmount = committedSum;
-  }
+  const spent = postedSum + committedSum;
+  const actualCommittedAmount = committedSum;
 
   const color = getStatusColor(budget, spent);
   const background = getIconBackground(budget, spent);
@@ -227,14 +220,14 @@ function OpenCostBreakdown(props) {
   };
 
   return (
-    <div className="open-breakdown-cost">
+    <div className="open-breakdown-cost" style={{position: 'relative'}}>
       {infoBoxes()}
       {tooltip.show && (
         <div
           style={{
             position: "absolute",
-            top: 0,
-            transform: "translateY(70%) translateX(140%)",
+            bottom: 0,
+            transform: "translateY(132%) translateX(0%)",
             background: "var(--terciary)",
             color: "white",
             padding: "8px 12px",

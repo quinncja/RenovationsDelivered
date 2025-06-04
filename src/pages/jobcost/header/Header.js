@@ -13,7 +13,6 @@ function Header({ setIsVisible }) {
   const headerRef = useRef(null);
   const { isEmpty, clearPageModifiers, pageModifiers } = useJobCostContext();
 
-  console.log(pageModifiers)
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {

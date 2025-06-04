@@ -42,8 +42,8 @@ function OpenBreakdown() {
       <div className="job-cost-widgets">
         <Header setIsVisible={setIsVisible} />
         <OpenCostBreakdown data={data} type={type} />
-        <OpenBreakdownBar data={data} />
-        <OpenBreakdownTable setIsVisible={setIsVisible2} />
+        <OpenBreakdownBar data={data}/>
+        <OpenBreakdownTable setIsVisible={setIsVisible2} type={type}/>
       </div>
     </div>
   );

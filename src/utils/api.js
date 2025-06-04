@@ -266,17 +266,9 @@ export async function fetchBreakdownItems(modifiers, costType, signal) {
       error.response.data &&
       error.response.data.error
     ) {
-      if (error.response.status === 500) {
-        toast.error(
-          "VPN connection error. Please wait a few minutes and try again",
-        );
-      }
-      console.error(
-        `Error loading ${modifiers.type}:`,
-        error.response.data.error,
-      );
+      throw error
     } else {
-      console.error(`Error loading ${modifiers.type}:`, error.message);
+      throw error
     }
   }
 }
@@ -296,12 +288,9 @@ export async function fetchAggrJobData(modifiers, signal) {
       error.response.data &&
       error.response.data.error
     ) {
-      console.error(
-        `Error loading ${modifiers.type}:`,
-        error.response.data.error,
-      );
+      throw error
     } else {
-      console.error(`Error loading ${modifiers.type}:`, error.message);
+      throw error
     }
   }
 }
@@ -321,12 +310,9 @@ export async function fetchJobData(modifiers, signal) {
       error.response.data &&
       error.response.data.error
     ) {
-      console.error(
-        `Error loading ${modifiers.type}:`,
-        error.response.data.error,
-      );
+      throw error
     } else {
-      console.error(`Error loading ${modifiers.type}:`, error.message);
+      throw error
     }
   }
 }

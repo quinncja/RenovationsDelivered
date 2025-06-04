@@ -1,7 +1,7 @@
 import { useJobCostContext } from "context/JobCostContext";
 import { getColor } from "utils/colors";
 
-function Filters() {
+function Filters({type}) {
   const { breakdownData, updateFocusedId, typeFilter, setTypeFilter } =
     useJobCostContext();
   const { focused } = breakdownData;
@@ -9,6 +9,9 @@ function Filters() {
   const toggleFilter = (filterValue) => {
     setTypeFilter(typeFilter === filterValue ? false : filterValue);
   };
+
+  const text = type === "Material" ? "Purchase Orders" : "Subcontracts"
+  const text2 = type === "Material" ? "PO" : "Subcontract"
 
   return (
     <div
@@ -32,18 +35,30 @@ function Filters() {
           <h4>{focused}</h4>
         </div>
       )}
+      {type === "Material" || type === "Subcontractors" ?
+        <>
       <div
+        className={`margin-filter ${typeFilter === "parent" ? "margin-filter-active" : ""}`}
+        onClick={() => toggleFilter("parent")}
+      >
+        <h4> {text} </h4>
+      </div>
+      <div
+        className={`margin-filter ${typeFilter === "orphan" ? "margin-filter-active" : ""}`}
+        onClick={() => toggleFilter("orphan")}
+        title={`Invoices not tied to a ${text2}`}
+      >
+        <h4> Orphaned Invoices </h4>
+      </div>
+      </>
+        :
+        <div
         className={`margin-filter ${typeFilter === "committed" ? "margin-filter-active" : ""}`}
-        onClick={() => toggleFilter("committed")}
-      >
-        <h4>Committed</h4>
+        style={{opacity: 0}}> 
+           <h4> - </h4>
       </div>
-      <div
-        className={`margin-filter ${typeFilter === "posted" ? "margin-filter-active" : ""}`}
-        onClick={() => toggleFilter("posted")}
-      >
-        <h4>Posted</h4>
-      </div>
+ 
+      }
     </div>
   );
 }

@@ -67,14 +67,9 @@ function Breakdown(props) {
   const postedSum = calculateTotalSum(posted);
   const committedSum = calculateTotalSum(committed);
 
-  let actualSpent, actualCommittedAmount;
-  if (type === "Subcontractors") {
-    actualSpent = committedSum > postedSum ? committedSum : postedSum;
-    actualCommittedAmount = committedSum - postedSum;
-  } else {
-    actualSpent = postedSum + committedSum;
-    actualCommittedAmount = committedSum;
-  }
+  const actualSpent =  postedSum + committedSum;
+  console.log(postedSum, committedSum, type)
+  console.log(spent, actualSpent, type)
 
   const background = getIconBackground(budget, actualSpent);
   const color = getStatusColor(budget, actualSpent);

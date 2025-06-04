@@ -1,47 +1,32 @@
-import { handshakeSvg, lockSvg } from "business/svg";
+import { handshakeSvg, hardHatSvg, invoiceSvg2, lockSvg } from "business/svg";
 import Searchbar from "./Searchbar";
 import Filters from "./Filters";
 
 function TableHeader(props) {
-  const { data } = props;
+  const { data, type } = props;
 
-  const renderPosted = () => {
-    if (!data)
-      return (
-        <div className="tjh-widget">
-          <div className="tjh-box "> {lockSvg()} </div>
-          <div className="loading-widget" />
-        </div>
-      );
-    const posted = data.filter((item) => item.type === "posted").length;
-    return (
-      <div className="tjh-widget">
-        <div className="tjh-box "> {lockSvg()} </div>
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "flex-start",
-          }}
-        >
-          <h2> {posted} </h2>
-          <h4> {"Posted"} </h4>
-        </div>
-      </div>
-    );
-  };
+  const getCommittedType = () => {
+    if(type === "Subcontractors") return "Subcontracts"
+    else if(type === "Material") return "Purchases"
+  }
+  const getComittedIcon = () => {
+     if(type === "Subcontractors") return hardHatSvg()
+    else if(type === "Material") return <div style={{fontWeight: "600", color: "white"}}> PO </div>
+  }
+
   const renderComitted = () => {
+    if(type === "Labor" || type === "WTPM") return;
     if (!data)
       return (
         <div className="tjh-widget">
-          <div className="tjh-box "> {handshakeSvg()} </div>
+          <div className="tjh-box "> {getComittedIcon()} </div>
           <div className="loading-widget" />
         </div>
       );
-    const committed = data.filter((item) => item.type === "committed").length;
+    const committed = data.parent.length;
     return (
       <div className="tjh-widget">
-        <div className="tjh-box "> {handshakeSvg()} </div>
+        <div className="tjh-box "> {getComittedIcon()} </div>
         <div
           style={{
             display: "flex",
@@ -50,7 +35,33 @@ function TableHeader(props) {
           }}
         >
           <h2> {committed} </h2>
-          <h4> {"Committed"} </h4>
+          <h4> {getCommittedType()} </h4>
+        </div>
+      </div>
+    );
+  };
+
+  const renderPosted = () => {
+    if (!data)
+      return (
+        <div className="tjh-widget">
+          <div className="tjh-box "> {invoiceSvg2()} </div>
+          <div className="loading-widget" />
+        </div>
+      );
+    const posted = data.children.length;
+    return (
+      <div className="tjh-widget">
+        <div className="tjh-box "> {invoiceSvg2()} </div>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "flex-start",
+          }}
+        >
+          <h2> {posted} </h2>
+          <h4> {"Invoices"} </h4>
         </div>
       </div>
     );
@@ -66,8 +77,8 @@ function TableHeader(props) {
       }}
     >
       <div style={{ display: "flex", gap: "10px", width: "100%" }}>
-        {renderPosted()}
         {renderComitted()}
+        {renderPosted()}
         <div
           style={{
             display: "flex",
@@ -77,7 +88,7 @@ function TableHeader(props) {
             width: "100%",
           }}
         >
-          <Filters />
+          <Filters type={type} />
           <Searchbar />
         </div>
       </div>

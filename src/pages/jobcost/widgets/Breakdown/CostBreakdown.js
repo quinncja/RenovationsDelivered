@@ -5,21 +5,13 @@ import { calculateTotalSum } from "utils/funcs";
 export default function CostBreakdown({
   budget,
   costItems,
-  open = false,
   color,
-  type,
 }) {
   const { posted, committed } = costItems;
   const postedSum = calculateTotalSum(posted);
   const committedSum = calculateTotalSum(committed);
-  let spent, actualCommittedAmount;
-  if (type === "Subcontractors") {
-    spent = committedSum > postedSum ? committedSum : postedSum;
-    actualCommittedAmount = committedSum - postedSum;
-  } else {
-    spent = postedSum + committedSum;
-    actualCommittedAmount = committedSum;
-  }
+  const spent = postedSum + committedSum;
+  const actualCommittedAmount = committedSum;
 
   const remainder = budget - spent;
   const remainderText = remainder > 0 ? "remaining" : "over budget";

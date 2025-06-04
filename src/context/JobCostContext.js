@@ -38,6 +38,10 @@ export const JobCostProvider = ({ children }) => {
     WTPM: null,
   });
 
+  const getSubCount = () => {
+    if(!jobData) return null;
+    else return jobData.subs[0].SubcontractCount
+  }
   const navigate = useNavigate();
 
   const savePageModifiers = async (modifiers) => {
@@ -248,22 +252,6 @@ export const JobCostProvider = ({ children }) => {
 
   // getters
 
-  const getSubSpent = (posted, committed) => {
-    let sum = 0;
-
-    if (posted)
-      for (const obj of posted) {
-        sum += Number(obj.value) || 0;
-      }
-
-    if (posted)
-      for (const obj of posted) {
-        sum += Number(obj.value) || 0;
-      }
-
-    return sum;
-  };
-
   const getSpent = (arr1, arr2) => {
     let sum = 0;
 
@@ -294,6 +282,7 @@ export const JobCostProvider = ({ children }) => {
     if (type === 4) return jobData?.committed?.subs || [];
   };
 
+
   const getPostedCosts = (type) => {
     return jobData.posted.filter((cost) => cost.costType === type);
   };
@@ -316,13 +305,7 @@ export const JobCostProvider = ({ children }) => {
       );
 
       data.budget = getBudget(type);
-      if (type === 4)
-        data.spent = getSubSpent(
-          data.costItems.posted,
-          data.costItems.committed,
-        );
-      else
-        data.spent = getSpent(data.costItems.posted, data.costItems.committed);
+      data.spent = getSpent(data.costItems.posted, data.costItems.committed);
       return data;
     },
     //eslint-disable-next-line
@@ -396,6 +379,7 @@ export const JobCostProvider = ({ children }) => {
             typeNum,
             controller.signal,
           );
+          console.log(items, typeNum)
           setBreakdownItems((prev) => ({ ...prev, [breakdown.type]: items }));
           lastLoadedModifiersRef.current = JSON.stringify(formattedModifiers);
         } catch (error) {
@@ -492,25 +476,58 @@ export const JobCostProvider = ({ children }) => {
   const getBreakdownItems = () => {
     const items = breakdownItems[breakdown.type] || null;
     if (!items) return null;
-
-    let filteredItems = breakdown.focused
-      ? items.filter((item) => item.id === breakdown.focused)
-      : items;
-
-    if (typeFilter) {
-      filteredItems = filteredItems.filter((item) => item.type === typeFilter);
+    
+    let dataToFilter;
+    if (Array.isArray(items)) {
+      dataToFilter = { parent: [], children: items };
+    } else {
+      dataToFilter = {
+        parent: items.parent || [],
+        children: items.children || []
+      };
     }
-
+    
+    let filteredData = { ...dataToFilter };
+    
+    if (breakdown.focused) {
+      filteredData.parent = filteredData.parent.filter((item) => item.id === breakdown.focused);
+      filteredData.children = filteredData.children.filter((item) => item.id === breakdown.focused);
+    }
+    
+    if (typeFilter) {
+      if (typeFilter === "parent") {
+        const parentIds = new Set(filteredData.parent.map(parent => parent.id));
+        filteredData = {
+          parent: filteredData.parent,
+          children: filteredData.children.filter(child => child.parent !== "")
+        };
+      } else if (typeFilter === "orphan") {
+        const parentIds = new Set(filteredData.parent.map(parent => parent.id));
+        filteredData = {
+          parent: [],
+          children: filteredData.children.filter(child => child.parent === "")
+        };
+      } else {
+        filteredData.parent = filteredData.parent.filter((item) => item.type === typeFilter);
+        filteredData.children = filteredData.children.filter((item) => item.type === typeFilter);
+      }
+    }
+    
     if (searchFilter) {
       const searchTerm = searchFilter.toLowerCase();
-      filteredItems = filteredItems.filter((item) =>
+      const searchMatch = (item) =>
         Object.values(item).some((value) =>
-          String(value).toLowerCase().includes(searchTerm),
-        ),
-      );
+          String(value).toLowerCase().includes(searchTerm)
+        );
+      filteredData.parent = filteredData.parent.filter(searchMatch);
+      filteredData.children = filteredData.children.filter(searchMatch);
     }
-
-    return filteredItems;
+    
+    if (filteredData.parent.length === 0 && filteredData.children.length === 0) {
+      return null;
+    }
+    
+    return filteredData;
   };
 
   return (
@@ -537,6 +554,7 @@ export const JobCostProvider = ({ children }) => {
         setTypeFilter,
         searchFilter,
         setSearchFilter,
+        getSubCount
       }}
     >
       {children}

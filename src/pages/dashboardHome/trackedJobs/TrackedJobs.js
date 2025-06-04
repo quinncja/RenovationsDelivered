@@ -32,24 +32,24 @@ function TrackedJobs({ jobs }) {
         setLoadingMap(true);
         return;
       }
-
+  
       const maxRetries = 5;
       let retryCount = 0;
-
+      
       const attemptLoad = async () => {
         let controller;
         try {
           if (abortControllerRef.current) {
             abortControllerRef.current.abort();
           }
-
           controller = new AbortController();
           abortControllerRef.current = controller;
-
+          
           const result = await fetchJobListData(jobsToShow, controller.signal);
           if (result) {
             setDataMap(result);
           }
+          return; // Success - exit the retry loop
         } catch (error) {
           console.log("Error details:", {
             name: error.name,
@@ -57,61 +57,57 @@ function TrackedJobs({ jobs }) {
             isAborted: controller?.signal?.aborted,
             retryCount: retryCount,
           });
-
-          const isRealAbortError =
-            error.name === "AbortError" && controller?.signal?.aborted;
+  
+          const isRealAbortError = error.name === "AbortError" && controller?.signal?.aborted;
           if (isRealAbortError) {
             console.log("Aborting due to explicit abort signal");
             throw error;
           }
-
+  
           retryCount++;
-          console.log(
-            `Error on attempt ${retryCount}/${maxRetries}:`,
-            error.message,
-          );
-
+          console.log(`Error on attempt ${retryCount}/${maxRetries}:`, error.message);
+          
           if (retryCount <= maxRetries) {
-            console.log(
-              `Retrying job list data fetch (attempt ${retryCount}/${maxRetries})`,
-            );
-            await new Promise((resolve) =>
-              setTimeout(resolve, 1000 * retryCount),
-            );
-            return await attemptLoad();
+            console.log(`Retrying job list data fetch (attempt ${retryCount}/${maxRetries})`);
+            await new Promise((resolve) => setTimeout(resolve, 1000 * retryCount));
+            // Continue to next iteration instead of recursive call
           } else {
             console.log("Max retries reached, giving up");
             throw error;
           }
         }
       };
-
-      try {
-        await attemptLoad();
-      } catch (error) {
-        if (
-          error.name !== "AbortError" &&
-          !abortControllerRef.current?.signal?.aborted
-        ) {
-          console.error("Failed to load job list data after retries:", error);
-          setDataMap({});
-          toast.error("Failed to load job data");
+  
+      // Use a while loop instead of recursion
+      while (retryCount <= maxRetries) {
+        try {
+          await attemptLoad();
+          break; // Success - exit the retry loop
+        } catch (error) {
+          if (error.name === "AbortError" && abortControllerRef.current?.signal?.aborted) {
+            break; // Exit on abort
+          }
+          if (retryCount > maxRetries) {
+            console.error("Failed to load job list data after retries:", error);
+            setDataMap({});
+            toast.error("Failed to load job data");
+            break;
+          }
         }
-      } finally {
-        setLoadingMap(false);
       }
+      
+      setLoadingMap(false);
     };
-
+  
     if (isAppReady) {
       loadJobListData();
     }
-
+  
     return () => {
       if (abortControllerRef.current) {
         abortControllerRef.current.abort();
       }
     };
-    // eslint-disable-next-line
   }, [jobsToShow, isAppReady]);
 
   const filteredJobsToShow = filterJobs(jobsToShow);

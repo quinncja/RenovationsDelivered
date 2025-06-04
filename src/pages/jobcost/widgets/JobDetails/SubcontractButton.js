@@ -4,13 +4,8 @@ import { useNavigate } from "react-router-dom";
 
 function SubcontractButton() {
   const navigate = useNavigate();
-  const { jobData, getCommittedCosts, getPostedCosts } = useJobCostContext();
-  let totalSubs;
-  if (jobData) {
-    const commited = getCommittedCosts(4).length;
-    const posted = getPostedCosts(4).length;
-    totalSubs = commited + posted;
-  }
+  const { getSubCount } = useJobCostContext();
+  const totalSubs = getSubCount();
 
   return (
     <div
@@ -20,7 +15,7 @@ function SubcontractButton() {
       onClick={() => navigate(`/jobcost/breakdown/subcontractors`)}
     >
       <div style={{ marginTop: "5px" }}> {hardHatSvg()}</div>
-      {jobData ? (
+      {totalSubs ? (
         <div
           style={{
             display: "flex",

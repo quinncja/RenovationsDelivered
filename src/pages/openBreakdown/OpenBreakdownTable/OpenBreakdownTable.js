@@ -4,10 +4,11 @@ import BreakdownTable from "pages/openBreakdown/OpenBreakdownTable/BreakdownTabl
 import { useEffect, useRef } from "react";
 
 function OpenBreakdownTable(props) {
-  const { setIsVisible } = props;
+  const { setIsVisible, type } = props;
   const headerRef = useRef(null);
   const { getBreakdownItems } = useJobCostContext();
   const data = getBreakdownItems();
+
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -48,8 +49,8 @@ function OpenBreakdownTable(props) {
         <div className="jobs-header no-sticky" ref={headerRef}>
           <h2> Cost Items </h2>
         </div>
-        <TableHeader data={data} />
-        <BreakdownTable data={data} color={null} />
+        <TableHeader data={data} type={type}/>
+        <BreakdownTable data={data} color={null} type={type}/>
       </div>
     </div>
   );
