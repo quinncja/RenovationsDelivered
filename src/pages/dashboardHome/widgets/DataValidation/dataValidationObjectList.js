@@ -4,7 +4,7 @@ export const dataValidationObjectList = [
     accessor: "open",
     className: "red",
     title: "Critical Issues",
-    subtitle: "Open POs or Subcontracts",
+    subtitle: "Open POs on Completed Jobs",
     route: "item/data-validation/critical-issues",
   },
   {
