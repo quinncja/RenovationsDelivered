@@ -1,4 +1,5 @@
 import { useJobCostContext } from "context/JobCostContext";
+import { useProjectContext } from "context/ProjectContext";
 import { useNavigate } from "react-router-dom";
 import {
   destructureJobNumber,
@@ -22,11 +23,11 @@ function Phase(props) {
   } = data || {};
 
   const navigate = useNavigate();
+  const { recnumToPageModifiers } = useProjectContext();
   const { updatePageModifiers } = useJobCostContext();
 
-  const handlePhaseClick = () => {
-    const { jobNum, year, phase } = destructureJobNumber(recnum);
-    const mods = strToMods(jobNum, year, phase);
+  const handlePhaseClick = () => {   
+    const mods = recnumToPageModifiers(recnum)
     updatePageModifiers(mods);
     navigate("/jobcost");
   };

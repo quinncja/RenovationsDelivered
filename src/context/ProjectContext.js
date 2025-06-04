@@ -8,6 +8,17 @@ export const useProjectContext = () => useContext(ProjectContext);
 export const ProjectProvider = ({ children }) => {
   const [projects, setProjects] = useState(undefined);
 
+  const recnumToPageModifiers = (recnum) => {
+    const jobNum = recnum.slice(2,6)
+    const yearId = `${jobNum}-${recnum.slice(0,2)}`
+    const phaseId = `${yearId}-${recnum.slice(6,8)}`
+    return({
+      jobNum,
+      yearId,
+      phaseId
+    })
+  }
+
   const getAllProjects = useCallback(() => {
     if (projects && projects.jobs) {
       return Object.values(projects.jobs);
@@ -584,10 +595,12 @@ export const ProjectProvider = ({ children }) => {
   return (
     <ProjectContext.Provider
       value={{
+        
         projects,
         setProjects,
         getAllProjects,
         getPhasesForJob,
+        recnumToPageModifiers,
         pageModifierToString,
         getPhaseById,
         getProjectByNum,
