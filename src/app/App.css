@@ -1238,6 +1238,9 @@ h1 {
 .clickable-widget:has(.aging-box:hover) {
   filter: none;
 }
+.clickable-widget:has(.insight-item:hover) {
+  filter: none;
+}
 .phase-chart {
   transition: all 0.3s ease-in-out;
   background: var(--dark);
@@ -2951,7 +2954,7 @@ body.overlay-open {
   flex-direction: row;
   justify-content: space-between;
   z-index: 8;
-  background-color: var(--dark);
+  background-color: var(--terciary);
   height: 70px !important;
   width: fit-content;
   min-width: 100%;
@@ -2980,7 +2983,7 @@ body.overlay-open {
 }
 .table-header-item {
   text-align: left;
-  background-color: var(--dark);
+  background-color: var(--terciary);
   padding: 10px;
   display: flex;
   flex-direction: row;
@@ -2994,7 +2997,7 @@ body.overlay-open {
 
 .sub-table-header-item {
   text-align: left;
-  background-color: var(--dark);
+  background-color: var(--terciary);
   padding: 10px;
   display: flex;
   flex-direction: row;
@@ -3679,6 +3682,9 @@ h1 {
   padding-inline: 5px;
   padding-block: 20px;
   position: relative;
+}
+.detail-body{
+  background: var(--dark);
 }
 .phase-job:before{
   content: "";
@@ -5555,6 +5561,17 @@ h2 {
   transition: all 0.3s ease;
   text-align: left;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.detail-header{
+  width: 100%;
+  background: var(--dark);
+  border: 1px solid var(--fancy-border);
+  border-radius: 5px;
+  height: 107px;
+  padding-inline: 25px;
+  box-sizing: border-box;
+  position: relative;
 }
 
 .validation-header {

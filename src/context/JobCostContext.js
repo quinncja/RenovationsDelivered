@@ -379,7 +379,6 @@ export const JobCostProvider = ({ children }) => {
             typeNum,
             controller.signal,
           );
-          console.log(items, typeNum)
           setBreakdownItems((prev) => ({ ...prev, [breakdown.type]: items }));
           lastLoadedModifiersRef.current = JSON.stringify(formattedModifiers);
         } catch (error) {

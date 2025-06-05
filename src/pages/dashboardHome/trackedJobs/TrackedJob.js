@@ -64,6 +64,7 @@ function TrackedJob(props) {
   };
 
   const handlePhaseClick = (year, phase) => {
+    console.log(year, phase)
     const mods = strToMods(job, year, phase);
     updatePageModifiers(mods);
     navigate("/jobcost");

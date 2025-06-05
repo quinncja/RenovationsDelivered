@@ -5,9 +5,11 @@ import { getColor } from "utils/colors";
 import PieChartTooltips from "./PieChartTooltips";
 import { useProjectContext } from "context/ProjectContext";
 import getVenderLabel from "./Label";
+import { useHome } from "context/HomeContext";
 
-function PieChart({ data, type }) {
+function PieChart({ data, type, pageId }) {
   const { getJobStr } = useProjectContext();
+  const { openDetailPage } = useHome();
   const [tooltip, setTooltip] = useState(null);
 
   if (!data) return;
@@ -22,11 +24,18 @@ function PieChart({ data, type }) {
     return array.reduce((sum, obj) => sum + (obj.value || 0), 0);
   };
 
+  const handleDetailClick = (e, datum) => {
+    const detailId = datum.data.detailId;
+    const id = datum.data.id;
+    e.stopPropagation();
+    openDetailPage(pageId, {id: detailId, value: type === "Project" ? getJobStr(detailId) : id})
+  }
+
   const sum = sumValues(data);
 
   const getName = (datum) => {
     return type === "Project"
-      ? getJobStr(datum.data.jobNumber)
+      ? getJobStr(datum.data.detailId)
       : type === "Vender"
         ? getVenderLabel(datum)
         : datum.id;
@@ -84,6 +93,7 @@ function PieChart({ data, type }) {
           from: "color",
           modifiers: [["darker", "0.3"]],
         }}
+        onClick={(datum, e) => handleDetailClick(e, datum)}
         arcLabel={(datum) => label(datum)}
         arcLabelsSkipAngle={8}
         arcLabelsTextColor="#ffffff"

@@ -14,21 +14,56 @@ export const HomeProvider = ({ children }) => {
   const [open, setOpen] = useState({
     type: null,
     focused: null,
+    detail: null
   });
+  const [detailMap, setDetailMap] = useState(undefined);
   const year = new Date().getFullYear();
   const { isAppReady } = useLoading();
   const location = useLocation();
   const navigate = useNavigate();
   const currentPath = location.pathname;
   const abortControllerRef = useRef(null);
+  const abortControllerRef2 = useRef(null);
 
   useEffect(() => {
-    if (!currentPath.startsWith("/dashboard/item"))
+    if (!currentPath.startsWith("/dashboard/item")) {
       setOpen({
         type: null,
         focused: null,
+        detail: null,
       });
+      return;
+    }
+
+    const pathParts = currentPath.split("/");
+    const typeFromPath = pathParts[3];
+    const detailFromPath = pathParts[5];
+    
+    if (detailFromPath) {
+      setOpen((prev) => {
+        if (prev.type !== typeFromPath || prev.detail?.id !== detailFromPath) {
+          return { 
+            type: typeFromPath, 
+            focused: null, 
+            detail: { id: detailFromPath } 
+          };
+        }
+        return prev;
+      });
+    } else if (typeFromPath) {
+      setOpen((prev) => {
+        if (prev.type !== typeFromPath || prev.detail !== null) {
+          return { 
+            type: typeFromPath, 
+            focused: null, 
+            detail: null 
+          };
+        }
+        return prev;
+      });
+    }
   }, [currentPath]);
+
 
   useEffect(() => {
     const loadJobData = async () => {
@@ -43,7 +78,6 @@ export const HomeProvider = ({ children }) => {
           const controller = new AbortController();
           abortControllerRef.current = controller;
           const homeData = await fetchHomeData(controller.signal);
-          console.log(homeData)
           setDataMap((prev) => {
             const currentData = prev || {};
             const result = { ...currentData };
@@ -52,6 +86,7 @@ export const HomeProvider = ({ children }) => {
               result[key] = {
                 widgetData: value,
                 homeData: currentData[key]?.homeData || null,
+                detailData: currentData[key]?.detailData || null, 
               };
             }
 
@@ -96,8 +131,6 @@ export const HomeProvider = ({ children }) => {
     // eslint-disable-next-line
   }, [isAppReady, currentPath]);
 
-  const abortControllerRef2 = useRef(null);
-
   useEffect(() => {
     const loadOpenData = async () => {
       const maxRetries = 5;
@@ -115,18 +148,30 @@ export const HomeProvider = ({ children }) => {
           const mods = {
             year: year,
             type: open.type,
+            detailId: open?.detail?.id,
           };
 
           const items = await fetchOpenHomeData(mods, controller.signal);
-          if (items) {
-            setDataMap((prev) => ({
-              ...(prev || {}),
-              [open.type]: {
-                ...(prev?.[open.type] || {}),
-                homeData: items[open.type],
-              },
-            }));
+
+          if(open?.detail?.id){
+            if (items) {
+              setDetailMap((prev) => ({
+                ...(prev || {}),
+                [open.detail.id]: items,
+              }));
+            }
+          } else {
+            if (items) {
+              setDataMap((prev) => ({
+                ...(prev || {}),
+                [open.type]: {
+                  ...(prev?.[open.type] || {}),
+                  homeData: items[open.type],
+                },
+              }));
+            }
           }
+          
         } catch (error) {
           console.log("Error details:", {
             name: error.name,
@@ -169,7 +214,7 @@ export const HomeProvider = ({ children }) => {
       } catch (error) {
         if (
           error.name !== "AbortError" &&
-          !abortControllerRef.current?.signal?.aborted
+          !abortControllerRef2.current?.signal?.aborted
         ) {
           console.error("Failed to load job data after retries:", error);
           toast.error("Failed to load job data");
@@ -185,23 +230,22 @@ export const HomeProvider = ({ children }) => {
       ) {
         return false;
       }
-      if (dataMap && dataMap[open.type] && dataMap[open.type].openData)
-        return false;
-      return true;
-    };
 
-    const pathParts = currentPath.split("/");
-    const typeFromPath = pathParts[3];
-    if (typeFromPath) {
-      setOpen((prev) => ({ ...prev, type: typeFromPath }));
-    }
+      if (open.detail?.id) {
+        const currentDetailData = dataMap?.[open.type]?.detailData;
+        return !currentDetailData || currentDetailData.detailId !== open.detail.id;
+      } else {
+        return !(dataMap?.[open.type]?.homeData);
+      }
+    };
 
     if (shouldLoadData()) {
       loadOpenData();
     }
 
     // eslint-disable-next-line
-  }, [isAppReady, currentPath, open.type]);
+  }, [isAppReady, currentPath, open.type, open.detail?.id]);
+
 
   const getWidgetDataById = (id) => {
     if (!dataMap) return null;
@@ -223,14 +267,21 @@ export const HomeProvider = ({ children }) => {
   };
 
   const openPage = (type, focused = null) => {
-    setOpen({ type, focused });
+    setOpen({ type, focused, detail: null });
     navigate(`/dashboard/item/${type.toLowerCase()}`);
   };
+
+  const openDetailPage = (type, detail) => {
+    setOpen({type, focused: null, detail })
+    navigate(`/dashboard/item/${type.toLowerCase()}/id/${detail.id}`);
+  }
 
   const openData = {
     type: open.type,
     focused: open.focused,
+    detail: open.detail,
     data: dataMap ? dataMap[open.type] : null,
+    detailData: detailMap && open.detail ? detailMap[open.detail.id] : null
   };
 
   return (
@@ -240,6 +291,7 @@ export const HomeProvider = ({ children }) => {
         updateFocusedId,
         updateFocusedPhaseCount,
         openPage,
+        openDetailPage,
         openData,
       }}
     >

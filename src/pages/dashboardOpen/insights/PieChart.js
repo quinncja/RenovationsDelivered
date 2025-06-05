@@ -5,10 +5,12 @@ import { getColor } from "utils/colors";
 import PieChartTooltips from "./PieChartTooltips";
 import { useProjectContext } from "context/ProjectContext";
 import getVenderLabel from "pages/dashboardHome/widgets/Insights/Label";
+import { useHome } from "context/HomeContext";
 
 function PieChart({ data, type }) {
   const { getJobStr } = useProjectContext();
   const [tooltip, setTooltip] = useState(null);
+  const { openDetailPage } = useHome();
 
   if (!data) return;
 
@@ -26,11 +28,18 @@ function PieChart({ data, type }) {
 
   const getName = (datum) => {
     return type === "project"
-      ? getJobStr(datum.data.jobNumber)
+      ? getJobStr(datum.data.detailId)
       : type === "Vender"
         ? getVenderLabel(datum)
         : datum.id;
   };
+
+  const handleDetailClick = (e, datum) => {
+    const detailId = datum.data.detailId;
+    const id = datum.data.id;
+    e.stopPropagation();
+    openDetailPage(`${type}-insight`, {id: detailId, value: type === "Project" ? getJobStr(detailId) : id})
+  }
 
   const label = (datum) => {
     const name = getName(datum);
@@ -84,6 +93,7 @@ function PieChart({ data, type }) {
           from: "color",
           modifiers: [["darker", "0.3"]],
         }}
+        onClick={(datum, e) => handleDetailClick(e, datum)}
         arcLabel={(datum) => label(datum)}
         arcLabelsSkipAngle={8}
         arcLabelsTextColor="#ffffff"
@@ -109,7 +119,7 @@ function PieChart({ data, type }) {
               opacity: 1,
             }}
           >
-            <PieChartTooltips datum={tooltip.datum} sum={sum} />
+            <PieChartTooltips datum={tooltip.datum} sum={sum}/>
           </div>,
           document.body,
         )}

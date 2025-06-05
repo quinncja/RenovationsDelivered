@@ -41,6 +41,14 @@ function Logo({ expanded }) {
       navigate("/dashboard");
     } else if (currentPath.startsWith("/jobcost/item/")) {
       navigate("/jobcost");
+    } else if (currentPath.startsWith("/dashboard/item/project-insight/id/")) {
+      navigate("/dashboard/item/project-insight/");
+    } else if (currentPath.startsWith("/dashboard/item/client-insight/id/")) {
+      navigate("/dashboard/item/client-insight/");
+    } else if (currentPath.startsWith("/dashboard/item/vendor-insight/id/")) {
+      navigate("/dashboard/item/vendor-insight/");
+    } else if (currentPath.startsWith("/dashboard/item/subcontractor-insight/id/")) {
+      navigate("/dashboard/item/subcontractor-insight/");
     } else {
       navigate("/dashboard");
     }

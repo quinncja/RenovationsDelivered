@@ -1,6 +1,4 @@
-import { dollarFormatter } from "utils/formatters";
 import PieChart from "./PieChart";
-import { getColor } from "utils/colors";
 import { useProjectContext } from "context/ProjectContext";
 import InsightEntry from "./InsightEntry";
 
@@ -40,11 +38,11 @@ function InsightPage({ type, focused, data }) {
 
   let topYear = widgetData ? widgetData[0].id : "";
   if (trimmedType === "project" && widgetData)
-    topYear = getJobStr(widgetData[0].jobNumber);
+    topYear = getJobStr(widgetData[0].detailId);
   const topValue = widgetData ? widgetData[0].value : "";
   let prevTop = homeData ? homeData[0].id : "";
   if (trimmedType === "project" && homeData)
-    prevTop = getJobStr(homeData[0].jobNumber);
+    prevTop = getJobStr(homeData[0].detailId);
 
   const prevValue = homeData ? homeData[0].value : "";
   const sumValues = (array) => {
@@ -80,56 +78,16 @@ function InsightPage({ type, focused, data }) {
               gap: "5px",
             }}
           >
-            <h4>
-              {" "}
-              {year} Top {typeSplit}{" "}
-            </h4>
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "row",
-                gap: "10px",
-                alignItems: "center",
-              }}
-            >
-              <div
-                style={{
-                  width: "25px",
-                  height: "25px",
-                  borderRadius: "5px",
-                  background: getColor(topYear),
-                }}
-              >
-                {" "}
-              </div>
-              <div
-                style={{ display: "flex", flexDirection: "column", gap: "0px" }}
-              >
-                <h3> {topYear} </h3>
-                <h4> {dollarFormatter(topValue)} </h4>
-              </div>
-            </div>
-          </div>
-          <h4 style={{ fontSize: "32px" }}>•</h4>
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              textAlign: "left",
-              marginTop: "-15px",
-              justifyContent: "center",
-              gap: "5px",
-            }}
-          >
-            <h4> Total {typeSplit}s </h4>
-            <h3> {widgetData ? widgetData.length : ""} </h3>
+            <h2 style={{fontSize: "32px"}}> {widgetData ? widgetData.length : ""} </h2>
+            <h4>  {year} Total {typeSplit}s </h4>
           </div>
         </div>
         <div
           className="left-border"
           style={{
-            display: "flex",
             width: "50%",
+            paddingLeft: "25px",
+            display: "flex",
             flexDirection: "row",
             gap: "30px",
             alignItems: "center",
@@ -144,46 +102,9 @@ function InsightPage({ type, focused, data }) {
               gap: "5px",
             }}
           >
-            <h4> Previous Top {typeSplit} </h4>
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "row",
-                gap: "10px",
-                alignItems: "center",
-              }}
-            >
-              <div
-                style={{
-                  width: "25px",
-                  height: "25px",
-                  borderRadius: "5px",
-                  background: getColor(prevTop),
-                }}
-              >
-                {" "}
-              </div>
-              <div
-                style={{ display: "flex", flexDirection: "column", gap: "0px" }}
-              >
-                <h3> {prevTop} </h3>
-                <h4> {dollarFormatter(prevValue)} </h4>
-              </div>
-            </div>
-          </div>
-          <h4 style={{ fontSize: "32px" }}>•</h4>
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              textAlign: "left",
-              marginTop: "-15px",
-              justifyContent: "center",
-              gap: "5px",
-            }}
-          >
-            <h4> Total {typeSplit}s </h4>
-            <h3> {homeData ? homeData.length : ""} </h3>
+            
+            <h2 style={{fontSize: "32px"}}> {homeData ? homeData.length : ""} </h2>
+            <h4>  {year-1} Total {typeSplit}s </h4>
           </div>
         </div>
       </div>

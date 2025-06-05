@@ -1,3 +1,4 @@
+import { useHome } from "context/HomeContext";
 import { useProjectContext } from "context/ProjectContext";
 import { formatNumberShort } from "utils/formatters";
 
@@ -5,18 +6,24 @@ function InsightEntry(props) {
   const { data, index } = props;
   const { sum, type } = data;
   const { getJobStr } = useProjectContext();
+  const { openDetailPage } = useHome();
   const getPercentage = (value) => {
     if (sum === 0) return "0%";
     const percentage = (value / sum) * 100;
     return `${percentage.toFixed(2)}%`;
   };
   const getName = () => {
-    if (type === "project") return getJobStr(data.jobNumber);
+    if (type === "project") return getJobStr(data.detailId);
     else return data.id;
   };
 
+  const handleDetailClick = (e) => {
+    e.stopPropagation();
+    openDetailPage(`${type}-insight`, {id: data.detailId, value: type === "Project" ? getJobStr(data.detailId) : data.id})
+  }
+
   return (
-    <div className="insight-item entry-item" key={index}>
+    <div className="insight-item entry-item" key={index} onClick={(e) => handleDetailClick(e)}>
       <div
         style={{
           display: "flex",

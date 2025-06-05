@@ -8,7 +8,7 @@ import { useHome } from "context/HomeContext";
 function Insight(props) {
   const { id, type, data } = props;
   const { getJobStr } = useProjectContext();
-  const { openPage } = useHome();
+  const { openPage, openDetailPage} = useHome();
 
   const localStorageKey = `insight-showList-${type}`;
 
@@ -32,6 +32,12 @@ function Insight(props) {
   const handleClick = () => {
     openPage(id);
   };
+
+  const handleDetailClick = (e, data) => {
+    e.stopPropagation();
+    openDetailPage(id, {id: data.detailId, value: type === "Project" ? getJobStr(data.detailId) : data.id})
+  }
+  
   const sum = sumValues(data);
   const slicedData = data.slice(0, 5);
 
@@ -43,12 +49,12 @@ function Insight(props) {
 
   const renderList = () => {
     return slicedData.map((data, index) => {
-      const name = type === "Project" ? getJobStr(data.jobNumber) : data.id;
+      const name = type === "Project" ? getJobStr(data.detailId) : data.id;
       return (
         <div
           className="insight-item"
           key={index}
-          onClick={() => openPage(id, data.id)}
+          onClick={(e) => handleDetailClick(e, data)}
         >
           <div
             style={{
@@ -130,7 +136,7 @@ function Insight(props) {
         </button>
       </div>
       <div>
-        {showList ? renderList() : <PieChart data={data} type={type} />}
+        {showList ? renderList() : <PieChart data={data} type={type} pageId={id}/>}
       </div>
     </div>
   );

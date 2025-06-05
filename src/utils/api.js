@@ -118,6 +118,7 @@ export async function fetchHomeData(signal) {
   }
 }
 
+
 export async function fetchOpenHomeData(modifiers, signal) {
   try {
     const response = await axios.get(`${apiUrl}home-data-open`, {
@@ -135,7 +136,7 @@ export async function fetchOpenHomeData(modifiers, signal) {
     ) {
       if (error.response.status === 500) {
         toast.error(
-          "VPN connection error. Please wait a few minutes and try again",
+          "VPN connection error. Please wait a few minutes and try again"
         );
       }
       console.log(error.response.data.error);

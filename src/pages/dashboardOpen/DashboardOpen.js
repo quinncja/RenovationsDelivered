@@ -5,16 +5,17 @@ import InsightPage from "./insights/InsightPage";
 import DataValidationPage from "./dataValidation/DataValidationPage";
 import { useNavigate, useParams } from "react-router-dom";
 import AgingSummaryPage from "./AgingSummary/AgingSummaryPage";
+import DetailPage from "./insights/DetailPage";
 
 function DashboardOpen() {
   const { openData, openPage } = useHome();
-  const { type } = openData;
+  const { type, detail } = openData;
   const normal = kebabToNormal(type);
   const { "*": remainingPath } = useParams();
   const navigate = useNavigate();
 
-  const currentType = remainingPath.split("/")[1] || null;
-
+  let currentType = !detail ? remainingPath.split("/")[1] : null;
+  
   const renderBody = () => {
     if (type === "data-validation")
       return <DataValidationPage {...openData} id={currentType} />;
@@ -22,7 +23,8 @@ function DashboardOpen() {
       return <AgingSummaryPage {...openData} />;
     else if (type === "phase-overview") return <PhaseCountPage {...openData} />;
     else if (type && type.includes("insight"))
-      return <InsightPage {...openData} />;
+      if (detail && detail.id) return <DetailPage {...openData}/>;
+      else return <InsightPage {...openData} />;
     else return "";
   };
   const insightTypes = ["client", "project", "vendor", "subcontractor"];

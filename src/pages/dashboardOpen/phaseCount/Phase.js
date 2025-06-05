@@ -2,11 +2,9 @@ import { useJobCostContext } from "context/JobCostContext";
 import { useProjectContext } from "context/ProjectContext";
 import { useNavigate } from "react-router-dom";
 import {
-  destructureJobNumber,
   dollarFormatter,
   getBaseJobName,
   phaseNumToMonth,
-  strToMods,
 } from "utils/formatters";
 import { calculateMargin, displayMargin, getMarginClass } from "utils/funcs";
 

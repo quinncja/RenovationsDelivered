@@ -68,9 +68,6 @@ function Breakdown(props) {
   const committedSum = calculateTotalSum(committed);
 
   const actualSpent =  postedSum + committedSum;
-  console.log(postedSum, committedSum, type)
-  console.log(spent, actualSpent, type)
-
   const background = getIconBackground(budget, actualSpent);
   const color = getStatusColor(budget, actualSpent);
 
