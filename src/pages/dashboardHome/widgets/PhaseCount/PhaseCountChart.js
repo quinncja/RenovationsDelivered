@@ -10,7 +10,7 @@ import { useHome } from "context/HomeContext";
 function PhaseCountChart({ id, data }) {
   const { openPage } = useHome();
   const [currentPage, setCurrentPage] = useState(0);
-  const itemsPerPage = 8;
+  const itemsPerPage = 13;
 
   const phaseData = data
     .filter((item) => item.phase !== "total")
