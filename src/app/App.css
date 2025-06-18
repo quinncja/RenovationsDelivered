@@ -5664,6 +5664,7 @@ h2 {
   color: white;
 }
 
+
 .dv-card-title {
   color: #e2e8f0;
   font-size: 15px;
@@ -5701,6 +5702,20 @@ h2 {
 .status-indicator.yellow::before {
   content: "#";
   font-weight: bold;
+}
+
+.status-indicator.gray {
+  background: var(--terciary);
+  color: white;
+}
+.status-indicator.gray::before {
+  content: "?";
+  font-weight: bold;
+}
+.status-indicator-bigger.gray::before {
+  content: "?";
+  font-weight: bold;
+  font-size: 32px;
 }
 
 .status-indicator-bigger.red::before {

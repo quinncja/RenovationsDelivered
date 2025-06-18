@@ -14,6 +14,7 @@ function DataValidation() {
         <div className="validation-card loading-widget" />
         <div className="validation-card loading-widget" />
         <div className="validation-card loading-widget" />
+        <div className="validation-card loading-widget" />
       </div>
     );
 

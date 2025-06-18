@@ -5,6 +5,7 @@ import { useState } from "react";
 function DataValidationPage({ data, id }) {
   const { widgetData, homeData } = data || {};
   const hasLoaded = widgetData && homeData;
+  console.log(id)
   const obj = dataValidationObjectList.find((item) => item.id === id);
 
   const [showCopyNotification, setShowCopyNotification] = useState(false);
@@ -56,6 +57,7 @@ function DataValidationPage({ data, id }) {
     );
   };
 
+  console.log(homeData)
   const items = homeData
     ? homeData.filter((item) => item.category === obj.accessor)
     : null;

@@ -23,4 +23,12 @@ export const dataValidationObjectList = [
     subtitle: "Incorrect Job Numbers",
     route: "item/data-validation/data-integrity",
   },
+  {
+    id: "unknown-contract",
+    className: "gray",
+    accessor: "unknown",
+    title: "Unknown Contracts",
+    subtitle: "Jobs Missing Contracts",
+    route: "item/data-validation/unknown-contract",
+  },
 ];
