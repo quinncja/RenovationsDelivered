@@ -50,7 +50,11 @@ function Feedbacks() {
         }}
       >
         {" "}
-        <h1> Feedback </h1>{" "}
+        <div className="jobs-header">
+        <div style={{ display: "flex", alignItems: "baseline", gap: "15px" }}>
+          <h2> Feedback </h2>
+        </div>
+      </div>
       </div>
 
       {!sortedFeedbacks ? (

@@ -223,14 +223,22 @@ export function Users() {
   if (items.adminUsers === -10 && items.normalUsers === -10)
     return (
       <div className="dashboard-welcome user-page">
-        <h1> Users </h1>
+      <div className="jobs-header">
+        <div style={{ display: "flex", alignItems: "baseline", gap: "15px" }}>
+          <h2> Users </h2>
+        </div>
+      </div>
       </div>
     );
 
   if (items.adminUsers.length === 0 && items.normalUsers.length === 0) {
     return (
       <div className="dashboard-welcome">
-        <h1> Users </h1>
+      <div className="jobs-header">
+        <div style={{ display: "flex", alignItems: "baseline", gap: "15px" }}>
+          <h2> Users </h2>
+        </div>
+      </div>
         <div className="loading-widget" />
       </div>
     );
@@ -238,7 +246,11 @@ export function Users() {
 
   return (
     <div className="dashboard-welcome user-page">
-      <h1> Users </h1>
+      <div className="jobs-header">
+        <div style={{ display: "flex", alignItems: "baseline", gap: "15px" }}>
+          <h2> Users </h2>
+        </div>
+      </div>
       <DndContext
         collisionDetection={closestCenter}
         onDragStart={({ active }) => setActiveId(active.id)}
@@ -246,7 +258,7 @@ export function Users() {
         onDragEnd={handleDragEnd}
         onDragCancel={handleDragCancel}
       >
-        <div className="user-lists">
+        <div className="user-lists" style={{paddingTop: "10px"}}>
           {Object.keys(items).map((containerId) => (
             <div
               key={containerId}
