@@ -14,33 +14,54 @@ function HomeWidgets() {
           style={{
             display: "flex",
             flexDirection: "column",
-            gap: "0px",
+            gap: "10px",
             width: "100%",
+            position: 'relative'
           }}
         >
-          <div className="jobs-header" style={{ background: "none" }}>
-            <h2> Business Insights </h2>
-          </div>
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              gap: "10px",
-              width: "100%",
-            }}
-          >
+
+            <div className="jobs-header" style={{ background: "none" }}>
+              <h2> Business Performance </h2>
+            </div>
+
             <Revenue />
             <div style={{ width: "100%", display: "flex", gap: "10px" }}>
               <YearRevenue />
               <PhaseCount />
             </div>
             <Margin />
+        </div>
+
+        <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                gap: "10px",
+                width: "100%",
+                position: 'relative'
+              }}
+            >
+            <div className="jobs-header" style={{ marginTop: "20px" }}>
+              <h2> Finances </h2>
+            </div>
             <AgingSummary />
             <Insights />
+            </div>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                gap: "0px",
+                width: "100%",
+                position: 'relative'
+              }}
+            >
+            <div className="jobs-header" style={{ marginTop: "20px" }}>
+              <h2> Reports </h2>
+            </div>
             <DataValidation />
           </div>
         </div>
-      </div>
     </>
   );
 }

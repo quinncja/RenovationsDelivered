@@ -38,7 +38,6 @@ function AgingSummary({data}){
         "total": "600",
     }
 
-    console.log(data)
     function addAgingTotals(data) {
         const apTotal = data.slice(0, 5).reduce((sum, item) => sum + item.amount, 0);
         const apCount = data.slice(0, 5).reduce((sum, item) => sum + item.count, 0);

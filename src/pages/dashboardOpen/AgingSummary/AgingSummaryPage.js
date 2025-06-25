@@ -15,7 +15,6 @@ function AgingSummaryPage({ data, id }){
     }
     else itemsList = homeData;
 
-    console.log(itemsList)
     return(
         <div style={{display: 'flex', flexDirection: "column", gap: "10px", width: "100%"}}> 
             <AgingSummary data={widgetData}/>
