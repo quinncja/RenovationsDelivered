@@ -42,7 +42,7 @@ function Margin() {
           }}
         >
           <h4> Closed Margin</h4>
-          <h2 style={{ fontSize: "42px", color: marginColor }}>
+          <h2 style={{ fontSize: "32px", color: marginColor }}>
             {" "}
             {displayMargin(total.value)}{" "}
           </h2>

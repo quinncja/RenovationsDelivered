@@ -718,12 +718,12 @@ h1 {
   align-items: center;
 }
 .breakdown-icon-box-bigger {
-  width: 45px;
-  height: 45px;
+  width: 40px;
+  height: 40px;
 }
 .breakdown-icon-box svg {
-  height: 20px;
-  width: 20px;
+  height: 18px;
+  width: 18px;
 }
 .breakdown-icon-box-bigger svg {
   height: 25px;

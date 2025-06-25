@@ -130,7 +130,7 @@ function JobDetails() {
             <div
               style={{ display: "flex", flexDirection: "column", gap: "2px" }}
             >
-              <h2 style={{ fontSize: "24px" }}>
+              <h2 style={{ fontSize: "20px" }}>
                 {dollarFormatter(details.ContractAmount)}
               </h2>
               <div className="jobcost-hl" />
@@ -150,7 +150,7 @@ function JobDetails() {
         >
           <h4>Budget</h4>
           <div style={{ display: "flex", flexDirection: "column", gap: "2px" }}>
-            <h2 style={{ fontSize: "24px" }}>
+            <h2 style={{ fontSize: "20px" }}>
               {dollarFormatter(jobDetails.budget)}
             </h2>
             <div className="jobcost-hl" />
@@ -170,7 +170,7 @@ function JobDetails() {
         >
           <h4>Spent</h4>
           <div style={{ display: "flex", flexDirection: "column", gap: "2px" }}>
-            <h2 style={{ fontSize: "24px" }}>
+            <h2 style={{ fontSize: "20px" }}>
               {dollarFormatter(jobDetails.cost)}
             </h2>
             <div className="jobcost-hl" />

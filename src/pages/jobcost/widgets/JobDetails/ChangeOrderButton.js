@@ -76,7 +76,7 @@ function ChangeOrderButton() {
               textAlign: "left",
             }}
           >
-            <h2 style={{ fontWeight: 700 }}>
+            <h2 style={{ fontWeight: 700, fontSize: '20px' }}>
               {" "}
               {changeOrders?.confirmedCount + changeOrders?.pendingCount || 0}
             </h2>
