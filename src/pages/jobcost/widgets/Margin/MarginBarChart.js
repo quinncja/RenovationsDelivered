@@ -2,10 +2,12 @@ import { useState } from "react";
 import { ResponsiveBar } from "@nivo/bar";
 import { displayMargin, getMarginClass } from "utils/funcs";
 import { dollarFormatter, yearPhaseToStr } from "utils/formatters";
+import useIsAdmin from "utils/hooks/useIsAdmin";
 
 function MarginBarChart({ phaseData, marginColor }) {
   const [hoveredId, setHoveredId] = useState(null);
-
+  const isAdmin = useIsAdmin();
+  
   if (phaseData.length === 0) return null;
 
   const maxMargin = Math.max(...phaseData.map((item) => item.value));
@@ -260,7 +262,7 @@ function MarginBarChart({ phaseData, marginColor }) {
                 {displayMargin(marginValue)}
               </span>
             </div>
-            <h4 style={{color: "white"}}> <span> {dollarFormatter(marginAmount)} </span> profit </h4>
+            {isAdmin && <h4 style={{color: "white"}}> <span> {dollarFormatter(marginAmount)} </span> profit </h4>}
             </div>
             {marginChange !== null && (
               <div style={{
