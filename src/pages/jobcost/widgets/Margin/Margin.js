@@ -1,8 +1,8 @@
 import { displayMargin, getMarginColor } from "utils/funcs";
 import { dollarFormatter } from "utils/formatters";
 import { useJobCostContext } from "context/JobCostContext";
-import MarginLineChart from "./MarginLineChart";
 import useIsAdmin from "utils/hooks/useIsAdmin";
+import MarginBarChart from "./MarginBarChart";
 
 function Margin() {
   const { getDataByType } = useJobCostContext();
@@ -72,7 +72,7 @@ function Margin() {
           )}
         </div>
       </div>
-      <MarginLineChart phaseData={phaseData} marginColor={"#acadae"} />
+      <MarginBarChart phaseData={phaseData} marginColor={"#acadae"} />
     </div>
   );
 }

@@ -1,7 +1,7 @@
 import { useHome } from "context/HomeContext";
 import { displayMargin, getMarginColor } from "utils/funcs";
-import MarginLineChart from "./MarginLineChart";
 import { dollarFormatter } from "utils/formatters";
+import MarginBarChart from "./MarginBarChart";
 
 function Margin() {
   const id = "margin";
@@ -70,7 +70,7 @@ function Margin() {
           </div>
         </div>
       </div>
-      <MarginLineChart data={data} marginColor={"#acadae"} />
+      <MarginBarChart data={data} marginColor={"#acadae"} />
     </div>
   );
 }
