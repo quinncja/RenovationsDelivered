@@ -10,49 +10,47 @@ function Margin() {
 
   if (!data) {
     return (
-      <div className="home-margin-widget">
+      <div className="home-phasecount-widget">
         <span className={`home-widget-num ${"home-widget-loading"}`}> </span>
         <span className="home-widget-title"> </span>
       </div>
     );
   }
 
-  const year = new Date().getFullYear();
   const total = data.find((item) => item.id === "total");
   const marginColor = getMarginColor(total.value);
 
   return (
-    <div className="home-margin-widget">
+    <div style={{display: 'flex', flexDirection: 'column', width: "calc(50% - 5px)", gap: "10px"}}> 
       <div
         style={{
           display: "flex",
-          flexDirection: "column",
-          textAlign: "left",
-          justifyContent: "center",
-          width: "30%",
-          gap: "30px",
-          flexShrink: "0",
+          justifyContent: "space-between",
+          paddingBottom: "0px",
+          gap: "10px"
         }}
       >
         <div
+          className="widget"
           style={{
             display: "flex",
             flexDirection: "column",
             textAlign: "left",
           }}
         >
-          <h4> {year} Margin </h4>
+          <h4> Margin </h4>
           <h2 style={{ fontSize: "32px", color: marginColor }}>
             {" "}
             {displayMargin(total.value)}{" "}
           </h2>
         </div>
+
         <div
+          className="widget"
           style={{
             display: "flex",
             flexDirection: "column",
             gap: "6px",
-            width: "100%",
           }}
         >
           <div
@@ -62,15 +60,35 @@ function Margin() {
               textAlign: "left",
             }}
           >
-            <h4> Amount </h4>
+            <h4> Profit Amount </h4>
             <h2 style={{ fontSize: "32px" }}>
               {" "}
               {dollarFormatter(total.TotalContract - total.TotalCost)}{" "}
             </h2>
           </div>
         </div>
+
       </div>
+    <div className="home-phasecount-widget">
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          padding: "25px",
+          paddingBottom: "0px",
+          alignItems: "flex-start",
+        }}
+      >
+      <h3 style={{fontWeight: 500, fontSize: "16px"}}>Monthly Margin Performance</h3>
+      </div>
+      <div
+        className="phase-chart"
+        style={{ flex: 1, minHeight: 0, paddingBottom: "25px" }}
+        onClick={(e) => e.stopPropagation()}
+      >
       <MarginBarChart data={data} marginColor={"#acadae"} />
+      </div>
+      </div>
     </div>
   );
 }

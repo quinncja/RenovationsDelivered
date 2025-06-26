@@ -1,8 +1,8 @@
 import { useHome } from "context/HomeContext";
-import YearRevenueLineChart from "./YearRevenueLineChart";
+import MonthlyYearRevenueLineChart from "./MonthlyYearRevenueLineChart";
 
-function YearRevenue() {
-  const id = "year-revenue";
+function MonthlyYearRevenue() {
+  const id = "monthly-year-revenue";
   const { getWidgetDataById } = useHome();
   const data = getWidgetDataById(id);
 
@@ -21,7 +21,7 @@ function YearRevenue() {
           alignItems: "flex-start",
         }}
       >
-        <h3 style={{fontWeight: 500, fontSize: "16px"}}>Cumulative Revenue Growth</h3>
+        <h3 style={{fontWeight: 500, fontSize: "16px"}}>Monthly Revenue Comparison</h3>
         <div style={{ display: "flex", flexDirection: "row", gap: "20px" }}>
           <div
             style={{
@@ -78,10 +78,10 @@ function YearRevenue() {
         </div>
       </div>
       <div style={{ flex: 1, minHeight: 0 }}>
-        <YearRevenueLineChart data={data} />
+        <MonthlyYearRevenueLineChart data={data} />
       </div>
     </div>
   );
 }
 
-export default YearRevenue;
+export default MonthlyYearRevenue;

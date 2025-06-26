@@ -125,7 +125,7 @@ function TrackedJobs({ jobs }) {
     <>
       <div className="jobs-header">
         <div style={{ display: "flex", alignItems: "baseline", gap: "15px" }}>
-          <h2> Projects </h2>
+          <h2> {isAdmin && "Active"} Projects </h2>
           {!isAdmin && (
             <button
               className="job-button add-new-button"

@@ -113,7 +113,7 @@ function MarginBarChart({ data, marginColor }) {
       data={allPhases}
       keys={['hoverValue']}
       indexBy="phase"
-      margin={{ top: 40, right: 15, bottom: 50, left: 40 }}
+      margin={{ top: 50, right: 35, bottom: 35, left: 65 }}
       padding={0.25}
       valueScale={{ type: 'linear', min: 0, max: 100 }}
       indexScale={{ type: 'band', round: true }}

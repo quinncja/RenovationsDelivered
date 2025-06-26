@@ -4373,12 +4373,20 @@ h1 {
   padding: 25px;
 }
 
+.widget{
+  background-color: var(--dark);
+  border: 1px solid var(--fancy-border);
+  border-radius: 5px;
+  width: 100%;
+  padding: 20px;
+  padding-inline: 25px;
+}
+
 .home-phasecount-widget {
   background-color: var(--dark);
   border: 1px solid var(--fancy-border);
   border-radius: 5px;
   height: 500px;
-  width: calc(50% - 5px);
   box-sizing: border-box;
   position: relative;
   display: flex;
