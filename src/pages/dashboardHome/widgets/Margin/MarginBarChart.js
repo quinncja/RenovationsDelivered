@@ -16,8 +16,44 @@ function MarginBarChart({ data, marginColor }) {
     phaseDataMap.set(phaseNum, item);
   });
 
+  // Always show at least 13 phases (12 regular + 1 extra)
+  const minPhasesToShow = 13;
+  const maxPhaseNum = phaseData.length > 0 
+    ? Math.max(...phaseData.map(item => parseInt(item.phase.slice(1))))
+    : 12;
+  const totalPhasesToShow = Math.max(minPhasesToShow, maxPhaseNum);
+
+  // Create complete array of all phases with auto-fill
   const allPhases = [];
+  
+  // First add phases 1-12
   for (let i = 1; i <= 12; i++) {
+    const phaseKey = i.toString().padStart(2, '0');
+    const existingData = phaseDataMap.get(phaseKey);
+    
+    if (existingData) {
+      allPhases.push({
+        phase: `P${phaseKey}`,
+        margin: existingData.value,
+        TotalContract: existingData.TotalContract,
+        TotalCost: existingData.TotalCost,
+        hasData: true,
+        hoverValue: 100
+      });
+    } else {
+      allPhases.push({
+        phase: `P${phaseKey}`,
+        margin: 0,
+        TotalContract: 0,
+        TotalCost: 0,
+        hasData: false,
+        hoverValue: 100
+      });
+    }
+  }
+  
+  // Then add extra phases (13+) at the end - always include at least P13
+  for (let i = 13; i <= totalPhasesToShow; i++) {
     const phaseKey = i.toString().padStart(2, '0');
     const existingData = phaseDataMap.get(phaseKey);
     
