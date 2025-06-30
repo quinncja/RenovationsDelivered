@@ -130,7 +130,7 @@ h4 {
   font-weight: 400;
   letter-spacing: 0.5px;
   margin: 0;
-  color: #cbd5e1ac;
+  color: #cbd5e1d1;
 }
 
 h5 {
@@ -318,7 +318,6 @@ h1 {
   margin-bottom: 0 !important;
   height: 30px;
 }
-
 .dropdown-button {
   padding-inline: 9px;
   padding-block: 7px;
@@ -2544,6 +2543,10 @@ body.overlay-open {
 
 .light-red {
   background-color: #ff204995;
+}
+
+.red {
+  color: var(--red)
 }
 
 .green {
@@ -5740,4 +5743,20 @@ h2 {
   content: "#";
   font-weight: bold;
   font-size: 32px;
+}
+.green-background{
+  background-color: rgba(40, 167, 69, 0.1) !important;
+  border: 1px solid var(--green) !important;
+}
+.red-background{
+  background-color: rgba(230, 32, 74, 0.1) !important;
+  border: 1px solid var(--red) !important;
+}
+.yellow-background{
+  background-color: rgba(230, 201, 53, 0.1) !important;
+  border: 1px solid var(--yellow) !important;
+}
+.orange-background{
+  background-color: rgba(255, 125, 53, 0.1) !important;
+  border: 1px solid var(--orange) !important;
 }

@@ -4,8 +4,8 @@ import Margin from "./Margin/Margin";
 import YearRevenue from "./YearRevenue/YearRevenue";
 import PhaseCount from "./PhaseCount/PhaseCount";
 import DataValidation from "./DataValidation/DataValidation";
-import AgingSummary from "./AgingSummary/AgingSummary";
 import MonthlyYearRevenue from "./MonthlyYearRevenue/MonthlyYearRevenue";
+import AgingSummary from "pages/dashboardOpen/AgingSummary/AgingSummary";
 
 function HomeWidgets() {
 
@@ -24,7 +24,7 @@ function HomeWidgets() {
           }}
         >
             <div className="jobs-header" style={{ background: "none" }}>
-              <h2> Business Insight </h2>
+              <h2> Business Development </h2>
             </div>
 
             <Revenue />
@@ -49,6 +49,7 @@ function HomeWidgets() {
             <Margin />
             <PhaseCount />
             </div>
+            <Insights />
         </div>
 
         <div
@@ -64,7 +65,6 @@ function HomeWidgets() {
               <h2> Finances </h2>
             </div>
             <AgingSummary />
-            <Insights />
             </div>
             <div
               style={{

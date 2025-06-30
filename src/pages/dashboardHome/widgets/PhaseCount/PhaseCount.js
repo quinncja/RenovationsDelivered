@@ -6,7 +6,7 @@ function PhaseCount() {
   const { getWidgetDataById, openPage } = useHome();
   const data = getWidgetDataById(id);
 
-  if (!data) return <div className="home-phasecount-widget loading-widget" />;
+  if (!data) return <div className="home-yearrevenue-widget loading-widget" />;
 
   const total = data.find((datum) => datum.phase === "total");
 

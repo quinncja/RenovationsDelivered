@@ -17,7 +17,7 @@ function AgingSummaryPage({ data, id }){
 
     return(
         <div style={{display: 'flex', flexDirection: "column", gap: "10px", width: "100%"}}> 
-            <AgingSummary data={widgetData}/>
+            <AgingSummary data={widgetData} open={true}/>
             <AgingItems data={itemsList}/>
         </div>
     )

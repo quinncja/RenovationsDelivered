@@ -1,11 +1,17 @@
 import { useHome } from "context/HomeContext";
+import { color } from "framer-motion";
 import { dollarFormatter } from "utils/formatters";
 
-function AgingSummary({data}){
-    const { openData, updateFocusedId } = useHome();
+function AgingSummary({data, open = false}){
+    const id = "aging-summary";
+    const { openData, updateFocusedId, getWidgetDataById, openPage} = useHome();
     const { focused } = openData;
 
-    if(!data) return(
+    let displayData;
+    if(open) displayData = data;
+    else displayData = getWidgetDataById(id)
+
+    if(!displayData) return(
         <div className="home-agingsummary-widget">
             <div className="loading-widget"/>
         </div>
@@ -38,45 +44,46 @@ function AgingSummary({data}){
         "total": "600",
     }
 
-    function addAgingTotals(data) {
+    function getAgingTotals(data) {
         const apTotal = data.slice(0, 5).reduce((sum, item) => sum + item.amount, 0);
         const apCount = data.slice(0, 5).reduce((sum, item) => sum + item.count, 0);
         
         const arTotal = data.slice(5, 10).reduce((sum, item) => sum + item.amount, 0);
         const arCount = data.slice(5, 10).reduce((sum, item) => sum + item.count, 0);
         
-        const apTotalObj = {
-          type: "AP",
-          aging_category: "total",
-          amount: apTotal,
-          count: apCount
+        return {
+          apTotal,
+          apCount,
+          arTotal,
+          arCount,
+          cashFlow: arTotal - apTotal,
         };
-        
-        const arTotalObj = {
-          type: "AR", 
-          aging_category: "total",
-          amount: arTotal,
-          count: arCount
-        };
-        
-        const result = [
-          ...data.slice(0, 5),    
-          apTotalObj,             
-          ...data.slice(5, 10),   
-          arTotalObj              
-        ];
-        
-        return result;
       }
 
-    const totalData = addAgingTotals(data);
+    const agingTotals = getAgingTotals(displayData);
 
-    const singleItem = (obj) => {
+    const handleItemClick = (obj, event) => {
+      event.stopPropagation();
+      if(!obj) return;
+      if(open) updateFocusedId(`${obj.type}-${obj.aging_category}`)
+      else openPage(id, `${obj.type}-${obj.aging_category}`)
+    }
+
+    const singleItem = (obj, type) => {
         const active = focused && focused === `${obj.type}-${obj.aging_category}`
+        
+        // Calculate percentage based on the passed type parameter
+        const isAR = type === 'ar';
+        const total = isAR ? agingTotals.arTotal : agingTotals.apTotal;
+        const percentage = total > 0 ? ((obj.amount / total) * 100).toFixed(1) : '0.0';
+        
+        // Debug logging to check calculation
+        console.log(`${type} - ${obj.aging_category}: amount=${obj.amount}, total=${total}, percentage=${percentage}`);
+        
         return(
         <div
           className={`aging-box jobcost-detail-box clickable-widget ${obj.aging_category === "under7" ? "" : "left-border"} ${active && "active-aging"}`}
-          onClick={() => updateFocusedId(`${obj.type}-${obj.aging_category}`)}
+          onClick={(e) => handleItemClick(obj, e)}
           style={{
             display: "flex",
             flexDirection: "column",
@@ -95,6 +102,8 @@ function AgingSummary({data}){
             </h2>
             <div className="jobcost-hl" />
             <h5>
+              {percentage}% 
+              •{" "}
               {obj.count} {obj.count === 1 ? "item" : "items"}
             </h5>
           </div>
@@ -102,31 +111,92 @@ function AgingSummary({data}){
         )
     }
     
+    const handleParentClick = () => {
+      if(open) return;
+      else openPage(id)
+    } 
+
     return(
         <> 
-        <div className="home-agingsummary-widget clickable-widget">
-            <div className="border-after" style={{ display: 'flex', flexDirection: "column", gap: "10px"}}>
-                <div style={{display: "flex", paddingLeft: '25px', flexDirection: "row", alignItems: 'center', gap: "15px" }}> 
-                    <div style={{height: "10px", width: "10px", display: "flex", justifyContent: "center", alignItems: "center", background: "var(--red)", padding: "10px", borderRadius: '5px'}}> 
-                        <h3 style={{fontSize: "12px"}}> AP </h3>
-                    </div>
-                    <h3> Payables Aging </h3>
-                </div> 
-                <div style={{display: 'grid', gridTemplateColumns: "1fr 1fr 1fr 1fr 1fr 1fr"}}>
-                    {totalData.slice(0,6).map((item) => singleItem(item))}
-                </div>
-            </div>
+        <div style={{boxSizing: "border-box", width: '100%', display: 'grid', gridTemplateColumns: "1fr 1fr 1fr", gap: "10px"}}>
+          <div className={`widget clickable-widget ${agingTotals.cashFlow > 0 ? "green-background" : "red-background"}`}
+          style={{
+              display: "flex",
+              flexDirection: "column",
+              textAlign: "left",
+              background: 'var(--dark)',
+              boxSizing: "border-box"
+            }} onClick={() => handleParentClick()}>
+
+            <h4 style={{color: "white"}}> Cash Position </h4>
+              <h2 className={agingTotals.cashFlow > 0 ? "green" : "red"} style={{ fontSize: "32px", marginTop: "5px"}}>
+                {dollarFormatter(agingTotals.cashFlow)}
+              </h2>
+              <div className="jobcost-hl" />
+              <h5>
+              {agingTotals.cashFlow > 0 ? "Positive Cash Flow" : "Negative Cash Flow"}
+              </h5>
+          </div>
+
+          <div className="widget clickable-widget" style={{
+              display: "flex",
+              flexDirection: "column",
+              textAlign: "left",
+              background: 'var(--dark)',
+              boxSizing: "border-box"
+            }} onClick={() => handleParentClick()}>
+
+            <h4> <span className="green" style={{fontWeight: "600"}}> AR </span>  Total Accounts Receivable </h4>
+              <h2 style={{ fontSize: "32px", marginTop: "5px"}}>
+                {dollarFormatter(agingTotals.arTotal)}
+              </h2>
+              <div className="jobcost-hl" />
+              <h5>
+                {agingTotals.arCount} items
+              </h5>
+          </div>
+
+          <div className="widget clickable-widget" style={{
+              display: "flex",
+              flexDirection: "column",
+              textAlign: "left",
+              background: 'var(--dark)',
+              boxSizing: "border-box"
+            }} onClick={() => handleParentClick()}>
+
+            <h4> <span className="red" style={{fontWeight: "600"}}> AP </span> Total Accounts Payable </h4>
+              <h2 style={{ fontSize: "32px", marginTop: "5px"}}>
+                {dollarFormatter(agingTotals.apTotal)}
+              </h2>
+              <div className="jobcost-hl" />
+              <h5>
+                {agingTotals.apCount} items
+              </h5>
+          </div>
         </div>
-        <div className="home-agingsummary-widget clickable-widget">
+        <div className="home-agingsummary-widget clickable-widget" onClick={() => handleParentClick()}>
             <div style={{display: 'flex', flexDirection: "column", gap: "10px"}}>
                 <div style={{display: "flex", paddingLeft: '25px',  flexDirection: "row", alignItems: 'center', gap: "15px" }}> 
                     <div style={{height: "10px", width: "10px", display: "flex", justifyContent: "center", alignItems: "center", background: "var(--green)", padding: "10px", borderRadius: '5px'}}> 
                         <h3 style={{fontSize: "12px"}}> AR </h3>
                     </div>
-                    <h3> Recievables Aging </h3>
+                    <h3 style={{fontSize: "16px"}}> Recievables Aging </h3>
                 </div> 
-                <div style={{display: 'grid', gridTemplateColumns: "1fr 1fr 1fr 1fr 1fr 1fr"}}>
-                    {totalData.slice(6,12).map((item) => singleItem(item))}
+                <div style={{display: 'grid', gridTemplateColumns: "1fr 1fr 1fr 1fr 1fr "}}>
+                    {displayData.slice(5,10).map((item) => singleItem(item, 'ar'))}
+                </div>
+            </div>
+        </div>
+        <div className="home-agingsummary-widget clickable-widget" onClick={() => handleParentClick()}>
+            <div className="border-after" style={{ display: 'flex', flexDirection: "column", gap: "10px"}}>
+                <div style={{display: "flex", paddingLeft: '25px', flexDirection: "row", alignItems: 'center', gap: "15px" }}> 
+                    <div style={{height: "10px", width: "10px", display: "flex", justifyContent: "center", alignItems: "center", background: "var(--red)", padding: "10px", borderRadius: '5px'}}> 
+                        <h3 style={{fontSize: "12px"}}> AP </h3>
+                    </div>
+                    <h3 style={{fontSize: "16px"}}> Payables Aging </h3>
+                </div> 
+                <div style={{display: 'grid', gridTemplateColumns: "1fr 1fr 1fr 1fr 1fr "}}>
+                    {displayData.slice(0,5).map((item) => singleItem(item, 'ap'))}
                 </div>
             </div>
         </div>

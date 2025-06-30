@@ -1,5 +1,5 @@
 import { useHome } from "context/HomeContext";
-import { displayMargin, getMarginColor } from "utils/funcs";
+import { displayMargin, getMarginBackground, getMarginColor } from "utils/funcs";
 import { dollarFormatter } from "utils/formatters";
 import MarginBarChart from "./MarginBarChart";
 
@@ -10,8 +10,7 @@ function Margin() {
 
   if (!data) {
     return (
-      <div className="home-phasecount-widget">
-        <span className={`home-widget-num ${"home-widget-loading"}`}> </span>
+      <div className="home-yearrevenue-widget loading-widget">
         <span className="home-widget-title"> </span>
       </div>
     );
@@ -19,6 +18,7 @@ function Margin() {
 
   const total = data.find((item) => item.id === "total");
   const marginColor = getMarginColor(total.value);
+  const marginBackground = getMarginBackground(total.value);
 
   return (
     <div style={{display: 'flex', flexDirection: 'column', width: "calc(50% - 5px)", gap: "10px"}}> 
@@ -31,14 +31,14 @@ function Margin() {
         }}
       >
         <div
-          className="widget"
+          className={`widget ${marginBackground}`}
           style={{
             display: "flex",
             flexDirection: "column",
             textAlign: "left",
           }}
         >
-          <h4> Margin </h4>
+          <h4 style={{color: "white"}}> Margin </h4>
           <h2 style={{ fontSize: "32px", color: marginColor }}>
             {" "}
             {displayMargin(total.value)}{" "}

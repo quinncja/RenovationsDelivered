@@ -267,6 +267,7 @@ export const HomeProvider = ({ children }) => {
   };
 
   const openPage = (type, focused = null) => {
+    console.log(type, focused)
     setOpen({ type, focused, detail: null });
     navigate(`/dashboard/item/${type.toLowerCase()}`);
   };

@@ -6,7 +6,7 @@ function MonthlyYearRevenue() {
   const { getWidgetDataById } = useHome();
   const data = getWidgetDataById(id);
 
-  if (!data) return <div className="home-phasecount-widget loading-widget" />;
+  if (!data) return <div className="home-yearrevenue-widget loading-widget" />;
 
   const year = new Date().getFullYear();
 
