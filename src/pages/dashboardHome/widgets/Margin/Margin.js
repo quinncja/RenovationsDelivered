@@ -38,7 +38,7 @@ function Margin() {
             textAlign: "left",
           }}
         >
-          <h4 style={{color: "white"}}> Margin </h4>
+          <h4 style={{color: "white"}}> Closed Job Margin </h4>
           <h2 style={{ fontSize: "32px", color: marginColor }}>
             {" "}
             {displayMargin(total.value)}{" "}
@@ -60,7 +60,7 @@ function Margin() {
               textAlign: "left",
             }}
           >
-            <h4> Profit Amount </h4>
+            <h4> Gross Profit Amount </h4>
             <h2 style={{ fontSize: "32px" }}>
               {" "}
               {dollarFormatter(total.TotalContract - total.TotalCost)}{" "}
