@@ -60,7 +60,7 @@ function Margin() {
               textAlign: "left",
             }}
           >
-            <h4> Gross Profit Amount </h4>
+            <h4> Closed Gross Profit  </h4>
             <h2 style={{ fontSize: "32px" }}>
               {" "}
               {dollarFormatter(total.TotalContract - total.TotalCost)}{" "}
