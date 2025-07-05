@@ -1,6 +1,5 @@
 import { Outlet } from "react-router-dom";
 import Navbar from "modules/navbar/Navbar";
-import useAuth from "utils/hooks/useAuth";
 import Modal from "../modules/modals/Modal";
 import SystemMessage from "../modules/systemMessage/SystemMessage";
 import "./App.css";
@@ -12,9 +11,11 @@ import logo from "images/R-Only-White.png";
 import { motion, AnimatePresence } from "framer-motion";
 import Typewriter from "./Typewriter";
 import { useState } from "react";
+import { useUserfront } from "@userfront/react";
+import LoginPage from "./LoginPage";
 
 function App() {
-  const isAuthenticated = useAuth();
+  const { isAuthenticated } = useUserfront();
   const { phase } = useAppInitializer(isAuthenticated);
   const [typingComplete, setTypingComplete] = useState(false);
 
@@ -44,7 +45,7 @@ function App() {
   if (!isAuthenticated) {
     return (
       <div className="App">
-        <Outlet />
+        <LoginPage/>
       </div>
     );
   }

@@ -1,5 +1,6 @@
 import { useMemo, useEffect, useState } from "react";
-import Userfront from "@userfront/toolkit";
+import Userfront from "@userfront/core";
+Userfront.init("xbpwwqmn");
 
 const useWelcomeText = () => {
   const [showConfetti, setShowConfetti] = useState(false);
@@ -12,7 +13,7 @@ const useWelcomeText = () => {
     const name = Userfront.user.name;
     const firstName = name.trim().split(" ")[0];
     
-    if (month === 5 && date === 30 && firstName === "Mike") {
+    if (month === 5 && date === 27 && firstName === "Mike") {
       setShowConfetti(true);
       return "Happy Birthday Dad!";
     }

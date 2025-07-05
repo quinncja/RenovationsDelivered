@@ -7,8 +7,6 @@ function BreakdownTable(props) {
   const [sortConfig, setSortConfig] = useState({ key: null, direction: null });
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 50;
-
-  console.log(data);
   
   const headerMap = {
     id: "Vendor",

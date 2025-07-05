@@ -10,7 +10,7 @@ function SubcontractButton() {
   return (
     <div
       className="job-cost-header-button"
-      title="View change orders"
+      title="View sub contracts"
       style={{ paddingLeft: "15px", paddingRight: "20px", gap: "15px" }}
       onClick={() => navigate(`/jobcost/breakdown/subcontractors`)}
     >

@@ -1,5 +1,5 @@
 import { Navigate, Route, Routes, useLocation } from "react-router-dom";
-import Home from "pages/welcome/welcome";
+import Home from "app/LoginPage";
 import App from "./App";
 import Userfront from "@userfront/toolkit";
 import DashboardHome from "pages/dashboardHome/DashboardHome";
@@ -12,10 +12,12 @@ import Feedback from "pages/feedback/Feedbacks";
 import OpenBreakdown from "pages/openBreakdown/OpenBreakdown";
 import DashboardOpen from "pages/dashboardOpen/DashboardOpen";
 import Users from "pages/users/Users";
+import { useUserfront } from "@userfront/react";
 
 function RequireAuth({ children }) {
+  const { isAuthenticated } = useUserfront();
   let location = useLocation();
-  if (!Userfront.tokens.accessToken) {
+  if (!isAuthenticated) {
     return <Navigate to="/login" state={{ from: location }} replace />;
   }
 
@@ -23,12 +25,20 @@ function RequireAuth({ children }) {
 }
 
 function Router() {
+  const { isAuthenticated } = useUserfront();
   return (
     <Routes>
       <Route path="/" element={<App />}>
-        <Route index element={<Home />} />
-        <Route path="/*" element={<Home />} />
-        <Route path="/home" element={<Home />} />
+        <Route 
+            index 
+            element={
+              isAuthenticated ? 
+              <Navigate to="/dashboard" replace /> : 
+              <App />
+            } 
+          />
+        <Route path="/*" element={<App />} />
+        <Route path="/home" element={<App />} />
         <Route
           path="/dashboard"
           element={

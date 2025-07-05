@@ -12,9 +12,11 @@ import { HomeProvider } from "context/HomeContext";
 import { JobCostProvider } from "context/JobCostContext";
 import { LoadingProvider } from "app/LoadingContext";
 import { BrowserRouter } from "react-router-dom";
+import { UserfrontProvider } from "@userfront/react";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
+  <UserfrontProvider tenantId="xbpwwqmn">
   <BrowserRouter>
     <LoadingProvider>
       <SystemMessageProvider>
@@ -35,5 +37,7 @@ root.render(
         </ModalProvider>
       </SystemMessageProvider>
     </LoadingProvider>
-  </BrowserRouter>,
+  </BrowserRouter>
+  </UserfrontProvider>
+  ,
 );

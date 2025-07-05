@@ -230,7 +230,7 @@ h1 {
 
 .nav-logo {
   height: 43px;
-  padding-top: 5px;
+  padding-top: 10px;
   margin-inline: auto;
   object-fit: contain;
   cursor: pointer;
@@ -238,22 +238,136 @@ h1 {
   pointer-events: auto;
 }
 
+.nav-grouping{
+  transition: min-width 0.2s ease-in-out;
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  color: white;
+  gap: 10px;
+  align-items: center;
+  z-index: 190;
+  border-radius: 4px;
+  cursor: pointer;
+  min-height: 43px;
+}
+.nav-extra{
+  display: none;
+}
+.nav-grouping:hover .nav-extra{
+  display: block;
+}
+.nav-extra-subs{
+  display: none !important;
+}
+.active-nav-grouping{
+  box-sizing: border-box;
+}
+.nav-grouping:hover .nav-extra-subs{
+  display: flex !important;
+  align-items: flex-start;
+  background: var(--background);
+}
+.active-nav-grouping .nav-extra-subs{
+  display: flex !important;
+  align-items: flex-end;
+}
+.nav-grouping:hover .nav-extra-subs .nav-grouping{
+  padding-left: 10px;
+}
+
+.nav-grouping:hover .nav-button{
+  background-color: var(--terciary);
+}
+.nav-grouping:hover{
+  background-color: var(--terciary);
+}
+.active-nav-grouping:hover{
+  background-color: var(--terciary);
+  filter: none !important;
+}
+.nav-button{
+  position: relative;
+  height: 43px;
+  width: 43px;
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: var(--background);
+  z-index: 10;
+}
+
+.sub-nav-button{
+  z-index: 0;
+  height: 43px;
+  width: 41px;
+  border-radius: 0px 0px 0px 0px !important;
+  position: relative;
+  box-sizing: border-box;
+}
+
+.sub-nav-button:last-child{
+  border-radius: 0px 0px 5px 5px !important;
+}
+
+.active-nav-button{
+  background-color: var(--terciary);
+}
+
+.active-nav-w-subs-false{
+  border-radius: 5px 5px 5px 5px !important;
+}
+.active-nav-w-subs-true{
+  border-radius: 5px 5px 5px 0px !important;
+}
+.active-nav-w-subs{
+  border-radius: 5px 5px 0px 0px !important;
+}
+
+.active-nav-button:hover{
+  filter: none;
+}
+.sub-items{
+  border-left: 1px solid var(--fancy-border);
+  border-right: 1px solid var(--fancy-border);
+  border-bottom: 1px solid var(--fancy-border);
+
+  border-radius: 0px 0px 5px 5px;
+  box-sizing: border-box;
+}
+.last-sub-item{
+  border-radius: 0px 0px 4px 4px !important;
+
+}
+.nav-button svg{ 
+  height: 25px;
+  width: 25px;
+  stroke-width: 1.5;
+}
+.sub-nav-button svg{
+  stroke-width: 1.5;
+  height: 20px;
+  width: 20px;
+}
+
 h1 {
   color: var(--white);
 }
 
+
 .top-left-container {
   position: fixed;
-  display: block;
+  display: flex;
+  flex-direction: column;
   left: 0;
   top: 0;
-  width: 59px;
-  height: 56px;
-  display: flex;
-  flex-direction: row;
-  z-index: 12;
+  width: 70px;
+  height: 100%;
+  z-index: 120;
   box-sizing: border-box;
-  pointer-events: none;
+  border-right: 1px solid var(--fancy-border);
 }
 
 .nav-container {
@@ -443,7 +557,7 @@ h1 {
   gap: 10px;
   width: 90%;
   height: max-content;
-  margin-inline: auto;
+  padding-left: 90px;
 }
 .job-cost-updates-button {
   width: 72.5px;
@@ -832,7 +946,7 @@ h1 {
 }
 .attachment-button:hover {
   opacity: 1;
-  filter: brightness(1.05);
+  filter: brightness(1.15);
 }
 .attachment-button svg path {
   stroke: var(--white);
@@ -3276,8 +3390,9 @@ body.overlay-open {
   filter: brightness(1.15);
 }
 .dashboard-welcome {
-  width: clamp(300px, 90%, 1300px);
-  margin-inline: auto;
+  width: clamp(300px, calc(100vw - 130px), 1500px);
+  padding-left: 90px;
+
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -3515,7 +3630,7 @@ h1 {
   background-color: var(--background);
   box-sizing: border-box;
   z-index: 11;
-  height: 55px;
+  height: 60px;
 }
 
 .jobs-header-btn {
@@ -4683,9 +4798,10 @@ h1 {
 }
 .user-lists {
   display: flex;
-  gap: 30px;
-  width: clamp(400px, 100%, 1500px);
+  gap: 0px;
+  width: clamp(400px, 100%, 1600px);
   margin-left: -20px;
+  height: 100%;
 }
 
 .user-cards {
@@ -4702,7 +4818,7 @@ h1 {
   padding: 20px;
   padding-block: 30px;
   box-sizing: content-box;
-  border-radius: 5px;
+  border-radius: 0px;
 }
 .user-list h2 {
   color: var(--white);
@@ -4712,22 +4828,24 @@ h1 {
 .user-card {
   background-color: var(--dark);
   border: 1px solid var(--fancy-border);
-  height: 100px;
+  height: 80px;
   display: flex;
   flex-direction: row;
   align-items: center;
-  padding-inline: 30px;
+  padding-inline: 20px;
   position: relative;
   gap: 20px;
   overflow: hidden;
+  border-radius: 5px;
 }
 
 .card-left {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-content: center;
   align-items: flex-start;
-  gap: 10px;
+  gap: 3px;
 }
 .card-left * {
   text-align: left;
@@ -4743,8 +4861,8 @@ p {
 }
 
 .background-icon svg {
-  height: 40px;
-  width: 40px;
+  height: 35px;
+  width: 35px;
   z-index: 0;
   opacity: 1;
 }
@@ -4760,7 +4878,7 @@ p {
 }
 
 .hovered-container {
-  background-color: var(--mid);
+  background-color: var(--terciary);
   transition:
     background-color 0.3s,
     border 0.3s;
@@ -5471,6 +5589,7 @@ h2 {
 
 .App {
   min-height: 100vh;
+  position: relative;
 }
 
 .footer {
@@ -5486,6 +5605,7 @@ h2 {
   justify-content: center;
   align-items: center;
   font-weight: 500;
+  z-index: 500;
 }
 
 .submission-form-button {

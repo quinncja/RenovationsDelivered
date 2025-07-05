@@ -20,19 +20,37 @@ export function Users() {
 
   useEffect(() => {
     const loadUsers = async () => {
+      const maxRetries = 5;
+      let retryCount = 0;
+      
+      const attemptLoad = async () => {
+        try {
+          const userData = await fetchUserList();
+          const sortedUsers = userData.results.sort(
+            (a, b) => new Date(b.lastActiveAt) - new Date(a.lastActiveAt),
+          );
+          const admins = sortedUsers.filter((user) => hasAdmin(user));
+          const normals = sortedUsers.filter((user) => !hasAdmin(user));
+          setItems({
+            adminUsers: admins,
+            normalUsers: normals,
+          });
+        } catch (error) {
+          retryCount++;
+          if (retryCount <= maxRetries) {
+            console.log(
+              `Retrying user data fetch (attempt ${retryCount}/${maxRetries})`,
+            );
+            await attemptLoad();
+          } else {
+            throw error;
+          }
+        }
+      };
+  
       try {
-        const userData = await fetchUserList();
-        const sortedUsers = userData.results.sort(
-          (a, b) => new Date(b.lastActiveAt) - new Date(a.lastActiveAt),
-        );
-        const admins = sortedUsers.filter((user) => hasAdmin(user));
-        const normals = sortedUsers.filter((user) => !hasAdmin(user));
-
-        setItems({
-          adminUsers: admins,
-          normalUsers: normals,
-        });
-      } catch {
+        await attemptLoad();
+      } catch (error) {
         setItems({
           adminUsers: -10,
           normalUsers: -10,
@@ -40,7 +58,7 @@ export function Users() {
         toast.error("Failed to load user data");
       }
     };
-
+  
     loadUsers();
   }, []);
 
@@ -225,7 +243,7 @@ export function Users() {
       <div className="dashboard-welcome user-page">
       <div className="jobs-header">
         <div style={{ display: "flex", alignItems: "baseline", gap: "15px" }}>
-          <h2> Users </h2>
+          <h3> Users </h3>
         </div>
       </div>
       </div>
@@ -258,7 +276,7 @@ export function Users() {
         onDragEnd={handleDragEnd}
         onDragCancel={handleDragCancel}
       >
-        <div className="user-lists" style={{paddingTop: "10px"}}>
+        <div className="user-lists">
           {Object.keys(items).map((containerId) => (
             <div
               key={containerId}
@@ -266,7 +284,7 @@ export function Users() {
                 hoveredContainer === containerId ? "hovered-container" : ""
               }`}
             >
-              <h2>{containerId === "adminUsers" ? "Admins" : "PMs"}</h2>
+              <h3 style={{fontWeight: 500, fontSize: "16px", textAlign: 'left'}}>{containerId === "adminUsers" ? "Admins" : "PMs"}</h3>
               <SortableContext
                 id={containerId}
                 items={items[containerId].map((user) => user.userId)}
