@@ -613,19 +613,26 @@ export function leftArrowSvg() {
   );
 }
 
+export function downArrowSvg() {
+  return(
+    <svg width="24" height="28" viewBox="5.5 0 18 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M6 9L12 15L18 9" style={{ stroke: "var(--less-white)" }} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+    </svg>
+  )
+}
 export function rightArrowSvg() {
   return (
     <svg
-      width="14"
-      height="20"
+      width="24"
+      height="24"
       viewBox="0 0 8 14"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
       <path
         d="M1 13L7 7L1 1"
-        stroke="#111111"
-        strokeWidth="2"
+        style={{ stroke: "var(--less-white)" }}
+        strokeWidth="1.5"
         strokeLinecap="round"
         strokeLinejoin="round"
       />

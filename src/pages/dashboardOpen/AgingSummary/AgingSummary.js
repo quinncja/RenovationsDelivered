@@ -72,13 +72,9 @@ function AgingSummary({data, open = false}){
     const singleItem = (obj, type) => {
         const active = focused && focused === `${obj.type}-${obj.aging_category}`
         
-        // Calculate percentage based on the passed type parameter
         const isAR = type === 'ar';
         const total = isAR ? agingTotals.arTotal : agingTotals.apTotal;
         const percentage = total > 0 ? ((obj.amount / total) * 100).toFixed(1) : '0.0';
-        
-        // Debug logging to check calculation
-        console.log(`${type} - ${obj.aging_category}: amount=${obj.amount}, total=${total}, percentage=${percentage}`);
         
         return(
         <div

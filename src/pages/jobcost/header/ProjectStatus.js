@@ -3,29 +3,54 @@ import { useProjectContext } from "context/ProjectContext";
 import { jobStatusFormatter } from "utils/formatters";
 
 function ProjectStatus() {
-  const { pageModifiers } = useJobCostContext();
-  const { getStatusByPhase } = useProjectContext();
-  const status = getStatusByPhase(pageModifiers?.phaseId);
+  const { pageModifiers, updatePageModifiers} = useJobCostContext();
+  const { getJobListStatus} = useProjectContext();
+  const jobListStatus = getJobListStatus(pageModifiers);
+
+  const status = pageModifiers.status || jobListStatus;
+
+  const handleClick = () => {
+    let newStatus;
+    if(!status || status === "Mixed") newStatus = 4;
+    else if(status === 4) newStatus = 5;
+    else if(status === 5) newStatus = null
+
+    const newMods = {
+      status: newStatus,
+    };
+    updatePageModifiers(newMods);
+  }
 
   return (
-    <div style={{ flexShrink: "0", display: "flex", flexDirection: "row" }}>
+    <div 
+    className={`status-select-wrapper ${pageModifiers.status && "status-select-wrapper-active"}`}
+    onClick={handleClick}
+    style={{ flexShrink: "0", display: "flex", flexDirection: "row",
+      height: '100%' ,
+      borderRadius: "5px 0px 0px 5px",    
+     }}>
       <div
         style={{
           display: "flex",
           minWidth: "8ch",
           flexDirection: "column",
-          marginRight: "22px",
+          alignContent: "center",
+          alignItems: "center",
           justifyContent: "center",
           borderRadius: "20px",
           padding: "10px 8px",
-          background: !status
+          marginInline: "22px",
+          marginBlock: "15px",
+          background: 
+          (!pageModifiers.status && !jobListStatus) ? "var(--dark)" :
+          (pageModifiers.status || jobListStatus) === "Mixed"
             ? "linear-gradient(135deg, var(--closed) 35%, var(--open))"
-            : status > 4
+            : (pageModifiers.status || jobListStatus) > 4
               ? "var(--closed)"
               : "var(--open)",
         }}
       >
-        <h3>{jobStatusFormatter(status)}</h3>
+        <h3>{jobStatusFormatter((pageModifiers.status || jobListStatus))}</h3>
       </div>
     </div>
   );

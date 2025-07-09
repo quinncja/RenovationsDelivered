@@ -55,6 +55,7 @@ export const JobCostProvider = ({ children }) => {
     state: null,
     pm: null,
     client: null,
+    status: null,
   });
 
   const isEmpty = useMemo(() => {
@@ -72,6 +73,7 @@ export const JobCostProvider = ({ children }) => {
         state: null,
         pm: null,
         client: null,
+        status: null,
       });
     else
       setPageModifiers({
@@ -81,6 +83,7 @@ export const JobCostProvider = ({ children }) => {
         state: null,
         pm: null,
         client: null,
+        status: null,
       });
   };
 

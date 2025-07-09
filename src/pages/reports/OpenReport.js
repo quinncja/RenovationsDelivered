@@ -39,7 +39,6 @@ function OpenReport() {
     const fetchReport = async () => {
       try {
         const response = await getReport(type, id);
-        console.log(response.data);
         setReport(response.data);
       } catch (error) {
         toast.error(`Failed to load ${type} report`);
@@ -66,10 +65,6 @@ function OpenReport() {
       setSortOrder("none");
     }
   };
-
-  useEffect(() => {
-    console.log(view, typeFilter);
-  });
 
   const changeGroupBy = () => {
     if (groupBy === "none") {

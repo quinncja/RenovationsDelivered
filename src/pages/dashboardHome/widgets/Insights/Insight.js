@@ -23,7 +23,6 @@ function Insight(props) {
 
   const sumValues = (array) => {
     if (!array || !Array.isArray(array)) {
-      console.log("sumValues received:", array);
       return 0;
     }
     return array.reduce((sum, obj) => sum + (obj.value || 0), 0);

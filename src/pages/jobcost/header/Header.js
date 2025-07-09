@@ -11,7 +11,7 @@ import { useJobCostContext } from "context/JobCostContext";
 
 function Header({ setIsVisible }) {
   const headerRef = useRef(null);
-  const { isEmpty, clearPageModifiers, pageModifiers } = useJobCostContext();
+  const { isEmpty, clearPageModifiers } = useJobCostContext();
 
   useEffect(() => {
     const observer = new IntersectionObserver(

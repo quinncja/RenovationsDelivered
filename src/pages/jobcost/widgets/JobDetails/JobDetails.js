@@ -2,8 +2,10 @@ import { dollarFormatter, percentFomatter } from "utils/formatters";
 import { getMarginClass } from "utils/funcs";
 import useIsAdmin from "utils/hooks/useIsAdmin";
 import SubcontractButton from "./SubcontractButton";
-import ChangeOrderButton from "./ChangeOrderButton";
 import { underConstructionSvg } from "business/svg";
+import JobListButton from "./JobListButton";
+import { useState, useEffect } from "react";
+import JobList from "./JobList";
 
 const { useJobCostContext } = require("context/JobCostContext");
 
@@ -14,9 +16,21 @@ function JobDetails() {
   const isAdmin = useIsAdmin();
   const { getJobDetails } = useJobCostContext();
   const jobDetails = getJobDetails();
+  
+  // Initialize state from localStorage
+  const [showJobList, setShowJobList] = useState(() => {
+    const saved = localStorage.getItem('showJobList');
+    return saved !== null ? JSON.parse(saved) : false;
+  });
+
+  // Save to localStorage whenever showJobList changes
+  useEffect(() => {
+    localStorage.setItem('showJobList', JSON.stringify(showJobList));
+  }, [showJobList]);
 
   if (!data) {
     return (
+      <> 
       <div
         style={{
           display: "flex",
@@ -47,9 +61,13 @@ function JobDetails() {
           >
             <SubcontractButton />
           </div>
-          <ChangeOrderButton />
-        </div>
+          <JobListButton isOpen={showJobList} setIsOpen={setShowJobList}/>
+          </div>
       </div>
+          {showJobList &&
+            <JobList />
+          }
+          </>
     );
   }
 
@@ -184,6 +202,7 @@ function JobDetails() {
   };
 
   return (
+    <>
     <div
       style={{
         display: "flex",
@@ -214,9 +233,13 @@ function JobDetails() {
         >
           <SubcontractButton />
         </div>
-        <ChangeOrderButton />
+        <JobListButton isOpen={showJobList} setIsOpen={setShowJobList}/>
       </div>
     </div>
+    {showJobList &&
+    <JobList />
+    }
+    </>
   );
 }
 

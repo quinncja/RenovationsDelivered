@@ -47,7 +47,6 @@ function InsightPage({ type, focused, data }) {
   const prevValue = homeData ? homeData[0].value : "";
   const sumValues = (array) => {
     if (!array || !Array.isArray(array)) {
-      console.log("sumValues received:", array);
       return 0;
     }
     return array.reduce((sum, obj) => sum + (obj.value || 0), 0);

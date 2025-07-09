@@ -1,3 +1,4 @@
+import _ from "lodash";
 import { createContext, useCallback, useContext, useState } from "react";
 import { phaseList, yearList } from "utils/modifiers";
 
@@ -362,7 +363,6 @@ export const ProjectProvider = ({ children }) => {
   };
 
   const getSupervisorName = (supervisorId) => {
-    console.log(projects);
     if (!projects) return [];
     return projects.supervisors?.[supervisorId]?.name || "Unknown";
   };
@@ -592,6 +592,64 @@ export const ProjectProvider = ({ children }) => {
     return parts.join(" ");
   };
 
+  const phaseListToProjectList = (phaseList) => {
+  const groupedPhases = _.groupBy(phaseList, 'jobNum');
+  
+  const projectList = Object.keys(groupedPhases).map(jobNum => ({
+    jobNum: jobNum,
+    name: getProjectByNum(jobNum)?.name || 'Unknown Project',
+    client: getClientByJob(jobNum)?.name || 'Unknown Client',
+    phases: groupedPhases[jobNum]
+  }));
+
+  return projectList;
+};
+
+const getJobListByPageModifiers = (pageModifiers) => {
+  const jobList = Object.values(projects?.phases || {}).filter((phase) => {
+    const statusMatch = pageModifiers.status === null || 
+                       (pageModifiers.status === 5 ? (phase.status === 5 || phase.status === 6) : 
+                        phase.status === pageModifiers.status);
+    
+    return (
+      (pageModifiers.jobNum === null || phase.jobNum === pageModifiers.jobNum) &&
+      (pageModifiers.yearId === null || phase.yearNum === pageModifiers.yearId.slice(-2)) &&
+      (pageModifiers.phaseId === null || phase.num === pageModifiers.phaseId.slice(-2)) &&
+      (pageModifiers.state === null || phase.state === pageModifiers.state) &&
+      statusMatch &&
+      (pageModifiers.pm === null || phase.pmId === pageModifiers.pm) &&
+      (pageModifiers.client === null || phase.clientId === pageModifiers.client)
+    );
+  });
+  
+  return jobList;
+};
+  function getUniformStatus(list) {
+    if (!list || list.length === 0) return null;
+    
+    const firstStatus = list[0].status;
+    const normalizedFirst = firstStatus === 6 ? 5 : firstStatus;
+    
+    for (let i = 1; i < list.length; i++) {
+      const currentStatus = list[i].status;
+      const normalizedCurrent = currentStatus === 6 ? 5 : currentStatus;
+      
+      if (normalizedCurrent !== normalizedFirst) {
+        return "Mixed";
+      }
+    }
+    
+    if (normalizedFirst === 4) return 4;
+    if (normalizedFirst === 5) return 5;
+    
+    return "Mixed";
+  }
+  
+  const getJobListStatus = (pageModifiers) => {
+    const jobList = getJobListByPageModifiers(pageModifiers)
+    return getUniformStatus(jobList)
+  }
+
   return (
     <ProjectContext.Provider
       value={{
@@ -655,6 +713,10 @@ export const ProjectProvider = ({ children }) => {
         getPhasesBySupervisorAndStatus,
         getSupervisorsByState,
         getPhasesByFullYear,
+
+        getJobListByPageModifiers,
+        getJobListStatus,
+        phaseListToProjectList
       }}
     >
       {children}

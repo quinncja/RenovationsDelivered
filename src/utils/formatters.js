@@ -178,8 +178,7 @@ export const modifierFormatter = (mods, prevPhase) => {
     job: "",
     year: "",
     phase: "",
-    prevYear: "",
-    prevPhase: "",
+    status: mods.status || "",
     state: mods.state || "",
     pm: mods.pm || "",
     client: mods.client || "",
@@ -253,6 +252,7 @@ export const dateFormatter = (dateInput) => {
 };
 
 export const jobStatusFormatter = (status) => {
+  if (!status) return "-";
   if (status === 1) return "Bid";
   if (status === 2) return "Refused";
   if (status === 3) return "Contract";

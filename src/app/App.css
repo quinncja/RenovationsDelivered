@@ -2187,7 +2187,6 @@ span.grippy::after {
   border: 1px solid var(--fancy-border);
   border-radius: 5px;
   flex-grow: 2;
-  padding-left: 22px;
 }
 
 .header-button {
@@ -2199,6 +2198,7 @@ span.grippy::after {
   filter: none;
   transition: none;
 }
+
 
 .job-cost-header-button {
   background-color: var(--dark);
@@ -2276,6 +2276,50 @@ span.grippy::after {
 
 .job-cost-header-button:hover {
   background: var(--terciary);
+}
+
+.open-job-cost-header-button{
+  border-radius: 5px 5px 0px 0px;
+  border-bottom: 1px solid var(--dark) !important;
+  position: relative;
+  box-sizing: border-box;
+}
+
+.open-job-cost-header-button::after{
+  content: "";
+  height: 12px;
+  border-left: 1px solid var(--fancy-border);
+  border-right: 1px solid var(--fancy-border);
+  width: calc(100% + 2px);  
+  left: -1px;
+  z-index: 10;
+  box-sizing: border-box;
+  position: absolute;
+  bottom: 0;
+  background: var(--dark);
+  transform: translateY(100%);
+}
+
+.open-job-cost-header-button:hover::after{
+  background-color: var(--terciary);
+}
+.joblist-arrow{
+  margin-left: auto;
+}
+.joblist-arrow svg{
+  height: 16px;
+  width: 32px;
+}
+
+.status-select-wrapper{
+  cursor: pointer;
+}
+.status-select-wrapper:hover {
+  background: var(--terciary);
+}
+
+.status-select-wrapper-active {
+  background: var(--terciary) !important;
 }
 
 .project-select-wrapper {
@@ -4604,6 +4648,32 @@ h1 {
   display: flex;
   flex-direction: row;
 }
+.joblist-widget{
+  background-color: var(--dark);
+  border: 1px solid var(--fancy-border);
+  border-radius: 5px;
+  min-height: 150px;
+  width: 100%;
+  box-sizing: border-box;
+  position: relative;
+  flex-shrink: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.joblist-phasebox{
+  padding: 10px;
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  border: 1px solid var(--secondary-border);
+}
+
+.joblist-phasebox:hover{
+  background: var(--terciary) !important;
+}
+
 .jobcost-detail-box {
   padding-left: 40px;
   box-sizing: border-box;
@@ -5879,4 +5949,152 @@ h2 {
 .orange-background{
   background-color: rgba(255, 125, 53, 0.1) !important;
   border: 1px solid var(--orange) !important;
+}
+
+/* Main container */
+.joblist-widget {
+  border-radius: 5px 0px 5px 5px;
+  padding-bottom: 20px;
+}
+
+.joblist-header {
+  padding-top: 20px;
+  padding-left: 25px;
+  padding-bottom: 20px;
+}
+
+.project-item {
+  display: flex;
+  flex-direction: column;
+  padding: 0px;
+  cursor: pointer;
+  position: relative;
+}
+
+.project-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.project-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  text-align: left;
+}
+
+.project-name {
+  color: white;
+  font-size: 16px;
+}
+
+.phase-count {
+  display: flex;
+  align-items: center;
+  align-content: center;
+  justify-content: flex-end;
+  gap: 8px;
+  background-color: var(--terciary);
+  padding: 12px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  color: var(--white);
+  transition: background-color 0.2s;
+  user-select: none;
+  width: 90px;
+  margin-right: 25px;
+}
+
+.phase-count:hover {
+  background-color: var(--primary);
+}
+
+.phase-count-chevron svg{
+  height: 12px;
+  width: 15px;  
+}
+
+.expanded-phases {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-top: 0px;
+  padding-top: 10px;
+  border-top: 1px solid #333;
+  max-width: calc(100% - 25px);
+  padding-bottom: 10px;
+  margin-left: 25px;
+  margin-right: 25px;
+}
+
+.phase-button {
+  color: var(--white);
+  background-color: var(--terciary);
+  padding: 10px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  border: none;
+  transition: background-color 0.2s;
+  min-width: 28px;
+  text-align: center;
+}
+
+.phase-button:hover {
+  background-color: var(--primary);
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding-top: 10px;
+  gap: 10px;
+}
+
+.pagination-button {
+  width: 40px;
+  height: 40px;
+  background-color: var(--terciary);
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  transition: background-color 0.2s;
+}
+
+.pagination-button.disabled {
+  background-color: transparent;
+  color: transparent;
+  cursor: not-allowed;
+}
+
+.pagination-info {
+  color: #ccc;
+  font-size: 14px;
+}
+
+.recent-item:has(.project-info:hover){
+  filter: none !important;
+}
+
+.project-info{
+  background-color: var(--dark);
+  padding-inline: 25px;
+  padding-block: 10px;
+  border-radius: 5px;
+}
+.project-info:hover{
+  cursor: pointer;
+  filter: brightness(1.15);
 }

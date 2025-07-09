@@ -56,7 +56,6 @@ function ProjectSelector() {
     else jobNum = value.length > 0 ? value[0].num : null;
 
     const newMods = getJobMods(jobNum);
-    console.log(newMods);
     updatePageModifiers(newMods);
   };
 
