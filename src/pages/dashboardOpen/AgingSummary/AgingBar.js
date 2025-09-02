@@ -19,7 +19,7 @@ export default function AgingBar({
               {current > 0 && (
                 <div
                   style={{
-                    height: "12px",
+                    height: "10px",
                     borderRadius: "15px",
                     width: `${(current / max) * 100}%`,
                     background: color,
@@ -34,7 +34,7 @@ export default function AgingBar({
 
               <div
                 style={{
-                  height: "12px",
+                  height: "10px",
                   borderRadius: "15px",
                   width: "100%",
                   background: "var(--darker)",

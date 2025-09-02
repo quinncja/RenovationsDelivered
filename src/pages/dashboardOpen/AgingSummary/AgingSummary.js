@@ -237,7 +237,7 @@ function AgingSummary({data, open = false}){
     }
     return(
         <> 
-        <div style={{boxSizing: "border-box", width: '100%', display: 'grid', gridTemplateColumns: ".75fr .75fr 1.5fr", gap: "10px"}}>
+        <div style={{boxSizing: "border-box", width: '100%', display: 'grid', gridTemplateColumns: "1fr 1fr 1.5fr", gap: "10px"}}>
           <div style={{display: "flex", flexDirection: "column", gap: "10px"}}> 
               {cashPosition()}
               {arTotal()}
