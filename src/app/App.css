@@ -3434,7 +3434,7 @@ body.overlay-open {
   filter: brightness(1.15);
 }
 .dashboard-welcome {
-  width: clamp(300px, calc(100vw - 130px), 1500px);
+  width: clamp(300px, calc(100vw - 130px), 1710px);
   padding-left: 90px;
 
   display: flex;
@@ -4540,8 +4540,8 @@ h1 {
   border: 1px solid var(--fancy-border);
   border-radius: 5px;
   width: 100%;
-  padding: 20px;
-  padding-inline: 25px;
+  padding: 15px;
+  padding-inline: 20px;
 }
 
 .home-phasecount-widget {

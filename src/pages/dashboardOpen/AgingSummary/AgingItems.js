@@ -30,7 +30,7 @@ import {
               display: "flex", 
               justifyContent: "center", 
               alignItems: "center", 
-              background: type === "AP" ? "var(--red)" : "var(--green)", 
+              background: type === "AP" ? "var(--red)" : type === "AR" ? "var(--green)" : "#9f3dac", 
               padding: "10px", 
               borderRadius: '5px'
             }}>

@@ -1,6 +1,6 @@
 import { useHome } from "context/HomeContext";
-import { color } from "framer-motion";
 import { dollarFormatter } from "utils/formatters";
+import AgingBar from "./AgingBar";
 
 function AgingSummary({data, open = false}){
     const id = "aging-summary";
@@ -51,12 +51,14 @@ function AgingSummary({data, open = false}){
         const arTotal = data.slice(5, 10).reduce((sum, item) => sum + item.amount, 0);
         const arCount = data.slice(5, 10).reduce((sum, item) => sum + item.count, 0);
         
+        const bankAmount = data[10].amount;
+
         return {
           apTotal,
           apCount,
           arTotal,
           arCount,
-          cashFlow: arTotal - apTotal,
+          cashFlow: arTotal + bankAmount - apTotal,
         };
       }
 
@@ -112,15 +114,84 @@ function AgingSummary({data, open = false}){
       else openPage(id)
     } 
 
-    return(
-        <> 
-        <div style={{boxSizing: "border-box", width: '100%', display: 'grid', gridTemplateColumns: "1fr 1fr 1fr", gap: "10px"}}>
-          <div className={`widget clickable-widget ${agingTotals.cashFlow > 0 ? "green-background" : "red-background"}`}
+    const liquidity = () => {
+      return(
+            <div className="widget clickable-widget" style={{
+                display: "flex",
+                flexDirection: "column",
+                textAlign: "left",
+                background: 'var(--dark)',
+                boxSizing: "border-box",
+                flexGrow: 1
+              }} onClick={() => handleParentClick()}> 
+             <div> 
+              <h4> <span style={{fontWeight: "600", color: "#9f3dac"}}> ADVIA </span>  Credit Union </h4>
+              <h2 style={{ fontSize: "32px", marginTop: "5px"}}>
+                {dollarFormatter(displayData[10].amount)}
+              </h2>
+              <div className="jobcost-hl" />
+              <h5>
+                Available Liquidity
+              </h5>
+             </div>
+              </div>
+      )
+    }
+
+    const arTotal = () => {
+      return(
+            <div className="widget clickable-widget" style={{
+                display: "flex",
+                flexDirection: "column",
+                textAlign: "left",
+                background: 'var(--dark)',
+                boxSizing: "border-box"
+              }} onClick={() => handleParentClick()}>
+
+              <h4> <span className="green" style={{fontWeight: "600"}}> AR </span>  Total Accounts Receivable </h4>
+                <h2 style={{ fontSize: "32px", marginTop: "5px"}}>
+                  {dollarFormatter(agingTotals.arTotal)}
+                </h2>
+                <div className="jobcost-hl" />
+                <h5>
+                  {agingTotals.arCount} items
+                </h5>
+            </div>
+      )
+    }
+
+    const apTotal = () => {
+      return(
+                    <div className="widget clickable-widget" style={{
+                display: "flex",
+                flexDirection: "column",
+                textAlign: "left",
+                background: 'var(--dark)',
+                boxSizing: "border-box"
+              }} onClick={() => handleParentClick()}>
+
+              <h4> <span className="red" style={{fontWeight: "600"}}> AP </span> Total Accounts Payable </h4>
+                <h2 style={{ fontSize: "32px", marginTop: "5px"}}>
+                  {dollarFormatter(agingTotals.apTotal)}
+                </h2>
+                <div className="jobcost-hl" />
+                <h5>
+                  {agingTotals.apCount} items
+                </h5>
+            </div>
+      )
+    }
+
+    const cashPosition = () => {
+      return(
+                  <div className={`widget clickable-widget ${agingTotals.cashFlow > 0 ? "green-background" : "red-background"}`}
           style={{
               display: "flex",
               flexDirection: "column",
               textAlign: "left",
+              justifyContent: "center",
               background: 'var(--dark)',
+              height: "fit-content",
               boxSizing: "border-box"
             }} onClick={() => handleParentClick()}>
 
@@ -132,44 +203,53 @@ function AgingSummary({data, open = false}){
               <h5>
               {agingTotals.cashFlow > 0 ? "Positive Cash Flow" : "Negative Cash Flow"}
               </h5>
-          </div>
+            </div>
+      )
+    }
+    const locTotal = () => {
+      return(
+                    <div className="widget clickable-widget" style={{
+                display: "flex",
+                flexDirection: "column",
+                textAlign: "left",
+                background: 'var(--dark)',
+                boxSizing: "border-box",
+                flexGrow: 1
+              }} onClick={() => handleParentClick()}>
 
-          <div className="widget clickable-widget" style={{
-              display: "flex",
-              flexDirection: "column",
-              textAlign: "left",
-              background: 'var(--dark)',
-              boxSizing: "border-box"
-            }} onClick={() => handleParentClick()}>
-
-            <h4> <span className="green" style={{fontWeight: "600"}}> AR </span>  Total Accounts Receivable </h4>
+          <div style={{display: "flex", flexDirection: "column", justifyContent: "space-between", height: "100%", gap: "10px"}}> 
+          
+            <div> 
+              <h4> <span style={{fontWeight: "600", color: "#9f3dac"}}> ADVIA </span>  Line of Credit </h4>
               <h2 style={{ fontSize: "32px", marginTop: "5px"}}>
-                {dollarFormatter(agingTotals.arTotal)}
+                {dollarFormatter(displayData[12].amount)}
               </h2>
               <div className="jobcost-hl" />
-              <h5>
-                {agingTotals.arCount} items
-              </h5>
+              <h5> Based on period {displayData[12].period} AR data </h5>
+            </div>
+
+            <div style={{display: "flex", flexDirection: "column", gap: "5px"}}> 
+                <AgingBar color={"#9f3dac"} max={displayData[12].amount} current={displayData[11].amount}/>
+            </div>
+          </div>        
+          </div> 
+      )
+    }
+    return(
+        <> 
+        <div style={{boxSizing: "border-box", width: '100%', display: 'grid', gridTemplateColumns: ".75fr .75fr 1.5fr", gap: "10px"}}>
+          <div style={{display: "flex", flexDirection: "column", gap: "10px"}}> 
+              {cashPosition()}
+              {arTotal()}
+            </div>
+            <div style={{display: "flex", flexDirection: "column", gap: "10px"}}> 
+              {liquidity()}
+              {apTotal()}
+            </div>
+
+              {locTotal()}  
           </div>
 
-          <div className="widget clickable-widget" style={{
-              display: "flex",
-              flexDirection: "column",
-              textAlign: "left",
-              background: 'var(--dark)',
-              boxSizing: "border-box"
-            }} onClick={() => handleParentClick()}>
-
-            <h4> <span className="red" style={{fontWeight: "600"}}> AP </span> Total Accounts Payable </h4>
-              <h2 style={{ fontSize: "32px", marginTop: "5px"}}>
-                {dollarFormatter(agingTotals.apTotal)}
-              </h2>
-              <div className="jobcost-hl" />
-              <h5>
-                {agingTotals.apCount} items
-              </h5>
-          </div>
-        </div>
         <div className="home-agingsummary-widget clickable-widget" onClick={() => handleParentClick()}>
             <div style={{display: 'flex', flexDirection: "column", gap: "10px"}}>
                 <div style={{display: "flex", paddingLeft: '25px',  flexDirection: "row", alignItems: 'center', gap: "15px" }}> 
