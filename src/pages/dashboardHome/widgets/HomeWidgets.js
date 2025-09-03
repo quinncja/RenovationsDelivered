@@ -6,6 +6,7 @@ import PhaseCount from "./PhaseCount/PhaseCount";
 import DataValidation from "./DataValidation/DataValidation";
 import MonthlyYearRevenue from "./MonthlyYearRevenue/MonthlyYearRevenue";
 import AgingSummary from "pages/dashboardOpen/AgingSummary/AgingSummary";
+import EmployeePerformance from "./EmployeePerformance";
 
 function HomeWidgets() {
 
@@ -49,7 +50,10 @@ function HomeWidgets() {
             <Margin />
             <PhaseCount />
             </div>
+            <h3 style={{textAlign: "left", paddingTop: "20px", opacity: '.95', fontSize: "16px", fontWeight: "500"}}> Business Insights </h3>
             <Insights />
+            <h3 style={{textAlign: "left", paddingTop: "20px", opacity: '.95', fontSize: "16px", fontWeight: "500"}}> Project Manager Performance  </h3>
+            <EmployeePerformance/>
         </div>
 
         <div
