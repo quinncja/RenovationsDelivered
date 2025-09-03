@@ -80,14 +80,23 @@ function MarginBarChart({ data, marginColor }) {
 
   const actualMargins = phaseData.map((item) => item.value);
   const maxMargin = actualMargins.length > 0 ? Math.max(...actualMargins) : 25;
+  const minMargin = actualMargins.length > 0 ? Math.min(...actualMargins) : 0;
   
-  const calculateChartMax = (max) => {
-    const padding = Math.max(max * 0.1, 2);
+  const calculateChartBounds = (min, max) => {
+    const range = max - min;
+    const padding = Math.max(range * 0.1, 2);
+    
+    const paddedMin = min - padding;
     const paddedMax = max + padding;
-    return Math.ceil(paddedMax / 5) * 5;
+    
+    const chartMin = Math.floor(paddedMin / 5) * 2;
+    const chartMax = Math.ceil(paddedMax / 5) * 5;
+    
+    return { chartMin, chartMax };
   };
 
-  const chartMax = calculateChartMax(maxMargin);
+  const { chartMin, chartMax } = calculateChartBounds(minMargin, maxMargin);
+  const chartRange = chartMax - chartMin;
 
   const getBarColor = (margin) => {
     if (margin < 0) return "#e6204a";
@@ -106,9 +115,16 @@ function MarginBarChart({ data, marginColor }) {
             return null;
           }
 
-          const marginPercent = phaseData.margin / chartMax;
-          const actualBarHeight = bar.height * marginPercent;
-          const actualBarY = bar.y + bar.height - actualBarHeight;
+          const zeroLinePercent = (0 - chartMin) / chartRange;
+          const zeroLineY = bar.y + bar.height - (bar.height * zeroLinePercent);
+          
+          const marginFromZero = phaseData.margin;
+          const barHeightPercent = Math.abs(marginFromZero) / chartRange;
+          const actualBarHeight = bar.height * barHeightPercent;
+          
+          const actualBarY = marginFromZero >= 0 
+            ? zeroLineY - actualBarHeight  
+            : zeroLineY;                  
           
           return (
             <g key={`margin-bar-${bar.data.indexValue}`}>
@@ -123,7 +139,7 @@ function MarginBarChart({ data, marginColor }) {
                 style={{pointerEvents: "none"}}
               />
               
-              {phaseData.margin > 0 && actualBarHeight > 15 && (
+              {phaseData.margin !== 0 && actualBarHeight > 15 && (
                 <text
                   x={bar.x + bar.width / 2}
                   y={actualBarY + actualBarHeight / 2}
@@ -171,7 +187,7 @@ function MarginBarChart({ data, marginColor }) {
         tickSize: 0,
         tickPadding: 5,
         tickValues: 5,
-        format: (value) => `${Math.round((value / 100) * chartMax)}%`
+        format: (value) => `${Math.round(((value / 100) * chartRange) + chartMin)}%`
       }}
       layers={[
         'bars',
@@ -181,9 +197,27 @@ function MarginBarChart({ data, marginColor }) {
         CustomBarLayer,
       ]}
       markers={[
-        {
+        ...(chartMin < 0 ? [{
           axis: 'y',
-          value: (20 / chartMax) * 100,
+          value: (0 - chartMin) / chartRange * 100,
+          lineStyle: {
+            stroke: '#edededff',
+            opacity: 0.8,
+            strokeWidth: 1,
+            pointerEvents: 'none',
+          },
+          legend: '0%',
+          legendOrientation: 'horizontal',
+          legendPosition: 'top-left',
+          textStyle: {
+            fill: '#666666',
+            fontSize: 11,
+            fontWeight: 600
+          }
+        }] : []),
+        ...(chartMax > 20 ? [{
+          axis: 'y',
+          value: (20 - chartMin) / chartRange * 100,
           lineStyle: {
             stroke: '#acadae',
             opacity: 0.8,
@@ -191,6 +225,7 @@ function MarginBarChart({ data, marginColor }) {
             strokeDasharray: '4 2',
             pointerEvents: 'none',
           },
+          legend: '20%',
           legendOrientation: 'horizontal',
           legendPosition: 'top-left',
           textStyle: {
@@ -198,7 +233,7 @@ function MarginBarChart({ data, marginColor }) {
             fontSize: 11,
             fontWeight: 500
           }
-        }
+        }] : [])
       ]}
       enableGridX={false}
       enableGridY={true}
