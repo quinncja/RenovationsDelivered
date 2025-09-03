@@ -11,93 +11,7 @@ function PhaseCount() {
   const total = data.find((datum) => datum.phase === "total");
 
   return (
-    <div style={{display: 'flex', flexDirection: 'column', width: "calc(50% - 5px)", gap: "10px"}}> 
-      <div
-      className="widget"
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          boxSizing: "border-box"
-        }}
-      >
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            textAlign: "left",
-          }}
-        >
-          <h4> Phase Count </h4>
-          <h2 style={{ fontSize: "32px" }}>
-            {" "}
-            {total.current_year_closed + total.current_year_open}{" "}
-          </h2>
-        </div>
-        <div style={{ display: "flex", flexDirection: "row", gap: "30px" }}>
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "row",
-              gap: "15px",
-              alignItems: "center",
-            }}
-          >
-            <div
-              style={{
-                width: "15px",
-                height: "15px",
-                borderRadius: "5px",
-                background: "var(--closed)",
-              }}
-            />
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                textAlign: "left",
-              }}
-            >
-              <h4> Closed</h4>
-              <h2 style={{ fontSize: "32px" }}>
-                {" "}
-                {total.current_year_closed}{" "}
-              </h2>
-            </div>
-          </div>
-          <div style={{ display: "flex", flexDirection: "row", gap: "30px" }}>
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "row",
-                gap: "15px",
-                alignItems: "center",
-              }}
-            >
-              <div
-                style={{
-                  width: "15px",
-                  height: "15px",
-                  borderRadius: "5px",
-                  background: "var(--open)",
-                }}
-              />
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  textAlign: "left",
-                }}
-              >
-                <h4> Open</h4>
-                <h2 style={{ fontSize: "32px" }}>
-                  {" "}
-                  {total.current_year_open}{" "}
-                </h2>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+    <div style={{display: 'flex', flexDirection: 'column', width: "100%", gap: "10px"}}> 
       <div
       className="home-phasecount-widget clickable-widget"
       onClick={() => openPage(id)}
@@ -109,13 +23,14 @@ function PhaseCount() {
           padding: "25px",
           paddingBottom: "0px",
           alignItems: "flex-start",
+          position: "relative"
         }}
       >
       <h3 style={{fontWeight: 500, fontSize: "16px"}}>Phase Status Distribution</h3>
       </div>
       <div
         className="phase-chart"
-        style={{ flex: 1, minHeight: 0, paddingBottom: "25px" }}
+        style={{ flex: 1, minHeight: 0, paddingBottom: "25px", position: "relative" }}
         onClick={(e) => e.stopPropagation()}
       >
         <PhaseCountChart id={id} data={data} />

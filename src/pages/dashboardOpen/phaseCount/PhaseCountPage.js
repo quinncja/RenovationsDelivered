@@ -14,14 +14,20 @@ function PhaseCountPage({ focused, data }) {
     ? totalData.previous_year_closed + totalData.previous_year_open
     : undefined;
 
-  const filteredPhases =
-    focused && homeData
-      ? homeData.filter(
-          (phase) =>
-            phase.Status === focused.status &&
-            phase.phase_num === focused.phase,
-        )
-      : homeData;
+const filteredPhases =
+  focused && homeData
+    ? homeData.filter((phase) => {
+        const statusMatches = phase.Status === focused.status;
+        let phaseMatches;
+        if (focused.phase === 13) {
+          phaseMatches = phase.phase_num >= 13;
+        } else {
+          phaseMatches = phase.phase_num === focused.phase;
+        }
+        
+        return statusMatches && phaseMatches;
+      })
+    : homeData;
 
   const renderHeader = () => {
     if (!widgetData)

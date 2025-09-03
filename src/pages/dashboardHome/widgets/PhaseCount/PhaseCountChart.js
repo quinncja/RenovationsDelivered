@@ -27,23 +27,44 @@ function PhaseCountChart({ id, data }) {
       hasData: true,
     }));
 
-  // Create a map for quick lookup
+  // Separate regular phases (1-12) and extra phases (13+)
+  const regularPhases = existingPhaseData.filter(item => item.phaseNum <= 12);
+  const extraPhases = existingPhaseData.filter(item => item.phaseNum > 12);
+
+  // Create a map for quick lookup of regular phases
   const phaseDataMap = new Map();
-  existingPhaseData.forEach((item) => {
+  regularPhases.forEach((item) => {
     phaseDataMap.set(item.phaseNum, item);
   });
 
-  // Always show at least 13 phases (12 regular + 1 extra)
-  const minPhasesToShow = 13;
-  const maxPhaseNum = existingPhaseData.length > 0 
-    ? Math.max(...existingPhaseData.map(item => item.phaseNum))
-    : 12;
-  const totalPhasesToShow = Math.max(minPhasesToShow, maxPhaseNum);
+  // Combine all extra phases into one "Extra" entry
+  const extraPhaseData = extraPhases.length > 0 ? {
+    phase: "extra",
+    phaseNum: 13, // Use 13 as the representative number for sorting
+    current_year_open: extraPhases.reduce((sum, item) => sum + item.current_year_open, 0),
+    current_year_closed: extraPhases.reduce((sum, item) => sum + item.current_year_closed, 0),
+    total: extraPhases.reduce((sum, item) => sum + item.total, 0),
+    hasData: true,
+  } : {
+    phase: "extra",
+    phaseNum: 13,
+    current_year_open: 0,
+    current_year_closed: 0,
+    total: 0,
+    hasData: false,
+  };
 
-  // Create complete array of all phases with auto-fill
+  console.log("Phase data analysis:", {
+    regularPhases: regularPhases.map(p => ({ phase: p.phaseNum, hasData: p.hasData })),
+    extraPhases: extraPhases.map(p => ({ phase: p.phaseNum, hasData: p.hasData })),
+    extraPhaseData,
+    combinedExtraTotal: extraPhaseData.total
+  });
+
+  // Create complete array of all phases
   const allPhases = [];
   
-  // First add phases 1-12
+  // Add phases 1-12 (regular phases)
   for (let i = 1; i <= 12; i++) {
     const existingData = phaseDataMap.get(i);
     
@@ -61,26 +82,18 @@ function PhaseCountChart({ id, data }) {
     }
   }
   
-  // Then add extra phases (13+) at the end - always include at least phase 13
-  for (let i = 13; i <= totalPhasesToShow; i++) {
-    const existingData = phaseDataMap.get(i);
-    
-    if (existingData) {
-      allPhases.push(existingData);
-    } else {
-      allPhases.push({
-        phase: i.toString(),
-        phaseNum: i,
-        current_year_open: 0,
-        current_year_closed: 0,
-        total: 0,
-        hasData: false,
-      });
-    }
-  }
+  // Add the single combined extra phase
+  allPhases.push(extraPhaseData);
 
   // Use the complete phase data for pagination
   const phaseData = allPhases;
+
+  console.log("Final phaseData structure:", phaseData.map(p => ({
+    phase: p.phase,
+    phaseNum: p.phaseNum,
+    hasData: p.hasData,
+    total: p.total
+  })));
 
   const totalPages = Math.ceil(phaseData.length / itemsPerPage);
   const startIndex = currentPage * itemsPerPage;
@@ -107,10 +120,11 @@ function PhaseCountChart({ id, data }) {
   const CustomTooltip = ({ id, value, color, data }) => {
     // Check if this phase has data
     if (!data.hasData) {
+      const phaseLabel = data.phase === "extra" ? "Extra" : phaseToMonth(data.phase);
       return (
         <div className="tooltip">
           <div style={{ fontWeight: "bold", marginBottom: "4px" }}>
-            {phaseToMonth(data.phase)}
+            {phaseLabel}
           </div>
           <div style={{ color: "#8b949e", fontWeight: 500, fontSize: "12px" }}>
             No data available
@@ -119,10 +133,11 @@ function PhaseCountChart({ id, data }) {
       );
     }
 
+    const phaseLabel = data.phase === "extra" ? "Extra" : phaseToMonth(data.phase);
     return (
       <div className="tooltip">
         <div style={{ fontWeight: "bold", marginBottom: "4px" }}>
-          {phaseToMonth(data.phase)}
+          {phaseLabel}
         </div>
         <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
           <div
@@ -238,7 +253,6 @@ function PhaseCountChart({ id, data }) {
         valueScale={{ type: "linear" }}
         indexScale={{ type: "band", round: true }}
         colors={({ id, data }) => {
-          // Make bars with no data more muted/transparent
           const baseColor = id === "current_year_open" ? "var(--open)" : "var(--closed)";
           return data.hasData ? baseColor : "#acadae";
         }}
@@ -259,7 +273,10 @@ function PhaseCountChart({ id, data }) {
         axisBottom={{
           tickSize: 0,
           tickPadding: 8,
-          format: (value) => phaseToShortMonth(value),
+          format: (value) => {
+            if (value === "extra") return "Extra";
+            return phaseToShortMonth(value);
+          },
         }}
         tooltip={CustomTooltip}
         enableLabel={true}

@@ -46,10 +46,7 @@ function HomeWidgets() {
             <div className="jobs-header" style={{ background: "none" }}>
               <h2> {year} Overview </h2>
             </div>
-            <div style={{ width: "100%", display: "flex", gap: "10px" }}>
             <Margin />
-            <PhaseCount />
-            </div>
             <h3 style={{textAlign: "left", paddingTop: "20px", opacity: '.95', fontSize: "16px", fontWeight: "500"}}> Business Insights </h3>
             <Insights />
             <h3 style={{textAlign: "left", paddingTop: "20px", opacity: '.95', fontSize: "16px", fontWeight: "500"}}> Project Manager Performance  </h3>
