@@ -241,7 +241,7 @@ export function Users() {
   if (items.adminUsers === -10 && items.normalUsers === -10)
     return (
       <div className="dashboard-welcome user-page">
-      <div className="jobs-header">
+      <div className="jobs-header jobs-header-old">
         <div style={{ display: "flex", alignItems: "baseline", gap: "15px" }}>
           <h3> Users </h3>
         </div>
@@ -252,7 +252,7 @@ export function Users() {
   if (items.adminUsers.length === 0 && items.normalUsers.length === 0) {
     return (
       <div className="dashboard-welcome">
-      <div className="jobs-header">
+      <div className="jobs-header jobs-header-old">
         <div style={{ display: "flex", alignItems: "baseline", gap: "15px" }}>
           <h2> Users </h2>
         </div>
@@ -264,7 +264,7 @@ export function Users() {
 
   return (
     <div className="dashboard-welcome user-page">
-      <div className="jobs-header">
+      <div className="jobs-header jobs-header-old">
         <div style={{ display: "flex", alignItems: "baseline", gap: "15px" }}>
           <h2> Users </h2>
         </div>

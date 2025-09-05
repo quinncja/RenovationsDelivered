@@ -13,7 +13,7 @@ function JobCostDashboard() {
 
   return (
     <div className="job-cost-dashboard">
-      <div className="jobs-header">
+      <div className="jobs-header jobs-header-old">
         <h2>
           {" "}
           Job Costing{" "}

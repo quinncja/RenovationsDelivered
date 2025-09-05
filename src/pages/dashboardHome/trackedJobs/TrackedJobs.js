@@ -24,6 +24,23 @@ function TrackedJobs({ jobs }) {
   );
 
   const abortControllerRef = useRef(null);
+  const headerRef = useRef(null);
+  const sentinelRef = useRef(null);
+
+  useEffect(() => {
+    const header = headerRef.current;
+    const sentinel = sentinelRef.current;
+    if (!header || !sentinel) return;
+
+    const observer = new IntersectionObserver( 
+      ([e]) => header.classList.toggle("is-pinned", e.intersectionRatio < 1),
+      { threshold: [1] }
+    );
+
+    observer.observe(sentinel);
+
+    return () => observer.disconnect();
+  }, []);
 
   useEffect(() => {
     const loadJobListData = async () => {
@@ -49,7 +66,7 @@ function TrackedJobs({ jobs }) {
           if (result) {
             setDataMap(result);
           }
-          return; // Success - exit the retry loop
+          return;
         } catch (error) {
           console.log("Error details:", {
             name: error.name,
@@ -70,7 +87,6 @@ function TrackedJobs({ jobs }) {
           if (retryCount <= maxRetries) {
             console.log(`Retrying job list data fetch (attempt ${retryCount}/${maxRetries})`);
             await new Promise((resolve) => setTimeout(resolve, 1000 * retryCount));
-            // Continue to next iteration instead of recursive call
           } else {
             console.log("Max retries reached, giving up");
             throw error;
@@ -78,14 +94,13 @@ function TrackedJobs({ jobs }) {
         }
       };
   
-      // Use a while loop instead of recursion
       while (retryCount <= maxRetries) {
         try {
           await attemptLoad();
-          break; // Success - exit the retry loop
+          break;
         } catch (error) {
           if (error.name === "AbortError" && abortControllerRef.current?.signal?.aborted) {
-            break; // Exit on abort
+            break;
           }
           if (retryCount > maxRetries) {
             console.error("Failed to load job list data after retries:", error);
@@ -122,8 +137,30 @@ function TrackedJobs({ jobs }) {
   };
 
   return (
-    <>
-      <div className="jobs-header">
+    <div 
+      style={{display: "flex", flexDirection: "column", width: '100%'}}
+      className="left-blur blur-white"
+    >
+      <div 
+        ref={sentinelRef}
+        style={{
+          height: '1px',
+          position: 'absolute',
+          top: '-1px',
+          left: 0,
+          right: 0,
+        }}
+      />
+      
+      <div 
+        ref={headerRef}
+        className="jobs-header"
+        style={{
+          position: 'sticky',
+          top: 0,
+          zIndex: 10,
+        }}
+      >
         <div style={{ display: "flex", alignItems: "baseline", gap: "15px" }}>
           <h2> {isAdmin && "Active"} Projects </h2>
           {!isAdmin && (
@@ -154,7 +191,7 @@ function TrackedJobs({ jobs }) {
           </h4>
         )}
       </div>
-    </>
+    </div>
   );
 }
 

@@ -46,7 +46,7 @@ function OpenBreakdownTable(props) {
       }}
     >
       <div style={{ display: "flex", flexDirection: "column", gap: "0px" }}>
-        <div className="jobs-header no-sticky" ref={headerRef}>
+        <div className="jobs-header jobs-header-old no-sticky" ref={headerRef}>
           <h2> Cost Items </h2>
         </div>
         <TableHeader data={data} type={type}/>

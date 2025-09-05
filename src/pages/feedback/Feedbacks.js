@@ -50,7 +50,7 @@ function Feedbacks() {
         }}
       >
         {" "}
-        <div className="jobs-header">
+        <div className="jobs-header jobs-header-old">
         <div style={{ display: "flex", alignItems: "baseline", gap: "15px" }}>
           <h2> Feedback </h2>
         </div>

@@ -59,7 +59,7 @@ function DashboardOpen() {
 
   return (
     <div className="job-cost-dashboard">
-      <div className="jobs-header" style={{ justifyContent: "space-between" }}>
+      <div className="jobs-header jobs-header-old" style={{ justifyContent: "space-between" }}>
         <h2>
           {" "}
           {normal} {currentType ? `• ${kebabToNormal(currentType)}` : ""}

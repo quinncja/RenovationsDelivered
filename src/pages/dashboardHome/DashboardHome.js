@@ -10,7 +10,7 @@ function DashboardHome() {
   const isAdmin = useIsAdmin();
 
   return (
-    <> 
+    <div style={{paddingBottom: "180px"}}> 
     <div className="jobs-header" style={{ width: "100%"}}/>
     <div className="dashboard-welcome">
       <h1> {welcomeText} </h1>
@@ -18,7 +18,7 @@ function DashboardHome() {
       {isAdmin && <HomeWidgets />}
       <TrackedJobs jobs={trackedJobs} />
     </div>
-    </>
+    </div>
   );
 }
 

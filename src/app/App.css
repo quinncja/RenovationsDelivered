@@ -2,7 +2,7 @@
   --activePrimary: #ffffff;
   --primary: hsl(220, 34%, 30%);
   --accent: #ff7b00;
-  --terciary: #252d3d;
+  --terciary: #212939;
   --primary-highlight: #f28500;
   --green: #28a745;
   --red: #e6204a;
@@ -10,10 +10,12 @@
   --orange: #ff7d35;
   --open: #2563eb;
   --closed: #475569;
+  --purple: rgb(159, 61, 172);
   --null: #212831;
   --secondary-font: #acadae;
   --dark-background: #0d1116;
-  --dark-dark: #161b22;
+  --dark-dark: #161b227e;
+  --solid-dark: #11151c;
   --dark-dropdown-background: #1b1b1b;
   --dark-mid: #31363c;
   --dark-more-mid: #25292e;
@@ -3663,6 +3665,26 @@ h1 {
   opacity: 1 !important;
 }
 
+.left-blur.blur-green {
+  --section-color: var(--green);
+}
+
+.left-blur.blur-blue {
+  --section-color: var(--open);
+}
+
+.left-blur.blur-purple {
+  --section-color: rgb(159, 61, 172);
+}
+
+.left-blur.blur-red {
+  --section-color: var(--red);
+}
+
+.left-blur.blur-white {
+  --section-color: rgba(255, 255, 255, 0.8);
+}
+
 .jobs-header {
   width: calc(100% + 10px);
   display: flex;
@@ -3671,10 +3693,101 @@ h1 {
   color: var(--white);
   position: sticky;
   top: 0px;
-  background-color: var(--background);
   box-sizing: border-box;
   z-index: 11;
   height: 60px;
+  box-sizing: border-box;
+  position: sticky;
+  top: -1;
+  z-index: 10;
+  margin-left: -21px;
+  padding-left: 20px;
+  background: none;
+}
+
+.jobs-header-old{
+  background: var(--background);
+  width: calc(100% + 30px);
+}
+.jobs-header.is-pinned {
+  background: var(--solid-dark) !important;
+}
+
+.jobs-header.is-pinned::before {
+  content: "";
+  position: absolute;
+  height: 100%;
+  top: 0;
+  width: 150px;
+  transform: translate3d(-20px, 0, 0);
+  pointer-events: none;
+}
+
+.blur-green .jobs-header.is-pinned::before {
+  background: linear-gradient(to right, var(--green) 0px, var(--green) 1px, rgba(40, 167, 69, 0.1) 1px, transparent 100%);
+}
+
+.blur-blue .jobs-header.is-pinned::before {
+  background: linear-gradient(to right, var(--open) 0px, var(--open) 1px, rgba(37, 99, 235, 0.1) 1px, transparent 100%);
+}
+
+.blur-red .jobs-header.is-pinned::before {
+  background: linear-gradient(to right, var(--red) 0px, var(--red) 1px, rgba(230, 32, 74, 0.1) 1px, transparent 100%);
+}
+
+.blur-purple .jobs-header.is-pinned::before {
+  background: linear-gradient(to right, rgb(159, 61, 172) 0px, rgb(159, 61, 172) 1px, rgba(159, 61, 172, 0.1) 1px, transparent 100%);
+}
+.blur-white .jobs-header.is-pinned::before {
+  background: linear-gradient(to right, rgba(255, 255, 255, 0.6) 0px, rgba(255, 255, 255, 0.6) 1px, rgba(255, 255, 255, 0.05) 1px, transparent 100%);
+}
+
+.left-blur{
+  position: relative;
+}
+
+.left-blur::before{
+  content: "";
+  position: absolute;
+  height: calc(100% + 100px);
+  top: 0;
+  width: 150px;
+  transform: translate3d(-21px, -30px, 0);
+  z-index: 0;
+}
+
+.blur-green::before{
+  background: 
+    linear-gradient(to right, var(--green) 0px, var(--green) 1px, rgba(40, 167, 69, 0.1) 1px, transparent 100%);
+  mask: linear-gradient(to bottom, transparent 0%, black 20%, black 80%, transparent 100%);
+  -webkit-mask: linear-gradient(to bottom, transparent 0%, black 20%, black 80%, transparent 100%);
+}
+.blur-blue::before{
+  background: 
+    linear-gradient(to right, var(--open) 0px, var(--open) 1px, rgba(37, 99, 235, 0.1) 1px, transparent 100%);
+  mask: linear-gradient(to bottom, transparent 0%, black 20%, black 80%, transparent 100%);
+  -webkit-mask: linear-gradient(to bottom, transparent 0%, black 20%, black 80%, transparent 100%);
+}
+
+.blur-red::before{
+  background: 
+    linear-gradient(to right, var(--red) 0px, var(--red) 1px, rgba(230, 32, 74, 0.1) 1px, transparent 100%);
+  mask: linear-gradient(to bottom, transparent 0%, black 20%, black 80%, transparent 100%);
+  -webkit-mask: linear-gradient(to bottom, transparent 0%, black 20%, black 80%, transparent 100%);
+}
+
+.blur-purple::before{
+  background: 
+    linear-gradient(to right, rgb(159, 61, 172) 0px, rgb(159, 61, 172) 1px, rgba(159, 61, 172, 0.1) 1px, transparent 100%);
+  mask: linear-gradient(to bottom, transparent 0%, black 20%, black 80%, transparent 100%);
+  -webkit-mask: linear-gradient(to bottom, transparent 0%, black 20%, black 80%, transparent 100%);
+}
+
+.blur-white::before{
+  background: 
+    linear-gradient(to right, rgba(255, 255, 255, 0.8) 0px, rgba(255, 255, 255, 0.8) 1px, rgba(255, 255, 255, 0.08) 1px, transparent 100%);
+  mask: linear-gradient(to bottom, transparent 0%, black 10%, black 90%, transparent 100%);
+  -webkit-mask: linear-gradient(to bottom, transparent 0%, black 10%, black 90%, transparent 100%);
 }
 
 .jobs-header-btn {
@@ -3709,7 +3822,6 @@ h1 {
   width: 100%;
   padding-top: 10px;
   gap: 10px;
-  padding-bottom: 180px;
 }
 
 .b-cost-item {
@@ -4099,10 +4211,11 @@ h1 {
 .home-widget-container {
   display: flex;
   flex-direction: row;
-  gap: 35px;
+  gap: 105px;
   flex-wrap: wrap;
   padding-bottom: 50px;
   width: 100%;
+  margin-bottom: 80px;
 }
 .tjh-widget {
   position: relative;
@@ -4422,6 +4535,7 @@ h1 {
   box-sizing: border-box;
 }
 .home-revenue-widget {
+  position: relative;
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -5669,13 +5783,13 @@ h2 {
   width: 100%;
   display: flex;
   flex-direction: row;
-  background-color: var(--dark);
+  background-color: var(--solid-dark);
   color: var(--less-white);
   border-top: 2px solid var(--fancy-border);
   justify-content: center;
   align-items: center;
   font-weight: 500;
-  z-index: 500;
+  z-index: 5000;
 }
 
 .submission-form-button {
@@ -5935,19 +6049,19 @@ h2 {
   font-size: 32px;
 }
 .green-background{
-  background-color: rgba(40, 167, 69, 0.1) !important;
+  background-color: rgba(40, 167, 69, .1) !important;
   border: 1px solid var(--green) !important;
 }
 .red-background{
-  background-color: rgba(230, 32, 74, 0.1) !important;
+  background-color: rgba(230, 32, 74, .1) !important;
   border: 1px solid var(--red) !important;
 }
 .yellow-background{
-  background-color: rgba(230, 201, 53, 0.1) !important;
+  background-color: rgba(230, 201, 53, .1) !important;
   border: 1px solid var(--yellow) !important;
 }
 .orange-background{
-  background-color: rgba(255, 125, 53, 0.1) !important;
+  background-color: rgba(255, 125, 53, .1) !important;
   border: 1px solid var(--orange) !important;
 }
 
