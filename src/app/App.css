@@ -3686,7 +3686,7 @@ h1 {
 }
 
 .jobs-header {
-  width: calc(100% + 10px);
+  width: calc(100% + 60px);
   display: flex;
   gap: 10px;
   align-items: center;
