@@ -28,7 +28,14 @@ function User(props) {
       </div>
       <div className="card-left">
         <h3> {user.name} </h3>
-        <h4> <span> Last Active </span><span title="Last Active"> {dateToString(new Date(user.lastActiveAt))} </span> </h4>
+        <h4>
+          {" "}
+          <span> Last Active </span>
+          <span title="Last Active">
+            {" "}
+            {dateToString(new Date(user.lastActiveAt))}{" "}
+          </span>{" "}
+        </h4>
       </div>
     </div>
   );

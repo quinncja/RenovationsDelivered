@@ -72,7 +72,10 @@ function DataValidationPage({ data, id }) {
         >
           <h4>
             {" "}
-            <span style={{fontWeight: "600", color: "white"}}> {getBaseJobName(item.jobnme)}{" "} </span>
+            <span style={{ fontWeight: "600", color: "white" }}>
+              {" "}
+              {getBaseJobName(item.jobnme)}{" "}
+            </span>
             <span
               style={{
                 fontWeight: "500",

@@ -241,7 +241,7 @@ h1 {
   pointer-events: auto;
 }
 
-.nav-grouping{
+.nav-grouping {
   transition: min-width 0.2s ease-in-out;
   position: absolute;
   display: flex;
@@ -254,42 +254,42 @@ h1 {
   cursor: pointer;
   min-height: 43px;
 }
-.nav-extra{
+.nav-extra {
   display: none;
 }
-.nav-grouping:hover .nav-extra{
+.nav-grouping:hover .nav-extra {
   display: block;
 }
-.nav-extra-subs{
+.nav-extra-subs {
   display: none !important;
 }
-.active-nav-grouping{
+.active-nav-grouping {
   box-sizing: border-box;
 }
-.nav-grouping:hover .nav-extra-subs{
+.nav-grouping:hover .nav-extra-subs {
   display: flex !important;
   align-items: flex-start;
   background: var(--background);
 }
-.active-nav-grouping .nav-extra-subs{
+.active-nav-grouping .nav-extra-subs {
   display: flex !important;
   align-items: flex-end;
 }
-.nav-grouping:hover .nav-extra-subs .nav-grouping{
+.nav-grouping:hover .nav-extra-subs .nav-grouping {
   padding-left: 10px;
 }
 
-.nav-grouping:hover .nav-button{
+.nav-grouping:hover .nav-button {
   background-color: var(--terciary);
 }
-.nav-grouping:hover{
+.nav-grouping:hover {
   background-color: var(--terciary);
 }
-.active-nav-grouping:hover{
+.active-nav-grouping:hover {
   background-color: var(--terciary);
   filter: none !important;
 }
-.nav-button{
+.nav-button {
   position: relative;
   height: 43px;
   width: 43px;
@@ -302,7 +302,7 @@ h1 {
   z-index: 10;
 }
 
-.sub-nav-button{
+.sub-nav-button {
   z-index: 0;
   height: 43px;
   width: 41px;
@@ -311,28 +311,28 @@ h1 {
   box-sizing: border-box;
 }
 
-.sub-nav-button:last-child{
+.sub-nav-button:last-child {
   border-radius: 0px 0px 5px 5px !important;
 }
 
-.active-nav-button{
+.active-nav-button {
   background-color: var(--terciary);
 }
 
-.active-nav-w-subs-false{
+.active-nav-w-subs-false {
   border-radius: 5px 5px 5px 5px !important;
 }
-.active-nav-w-subs-true{
+.active-nav-w-subs-true {
   border-radius: 5px 5px 5px 0px !important;
 }
-.active-nav-w-subs{
+.active-nav-w-subs {
   border-radius: 5px 5px 0px 0px !important;
 }
 
-.active-nav-button:hover{
+.active-nav-button:hover {
   filter: none;
 }
-.sub-items{
+.sub-items {
   border-left: 1px solid var(--fancy-border);
   border-right: 1px solid var(--fancy-border);
   border-bottom: 1px solid var(--fancy-border);
@@ -340,16 +340,15 @@ h1 {
   border-radius: 0px 0px 5px 5px;
   box-sizing: border-box;
 }
-.last-sub-item{
+.last-sub-item {
   border-radius: 0px 0px 4px 4px !important;
-
 }
-.nav-button svg{ 
+.nav-button svg {
   height: 25px;
   width: 25px;
   stroke-width: 1.5;
 }
-.sub-nav-button svg{
+.sub-nav-button svg {
   stroke-width: 1.5;
   height: 20px;
   width: 20px;
@@ -358,7 +357,6 @@ h1 {
 h1 {
   color: var(--white);
 }
-
 
 .top-left-container {
   position: fixed;
@@ -1406,7 +1404,7 @@ h1 {
 .left-border {
   position: relative;
   padding-left: 25px !important;
-  transition: all .3 ease-in-out;
+  transition: all 0.3 ease-in-out;
 }
 
 .left-border::before {
@@ -1418,11 +1416,9 @@ h1 {
   background: var(--secondary-border);
 }
 
-.aging-item:first-child.left-border::before{
+.aging-item:first-child.left-border::before {
   opacity: 0 !important;
 }
-
-
 
 .open-insight-chart-wrapper {
   background: var(--dark);
@@ -2202,7 +2198,6 @@ span.grippy::after {
   transition: none;
 }
 
-
 .job-cost-header-button {
   background-color: var(--dark);
   border: 1px solid var(--fancy-border);
@@ -2281,19 +2276,19 @@ span.grippy::after {
   background: var(--terciary);
 }
 
-.open-job-cost-header-button{
+.open-job-cost-header-button {
   border-radius: 5px 5px 0px 0px;
   border-bottom: 1px solid var(--dark) !important;
   position: relative;
   box-sizing: border-box;
 }
 
-.open-job-cost-header-button::after{
+.open-job-cost-header-button::after {
   content: "";
   height: 12px;
   border-left: 1px solid var(--fancy-border);
   border-right: 1px solid var(--fancy-border);
-  width: calc(100% + 2px);  
+  width: calc(100% + 2px);
   left: -1px;
   z-index: 10;
   box-sizing: border-box;
@@ -2303,18 +2298,18 @@ span.grippy::after {
   transform: translateY(100%);
 }
 
-.open-job-cost-header-button:hover::after{
+.open-job-cost-header-button:hover::after {
   background-color: var(--terciary);
 }
-.joblist-arrow{
+.joblist-arrow {
   margin-left: auto;
 }
-.joblist-arrow svg{
+.joblist-arrow svg {
   height: 16px;
   width: 32px;
 }
 
-.status-select-wrapper{
+.status-select-wrapper {
   cursor: pointer;
 }
 .status-select-wrapper:hover {
@@ -2559,22 +2554,22 @@ body.overlay-open {
   overflow: hidden;
 }
 
-.loc-test{
+.loc-test {
   position: relative;
 }
-.loc-test::after{
+.loc-test::after {
   content: "";
   position: absolute;
   width: 100%;
   bottom: 0;
   height: 1px;
   background: var(--fancy-border);
-  opacity: .5;
+  opacity: 0.5;
 }
-.loc-test:first-child{
+.loc-test:first-child {
   padding-top: 10px !important;
 }
-.loc-test:last-child::after{
+.loc-test:last-child::after {
   opacity: 0;
 }
 .new-widget-popup .widget-top {
@@ -2724,7 +2719,7 @@ body.overlay-open {
 }
 
 .red {
-  color: var(--red)
+  color: var(--red);
 }
 
 .green {
@@ -3146,7 +3141,7 @@ body.overlay-open {
   border-radius: 5px 5px 0px 0px;
   position: relative;
 }
-.sub-header-row{
+.sub-header-row {
   justify-content: flex-start;
   width: fit-content;
 }
@@ -3187,9 +3182,8 @@ body.overlay-open {
   width: 200px !important;
   box-sizing: border-box;
   color: var(--white);
-
 }
-.sub-table-body-wrapper{
+.sub-table-body-wrapper {
   border-radius: 5px;
   border: 1px solid var(--fancy-border);
   overflow: hidden;
@@ -3250,7 +3244,6 @@ body.overlay-open {
   background: var(--background);
   z-index: 12;
 }
-
 
 .table-entries {
   display: flex;
@@ -3723,7 +3716,7 @@ h1 {
   background: none;
 }
 
-.jobs-header-old{
+.jobs-header-old {
   background: var(--background);
   width: calc(100% + 30px);
 }
@@ -3742,29 +3735,59 @@ h1 {
 }
 
 .blur-green .jobs-header.is-pinned::before {
-  background: linear-gradient(to right, var(--green) 0px, var(--green) 1px, rgba(40, 167, 69, 0.1) 1px, transparent 100%);
+  background: linear-gradient(
+    to right,
+    var(--green) 0px,
+    var(--green) 1px,
+    rgba(40, 167, 69, 0.1) 1px,
+    transparent 100%
+  );
 }
 
 .blur-blue .jobs-header.is-pinned::before {
-  background: linear-gradient(to right, var(--open) 0px, var(--open) 1px, rgba(37, 99, 235, 0.1) 1px, transparent 100%);
+  background: linear-gradient(
+    to right,
+    var(--open) 0px,
+    var(--open) 1px,
+    rgba(37, 99, 235, 0.1) 1px,
+    transparent 100%
+  );
 }
 
 .blur-red .jobs-header.is-pinned::before {
-  background: linear-gradient(to right, var(--red) 0px, var(--red) 1px, rgba(230, 32, 74, 0.1) 1px, transparent 100%);
+  background: linear-gradient(
+    to right,
+    var(--red) 0px,
+    var(--red) 1px,
+    rgba(230, 32, 74, 0.1) 1px,
+    transparent 100%
+  );
 }
 
 .blur-purple .jobs-header.is-pinned::before {
-  background: linear-gradient(to right, rgb(159, 61, 172) 0px, rgb(159, 61, 172) 1px, rgba(159, 61, 172, 0.1) 1px, transparent 100%);
+  background: linear-gradient(
+    to right,
+    rgb(159, 61, 172) 0px,
+    rgb(159, 61, 172) 1px,
+    rgba(159, 61, 172, 0.1) 1px,
+    transparent 100%
+  );
 }
 .blur-white .jobs-header.is-pinned::before {
-  background: linear-gradient(to right, rgba(255, 255, 255, 0.6) 0px, rgba(255, 255, 255, 0.6) 1px, rgba(255, 255, 255, 0.05) 1px, transparent 100%);
+  background: linear-gradient(
+    to right,
+    rgba(255, 255, 255, 0.6) 0px,
+    rgba(255, 255, 255, 0.6) 1px,
+    rgba(255, 255, 255, 0.05) 1px,
+    transparent 100%
+  );
 }
 
-.left-blur{
+.left-blur {
   position: relative;
 }
 
-.left-blur::before{
+.left-blur::before {
   content: "";
   position: absolute;
   height: calc(100% + 100px);
@@ -3774,38 +3797,123 @@ h1 {
   z-index: 0;
 }
 
-.blur-green::before{
-  background: 
-    linear-gradient(to right, var(--green) 0px, var(--green) 1px, rgba(40, 167, 69, 0.1) 1px, transparent 100%);
-  mask: linear-gradient(to bottom, transparent 0%, black 20%, black 80%, transparent 100%);
-  -webkit-mask: linear-gradient(to bottom, transparent 0%, black 20%, black 80%, transparent 100%);
+.blur-green::before {
+  background: linear-gradient(
+    to right,
+    var(--green) 0px,
+    var(--green) 1px,
+    rgba(40, 167, 69, 0.1) 1px,
+    transparent 100%
+  );
+  mask: linear-gradient(
+    to bottom,
+    transparent 0%,
+    black 20%,
+    black 80%,
+    transparent 100%
+  );
+  -webkit-mask: linear-gradient(
+    to bottom,
+    transparent 0%,
+    black 20%,
+    black 80%,
+    transparent 100%
+  );
 }
-.blur-blue::before{
-  background: 
-    linear-gradient(to right, var(--open) 0px, var(--open) 1px, rgba(37, 99, 235, 0.1) 1px, transparent 100%);
-  mask: linear-gradient(to bottom, transparent 0%, black 20%, black 80%, transparent 100%);
-  -webkit-mask: linear-gradient(to bottom, transparent 0%, black 20%, black 80%, transparent 100%);
+.blur-blue::before {
+  background: linear-gradient(
+    to right,
+    var(--open) 0px,
+    var(--open) 1px,
+    rgba(37, 99, 235, 0.1) 1px,
+    transparent 100%
+  );
+  mask: linear-gradient(
+    to bottom,
+    transparent 0%,
+    black 20%,
+    black 80%,
+    transparent 100%
+  );
+  -webkit-mask: linear-gradient(
+    to bottom,
+    transparent 0%,
+    black 20%,
+    black 80%,
+    transparent 100%
+  );
 }
 
-.blur-red::before{
-  background: 
-    linear-gradient(to right, var(--red) 0px, var(--red) 1px, rgba(230, 32, 74, 0.1) 1px, transparent 100%);
-  mask: linear-gradient(to bottom, transparent 0%, black 20%, black 80%, transparent 100%);
-  -webkit-mask: linear-gradient(to bottom, transparent 0%, black 20%, black 80%, transparent 100%);
+.blur-red::before {
+  background: linear-gradient(
+    to right,
+    var(--red) 0px,
+    var(--red) 1px,
+    rgba(230, 32, 74, 0.1) 1px,
+    transparent 100%
+  );
+  mask: linear-gradient(
+    to bottom,
+    transparent 0%,
+    black 20%,
+    black 80%,
+    transparent 100%
+  );
+  -webkit-mask: linear-gradient(
+    to bottom,
+    transparent 0%,
+    black 20%,
+    black 80%,
+    transparent 100%
+  );
 }
 
-.blur-purple::before{
-  background: 
-    linear-gradient(to right, rgb(159, 61, 172) 0px, rgb(159, 61, 172) 1px, rgba(159, 61, 172, 0.1) 1px, transparent 100%);
-  mask: linear-gradient(to bottom, transparent 0%, black 20%, black 80%, transparent 100%);
-  -webkit-mask: linear-gradient(to bottom, transparent 0%, black 20%, black 80%, transparent 100%);
+.blur-purple::before {
+  background: linear-gradient(
+    to right,
+    rgb(159, 61, 172) 0px,
+    rgb(159, 61, 172) 1px,
+    rgba(159, 61, 172, 0.1) 1px,
+    transparent 100%
+  );
+  mask: linear-gradient(
+    to bottom,
+    transparent 0%,
+    black 20%,
+    black 80%,
+    transparent 100%
+  );
+  -webkit-mask: linear-gradient(
+    to bottom,
+    transparent 0%,
+    black 20%,
+    black 80%,
+    transparent 100%
+  );
 }
 
-.blur-white::before{
-  background: 
-    linear-gradient(to right, rgba(255, 255, 255, 0.8) 0px, rgba(255, 255, 255, 0.8) 1px, rgba(255, 255, 255, 0.08) 1px, transparent 100%);
-  mask: linear-gradient(to bottom, transparent 0%, black 10%, black 90%, transparent 100%);
-  -webkit-mask: linear-gradient(to bottom, transparent 0%, black 10%, black 90%, transparent 100%);
+.blur-white::before {
+  background: linear-gradient(
+    to right,
+    rgba(255, 255, 255, 0.8) 0px,
+    rgba(255, 255, 255, 0.8) 1px,
+    rgba(255, 255, 255, 0.08) 1px,
+    transparent 100%
+  );
+  mask: linear-gradient(
+    to bottom,
+    transparent 0%,
+    black 10%,
+    black 90%,
+    transparent 100%
+  );
+  -webkit-mask: linear-gradient(
+    to bottom,
+    transparent 0%,
+    black 10%,
+    black 90%,
+    transparent 100%
+  );
 }
 
 .jobs-header-btn {
@@ -3975,10 +4083,10 @@ h1 {
   padding-block: 20px;
   position: relative;
 }
-.detail-body{
+.detail-body {
   background: var(--dark);
 }
-.phase-job:before{
+.phase-job:before {
   content: "";
   position: absolute;
   bottom: 0;
@@ -4358,7 +4466,7 @@ h1 {
   position: relative;
 }
 
-.entry-item:before{
+.entry-item:before {
   content: "";
   position: absolute;
   bottom: 0;
@@ -4612,10 +4720,10 @@ h1 {
   padding-top: 18px;
   overflow: hidden;
 }
-.active-aging{
+.active-aging {
   background: var(--terciary) !important;
 }
-.aging-item{
+.aging-item {
   background: var(--dark);
   padding-inline: 25px;
   padding-block: 20px;
@@ -4626,8 +4734,7 @@ h1 {
   overflow: visible !important;
 }
 
-
-.aging-item::before{
+.aging-item::before {
   content: "";
   position: absolute;
   bottom: 0;
@@ -4638,24 +4745,23 @@ h1 {
   z-index: 500;
 }
 
-.aging-item:first-child{
+.aging-item:first-child {
   border-top: 1px solid var(--fancy-border);
   border-radius: 5px 5px 0px 0px;
 }
-.aging-item:last-child{
+.aging-item:last-child {
   border-bottom: 1px solid var(--fancy-border);
   border-radius: 0px 0px 5px 5px;
 }
-.aging-item:only-child{
+.aging-item:only-child {
   border-bottom: 1px solid var(--fancy-border);
   border-radius: 5px 5px 5px 5px;
 }
 
-
-.aging-item:last-child:before{
+.aging-item:last-child:before {
   opacity: 0;
 }
-.aging-item:only-child::before{
+.aging-item:only-child::before {
   opacity: 0;
 }
 
@@ -4667,7 +4773,7 @@ h1 {
   padding: 25px;
 }
 
-.widget{
+.widget {
   background-color: var(--dark);
   border: 1px solid var(--fancy-border);
   border-radius: 5px;
@@ -4781,7 +4887,7 @@ h1 {
   display: flex;
   flex-direction: row;
 }
-.joblist-widget{
+.joblist-widget {
   background-color: var(--dark);
   border: 1px solid var(--fancy-border);
   border-radius: 5px;
@@ -4795,7 +4901,7 @@ h1 {
   flex-direction: column;
   align-items: flex-start;
 }
-.joblist-phasebox{
+.joblist-phasebox {
   padding: 10px;
   border-radius: 5px;
   display: flex;
@@ -4803,7 +4909,7 @@ h1 {
   border: 1px solid var(--secondary-border);
 }
 
-.joblist-phasebox:hover{
+.joblist-phasebox:hover {
   background: var(--terciary) !important;
 }
 
@@ -5896,7 +6002,7 @@ h2 {
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
 }
 
-.detail-header{
+.detail-header {
   width: 100%;
   background: var(--dark);
   border: 1px solid var(--fancy-border);
@@ -5941,7 +6047,7 @@ h2 {
   padding: 20px;
 }
 
-.validation-item:before{
+.validation-item:before {
   content: "";
   position: absolute;
   bottom: 0;
@@ -5996,7 +6102,6 @@ h2 {
   background: var(--yellow);
   color: white;
 }
-
 
 .dv-card-title {
   color: #e2e8f0;
@@ -6067,20 +6172,20 @@ h2 {
   font-weight: bold;
   font-size: 32px;
 }
-.green-background{
-  background-color: rgba(40, 167, 69, .1) !important;
+.green-background {
+  background-color: rgba(40, 167, 69, 0.1) !important;
   border: 1px solid var(--green) !important;
 }
-.red-background{
-  background-color: rgba(230, 32, 74, .1) !important;
+.red-background {
+  background-color: rgba(230, 32, 74, 0.1) !important;
   border: 1px solid var(--red) !important;
 }
-.yellow-background{
-  background-color: rgba(230, 201, 53, .1) !important;
+.yellow-background {
+  background-color: rgba(230, 201, 53, 0.1) !important;
   border: 1px solid var(--yellow) !important;
 }
-.orange-background{
-  background-color: rgba(255, 125, 53, .1) !important;
+.orange-background {
+  background-color: rgba(255, 125, 53, 0.1) !important;
   border: 1px solid var(--orange) !important;
 }
 
@@ -6146,9 +6251,9 @@ h2 {
   background-color: var(--primary);
 }
 
-.phase-count-chevron svg{
+.phase-count-chevron svg {
   height: 12px;
-  width: 15px;  
+  width: 15px;
 }
 
 .expanded-phases {
@@ -6217,22 +6322,22 @@ h2 {
   font-size: 14px;
 }
 
-.recent-item:has(.project-info:hover){
+.recent-item:has(.project-info:hover) {
   filter: none !important;
 }
 
-.project-info{
+.project-info {
   background-color: var(--dark);
   padding-inline: 25px;
   padding-block: 10px;
   border-radius: 5px;
 }
-.project-info:hover{
+.project-info:hover {
   cursor: pointer;
   filter: brightness(1.15);
 }
 
-.widget-details{
+.widget-details {
   height: 25px;
   width: 25px;
   display: flex;
@@ -6242,9 +6347,9 @@ h2 {
   padding: 10px;
   margin-top: 5px;
   margin-right: 7px;
-  opacity: .5;
+  opacity: 0.5;
 }
 
-.widget-details:hover{
+.widget-details:hover {
   opacity: 1;
 }

@@ -115,7 +115,7 @@ export const yearPhaseToStr = (yearPhase) => {
 
 export const phaseNumToMonth = (phase) => {
   const phaseMap = {
-    "0": "Extra Work",
+    0: "Extra Work",
     "00": "Extra Work",
     "01": "January",
     "02": "February",
@@ -140,7 +140,7 @@ export const phaseNumToMonth = (phase) => {
 };
 export const phaseToMonth = (phase, optional) => {
   let phaseMap = {
-    "0": "Extra Work",
+    0: "Extra Work",
     "00": "Extra Work",
     "01": "January",
     "02": "February",

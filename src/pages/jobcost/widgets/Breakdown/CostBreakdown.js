@@ -2,11 +2,7 @@ import React, { useState } from "react";
 import { dollarFormatter } from "utils/formatters";
 import { calculateTotalSum } from "utils/funcs";
 
-export default function CostBreakdown({
-  budget,
-  costItems,
-  color,
-}) {
+export default function CostBreakdown({ budget, costItems, color }) {
   const { posted, committed } = costItems;
   const postedSum = calculateTotalSum(posted);
   const committedSum = calculateTotalSum(committed);

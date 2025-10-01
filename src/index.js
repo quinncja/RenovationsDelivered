@@ -17,27 +17,26 @@ import { UserfrontProvider } from "@userfront/react";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <UserfrontProvider tenantId="xbpwwqmn">
-  <BrowserRouter>
-    <LoadingProvider>
-      <SystemMessageProvider>
-        <ModalProvider>
-          <HistoryProvider>
-            <ProjectProvider>
-              <TrackedJobProvider>
-                <ItemsProvider>
-                  <JobCostProvider>
-                    <HomeProvider>
-                      <Router />
-                    </HomeProvider>
-                  </JobCostProvider>
-                </ItemsProvider>
-              </TrackedJobProvider>
-            </ProjectProvider>
-          </HistoryProvider>
-        </ModalProvider>
-      </SystemMessageProvider>
-    </LoadingProvider>
-  </BrowserRouter>
-  </UserfrontProvider>
-  ,
+    <BrowserRouter>
+      <LoadingProvider>
+        <SystemMessageProvider>
+          <ModalProvider>
+            <HistoryProvider>
+              <ProjectProvider>
+                <TrackedJobProvider>
+                  <ItemsProvider>
+                    <JobCostProvider>
+                      <HomeProvider>
+                        <Router />
+                      </HomeProvider>
+                    </JobCostProvider>
+                  </ItemsProvider>
+                </TrackedJobProvider>
+              </ProjectProvider>
+            </HistoryProvider>
+          </ModalProvider>
+        </SystemMessageProvider>
+      </LoadingProvider>
+    </BrowserRouter>
+  </UserfrontProvider>,
 );

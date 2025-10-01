@@ -2,7 +2,8 @@ import Select from "react-dropdown-select";
 import { useProjectContext } from "context/ProjectContext";
 
 function StateSelector() {
-  const { getAllStates, projectQuery, updateProjectQuery } = useProjectContext();
+  const { getAllStates, projectQuery, updateProjectQuery } =
+    useProjectContext();
 
   const selectedState = projectQuery.state;
   const active = projectQuery.state;
@@ -41,26 +42,26 @@ function StateSelector() {
       }}
       onClick={handleWrapperClick}
     >
-          <h4> State </h4>
-          <Select
-            labelField="name"
-            valueField="id"
-            options={stateList}
-            values={
-              selectedState
-                ? [
-                    stateList.find((state) => state.id === selectedState),
-                  ].filter(Boolean)
-                : []
-            }
-            placeholder={"-"}
-            className="project-select-dropdown project-select-dropdown-smaller"
-            dropdownGap={-3}
-            dropdownHandle={false}
-            searchBy="name"
-            sortBy="name"
-            onChange={handlePMChange}
-          />
+      <h4> State </h4>
+      <Select
+        labelField="name"
+        valueField="id"
+        options={stateList}
+        values={
+          selectedState
+            ? [stateList.find((state) => state.id === selectedState)].filter(
+                Boolean,
+              )
+            : []
+        }
+        placeholder={"-"}
+        className="project-select-dropdown project-select-dropdown-smaller"
+        dropdownGap={-3}
+        dropdownHandle={false}
+        searchBy="name"
+        sortBy="name"
+        onChange={handlePMChange}
+      />
     </div>
   );
 }

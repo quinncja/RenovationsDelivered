@@ -15,7 +15,7 @@ function Header() {
 
   return (
     <div ref={headerRef} className="job-cost-header">
-      <ProjectCount/>
+      <ProjectCount />
       <div
         className="job-cost-header-item"
         style={{

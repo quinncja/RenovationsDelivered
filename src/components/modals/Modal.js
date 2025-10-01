@@ -33,11 +33,7 @@ const Modal = () => {
           />
         );
       case "widget-details":
-        return(
-          <WidgetDetailsModal 
-            type={modalData}
-          />
-        )
+        return <WidgetDetailsModal type={modalData} />;
       default:
         return null;
     }

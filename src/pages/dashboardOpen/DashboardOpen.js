@@ -15,15 +15,14 @@ function DashboardOpen() {
   const navigate = useNavigate();
 
   let currentType = !detail ? remainingPath.split("/")[1] : null;
-  
+
   const renderBody = () => {
     if (type === "data-validation")
       return <DataValidationPage {...openData} id={currentType} />;
-    if (type === "aging-summary")
-      return <AgingSummaryPage {...openData} />;
+    if (type === "aging-summary") return <AgingSummaryPage {...openData} />;
     else if (type === "phase-overview") return <PhaseCountPage {...openData} />;
     else if (type && type.includes("insight"))
-      if (detail && detail.id) return <DetailPage {...openData}/>;
+      if (detail && detail.id) return <DetailPage {...openData} />;
       else return <InsightPage {...openData} />;
     else return "";
   };
@@ -59,7 +58,10 @@ function DashboardOpen() {
 
   return (
     <div className="job-cost-dashboard">
-      <div className="jobs-header jobs-header-old" style={{ justifyContent: "space-between" }}>
+      <div
+        className="jobs-header jobs-header-old"
+        style={{ justifyContent: "space-between" }}
+      >
         <h2>
           {" "}
           {normal} {currentType ? `• ${kebabToNormal(currentType)}` : ""}

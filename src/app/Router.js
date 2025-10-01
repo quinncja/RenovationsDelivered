@@ -29,14 +29,12 @@ function Router() {
   return (
     <Routes>
       <Route path="/" element={<App />}>
-        <Route 
-            index 
-            element={
-              isAuthenticated ? 
-              <Navigate to="/dashboard" replace /> : 
-              <App />
-            } 
-          />
+        <Route
+          index
+          element={
+            isAuthenticated ? <Navigate to="/dashboard" replace /> : <App />
+          }
+        />
         <Route path="/*" element={<App />} />
         <Route path="/home" element={<App />} />
         <Route

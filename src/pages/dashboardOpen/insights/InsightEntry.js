@@ -19,11 +19,18 @@ function InsightEntry(props) {
 
   const handleDetailClick = (e) => {
     e.stopPropagation();
-    openDetailPage(`${type}-insight`, {id: data.detailId, value: type === "Project" ? getJobStr(data.detailId) : data.id})
-  }
+    openDetailPage(`${type}-insight`, {
+      id: data.detailId,
+      value: type === "Project" ? getJobStr(data.detailId) : data.id,
+    });
+  };
 
   return (
-    <div className="insight-item entry-item" key={index} onClick={(e) => handleDetailClick(e)}>
+    <div
+      className="insight-item entry-item"
+      key={index}
+      onClick={(e) => handleDetailClick(e)}
+    >
       <div
         style={{
           display: "flex",

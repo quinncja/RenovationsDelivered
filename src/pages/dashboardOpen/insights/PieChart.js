@@ -37,8 +37,11 @@ function PieChart({ data, type }) {
     const detailId = datum.data.detailId;
     const id = datum.data.id;
     e.stopPropagation();
-    openDetailPage(`${type}-insight`, {id: detailId, value: type === "Project" ? getJobStr(detailId) : id})
-  }
+    openDetailPage(`${type}-insight`, {
+      id: detailId,
+      value: type === "Project" ? getJobStr(detailId) : id,
+    });
+  };
 
   const label = (datum) => {
     const name = getName(datum);
@@ -118,7 +121,7 @@ function PieChart({ data, type }) {
               opacity: 1,
             }}
           >
-            <PieChartTooltips datum={tooltip.datum} sum={sum}/>
+            <PieChartTooltips datum={tooltip.datum} sum={sum} />
           </div>,
           document.body,
         )}

@@ -4,10 +4,10 @@ const SectionSubheading = ({ children, style = {} }) => {
       style={{
         textAlign: "left",
         paddingTop: "20px",
-        opacity: '.95',
+        opacity: ".95",
         fontSize: "16px",
         fontWeight: "500",
-        ...style
+        ...style,
       }}
     >
       {children}

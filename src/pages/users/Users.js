@@ -22,7 +22,7 @@ export function Users() {
     const loadUsers = async () => {
       const maxRetries = 5;
       let retryCount = 0;
-      
+
       const attemptLoad = async () => {
         try {
           const userData = await fetchUserList();
@@ -47,7 +47,7 @@ export function Users() {
           }
         }
       };
-  
+
       try {
         await attemptLoad();
       } catch (error) {
@@ -58,7 +58,7 @@ export function Users() {
         toast.error("Failed to load user data");
       }
     };
-  
+
     loadUsers();
   }, []);
 
@@ -241,22 +241,22 @@ export function Users() {
   if (items.adminUsers === -10 && items.normalUsers === -10)
     return (
       <div className="dashboard-welcome user-page">
-      <div className="jobs-header jobs-header-old">
-        <div style={{ display: "flex", alignItems: "baseline", gap: "15px" }}>
-          <h3> Users </h3>
+        <div className="jobs-header jobs-header-old">
+          <div style={{ display: "flex", alignItems: "baseline", gap: "15px" }}>
+            <h3> Users </h3>
+          </div>
         </div>
-      </div>
       </div>
     );
 
   if (items.adminUsers.length === 0 && items.normalUsers.length === 0) {
     return (
       <div className="dashboard-welcome">
-      <div className="jobs-header jobs-header-old">
-        <div style={{ display: "flex", alignItems: "baseline", gap: "15px" }}>
-          <h2> Users </h2>
+        <div className="jobs-header jobs-header-old">
+          <div style={{ display: "flex", alignItems: "baseline", gap: "15px" }}>
+            <h2> Users </h2>
+          </div>
         </div>
-      </div>
         <div className="loading-widget" />
       </div>
     );
@@ -284,7 +284,11 @@ export function Users() {
                 hoveredContainer === containerId ? "hovered-container" : ""
               }`}
             >
-              <h3 style={{fontWeight: 500, fontSize: "16px", textAlign: 'left'}}>{containerId === "adminUsers" ? "Admins" : "PMs"}</h3>
+              <h3
+                style={{ fontWeight: 500, fontSize: "16px", textAlign: "left" }}
+              >
+                {containerId === "adminUsers" ? "Admins" : "PMs"}
+              </h3>
               <SortableContext
                 id={containerId}
                 items={items[containerId].map((user) => user.userId)}

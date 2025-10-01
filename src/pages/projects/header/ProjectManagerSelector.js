@@ -2,7 +2,8 @@ import Select from "react-dropdown-select";
 import { useProjectContext } from "context/ProjectContext";
 
 function ProjectManagerSelector() {
-  const { getAllSupervisors, projectQuery, updateProjectQuery } = useProjectContext();
+  const { getAllSupervisors, projectQuery, updateProjectQuery } =
+    useProjectContext();
 
   const selectedPM = projectQuery.pm;
   const supervisorList = getAllSupervisors();
@@ -42,26 +43,26 @@ function ProjectManagerSelector() {
       }}
       onClick={handleWrapperClick}
     >
-          <h4> PM </h4>
-          <Select
-            labelField="name"
-            valueField="id"
-            options={supervisorList}
-            values={
-              selectedPM
-                ? [supervisorList.find((pm) => pm.id === selectedPM)].filter(
-                    Boolean,
-                  )
-                : []
-            }
-            placeholder={"-"}
-            className="project-select-dropdown project-select-dropdown-smaller"
-            dropdownGap={-3}
-            dropdownHandle={false}
-            searchBy="name"
-            sortBy="name"
-            onChange={handlePMChange}
-          />
+      <h4> PM </h4>
+      <Select
+        labelField="name"
+        valueField="id"
+        options={supervisorList}
+        values={
+          selectedPM
+            ? [supervisorList.find((pm) => pm.id === selectedPM)].filter(
+                Boolean,
+              )
+            : []
+        }
+        placeholder={"-"}
+        className="project-select-dropdown project-select-dropdown-smaller"
+        dropdownGap={-3}
+        dropdownHandle={false}
+        searchBy="name"
+        sortBy="name"
+        onChange={handlePMChange}
+      />
     </div>
   );
 }

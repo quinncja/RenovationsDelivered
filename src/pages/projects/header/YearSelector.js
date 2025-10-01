@@ -3,7 +3,7 @@ import { useProjectContext } from "context/ProjectContext";
 import { yearList } from "utils/modifiers";
 
 function YearSelector() {
-  const { projectQuery, updateProjectQuery} = useProjectContext();
+  const { projectQuery, updateProjectQuery } = useProjectContext();
 
   let selectedYearId = projectQuery.year;
   const active = projectQuery.year;
@@ -48,9 +48,9 @@ function YearSelector() {
         options={yearList}
         values={
           yearList
-            ? [
-                yearList.find((year) => year.id === selectedYearId),
-              ].filter(Boolean)
+            ? [yearList.find((year) => year.id === selectedYearId)].filter(
+                Boolean,
+              )
             : []
         }
         placeholder="-"

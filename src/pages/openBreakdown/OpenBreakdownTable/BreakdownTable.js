@@ -7,7 +7,7 @@ function BreakdownTable(props) {
   const [sortConfig, setSortConfig] = useState({ key: null, direction: null });
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 50;
-  
+
   const headerMap = {
     id: "Vendor",
     dscrpt: "Description",
@@ -37,11 +37,11 @@ function BreakdownTable(props) {
 
   const getAllData = () => {
     if (!data) return [];
-    
+
     if (Array.isArray(data)) {
       return data;
     }
-    
+
     const allItems = [];
     if (data.parent) allItems.push(...data.parent);
     if (data.children) allItems.push(...data.children);
@@ -50,12 +50,12 @@ function BreakdownTable(props) {
 
   const hasParentsWithChildren = () => {
     if (!data || Array.isArray(data)) return false;
-    
+
     const parents = data.parent || [];
     const children = data.children || [];
-    
-    return parents.some(parent => 
-      children.some(child => child.parent === parent.recnum)
+
+    return parents.some((parent) =>
+      children.some((child) => child.parent === parent.recnum),
     );
   };
 
@@ -64,89 +64,105 @@ function BreakdownTable(props) {
     if (!children || children.length === 0) {
       return parentAmount;
     }
-    
+
     const childrenTotal = children.reduce((sum, child) => {
       const childAmount = child.value || child.total || child.amount || 0;
       return sum + (parseFloat(childAmount) || 0);
     }, 0);
-    
+
     return (parseFloat(parentAmount) || 0) - childrenTotal;
   };
 
   const processDataForRendering = () => {
     if (!data) return [];
-    
+
     if (Array.isArray(data)) {
       return data;
     }
-    
+
     const parents = data.parent || [];
     const children = data.children || [];
-    
+
     if (type === "Material" || type === "Subcontractors") {
       const parentsWithChildren = parents.map((parent) => {
-        const parentChildren = children.filter((child) => child.parent === parent.recnum);
-        
+        const parentChildren = children.filter(
+          (child) => child.parent === parent.recnum,
+        );
+
         let processedParent = {
           ...parent,
           children: parentChildren,
-          invoices: parentChildren.length 
+          invoices: parentChildren.length,
         };
-        
+
         // Calculate remaining amount for Material type
         if (type === "Material") {
-          const parentAmount = parent.value || parent.total || parent.amount || 0;
-          processedParent.remaining = calculateRemaining(parentAmount, parentChildren);
+          const parentAmount =
+            parent.value || parent.total || parent.amount || 0;
+          processedParent.remaining = calculateRemaining(
+            parentAmount,
+            parentChildren,
+          );
         }
-        
+
         return processedParent;
       });
-      
-      const orphanChildren = children.filter(child => 
-        !parents.some(parent => parent.recnum === child.parent)
-      ).map(child => {
-        let processedChild = {
-          ...child,
-          invoices: 0 
-        };
-        
-        // For orphan children in Material type, remaining is 0 since they have no sub-items
-        if (type === "Material") {
-          processedChild.remaining = 0;
-        }
-        
-        return processedChild;
-      });
-      
+
+      const orphanChildren = children
+        .filter(
+          (child) => !parents.some((parent) => parent.recnum === child.parent),
+        )
+        .map((child) => {
+          let processedChild = {
+            ...child,
+            invoices: 0,
+          };
+
+          // For orphan children in Material type, remaining is 0 since they have no sub-items
+          if (type === "Material") {
+            processedChild.remaining = 0;
+          }
+
+          return processedChild;
+        });
+
       return [...parentsWithChildren, ...orphanChildren];
     } else {
-      return children.map(child => ({
+      return children.map((child) => ({
         ...child,
-        invoices: 0
+        invoices: 0,
       }));
     }
   };
 
   const getColumnHeaders = () => {
-    const excludedKeys = ["imagePath", "imageName", "imageUser", "parent", "costType", "status", "type"];
+    const excludedKeys = [
+      "imagePath",
+      "imageName",
+      "imageUser",
+      "parent",
+      "costType",
+      "status",
+      "type",
+    ];
     const allData = getAllData();
-    
-    if (allData.length === 0) return [];    
+
+    if (allData.length === 0) return [];
     const shouldShowInvoices = hasParentsWithChildren();
-    
+
     let keys = Object.keys(allData[0]).filter(
       (key) => !excludedKeys.includes(key),
     );
-    
-    if (shouldShowInvoices && !keys.includes('invoices')) {
-      keys.push('invoices');
+
+    if (shouldShowInvoices && !keys.includes("invoices")) {
+      keys.push("invoices");
     }
-    
+
     // Add 'remaining' column for Material type if it doesn't exist
-    if (type === "Material" && !keys.includes('remaining')) {
-      keys.push('remaining');
+    if (type === "Material" && !keys.includes("remaining")) {
+      keys.push("remaining");
     }
-    
+
     const orderedKeys = Object.keys(headerMap).filter((key) =>
       keys.includes(key),
     );
@@ -156,7 +172,7 @@ function BreakdownTable(props) {
 
   const sortData = (dataArray) => {
     if (!sortConfig.key || !sortConfig.direction) return dataArray;
-    
+
     return [...dataArray].sort((a, b) => {
       const aValue = a[sortConfig.key];
       const bValue = b[sortConfig.key];
@@ -298,7 +314,7 @@ function BreakdownTable(props) {
   if (!data) return <div className="data-display loading-widget" />;
 
   const processedData = processDataForRendering();
-  
+
   if (processedData.length === 0) {
     return (
       <div className="data-display">

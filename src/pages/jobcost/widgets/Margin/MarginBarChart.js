@@ -7,7 +7,7 @@ import useIsAdmin from "utils/hooks/useIsAdmin";
 function MarginBarChart({ phaseData, marginColor }) {
   const [hoveredId, setHoveredId] = useState(null);
   const isAdmin = useIsAdmin();
-  
+
   if (phaseData.length === 0) return null;
 
   const maxMargin = Math.max(...phaseData.map((item) => item.value));
@@ -39,7 +39,7 @@ function MarginBarChart({ phaseData, marginColor }) {
     TotalContract: item.TotalContract,
     TotalCost: item.TotalCost,
     hasData: true,
-    hoverValue: 100 
+    hoverValue: 100,
   }));
 
   const getBarColor = (margin) => {
@@ -70,8 +70,10 @@ function MarginBarChart({ phaseData, marginColor }) {
     return (
       <g>
         {bars.map((bar) => {
-          const phaseItem = barData.find(p => p.phase === bar.data.indexValue);
-          
+          const phaseItem = barData.find(
+            (p) => p.phase === bar.data.indexValue,
+          );
+
           if (!phaseItem || !phaseItem.hasData) {
             return null;
           }
@@ -79,7 +81,7 @@ function MarginBarChart({ phaseData, marginColor }) {
           const marginPercent = (phaseItem.margin - chartMin) / chartRange;
           const actualBarHeight = bar.height * marginPercent;
           const actualBarY = bar.y + bar.height - actualBarHeight;
-          
+
           return (
             <g key={`margin-bar-${bar.data.indexValue}`}>
               <rect
@@ -90,9 +92,9 @@ function MarginBarChart({ phaseData, marginColor }) {
                 fill={getBarColor(phaseItem.margin)}
                 rx={3}
                 ry={3}
-                style={{pointerEvents: "none"}}
+                style={{ pointerEvents: "none" }}
               />
-              
+
               {actualBarHeight > 15 && bar.width > 25 && (
                 <text
                   x={bar.x + bar.width / 2}
@@ -102,7 +104,7 @@ function MarginBarChart({ phaseData, marginColor }) {
                   fill="#ffffff"
                   fontSize="12"
                   fontWeight="600"
-                  style={{pointerEvents: "none"}}
+                  style={{ pointerEvents: "none" }}
                 >
                   {Math.round(phaseItem.margin)}%
                 </text>
@@ -117,13 +119,15 @@ function MarginBarChart({ phaseData, marginColor }) {
   return (
     <ResponsiveBar
       data={barData}
-      keys={['hoverValue']}
+      keys={["hoverValue"]}
       indexBy="phase"
       margin={{ top: 40, right: 15, bottom: 50, left: 40 }}
       padding={0.25}
-      valueScale={{ type: 'linear', min: 0, max: 100 }}
-      indexScale={{ type: 'band', round: true }}
-      colors={(bar) => hoveredId === bar.indexValue ? '#191f27' : 'var(--dark)'}
+      valueScale={{ type: "linear", min: 0, max: 100 }}
+      indexScale={{ type: "band", round: true }}
+      colors={(bar) =>
+        hoveredId === bar.indexValue ? "#191f27" : "var(--dark)"
+      }
       borderWidth={0}
       borderRadius={0}
       innerPadding={2}
@@ -133,40 +137,35 @@ function MarginBarChart({ phaseData, marginColor }) {
         tickSize: 0,
         tickPadding: 8,
         tickValues: getTickValues(),
-        format: (value) => yearPhaseToStr(value)
+        format: (value) => yearPhaseToStr(value),
       }}
       axisLeft={{
         tickSize: 0,
         tickPadding: 5,
         tickValues: 5,
-        format: (value) => `${Math.round(chartMin + (value / 100) * chartRange)}%`
+        format: (value) =>
+          `${Math.round(chartMin + (value / 100) * chartRange)}%`,
       }}
-      layers={[
-        'bars',
-        'grid',
-        'axes', 
-        'markers',
-        CustomBarLayer,
-      ]}
+      layers={["bars", "grid", "axes", "markers", CustomBarLayer]}
       markers={[
         {
-          axis: 'y',
+          axis: "y",
           value: ((20 - chartMin) / chartRange) * 100,
           lineStyle: {
-            stroke: '#acadae',
+            stroke: "#acadae",
             opacity: 0.8,
             strokeWidth: 1,
-            strokeDasharray: '4 2',
-            pointerEvents: 'none',
+            strokeDasharray: "4 2",
+            pointerEvents: "none",
           },
-          legendOrientation: 'horizontal',
-          legendPosition: 'top-left',
+          legendOrientation: "horizontal",
+          legendPosition: "top-left",
           textStyle: {
-            fill: '#28a745',
+            fill: "#28a745",
             fontSize: 11,
-            fontWeight: 500
-          }
-        }
+            fontWeight: 500,
+          },
+        },
       ]}
       enableGridX={false}
       enableGridY={true}
@@ -179,51 +178,53 @@ function MarginBarChart({ phaseData, marginColor }) {
         setHoveredId(null);
       }}
       theme={{
-        background: 'transparent',
+        background: "transparent",
         grid: {
           line: {
-            stroke: '#acadae',
-            pointerEvents: 'none',
-            strokeOpacity: 0.3
-          }
+            stroke: "#acadae",
+            pointerEvents: "none",
+            strokeOpacity: 0.3,
+          },
         },
         axis: {
           ticks: {
             line: {
               strokeWidth: 1,
-              stroke: '#acadae',
+              stroke: "#acadae",
             },
             text: {
               fontSize: 12,
-              fill: '#acadae',
-              fontWeight: '500'
-            }
+              fill: "#acadae",
+              fontWeight: "500",
+            },
           },
           legend: {
             text: {
               fontSize: 14,
               fontWeight: 600,
-              fill: '#acadae'
-            }
-          }
+              fill: "#acadae",
+            },
+          },
         },
         labels: {
           text: {
             fontSize: 12,
-            fontWeight: '600'
-          }
-        }
+            fontWeight: "600",
+          },
+        },
       }}
       tooltip={({ indexValue, value, data: currentBarData }) => {
-        const currentPhase = barData.find(p => p.phase === indexValue);
-        
+        const currentPhase = barData.find((p) => p.phase === indexValue);
+
         if (!currentPhase?.hasData) {
           return (
             <div className="tooltip">
               <div style={{ fontWeight: "bold", marginBottom: "4px" }}>
                 {yearPhaseToStr(indexValue)}
               </div>
-              <div style={{ color: "#8b949e", fontWeight: 500, fontSize: "12px" }}>
+              <div
+                style={{ color: "#8b949e", fontWeight: 500, fontSize: "12px" }}
+              >
                 No data available
               </div>
             </div>
@@ -231,12 +232,15 @@ function MarginBarChart({ phaseData, marginColor }) {
         }
 
         const marginValue = currentPhase.margin;
-        const marginAmount = currentPhase.TotalContract - currentPhase.TotalCost;
-        
-        const currentIndex = phaseData.findIndex(p => p.phase.toUpperCase() === indexValue);
+        const marginAmount =
+          currentPhase.TotalContract - currentPhase.TotalCost;
+
+        const currentIndex = phaseData.findIndex(
+          (p) => p.phase.toUpperCase() === indexValue,
+        );
         let marginChange = null;
         let marginChangeColor = "#ffffff";
-        
+
         if (currentIndex > 0) {
           const previousPhaseData = phaseData[currentIndex - 1];
           marginChange = marginValue - previousPhaseData.value;
@@ -248,35 +252,54 @@ function MarginBarChart({ phaseData, marginColor }) {
             <div style={{ fontWeight: "bold", marginBottom: "4px" }}>
               {yearPhaseToStr(indexValue)}
             </div>
-            <div style={{
-                display: 'flex', flexDirection: 'column', gap: "5px", marginBottom: "4px" 
-            }}> 
-            <div style={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-              flexDirection: "row",
-              gap: "5px",
-            }}>
-              <span className={`${getMarginClass(marginValue)}`} style={{ fontWeight: 700, fontSize: "16px" }}>
-                {displayMargin(marginValue)}
-              </span>
-            </div>
-            {isAdmin && <h4 style={{color: "white"}}> <span> {dollarFormatter(marginAmount)} </span> profit </h4>}
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                gap: "5px",
+                marginBottom: "4px",
+              }}
+            >
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  flexDirection: "row",
+                  gap: "5px",
+                }}
+              >
+                <span
+                  className={`${getMarginClass(marginValue)}`}
+                  style={{ fontWeight: 700, fontSize: "16px" }}
+                >
+                  {displayMargin(marginValue)}
+                </span>
+              </div>
+              {isAdmin && (
+                <h4 style={{ color: "white" }}>
+                  {" "}
+                  <span> {dollarFormatter(marginAmount)} </span> profit{" "}
+                </h4>
+              )}
             </div>
             {marginChange !== null && (
-              <div style={{
-                display: "flex",
-                justifyContent: "flex-start",
-                fontSize: "12px",
-                fontWeight: 600
-              }}>
-                <div style={{
-                  color: marginChangeColor,
+              <div
+                style={{
                   display: "flex",
-                  alignItems: "center",
-                  gap: "4px"
-                }}>
+                  justifyContent: "flex-start",
+                  fontSize: "12px",
+                  fontWeight: 600,
+                }}
+              >
+                <div
+                  style={{
+                    color: marginChangeColor,
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "4px",
+                  }}
+                >
                   <span>{marginChange >= 0 ? "↗" : "↘"}</span>
                   <span>
                     {marginChange >= 0 ? "+" : ""}
@@ -287,11 +310,13 @@ function MarginBarChart({ phaseData, marginColor }) {
             )}
 
             {marginChange === null && (
-              <div style={{
-                color: "#8b949e",
-                fontWeight: 500,
-                fontSize: "12px"
-              }}>
+              <div
+                style={{
+                  color: "#8b949e",
+                  fontWeight: 500,
+                  fontSize: "12px",
+                }}
+              >
                 First phase
               </div>
             )}

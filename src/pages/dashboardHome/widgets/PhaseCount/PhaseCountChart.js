@@ -26,35 +26,44 @@ function PhaseCountChart({ id, data }) {
       hasData: true,
     }));
 
-  const regularPhases = existingPhaseData.filter(item => item.phaseNum <= 12);
-  const extraPhases = existingPhaseData.filter(item => item.phaseNum > 12);
+  const regularPhases = existingPhaseData.filter((item) => item.phaseNum <= 12);
+  const extraPhases = existingPhaseData.filter((item) => item.phaseNum > 12);
 
   const phaseDataMap = new Map();
   regularPhases.forEach((item) => {
     phaseDataMap.set(item.phaseNum, item);
   });
 
-  const extraPhaseData = extraPhases.length > 0 ? {
-    phase: "extra",
-    phaseNum: 13,
-    current_year_open: extraPhases.reduce((sum, item) => sum + item.current_year_open, 0),
-    current_year_closed: extraPhases.reduce((sum, item) => sum + item.current_year_closed, 0),
-    total: extraPhases.reduce((sum, item) => sum + item.total, 0),
-    hasData: true,
-  } : {
-    phase: "extra",
-    phaseNum: 13,
-    current_year_open: 0,
-    current_year_closed: 0,
-    total: 0,
-    hasData: false,
-  };
+  const extraPhaseData =
+    extraPhases.length > 0
+      ? {
+          phase: "extra",
+          phaseNum: 13,
+          current_year_open: extraPhases.reduce(
+            (sum, item) => sum + item.current_year_open,
+            0,
+          ),
+          current_year_closed: extraPhases.reduce(
+            (sum, item) => sum + item.current_year_closed,
+            0,
+          ),
+          total: extraPhases.reduce((sum, item) => sum + item.total, 0),
+          hasData: true,
+        }
+      : {
+          phase: "extra",
+          phaseNum: 13,
+          current_year_open: 0,
+          current_year_closed: 0,
+          total: 0,
+          hasData: false,
+        };
 
   const allPhases = [];
-  
+
   for (let i = 1; i <= 12; i++) {
     const existingData = phaseDataMap.get(i);
-    
+
     if (existingData) {
       allPhases.push(existingData);
     } else {
@@ -68,7 +77,7 @@ function PhaseCountChart({ id, data }) {
       });
     }
   }
-  
+
   allPhases.push(extraPhaseData);
 
   const phaseData = allPhases;
@@ -98,7 +107,8 @@ function PhaseCountChart({ id, data }) {
   const CustomTooltip = ({ id, value, color, data }) => {
     // Check if this phase has data
     if (!data.hasData) {
-      const phaseLabel = data.phase === "extra" ? "Extra" : phaseToMonth(data.phase);
+      const phaseLabel =
+        data.phase === "extra" ? "Extra" : phaseToMonth(data.phase);
       return (
         <div className="tooltip">
           <div style={{ fontWeight: "bold", marginBottom: "4px" }}>
@@ -111,7 +121,8 @@ function PhaseCountChart({ id, data }) {
       );
     }
 
-    const phaseLabel = data.phase === "extra" ? "Extra" : phaseToMonth(data.phase);
+    const phaseLabel =
+      data.phase === "extra" ? "Extra" : phaseToMonth(data.phase);
     return (
       <div className="tooltip">
         <div style={{ fontWeight: "bold", marginBottom: "4px" }}>
@@ -138,7 +149,7 @@ function PhaseCountChart({ id, data }) {
   const handleClick = (e) => {
     // Only handle clicks for phases with data
     if (!e.data.hasData) return;
-    
+
     const textStatus = e.id.split("_")[2];
     const status = textStatus === "closed" ? 5 : 4;
     const phase = e.data.phaseNum;
@@ -231,7 +242,8 @@ function PhaseCountChart({ id, data }) {
         valueScale={{ type: "linear" }}
         indexScale={{ type: "band", round: true }}
         colors={({ id, data }) => {
-          const baseColor = id === "current_year_open" ? "var(--open)" : "var(--closed)";
+          const baseColor =
+            id === "current_year_open" ? "var(--open)" : "var(--closed)";
           return data.hasData ? baseColor : "#acadae";
         }}
         enableGridY={true}

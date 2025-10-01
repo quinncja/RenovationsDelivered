@@ -67,7 +67,7 @@ function Breakdown(props) {
   const postedSum = calculateTotalSum(posted);
   const committedSum = calculateTotalSum(committed);
 
-  const actualSpent =  postedSum + committedSum;
+  const actualSpent = postedSum + committedSum;
   const background = getIconBackground(budget, actualSpent);
   const color = getStatusColor(budget, actualSpent);
 

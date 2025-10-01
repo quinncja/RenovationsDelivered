@@ -21,7 +21,9 @@ function YearRevenue() {
           alignItems: "flex-start",
         }}
       >
-        <h3 style={{fontWeight: 500, fontSize: "16px"}}>Cumulative Revenue Growth</h3>
+        <h3 style={{ fontWeight: 500, fontSize: "16px" }}>
+          Cumulative Revenue Growth
+        </h3>
         <div style={{ display: "flex", flexDirection: "row", gap: "20px" }}>
           <div
             style={{

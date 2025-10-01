@@ -77,8 +77,14 @@ function InsightPage({ type, focused, data }) {
               gap: "5px",
             }}
           >
-            <h2 style={{fontSize: "32px"}}> {widgetData ? widgetData.length : ""} </h2>
-            <h4>  {year} Total {typeSplit}s </h4>
+            <h2 style={{ fontSize: "32px" }}>
+              {" "}
+              {widgetData ? widgetData.length : ""}{" "}
+            </h2>
+            <h4>
+              {" "}
+              {year} Total {typeSplit}s{" "}
+            </h4>
           </div>
         </div>
         <div
@@ -101,9 +107,14 @@ function InsightPage({ type, focused, data }) {
               gap: "5px",
             }}
           >
-            
-            <h2 style={{fontSize: "32px"}}> {homeData ? homeData.length : ""} </h2>
-            <h4>  {year-1} Total {typeSplit}s </h4>
+            <h2 style={{ fontSize: "32px" }}>
+              {" "}
+              {homeData ? homeData.length : ""}{" "}
+            </h2>
+            <h4>
+              {" "}
+              {year - 1} Total {typeSplit}s{" "}
+            </h4>
           </div>
         </div>
       </div>

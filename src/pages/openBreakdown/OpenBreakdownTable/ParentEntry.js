@@ -1,10 +1,5 @@
-function ParentEntry(){
-
-  return(
-    <div>
-
-    </div>
-  )
+function ParentEntry() {
+  return <div></div>;
 }
 
 export default ParentEntry;

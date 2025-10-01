@@ -19,7 +19,7 @@ export const ModalProvider = ({ children }) => {
 
   const openModal = (type) => setModalType(type);
   const openModalWithData = (type, data) => {
-    console.log(type, data)
+    console.log(type, data);
     setModalType(type);
     setModalData(data);
   };

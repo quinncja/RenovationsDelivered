@@ -56,8 +56,7 @@ function MonthlyYearRevenueLineChart({ data }) {
         ((currentMonthly - previousMonthly) / previousMonthly) * 100;
 
       monthlyGrowth = monthlyGrowthPercent;
-      growthColor =
-        monthlyGrowthPercent >= 0 ? "var(--green)" : "var(--red)";
+      growthColor = monthlyGrowthPercent >= 0 ? "var(--green)" : "var(--red)";
     }
 
     return (

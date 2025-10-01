@@ -22,7 +22,10 @@ function OpenBreakdown() {
 
   return (
     <div className="job-cost-dashboard">
-      <div className="jobs-header jobs-header-old" style={{ justifyContent: "space-between" }}>
+      <div
+        className="jobs-header jobs-header-old"
+        style={{ justifyContent: "space-between" }}
+      >
         <h2>
           {" "}
           {type} {isVisible2 ? "Breakdown" : "Cost Items"}{" "}
@@ -42,8 +45,8 @@ function OpenBreakdown() {
       <div className="job-cost-widgets">
         <Header setIsVisible={setIsVisible} />
         <OpenCostBreakdown data={data} type={type} />
-        <OpenBreakdownBar data={data}/>
-        <OpenBreakdownTable setIsVisible={setIsVisible2} type={type}/>
+        <OpenBreakdownBar data={data} />
+        <OpenBreakdownTable setIsVisible={setIsVisible2} type={type} />
       </div>
     </div>
   );

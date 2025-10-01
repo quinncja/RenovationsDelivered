@@ -27,8 +27,11 @@ function PieChart({ data, type, pageId }) {
     const detailId = datum.data.detailId;
     const id = datum.data.id;
     e.stopPropagation();
-    openDetailPage(pageId, {id: detailId, value: type === "Project" ? getJobStr(detailId) : id})
-  }
+    openDetailPage(pageId, {
+      id: detailId,
+      value: type === "Project" ? getJobStr(detailId) : id,
+    });
+  };
 
   const sum = sumValues(data);
 

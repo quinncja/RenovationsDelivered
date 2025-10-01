@@ -47,7 +47,9 @@ function Logo({ expanded }) {
       navigate("/dashboard/item/client-insight/");
     } else if (currentPath.startsWith("/dashboard/item/vendor-insight/id/")) {
       navigate("/dashboard/item/vendor-insight/");
-    } else if (currentPath.startsWith("/dashboard/item/subcontractor-insight/id/")) {
+    } else if (
+      currentPath.startsWith("/dashboard/item/subcontractor-insight/id/")
+    ) {
       navigate("/dashboard/item/subcontractor-insight/");
     } else {
       navigate("/dashboard");

@@ -6,19 +6,19 @@ import DataValidation from "./DataValidation/DataValidation";
 import MonthlyYearRevenue from "./MonthlyYearRevenue/MonthlyYearRevenue";
 import AgingSummary from "pages/dashboardOpen/AgingSummary/AgingSummary";
 import EmployeePerformance from "./EmployeePerformance";
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef } from "react";
 
 const WidgetSection = ({
   title,
-  color = 'green',
-  gap = '10px',
+  color = "green",
+  gap = "10px",
   children,
-  className = '',
-  style = {}
+  className = "",
+  style = {},
 }) => {
   const headerRef = useRef(null);
   const sentinelRef = useRef(null);
-  
+
   useEffect(() => {
     const header = headerRef.current;
     const sentinel = sentinelRef.current;
@@ -26,7 +26,7 @@ const WidgetSection = ({
 
     const observer = new IntersectionObserver(
       ([e]) => header.classList.toggle("is-pinned", e.intersectionRatio < 1),
-      { threshold: [1] }
+      { threshold: [1] },
     );
 
     observer.observe(sentinel);
@@ -42,16 +42,16 @@ const WidgetSection = ({
         flexDirection: "column",
         gap: gap,
         width: "100%",
-        position: 'relative',
-        ...style
+        position: "relative",
+        ...style,
       }}
     >
       <div
         ref={sentinelRef}
         style={{
-          height: '1px',
-          position: 'absolute',
-          top: '-1px',
+          height: "1px",
+          position: "absolute",
+          top: "-1px",
           left: 0,
           right: 0,
         }}
@@ -61,12 +61,12 @@ const WidgetSection = ({
         className="jobs-header"
         style={{
           background: "none",
-          position: 'sticky',
+          position: "sticky",
           top: 0,
           zIndex: 10,
         }}
       >
-        <h2 style={{paddingLeft: "2px"}}>{title}</h2>
+        <h2 style={{ paddingLeft: "2px" }}>{title}</h2>
       </div>
       {children}
     </div>
@@ -79,10 +79,10 @@ const SectionSubheading = ({ children, style = {} }) => {
       style={{
         textAlign: "left",
         paddingTop: "20px",
-        opacity: '.95',
+        opacity: ".95",
         fontSize: "16px",
         fontWeight: "500",
-        ...style
+        ...style,
       }}
     >
       {children}
@@ -92,7 +92,7 @@ const SectionSubheading = ({ children, style = {} }) => {
 
 function HomeWidgets() {
   const year = new Date().getFullYear();
-  
+
   return (
     <>
       <div className="home-widget-container">
@@ -103,7 +103,7 @@ function HomeWidgets() {
             <MonthlyYearRevenue />
           </div>
         </WidgetSection>
-        
+
         <WidgetSection title={`${year} Overview`} color="blue">
           <Margin />
           <SectionSubheading>Business Insights</SectionSubheading>

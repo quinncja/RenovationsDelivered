@@ -6,16 +6,17 @@ function TableHeader(props) {
   const { data, type } = props;
 
   const getCommittedType = () => {
-    if(type === "Subcontractors") return "Subcontracts"
-    else if(type === "Material") return "Purchases"
-  }
+    if (type === "Subcontractors") return "Subcontracts";
+    else if (type === "Material") return "Purchases";
+  };
   const getComittedIcon = () => {
-     if(type === "Subcontractors") return hardHatSvg()
-    else if(type === "Material") return <div style={{fontWeight: "600", color: "white"}}> PO </div>
-  }
+    if (type === "Subcontractors") return hardHatSvg();
+    else if (type === "Material")
+      return <div style={{ fontWeight: "600", color: "white" }}> PO </div>;
+  };
 
   const renderComitted = () => {
-    if(type === "Labor" || type === "WTPM") return;
+    if (type === "Labor" || type === "WTPM") return;
     if (!data)
       return (
         <div className="tjh-widget">

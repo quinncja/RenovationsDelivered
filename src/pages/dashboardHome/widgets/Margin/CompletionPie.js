@@ -5,31 +5,33 @@ import PieChartTooltips from "../Insights/PieChartTooltips";
 
 function CompletionPie({ totalContracted, completedContracted }) {
   const [tooltip, setTooltip] = useState(null);
-  
+
   if (!totalContracted || totalContracted <= 0) return null;
-  
+
   const remainingContract = totalContracted - completedContracted;
-  const completionPercentage = Math.round((completedContracted / totalContracted) * 100);
-  
+  const completionPercentage = Math.round(
+    (completedContracted / totalContracted) * 100,
+  );
+
   const data = [
     {
       id: "completed",
       label: "Completed",
       value: completedContracted,
-      color: "#475569"
+      color: "#475569",
     },
     {
       id: "remaining",
-      label: "Remaining", 
+      label: "Remaining",
       value: remainingContract,
-      color: "#2563eb"
-    }
-  ].filter(item => item.value > 0);
-  
+      color: "#2563eb",
+    },
+  ].filter((item) => item.value > 0);
+
   const getColor = (datum) => {
     return datum.data.color;
   };
-  
+
   const CenterText = ({ centerX, centerY }) => {
     return (
       <g>
@@ -41,7 +43,7 @@ function CompletionPie({ totalContracted, completedContracted }) {
           style={{
             fontSize: "32px",
             fontWeight: "bold",
-            fill: "#ffffff"
+            fill: "#ffffff",
           }}
         >
           {completionPercentage}%
@@ -54,7 +56,7 @@ function CompletionPie({ totalContracted, completedContracted }) {
           style={{
             fontSize: "14px",
             fontWeight: "500",
-            fill: "#9ca3af"
+            fill: "#9ca3af",
           }}
         >
           Complete
@@ -62,7 +64,7 @@ function CompletionPie({ totalContracted, completedContracted }) {
       </g>
     );
   };
-  
+
   const theme = {
     tooltip: {
       container: {
@@ -71,7 +73,7 @@ function CompletionPie({ totalContracted, completedContracted }) {
       },
     },
   };
-  
+
   return (
     <>
       <ResponsivePie
@@ -81,7 +83,7 @@ function CompletionPie({ totalContracted, completedContracted }) {
             datum: {
               id: data.label,
               value: data.value,
-              color: data.data.color 
+              color: data.data.color,
             },
             x: event.clientX,
             y: event.clientY,
@@ -92,7 +94,7 @@ function CompletionPie({ totalContracted, completedContracted }) {
             datum: {
               id: data.label,
               value: data.value,
-              color: data.data.color
+              color: data.data.color,
             },
             x: event.clientX,
             y: event.clientY,
@@ -114,13 +116,7 @@ function CompletionPie({ totalContracted, completedContracted }) {
         enableArcLinkLabels={false}
         animate={true}
         theme={theme}
-        layers={[
-          'arcs',
-          'arcLabels', 
-          'arcLinkLabels',
-          'legends',
-          CenterText
-        ]}
+        layers={["arcs", "arcLabels", "arcLinkLabels", "legends", CenterText]}
       />
       {tooltip &&
         createPortal(
@@ -136,9 +132,9 @@ function CompletionPie({ totalContracted, completedContracted }) {
               opacity: 1,
             }}
           >
-            <PieChartTooltips 
-              datum={tooltip.datum} 
-              sum={totalContracted} 
+            <PieChartTooltips
+              datum={tooltip.datum}
+              sum={totalContracted}
               color={tooltip.datum.color}
             />
           </div>,

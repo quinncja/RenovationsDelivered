@@ -14,7 +14,7 @@ export const HomeProvider = ({ children }) => {
   const [open, setOpen] = useState({
     type: null,
     focused: null,
-    detail: null
+    detail: null,
   });
   const [detailMap, setDetailMap] = useState(undefined);
   const year = new Date().getFullYear();
@@ -38,14 +38,14 @@ export const HomeProvider = ({ children }) => {
     const pathParts = currentPath.split("/");
     const typeFromPath = pathParts[3];
     const detailFromPath = pathParts[5];
-    
+
     if (detailFromPath) {
       setOpen((prev) => {
         if (prev.type !== typeFromPath || prev.detail?.id !== detailFromPath) {
-          return { 
-            type: typeFromPath, 
-            focused: null, 
-            detail: { id: detailFromPath } 
+          return {
+            type: typeFromPath,
+            focused: null,
+            detail: { id: detailFromPath },
           };
         }
         return prev;
@@ -53,17 +53,16 @@ export const HomeProvider = ({ children }) => {
     } else if (typeFromPath) {
       setOpen((prev) => {
         if (prev.type !== typeFromPath || prev.detail !== null) {
-          return { 
-            type: typeFromPath, 
-            focused: null, 
-            detail: null 
+          return {
+            type: typeFromPath,
+            focused: null,
+            detail: null,
           };
         }
         return prev;
       });
     }
   }, [currentPath]);
-
 
   useEffect(() => {
     const loadJobData = async () => {
@@ -78,7 +77,7 @@ export const HomeProvider = ({ children }) => {
           const controller = new AbortController();
           abortControllerRef.current = controller;
           const homeData = await fetchHomeData(controller.signal);
-          console.log(homeData)
+          console.log(homeData);
           setDataMap((prev) => {
             const currentData = prev || {};
             const result = { ...currentData };
@@ -87,7 +86,7 @@ export const HomeProvider = ({ children }) => {
               result[key] = {
                 widgetData: value,
                 homeData: currentData[key]?.homeData || null,
-                detailData: currentData[key]?.detailData || null, 
+                detailData: currentData[key]?.detailData || null,
               };
             }
 
@@ -154,7 +153,7 @@ export const HomeProvider = ({ children }) => {
 
           const items = await fetchOpenHomeData(mods, controller.signal);
 
-          if(open?.detail?.id){
+          if (open?.detail?.id) {
             if (items) {
               setDetailMap((prev) => ({
                 ...(prev || {}),
@@ -172,7 +171,6 @@ export const HomeProvider = ({ children }) => {
               }));
             }
           }
-          
         } catch (error) {
           console.log("Error details:", {
             name: error.name,
@@ -234,9 +232,11 @@ export const HomeProvider = ({ children }) => {
 
       if (open.detail?.id) {
         const currentDetailData = dataMap?.[open.type]?.detailData;
-        return !currentDetailData || currentDetailData.detailId !== open.detail.id;
+        return (
+          !currentDetailData || currentDetailData.detailId !== open.detail.id
+        );
       } else {
-        return !(dataMap?.[open.type]?.homeData);
+        return !dataMap?.[open.type]?.homeData;
       }
     };
 
@@ -246,7 +246,6 @@ export const HomeProvider = ({ children }) => {
 
     // eslint-disable-next-line
   }, [isAppReady, currentPath, open.type, open.detail?.id]);
-
 
   const getWidgetDataById = (id) => {
     if (!dataMap) return null;
@@ -273,16 +272,16 @@ export const HomeProvider = ({ children }) => {
   };
 
   const openDetailPage = (type, detail) => {
-    setOpen({type, focused: null, detail })
+    setOpen({ type, focused: null, detail });
     navigate(`/dashboard/item/${type.toLowerCase()}/id/${detail.id}`);
-  }
+  };
 
   const openData = {
     type: open.type,
     focused: open.focused,
     detail: open.detail,
     data: dataMap ? dataMap[open.type] : null,
-    detailData: detailMap && open.detail ? detailMap[open.detail.id] : null
+    detailData: detailMap && open.detail ? detailMap[open.detail.id] : null,
   };
 
   return (

@@ -32,9 +32,9 @@ function TrackedJobs({ jobs }) {
     const sentinel = sentinelRef.current;
     if (!header || !sentinel) return;
 
-    const observer = new IntersectionObserver( 
+    const observer = new IntersectionObserver(
       ([e]) => header.classList.toggle("is-pinned", e.intersectionRatio < 1),
-      { threshold: [1] }
+      { threshold: [1] },
     );
 
     observer.observe(sentinel);
@@ -49,10 +49,10 @@ function TrackedJobs({ jobs }) {
         setLoadingMap(true);
         return;
       }
-  
+
       const maxRetries = 5;
       let retryCount = 0;
-      
+
       const attemptLoad = async () => {
         let controller;
         try {
@@ -61,7 +61,7 @@ function TrackedJobs({ jobs }) {
           }
           controller = new AbortController();
           abortControllerRef.current = controller;
-          
+
           const result = await fetchJobListData(jobsToShow, controller.signal);
           if (result) {
             setDataMap(result);
@@ -74,32 +74,43 @@ function TrackedJobs({ jobs }) {
             isAborted: controller?.signal?.aborted,
             retryCount: retryCount,
           });
-  
-          const isRealAbortError = error.name === "AbortError" && controller?.signal?.aborted;
+
+          const isRealAbortError =
+            error.name === "AbortError" && controller?.signal?.aborted;
           if (isRealAbortError) {
             console.log("Aborting due to explicit abort signal");
             throw error;
           }
-  
+
           retryCount++;
-          console.log(`Error on attempt ${retryCount}/${maxRetries}:`, error.message);
-          
+          console.log(
+            `Error on attempt ${retryCount}/${maxRetries}:`,
+            error.message,
+          );
+
           if (retryCount <= maxRetries) {
-            console.log(`Retrying job list data fetch (attempt ${retryCount}/${maxRetries})`);
-            await new Promise((resolve) => setTimeout(resolve, 1000 * retryCount));
+            console.log(
+              `Retrying job list data fetch (attempt ${retryCount}/${maxRetries})`,
+            );
+            await new Promise((resolve) =>
+              setTimeout(resolve, 1000 * retryCount),
+            );
           } else {
             console.log("Max retries reached, giving up");
             throw error;
           }
         }
       };
-  
+
       while (retryCount <= maxRetries) {
         try {
           await attemptLoad();
           break;
         } catch (error) {
-          if (error.name === "AbortError" && abortControllerRef.current?.signal?.aborted) {
+          if (
+            error.name === "AbortError" &&
+            abortControllerRef.current?.signal?.aborted
+          ) {
             break;
           }
           if (retryCount > maxRetries) {
@@ -110,14 +121,14 @@ function TrackedJobs({ jobs }) {
           }
         }
       }
-      
+
       setLoadingMap(false);
     };
-  
+
     if (isAppReady) {
       loadJobListData();
     }
-  
+
     return () => {
       if (abortControllerRef.current) {
         abortControllerRef.current.abort();
@@ -137,26 +148,26 @@ function TrackedJobs({ jobs }) {
   };
 
   return (
-    <div 
-      style={{display: "flex", flexDirection: "column", width: '100%'}}
+    <div
+      style={{ display: "flex", flexDirection: "column", width: "100%" }}
       className="left-blur blur-white"
     >
-      <div 
+      <div
         ref={sentinelRef}
         style={{
-          height: '1px',
-          position: 'absolute',
-          top: '-1px',
+          height: "1px",
+          position: "absolute",
+          top: "-1px",
           left: 0,
           right: 0,
         }}
       />
-      
-      <div 
+
+      <div
         ref={headerRef}
         className="jobs-header"
         style={{
-          position: 'sticky',
+          position: "sticky",
           top: 0,
           zIndex: 10,
         }}

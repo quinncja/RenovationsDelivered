@@ -9,7 +9,6 @@ function OpenBreakdownTable(props) {
   const { getBreakdownItems } = useJobCostContext();
   const data = getBreakdownItems();
 
-
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -49,8 +48,8 @@ function OpenBreakdownTable(props) {
         <div className="jobs-header jobs-header-old no-sticky" ref={headerRef}>
           <h2> Cost Items </h2>
         </div>
-        <TableHeader data={data} type={type}/>
-        <BreakdownTable data={data} color={null} type={type}/>
+        <TableHeader data={data} type={type} />
+        <BreakdownTable data={data} color={null} type={type} />
       </div>
     </div>
   );

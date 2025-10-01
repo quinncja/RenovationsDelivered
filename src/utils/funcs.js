@@ -188,13 +188,13 @@ export const getMarginColor = (margin) => {
   else return "var(--orange)";
 };
 
-export const getMarginBackground = margin => {
+export const getMarginBackground = (margin) => {
   if (margin === "-- %") return "";
   else if (margin < 0) return "red-background";
   else if (margin > 25) return "green-background";
   else if (margin > 20) return "yellow-background";
   else return "orange-background";
-}
+};
 export const displayMargin = (margin) => {
   if (margin === "-- %") return margin;
   return `${margin.toFixed(2)}%`;

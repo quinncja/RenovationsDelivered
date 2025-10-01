@@ -23,7 +23,10 @@ function SubcontractButton() {
             textAlign: "left",
           }}
         >
-          <h2 style={{ fontWeight: 700, fontSize: '20px'}}> {totalSubs || 0}</h2>
+          <h2 style={{ fontWeight: 700, fontSize: "20px" }}>
+            {" "}
+            {totalSubs || 0}
+          </h2>
           <h5 style={{ minWidth: "17ch" }}>
             {" "}
             {totalSubs && totalSubs === 1 ? "Subcontract" : "Subcontracts"}{" "}
@@ -41,7 +44,10 @@ function SubcontractButton() {
             }}
           >
             <div className="loading-widget" />
-            <h5 style={{ opacity: 0, minWidth: "17ch", fontSize: '20px'}}> Subcontracts </h5>
+            <h5 style={{ opacity: 0, minWidth: "17ch", fontSize: "20px" }}>
+              {" "}
+              Subcontracts{" "}
+            </h5>
           </div>
         </>
       )}

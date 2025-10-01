@@ -45,7 +45,7 @@ function App() {
   if (!isAuthenticated) {
     return (
       <div className="App">
-        <LoginPage/>
+        <LoginPage />
       </div>
     );
   }

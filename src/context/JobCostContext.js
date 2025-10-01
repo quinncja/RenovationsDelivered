@@ -39,9 +39,9 @@ export const JobCostProvider = ({ children }) => {
   });
 
   const getSubCount = () => {
-    if(!jobData) return null;
-    else return jobData.subs[0].SubcontractCount
-  }
+    if (!jobData) return null;
+    else return jobData.subs[0].SubcontractCount;
+  };
   const navigate = useNavigate();
 
   const savePageModifiers = async (modifiers) => {
@@ -285,7 +285,6 @@ export const JobCostProvider = ({ children }) => {
     if (type === 4) return jobData?.committed?.subs || [];
   };
 
-
   const getPostedCosts = (type) => {
     return jobData.posted.filter((cost) => cost.costType === type);
   };
@@ -478,57 +477,76 @@ export const JobCostProvider = ({ children }) => {
   const getBreakdownItems = () => {
     const items = breakdownItems[breakdown.type] || null;
     if (!items) return null;
-    
+
     let dataToFilter;
     if (Array.isArray(items)) {
       dataToFilter = { parent: [], children: items };
     } else {
       dataToFilter = {
         parent: items.parent || [],
-        children: items.children || []
+        children: items.children || [],
       };
     }
-    
+
     let filteredData = { ...dataToFilter };
-    
+
     if (breakdown.focused) {
-      filteredData.parent = filteredData.parent.filter((item) => item.id === breakdown.focused);
-      filteredData.children = filteredData.children.filter((item) => item.id === breakdown.focused);
+      filteredData.parent = filteredData.parent.filter(
+        (item) => item.id === breakdown.focused,
+      );
+      filteredData.children = filteredData.children.filter(
+        (item) => item.id === breakdown.focused,
+      );
     }
-    
+
     if (typeFilter) {
       if (typeFilter === "parent") {
-        const parentIds = new Set(filteredData.parent.map(parent => parent.id));
+        const parentIds = new Set(
+          filteredData.parent.map((parent) => parent.id),
+        );
         filteredData = {
           parent: filteredData.parent,
-          children: filteredData.children.filter(child => child.parent !== "")
+          children: filteredData.children.filter(
+            (child) => child.parent !== "",
+          ),
         };
       } else if (typeFilter === "orphan") {
-        const parentIds = new Set(filteredData.parent.map(parent => parent.id));
+        const parentIds = new Set(
+          filteredData.parent.map((parent) => parent.id),
+        );
         filteredData = {
           parent: [],
-          children: filteredData.children.filter(child => child.parent === "")
+          children: filteredData.children.filter(
+            (child) => child.parent === "",
+          ),
         };
       } else {
-        filteredData.parent = filteredData.parent.filter((item) => item.type === typeFilter);
-        filteredData.children = filteredData.children.filter((item) => item.type === typeFilter);
+        filteredData.parent = filteredData.parent.filter(
+          (item) => item.type === typeFilter,
+        );
+        filteredData.children = filteredData.children.filter(
+          (item) => item.type === typeFilter,
+        );
       }
     }
-    
+
     if (searchFilter) {
       const searchTerm = searchFilter.toLowerCase();
       const searchMatch = (item) =>
         Object.values(item).some((value) =>
-          String(value).toLowerCase().includes(searchTerm)
+          String(value).toLowerCase().includes(searchTerm),
         );
       filteredData.parent = filteredData.parent.filter(searchMatch);
       filteredData.children = filteredData.children.filter(searchMatch);
     }
-    
-    if (filteredData.parent.length === 0 && filteredData.children.length === 0) {
+
+    if (
+      filteredData.parent.length === 0 &&
+      filteredData.children.length === 0
+    ) {
       return null;
     }
-    
+
     return filteredData;
   };
 
@@ -556,7 +574,7 @@ export const JobCostProvider = ({ children }) => {
         setTypeFilter,
         searchFilter,
         setSearchFilter,
-        getSubCount
+        getSubCount,
       }}
     >
       {children}

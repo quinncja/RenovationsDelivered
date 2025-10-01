@@ -220,7 +220,7 @@ function OpenCostBreakdown(props) {
   };
 
   return (
-    <div className="open-breakdown-cost" style={{position: 'relative'}}>
+    <div className="open-breakdown-cost" style={{ position: "relative" }}>
       {infoBoxes()}
       {tooltip.show && (
         <div

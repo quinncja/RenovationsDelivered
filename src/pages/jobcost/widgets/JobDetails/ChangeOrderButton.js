@@ -44,7 +44,7 @@ function ChangeOrderButton() {
   };
 
   return (
-    <div className="jobcost-changeorder-button" style={{overflow: "hidden"}}>
+    <div className="jobcost-changeorder-button" style={{ overflow: "hidden" }}>
       <div
         className="clickable-co"
         style={{
@@ -76,7 +76,7 @@ function ChangeOrderButton() {
               textAlign: "left",
             }}
           >
-            <h2 style={{ fontWeight: 700, fontSize: '20px' }}>
+            <h2 style={{ fontWeight: 700, fontSize: "20px" }}>
               {" "}
               {changeOrders?.confirmedCount + changeOrders?.pendingCount || 0}
             </h2>

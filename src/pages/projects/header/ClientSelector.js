@@ -3,7 +3,8 @@ import { useProjectContext } from "context/ProjectContext";
 import useIsAdmin from "utils/hooks/useIsAdmin";
 
 function ClientSelector() {
-  const { getAllClients, projectQuery, updateProjectQuery } = useProjectContext();
+  const { getAllClients, projectQuery, updateProjectQuery } =
+    useProjectContext();
   const isAdmin = useIsAdmin();
 
   const selectedClient = projectQuery.client;

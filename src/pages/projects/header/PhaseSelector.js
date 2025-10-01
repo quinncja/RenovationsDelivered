@@ -4,7 +4,7 @@ import { phaseList } from "utils/modifiers";
 
 function PhaseSelector() {
   const { projectQuery, updateProjectQuery } = useProjectContext();
-    
+
   let selectedPhaseId = projectQuery.phase;
 
   const active = projectQuery.phase;
@@ -49,11 +49,9 @@ function PhaseSelector() {
         options={phaseList}
         values={
           selectedPhaseId
-            ? [
-                phaseList.find(
-                  (phase) => phase.id === selectedPhaseId,
-                ),
-              ].filter(Boolean)
+            ? [phaseList.find((phase) => phase.id === selectedPhaseId)].filter(
+                Boolean,
+              )
             : []
         }
         placeholder="-"

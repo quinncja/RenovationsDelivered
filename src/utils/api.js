@@ -118,7 +118,6 @@ export async function fetchHomeData(signal) {
   }
 }
 
-
 export async function fetchOpenHomeData(modifiers, signal) {
   try {
     const response = await axios.get(`${apiUrl}home-data-open`, {
@@ -136,7 +135,7 @@ export async function fetchOpenHomeData(modifiers, signal) {
     ) {
       if (error.response.status === 500) {
         toast.error(
-          "VPN connection error. Please wait a few minutes and try again"
+          "VPN connection error. Please wait a few minutes and try again",
         );
       }
       console.log(error.response.data.error);
@@ -267,9 +266,9 @@ export async function fetchBreakdownItems(modifiers, costType, signal) {
       error.response.data &&
       error.response.data.error
     ) {
-      throw error
+      throw error;
     } else {
-      throw error
+      throw error;
     }
   }
 }
@@ -289,9 +288,9 @@ export async function fetchAggrJobData(modifiers, signal) {
       error.response.data &&
       error.response.data.error
     ) {
-      throw error
+      throw error;
     } else {
-      throw error
+      throw error;
     }
   }
 }
@@ -311,9 +310,9 @@ export async function fetchJobData(modifiers, signal) {
       error.response.data &&
       error.response.data.error
     ) {
-      throw error
+      throw error;
     } else {
-      throw error
+      throw error;
     }
   }
 }
@@ -535,15 +534,12 @@ export async function runReport(type) {
   }
 }
 
-export async function fetchWidgetDetails(type, signal){
-    try {
-    const response = await axios.get(
-      `${apiUrl}${type}-test`,
-      {
-        ...ngrokHeaders,
-        signal,
-      },
-    );
+export async function fetchWidgetDetails(type, signal) {
+  try {
+    const response = await axios.get(`${apiUrl}${type}-test`, {
+      ...ngrokHeaders,
+      signal,
+    });
     return response.data;
   } catch (error) {
     if (axios.isCancel(error)) {

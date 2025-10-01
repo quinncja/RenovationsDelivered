@@ -16,58 +16,56 @@ function JobDetails() {
   const isAdmin = useIsAdmin();
   const { getJobDetails } = useJobCostContext();
   const jobDetails = getJobDetails();
-  
+
   // Initialize state from localStorage
   const [showJobList, setShowJobList] = useState(() => {
-    const saved = localStorage.getItem('showJobList');
+    const saved = localStorage.getItem("showJobList");
     return saved !== null ? JSON.parse(saved) : false;
   });
 
   // Save to localStorage whenever showJobList changes
   useEffect(() => {
-    localStorage.setItem('showJobList', JSON.stringify(showJobList));
+    localStorage.setItem("showJobList", JSON.stringify(showJobList));
   }, [showJobList]);
 
   if (!data) {
     return (
-      <> 
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "row",
-          width: "100%",
-          gap: "7px",
-          boxSizing: "border-box",
-        }}
-      >
-        <div className="jobcost-details-widget loading-widget" />
+      <>
         <div
           style={{
             display: "flex",
-            flexDirection: "column",
-            gap: "7px",
+            flexDirection: "row",
             width: "100%",
+            gap: "7px",
+            boxSizing: "border-box",
           }}
         >
+          <div className="jobcost-details-widget loading-widget" />
           <div
             style={{
               display: "flex",
-              flexDirection: "row",
+              flexDirection: "column",
               gap: "7px",
-              flexGrow: "1",
-              height: "100%",
-              boxSizing: "border-box",
+              width: "100%",
             }}
           >
-            <SubcontractButton />
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                gap: "7px",
+                flexGrow: "1",
+                height: "100%",
+                boxSizing: "border-box",
+              }}
+            >
+              <SubcontractButton />
+            </div>
+            <JobListButton isOpen={showJobList} setIsOpen={setShowJobList} />
           </div>
-          <JobListButton isOpen={showJobList} setIsOpen={setShowJobList}/>
-          </div>
-      </div>
-          {showJobList &&
-            <JobList />
-          }
-          </>
+        </div>
+        {showJobList && <JobList />}
+      </>
     );
   }
 
@@ -203,42 +201,40 @@ function JobDetails() {
 
   return (
     <>
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "row",
-        width: "100%",
-        gap: "7px",
-        boxSizing: "border-box",
-      }}
-    >
-      <div className="jobcost-details-widget">{infoBoxes(data[0])}</div>
       <div
         style={{
           display: "flex",
-          flexDirection: "column",
-          gap: "7px",
+          flexDirection: "row",
           width: "100%",
+          gap: "7px",
+          boxSizing: "border-box",
         }}
       >
+        <div className="jobcost-details-widget">{infoBoxes(data[0])}</div>
         <div
           style={{
             display: "flex",
-            flexDirection: "row",
+            flexDirection: "column",
             gap: "7px",
-            flexGrow: "1",
-            height: "100%",
-            boxSizing: "border-box",
+            width: "100%",
           }}
         >
-          <SubcontractButton />
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              gap: "7px",
+              flexGrow: "1",
+              height: "100%",
+              boxSizing: "border-box",
+            }}
+          >
+            <SubcontractButton />
+          </div>
+          <JobListButton isOpen={showJobList} setIsOpen={setShowJobList} />
         </div>
-        <JobListButton isOpen={showJobList} setIsOpen={setShowJobList}/>
       </div>
-    </div>
-    {showJobList &&
-    <JobList />
-    }
+      {showJobList && <JobList />}
     </>
   );
 }

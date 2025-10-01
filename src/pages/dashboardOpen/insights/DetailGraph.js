@@ -2,9 +2,7 @@ import React from "react";
 import { ResponsiveLine } from "@nivo/line";
 import { dollarFormatter, formatNumberShort } from "utils/formatters";
 
-
 function DetailGraph({ data, type, color = "#28a745" }) {
-
   const chartData = [
     {
       id: "Contracted",
@@ -23,13 +21,14 @@ function DetailGraph({ data, type, color = "#28a745" }) {
 
     let growth = null;
     let growthColor = "#8b949e";
-    
+
     if (data.length >= 2) {
-      const currentIndex = data.findIndex(item => item.x === year);
+      const currentIndex = data.findIndex((item) => item.x === year);
       if (currentIndex > 0) {
         const currentValue = value;
         const previousValue = data[currentIndex - 1].y;
-        const growthPercent = ((currentValue - previousValue) / previousValue) * 100;
+        const growthPercent =
+          ((currentValue - previousValue) / previousValue) * 100;
         growth = growthPercent;
         growthColor = growthPercent >= 0 ? "var(--green)" : "var(--red)";
       }
