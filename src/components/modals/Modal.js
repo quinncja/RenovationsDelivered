@@ -1,10 +1,11 @@
 import React from "react";
 import { useModalContext } from "context/ModalContext";
-import Overlay from "modules/modals/Overlay";
+import Overlay from "components/modals/Overlay";
 import AddJobModal from "./addJobs/AddJobModal";
 import NewChangeOrderModal from "./newChangeOrder/NewChangeOrderModal";
 import FeedbackModal from "./feedback/FeedbackModal";
 import AttachmentViewer from "./attachementViewer/AttachmentViewer";
+import WidgetDetailsModal from "components/WidgetDetails/WidgetDetailsModal";
 
 const Modal = () => {
   const { modalType, closeModal, modalData } = useModalContext();
@@ -31,6 +32,12 @@ const Modal = () => {
             key="newChangeOrderModal"
           />
         );
+      case "widget-details":
+        return(
+          <WidgetDetailsModal 
+            type={modalData}
+          />
+        )
       default:
         return null;
     }

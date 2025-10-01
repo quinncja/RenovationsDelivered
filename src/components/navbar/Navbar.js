@@ -1,4 +1,4 @@
-import { homeSvg, jobcostSvg, usersSvg, UserSvg } from "business/svg";
+import { buildingSvg, homeSvg, jobcostSvg, usersSvg, UserSvg } from "business/svg";
 import Logo from "./Logo";
 import { useLocation, useNavigate } from "react-router-dom";
 import { getBreakdownIconByType } from "utils/funcs";
@@ -43,6 +43,11 @@ function Navbar() {
         },
       ]
     },
+    // {
+    //   id: "Project Library",
+    //   path: "/projects",
+    //   svg: buildingSvg(),
+    // },
     ...(isAdmin ? [{
       id: "Users",
       path: "/users",

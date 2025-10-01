@@ -12,7 +12,6 @@ function PhaseCountChart({ id, data }) {
   const [currentPage, setCurrentPage] = useState(0);
   const itemsPerPage = 13;
 
-  // Filter and process existing data
   const existingPhaseData = data
     .filter((item) => item.phase !== "total")
     .filter(
@@ -27,20 +26,17 @@ function PhaseCountChart({ id, data }) {
       hasData: true,
     }));
 
-  // Separate regular phases (1-12) and extra phases (13+)
   const regularPhases = existingPhaseData.filter(item => item.phaseNum <= 12);
   const extraPhases = existingPhaseData.filter(item => item.phaseNum > 12);
 
-  // Create a map for quick lookup of regular phases
   const phaseDataMap = new Map();
   regularPhases.forEach((item) => {
     phaseDataMap.set(item.phaseNum, item);
   });
 
-  // Combine all extra phases into one "Extra" entry
   const extraPhaseData = extraPhases.length > 0 ? {
     phase: "extra",
-    phaseNum: 13, // Use 13 as the representative number for sorting
+    phaseNum: 13,
     current_year_open: extraPhases.reduce((sum, item) => sum + item.current_year_open, 0),
     current_year_closed: extraPhases.reduce((sum, item) => sum + item.current_year_closed, 0),
     total: extraPhases.reduce((sum, item) => sum + item.total, 0),
@@ -54,17 +50,8 @@ function PhaseCountChart({ id, data }) {
     hasData: false,
   };
 
-  console.log("Phase data analysis:", {
-    regularPhases: regularPhases.map(p => ({ phase: p.phaseNum, hasData: p.hasData })),
-    extraPhases: extraPhases.map(p => ({ phase: p.phaseNum, hasData: p.hasData })),
-    extraPhaseData,
-    combinedExtraTotal: extraPhaseData.total
-  });
-
-  // Create complete array of all phases
   const allPhases = [];
   
-  // Add phases 1-12 (regular phases)
   for (let i = 1; i <= 12; i++) {
     const existingData = phaseDataMap.get(i);
     
@@ -82,18 +69,9 @@ function PhaseCountChart({ id, data }) {
     }
   }
   
-  // Add the single combined extra phase
   allPhases.push(extraPhaseData);
 
-  // Use the complete phase data for pagination
   const phaseData = allPhases;
-
-  console.log("Final phaseData structure:", phaseData.map(p => ({
-    phase: p.phase,
-    phaseNum: p.phaseNum,
-    hasData: p.hasData,
-    total: p.total
-  })));
 
   const totalPages = Math.ceil(phaseData.length / itemsPerPage);
   const startIndex = currentPage * itemsPerPage;

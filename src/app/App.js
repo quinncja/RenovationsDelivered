@@ -1,10 +1,10 @@
 import { Outlet } from "react-router-dom";
-import Navbar from "modules/navbar/Navbar";
-import Modal from "../modules/modals/Modal";
-import SystemMessage from "../modules/systemMessage/SystemMessage";
+import Navbar from "components/navbar/Navbar";
+import Modal from "../components/modals/Modal";
+import SystemMessage from "../components/systemMessage/SystemMessage";
 import "./App.css";
 import { Toaster } from "sonner";
-import Footer from "modules/footer/Footer";
+import Footer from "components/footer/Footer";
 import { useAppInitializer } from "./useAppInitializer";
 import useScrollToTop from "utils/hooks/useScrollToTop";
 import logo from "images/R-Only-White.png";

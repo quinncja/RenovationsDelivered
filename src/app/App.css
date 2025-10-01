@@ -1,5 +1,6 @@
 :root {
   --activePrimary: #ffffff;
+  --popover-dark: #1a1d2392;
   --primary: hsl(220, 34%, 30%);
   --accent: #ff7b00;
   --terciary: #212939;
@@ -119,18 +120,18 @@ button {
 h2 {
   font-size: 22px;
   margin: 0;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.03em;
 }
 h3 {
-  font-size: 18px;
+  font-size: 16px;
   margin: 0;
   color: var(--white);
-  letter-spacing: 0.5px;
+  letter-spacing: 0.03em;
 }
 h4 {
   font-size: 14px;
   font-weight: 400;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.03em;
   margin: 0;
   color: #cbd5e1d1;
 }
@@ -138,8 +139,8 @@ h4 {
 h5 {
   font-size: 12px;
   font-weight: 400;
-  letter-spacing: 0.5px;
   margin: 0;
+  letter-spacing: 0.03em;
   color: #cbd5e1c0;
 }
 
@@ -2530,7 +2531,7 @@ body.overlay-open {
   justify-content: center;
   align-items: center;
   width: 100vw;
-  min-height: 100vh;
+  height: 100vh;
   z-index: 215;
   pointer-events: none;
 }
@@ -2544,21 +2545,38 @@ body.overlay-open {
 .new-widget-popup {
   display: flex;
   flex-direction: column;
-  min-width: 600px;
-  width: fit-content;
-  min-height: 450px;
-  height: fit-content;
-  padding: 20px;
+  width: 950px;
+  height: 90%;
+  padding: 30px;
   box-sizing: border-box;
-  background-color: var(--dark);
+  background-color: var(--solid-dark);
   border: 1px solid var(--fancy-border);
   color: var(--less-white);
   pointer-events: auto;
   position: relative;
   border-radius: 5px;
-  gap: 20px;
+  gap: 35px;
+  overflow: hidden;
 }
 
+.loc-test{
+  position: relative;
+}
+.loc-test::after{
+  content: "";
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+  height: 1px;
+  background: var(--fancy-border);
+  opacity: .5;
+}
+.loc-test:first-child{
+  padding-top: 10px !important;
+}
+.loc-test:last-child::after{
+  opacity: 0;
+}
 .new-widget-popup .widget-top {
   padding: 0px;
 }
@@ -4656,6 +4674,7 @@ h1 {
   width: 100%;
   padding: 15px;
   padding-inline: 20px;
+  position: relative;
 }
 
 .home-phasecount-widget {
@@ -6211,4 +6230,21 @@ h2 {
 .project-info:hover{
   cursor: pointer;
   filter: brightness(1.15);
+}
+
+.widget-details{
+  height: 25px;
+  width: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  padding: 10px;
+  margin-top: 5px;
+  margin-right: 7px;
+  opacity: .5;
+}
+
+.widget-details:hover{
+  opacity: 1;
 }

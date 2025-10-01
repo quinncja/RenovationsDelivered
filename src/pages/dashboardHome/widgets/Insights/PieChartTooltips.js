@@ -3,7 +3,6 @@ import { dollarFormatter } from "utils/formatters";
 
 export default function PieChartTooltips(props) {
   const { datum, sum, color} = props;
-  console.log(datum, color)
   const getPercentage = () => {
     if (sum === 0) return "0%";
     const percentage = (datum.value / sum) * 100;

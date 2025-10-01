@@ -1,6 +1,7 @@
 import { useHome } from "context/HomeContext";
 import { dollarFormatter } from "utils/formatters";
 import AgingBar from "./AgingBar";
+import WidgetDetails from "components/WidgetDetails/WidgetDetails";
 
 function AgingSummary({data, open = false}){
     const id = "aging-summary";
@@ -220,6 +221,7 @@ function AgingSummary({data, open = false}){
           <div style={{display: "flex", flexDirection: "column", justifyContent: "space-between", height: "100%", gap: "10px"}}> 
           
             <div> 
+              <WidgetDetails type={"loc"}/>
               <h4> <span style={{fontWeight: "600", color: "#9f3dac"}}> ADVIA </span>  Line of Credit </h4>
               <h2 style={{ fontSize: "32px", marginTop: "5px"}}>
                 {dollarFormatter(displayData[12].amount)}
