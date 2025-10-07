@@ -1,12 +1,13 @@
 import Revenue from "./Revenue/Revenue";
 import Insights from "./Insights/Insights";
-import Margin from "./Margin/Margin";
 import YearRevenue from "./YearRevenue/YearRevenue";
 import DataValidation from "./DataValidation/DataValidation";
 import MonthlyYearRevenue from "./MonthlyYearRevenue/MonthlyYearRevenue";
 import AgingSummary from "pages/dashboardOpen/AgingSummary/AgingSummary";
 import EmployeePerformance from "./EmployeePerformance";
 import { useEffect, useRef } from "react";
+import MarginPerformance from "./MarginPerformance/MarginPerformance";
+import YearCompletion from "./YearCompletion/YearCompletion";
 
 const WidgetSection = ({
   title,
@@ -105,7 +106,9 @@ function HomeWidgets() {
         </WidgetSection>
 
         <WidgetSection title={`${year} Overview`} color="blue">
-          <Margin />
+          <MarginPerformance/>
+          <div style={{height: "10px"}}> </div>
+          <YearCompletion/>
           <SectionSubheading>Business Insights</SectionSubheading>
           <Insights />
           <SectionSubheading>Project Manager Performance</SectionSubheading>

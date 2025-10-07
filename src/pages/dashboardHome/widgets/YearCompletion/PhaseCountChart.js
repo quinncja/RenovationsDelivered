@@ -237,7 +237,7 @@ function PhaseCountChart({ id, data }) {
         data={currentPageData}
         keys={["current_year_open", "current_year_closed"]}
         indexBy="phase"
-        margin={{ top: 10, right: 30, bottom: 25, left: 43 }}
+        margin={{ top: 15, right: 35, bottom: 35, left: 33 }}
         padding={0.25}
         valueScale={{ type: "linear" }}
         indexScale={{ type: "band", round: true }}
@@ -256,7 +256,7 @@ function PhaseCountChart({ id, data }) {
         innerPadding={2}
         axisLeft={{
           tickSize: 0,
-          tickPadding: 5,
+          tickPadding: 15,
           tickValues: 5,
           format: (value) => formatNumberShort(value),
         }}

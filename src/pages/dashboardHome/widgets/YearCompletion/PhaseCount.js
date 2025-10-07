@@ -11,38 +11,24 @@ function PhaseCount() {
   const total = data.find((datum) => datum.phase === "total");
 
   return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        width: "100%",
-        gap: "10px",
-      }}
-    >
-      <div
-        className="home-phasecount-widget clickable-widget"
-        onClick={() => openPage(id)}
-      >
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            padding: "25px",
-            paddingBottom: "0px",
-            alignItems: "flex-start",
-            position: "relative",
-          }}
-        >
-          <h3 style={{ fontWeight: 500, fontSize: "16px" }}>
+        <div className="home-phasecount-widget sub-widget"        
+         onClick={() => openPage(id)}>
+          <div
+            style={{
+              display: "flex",
+              paddingTop: "15px",
+              alignItems: "flex-start",
+            }}
+          >
+          <h4 style={{ fontWeight: 500, fontSize: "14px" }}>
             Phase Status Distribution
-          </h3>
+          </h4>
         </div>
         <div
           className="phase-chart"
           style={{
             flex: 1,
             minHeight: 0,
-            paddingBottom: "25px",
             position: "relative",
           }}
           onClick={(e) => e.stopPropagation()}
@@ -50,7 +36,6 @@ function PhaseCount() {
           <PhaseCountChart id={id} data={data} />
         </div>
       </div>
-    </div>
   );
 }
 

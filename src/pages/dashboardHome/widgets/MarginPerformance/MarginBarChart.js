@@ -167,7 +167,7 @@ function MarginBarChart({ data, marginColor }) {
       data={allPhases}
       keys={["hoverValue"]}
       indexBy="phase"
-      margin={{ top: 50, right: 35, bottom: 35, left: 65 }}
+      margin={{ top: 15, right: 35, bottom: 35, left: 33 }}
       padding={0.25}
       valueScale={{ type: "linear", min: 0, max: 100 }}
       indexScale={{ type: "band", round: true }}
@@ -214,29 +214,6 @@ function MarginBarChart({ data, marginColor }) {
                   fill: "#666666",
                   fontSize: 11,
                   fontWeight: 600,
-                },
-              },
-            ]
-          : []),
-        ...(chartMax > 20
-          ? [
-              {
-                axis: "y",
-                value: ((20 - chartMin) / chartRange) * 100,
-                lineStyle: {
-                  stroke: "#acadae",
-                  opacity: 0.8,
-                  strokeWidth: 1,
-                  strokeDasharray: "4 2",
-                  pointerEvents: "none",
-                },
-                legend: "20%",
-                legendOrientation: "horizontal",
-                legendPosition: "top-left",
-                textStyle: {
-                  fill: "#28a745",
-                  fontSize: 11,
-                  fontWeight: 500,
                 },
               },
             ]

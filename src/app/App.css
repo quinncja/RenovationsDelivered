@@ -1,6 +1,6 @@
 :root {
   --activePrimary: #ffffff;
-  --popover-dark: #1a1d2392;
+  --popover-dark: #1a1d23a9;
   --primary: hsl(220, 34%, 30%);
   --accent: #ff7b00;
   --terciary: #212939;
@@ -1360,10 +1360,6 @@ h1 {
 }
 .phase-chart {
   transition: all 0.3s ease-in-out;
-}
-.phase-chart:hover {
-  filter: brightness(1.15);
-    background: var(--dark);
 }
 .clickable-widget:has(.recent-items:hover) {
   filter: none;
@@ -4778,11 +4774,13 @@ h1 {
   position: relative;
 }
 
-.home-phasecount-widget {
-  background-color: var(--dark);
+.sub-widget{
+  background-color: var(--popover-dark);
   border: 1px solid var(--fancy-border);
-  border-radius: 5px;
-  height: 500px;
+}
+
+.home-phasecount-widget {
+  height: 400px;
   box-sizing: border-box;
   position: relative;
   display: flex;
@@ -4791,7 +4789,9 @@ h1 {
   flex-shrink: 0;
   padding-bottom: 0px;
   gap: 25px;
+  border-radius: 5px;
   overflow: hidden;
+  padding-left: 20px;
 }
 .widget-wrapper {
   background-color: var(--dark);
