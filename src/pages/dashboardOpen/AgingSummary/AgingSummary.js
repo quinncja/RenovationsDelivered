@@ -95,7 +95,6 @@ function AgingSummary({ data, open = false }) {
           display: "flex",
           flexDirection: "column",
           textAlign: "left",
-          background: "var(--dark)",
           paddingInline: "25px",
           paddingBlock: "15px",
           paddingTop: "10px",

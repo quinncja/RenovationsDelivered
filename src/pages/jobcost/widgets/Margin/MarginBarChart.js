@@ -126,7 +126,7 @@ function MarginBarChart({ phaseData, marginColor }) {
       valueScale={{ type: "linear", min: 0, max: 100 }}
       indexScale={{ type: "band", round: true }}
       colors={(bar) =>
-        hoveredId === bar.indexValue ? "#191f27" : "var(--dark)"
+        hoveredId === bar.indexValue ? "#191f27" : "var(--solid-dark)"
       }
       borderWidth={0}
       borderRadius={0}

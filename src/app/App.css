@@ -777,8 +777,11 @@ h1 {
   width: 100%;
   padding: 10px;
   padding-inline: 25px;
-  background-color: var(--dark);
   box-sizing: border-box;
+}
+
+.recent-item:hover{
+    background-color: var(--dark);
 }
 
 .phaselist-item {
@@ -1357,22 +1360,22 @@ h1 {
 }
 .phase-chart {
   transition: all 0.3s ease-in-out;
-  background: var(--dark);
 }
 .phase-chart:hover {
   filter: brightness(1.15);
+    background: var(--dark);
 }
 .clickable-widget:has(.recent-items:hover) {
   filter: none;
 }
 .breakdown-bar {
   border: 1px solid var(--dark);
-  background-color: var(--dark);
   transition: all 0.3s ease-in-out;
   box-sizing: border-box;
 }
 .breakdown-bar:hover {
   filter: brightness(1.15);
+    background-color: var(--dark);
 }
 
 .insight-header {
@@ -4450,7 +4453,6 @@ h1 {
   width: 100%;
   padding: 15px;
   box-sizing: border-box;
-  background-color: var(--dark);
   padding-inline: 20px;
 }
 .insight-item:last-child {
@@ -4459,6 +4461,7 @@ h1 {
 
 .insight-item:hover {
   cursor: pointer;
+  background-color: var(--dark);
   filter: brightness(1.15);
 }
 .entry-item {
@@ -4933,6 +4936,9 @@ h1 {
   padding-block: 20px !important;
   border-left: 1px solid var(--secondary-border);
   align-self: center;
+}
+.aging-box:hover {
+  background: var(--dark);
 }
 .jobcost-detail-box:first-child {
   padding-left: 0px;
