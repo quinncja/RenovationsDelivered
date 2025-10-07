@@ -4073,8 +4073,10 @@ h1 {
 }
 
 .phase-job {
-  min-height: 60px;
+  min-height: 79px;
   height: max-content;
+  position: relative;
+  box-sizing: border-box;
 }
 
 .phase-body {
@@ -4088,16 +4090,6 @@ h1 {
 }
 .detail-body {
   background: var(--dark);
-}
-.phase-job:before {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  height: 1px;
-  width: 100%;
-  background-color: var(--background);
-  z-index: 500;
 }
 .standalone-body {
   border-left: 1px solid var(--fancy-border);
