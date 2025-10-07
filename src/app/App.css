@@ -3898,9 +3898,9 @@ h1 {
 .blur-white::before {
   background: linear-gradient(
     to right,
-    rgba(255, 255, 255, 0.8) 0px,
-    rgba(255, 255, 255, 0.8) 1px,
-    rgba(255, 255, 255, 0.08) 1px,
+    rgba(255, 255, 255, 0.5) 0px,
+    rgba(255, 255, 255, 0.5) 1px,
+    rgba(255, 255, 255, 0.05) 1px,
     transparent 100%
   );
   mask: linear-gradient(
