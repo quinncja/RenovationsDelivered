@@ -1,17 +1,16 @@
 import { useHome } from "context/HomeContext";
 import { dollarFormatter, percentFomatter } from "utils/formatters";
 import PhaseCount from "./PhaseCount";
-import PhaseCountChart from "./PhaseCountChart";
 
 function YearCompletion(){
     const id = "margin";
     const { getWidgetDataById } = useHome();
     const data = getWidgetDataById(id);
     const homeRevData = getWidgetDataById("homeRev");
-    const total = data.find((item) => item.id === "total");
+    const total = data ? data.find((item) => item.id === "total") : null;
     const year = new Date().getFullYear();
     const yearSum =
-        homeRevData && homeRevData.find((item) => item.year === year)?.revenue;
+        homeRevData ? homeRevData.find((item) => item.year === year)?.revenue : 0;
 
     const completionPercentage = Math.round((total.TotalContract / yearSum) * 100);
     const closedContract = () => {
