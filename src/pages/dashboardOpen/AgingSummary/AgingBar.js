@@ -1,5 +1,5 @@
+import MoneyDisplay from "components/MoneyDisplay/MoneyDisplay";
 import React from "react";
-import { dollarFormatter } from "utils/formatters";
 
 export default function AgingBar({ max, current, color }) {
   const remainder = max - current;
@@ -78,7 +78,7 @@ export default function AgingBar({ max, current, color }) {
             <div
               style={{ display: "flex", alignItems: "baseline", gap: "5px" }}
             >
-              <h2>{dollarFormatter(current || 0)}</h2>
+              <MoneyDisplay value={current || 0} tag={'h2'}/>
               <h5>
                 {utilizationRate != null && isFinite(utilizationRate)
                   ? ` • ${utilizationRate.toFixed(0)}% Utilized`
@@ -95,7 +95,8 @@ export default function AgingBar({ max, current, color }) {
             }}
           >
             <h4 className={remainder < 0 ? "Over" : ""}>{remainderText}</h4>
-            <h3>{dollarFormatter(Math.abs(remainder) || 0)}</h3>
+            <div style={{height: "2px"}}> </div> 
+              <MoneyDisplay value={Math.abs(remainder) || 0} size={18}/>
           </div>
         </div>
         {bar()}

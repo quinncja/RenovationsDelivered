@@ -1,6 +1,7 @@
 import { useHome } from "context/HomeContext";
-import { dollarFormatter, percentFomatter } from "utils/formatters";
+import { percentFomatter } from "utils/formatters";
 import PhaseCount from "./PhaseCount";
+import MoneyDisplay from "components/MoneyDisplay/MoneyDisplay";
 
 function YearCompletion(){
     const id = "margin";
@@ -51,10 +52,7 @@ function YearCompletion(){
 
               <h4> Completed </h4>
               </div>
-              <h2 style={{ fontSize: "26px" }}>
-                {" "}
-                {dollarFormatter(total.TotalContract)}{" "}
-              </h2>
+                <MoneyDisplay value={total.TotalContract} size={26}/>
             </div>
           </div>
         );
@@ -93,10 +91,7 @@ function YearCompletion(){
             ></div>
               <h4> Remaining </h4>
             </div>
-              <h2 style={{ fontSize: "26px" }}>
-                {" "}
-                {dollarFormatter(yearSum - total.TotalContract)}{" "}
-              </h2>
+              <MoneyDisplay value={yearSum - total.TotalContract} size={26}/>
             </div>
           </div>
         );
@@ -127,10 +122,7 @@ function YearCompletion(){
             <div style={{display: "flex", gap: "5px", alignItems: "center"}}> 
               <h4> Total Contracted </h4>
             </div>
-              <h2 style={{ fontSize: "26px" }}>
-                {" "}
-                {dollarFormatter(yearSum)}{" "}
-              </h2>
+              <MoneyDisplay value={yearSum} size={26}/>
             </div>
           </div>
         );

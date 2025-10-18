@@ -1,8 +1,8 @@
 import { displayMargin, getMarginColor } from "utils/funcs";
-import { dollarFormatter } from "utils/formatters";
 import { useJobCostContext } from "context/JobCostContext";
 import useIsAdmin from "utils/hooks/useIsAdmin";
 import MarginBarChart from "./MarginBarChart";
+import MoneyDisplay from "components/MoneyDisplay/MoneyDisplay";
 
 function Margin() {
   const { getDataByType } = useJobCostContext();
@@ -64,10 +64,7 @@ function Margin() {
               }}
             >
               <h4> Profit </h4>
-              <h2 style={{ fontSize: "32px" }}>
-                {" "}
-                {dollarFormatter(total.TotalContract - total.TotalCost)}{" "}
-              </h2>
+              <MoneyDisplay size={32} value={total.TotalContract - total.TotalCost}/>
             </div>
           )}
         </div>

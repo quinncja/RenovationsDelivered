@@ -1,6 +1,6 @@
 import { useHome } from "context/HomeContext";
-import { dollarFormatter } from "utils/formatters";
 import RevenueLineChart from "./RevenueLineChart";
+import MoneyDisplay from "components/MoneyDisplay/MoneyDisplay";
 
 function Revenue() {
   const id = "homeRev";
@@ -117,7 +117,7 @@ function Revenue() {
           }}
         >
           <h4> {year} Revenue</h4>
-          <h2 style={{ fontSize: "32px" }}> {dollarFormatter(yearSum)} </h2>
+          <MoneyDisplay value={yearSum} size={32}/>
           {yoyGrowth !== null ? (
             <span
               className="thisyear"
@@ -154,7 +154,7 @@ function Revenue() {
               alignItems: "baseline",
             }}
           >
-            <h2 style={{ fontSize: "32px" }}> {dollarFormatter(totalSum)} </h2>
+            <MoneyDisplay value={totalSum} size={32}/>
           </div>
         </div>
       </div>

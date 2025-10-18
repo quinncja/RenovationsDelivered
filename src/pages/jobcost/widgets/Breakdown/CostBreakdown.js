@@ -1,3 +1,4 @@
+import MoneyDisplay from "components/MoneyDisplay/MoneyDisplay";
 import React, { useState } from "react";
 import { dollarFormatter } from "utils/formatters";
 import { calculateTotalSum } from "utils/funcs";
@@ -62,7 +63,7 @@ export default function CostBreakdown({ budget, costItems, color }) {
               gap: "2px",
             }}
           >
-            <h2>{dollarFormatter(spent || 0)}</h2>
+            <MoneyDisplay value={spent} tag={"h2"}/>
             <h4>
               of {dollarFormatter(budget || 0)}{" "}
               {utilizationRate != null && isFinite(utilizationRate)

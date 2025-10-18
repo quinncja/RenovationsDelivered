@@ -1,7 +1,8 @@
 import { useHome } from "context/HomeContext";
-import { dollarFormatter, percentFomatter } from "utils/formatters";
+import { percentFomatter } from "utils/formatters";
 import { displayMargin, getMarginBackground, getMarginColor } from "utils/funcs";
 import MarginBarChart from "./MarginBarChart";
+import MoneyDisplay from "components/MoneyDisplay/MoneyDisplay";
 
 function MarginPerformance(){
     const id = "margin";
@@ -10,10 +11,10 @@ function MarginPerformance(){
 
     if (!data) {
         return (
-              <div className="home-yearrevenue-widget loading-widget">
-                <span className="home-widget-title"> </span>
-              </div>
-            );
+        <div className="home-yearrevenue-widget loading-widget">
+          <span className="home-widget-title"> </span>
+        </div>
+      );
     }
         
     const total = data.find((item) => item.id === "total");
@@ -71,10 +72,7 @@ function MarginPerformance(){
               }}
             >
               <h4> Completed Gross </h4>
-              <h2 style={{ fontSize: "26px" }}>
-                {" "}
-                {dollarFormatter(total.TotalContract - total.TotalCost)}{" "}
-              </h2>
+                <MoneyDisplay value={total.TotalContract - total.TotalCost} size={26}/>
             </div>
           </div>
         );
@@ -106,9 +104,7 @@ function MarginPerformance(){
               }}
             >
               <h4> Projected Gross @ {percentFomatter(total.value)} </h4>
-              <h2 style={{ fontSize: "26px" }}>
-                {dollarFormatter(closedGross + projectedGrossFromRemaining)}
-              </h2>
+                <MoneyDisplay value={closedGross + projectedGrossFromRemaining} size={26}/>
             </div>
           </div>
         );
