@@ -7,10 +7,15 @@ function YearCompletion(){
     const { getWidgetDataById } = useHome();
     const data = getWidgetDataById(id);
     const homeRevData = getWidgetDataById("homeRev");
-    const total = data ? data.find((item) => item.id === "total") : null;
+    if(!data || !homeRevData) return(
+        <div className="widget loading-widget"
+            style={{display: "flex", flexDirection: "column", gap: '15px', boxSizing: "border-box", paddingBlock: "25px"}}
+        ></div>
+    ) 
+
+    const total = data.find((item) => item.id === "total");
     const year = new Date().getFullYear();
-    const yearSum =
-        homeRevData ? homeRevData.find((item) => item.year === year)?.revenue : 0;
+    const yearSum = homeRevData.find((item) => item.year === year)?.revenue;
 
     const completionPercentage = Math.round((total.TotalContract / yearSum) * 100);
     const closedContract = () => {
