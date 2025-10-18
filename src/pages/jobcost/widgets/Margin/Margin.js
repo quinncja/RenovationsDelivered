@@ -64,7 +64,10 @@ function Margin() {
               }}
             >
               <h4> Profit </h4>
-              <MoneyDisplay size={32} value={total.TotalContract - total.TotalCost}/>
+              <MoneyDisplay
+                size={32}
+                value={total.TotalContract - total.TotalCost}
+              />
             </div>
           )}
         </div>

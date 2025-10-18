@@ -117,7 +117,7 @@ function Revenue() {
           }}
         >
           <h4> {year} Revenue</h4>
-          <MoneyDisplay value={yearSum} size={32}/>
+          <MoneyDisplay value={yearSum} size={32} />
           {yoyGrowth !== null ? (
             <span
               className="thisyear"
@@ -154,7 +154,7 @@ function Revenue() {
               alignItems: "baseline",
             }}
           >
-            <MoneyDisplay value={totalSum} size={32}/>
+            <MoneyDisplay value={totalSum} size={32} />
           </div>
         </div>
       </div>

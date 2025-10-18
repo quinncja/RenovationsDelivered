@@ -106,9 +106,9 @@ function HomeWidgets() {
         </WidgetSection>
 
         <WidgetSection title={`${year} Overview`} color="blue">
-          <MarginPerformance/>
-          <div style={{height: "10px"}}> </div>
-          <YearCompletion/>
+          <MarginPerformance />
+          <div style={{ height: "10px" }}> </div>
+          <YearCompletion />
           <SectionSubheading>Business Insights</SectionSubheading>
           <Insights />
           <SectionSubheading>Project Manager Performance</SectionSubheading>

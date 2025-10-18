@@ -780,8 +780,8 @@ h1 {
   box-sizing: border-box;
 }
 
-.recent-item:hover{
-    background-color: var(--dark);
+.recent-item:hover {
+  background-color: var(--dark);
 }
 
 .phaselist-item {
@@ -1371,7 +1371,7 @@ h1 {
 }
 .breakdown-bar:hover {
   filter: brightness(1.15);
-    background-color: var(--dark);
+  background-color: var(--dark);
 }
 
 .insight-header {
@@ -4774,7 +4774,7 @@ h1 {
   position: relative;
 }
 
-.sub-widget{
+.sub-widget {
   background-color: var(--popover-dark);
   border: 1px solid var(--fancy-border);
 }

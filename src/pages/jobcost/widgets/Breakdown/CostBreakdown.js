@@ -63,7 +63,7 @@ export default function CostBreakdown({ budget, costItems, color }) {
               gap: "2px",
             }}
           >
-            <MoneyDisplay value={spent} tag={"h2"}/>
+            <MoneyDisplay value={spent} tag={"h2"} />
             <h4>
               of {dollarFormatter(budget || 0)}{" "}
               {utilizationRate != null && isFinite(utilizationRate)

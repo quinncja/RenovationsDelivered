@@ -111,7 +111,7 @@ function AgingSummary({ data, open = false }) {
           {titleMap[obj.aging_category]}
         </h4>
         <div style={{ display: "flex", flexDirection: "column", gap: "2px" }}>
-          <MoneyDisplay value={obj.amount} size={18}/>
+          <MoneyDisplay value={obj.amount} size={18} />
           <div className="jobcost-hl" />
           <h5>
             {percentage}% • {obj.count} {obj.count === 1 ? "item" : "items"}
@@ -149,8 +149,8 @@ function AgingSummary({ data, open = false }) {
             </span>{" "}
             Credit Union{" "}
           </h4>
-          <div style={{height: "5px"}}> </div>
-          <MoneyDisplay value={displayData[10].amount} size={32}/>
+          <div style={{ height: "5px" }}> </div>
+          <MoneyDisplay value={displayData[10].amount} size={32} />
           <div className="jobcost-hl" />
           <h5>Available Liquidity</h5>
         </div>
@@ -179,8 +179,8 @@ function AgingSummary({ data, open = false }) {
           </span>{" "}
           Total Accounts Receivable{" "}
         </h4>
-          <div style={{height: "5px"}}> </div>
-          <MoneyDisplay value={agingTotals.arTotal} size={32}/>
+        <div style={{ height: "5px" }}> </div>
+        <MoneyDisplay value={agingTotals.arTotal} size={32} />
         <div className="jobcost-hl" />
         <h5>{agingTotals.arCount} items</h5>
       </div>
@@ -208,8 +208,8 @@ function AgingSummary({ data, open = false }) {
           </span>{" "}
           Total Accounts Payable{" "}
         </h4>
-          <div style={{height: "5px"}}> </div>
-          <MoneyDisplay value={agingTotals.apTotal} size={32}/>
+        <div style={{ height: "5px" }}> </div>
+        <MoneyDisplay value={agingTotals.apTotal} size={32} />
         <div className="jobcost-hl" />
         <h5>{agingTotals.apCount} items</h5>
       </div>
@@ -232,8 +232,12 @@ function AgingSummary({ data, open = false }) {
         onClick={() => handleParentClick()}
       >
         <h4 style={{ color: "white" }}> Cash Position </h4>
-          <div style={{height: "5px"}}> </div>
-          <MoneyDisplay className={agingTotals.cashFlow > 0 ? "green" : "red"} value={agingTotals.cashFlow} size={32}/>
+        <div style={{ height: "5px" }}> </div>
+        <MoneyDisplay
+          className={agingTotals.cashFlow > 0 ? "green" : "red"}
+          value={agingTotals.cashFlow}
+          size={32}
+        />
         <div className="jobcost-hl" />
         <h5>
           {agingTotals.cashFlow > 0
@@ -276,9 +280,9 @@ function AgingSummary({ data, open = false }) {
               </span>{" "}
               Line of Credit{" "}
             </h4>
-            
-              <div style={{height: "5px"}}> </div>
-              <MoneyDisplay value={displayData[12].amount} size={32}/>
+
+            <div style={{ height: "5px" }}> </div>
+            <MoneyDisplay value={displayData[12].amount} size={32} />
             <div className="jobcost-hl" />
             <h5> Based on period {displayData[12].period} AR data </h5>
           </div>

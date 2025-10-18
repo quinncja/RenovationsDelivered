@@ -78,7 +78,7 @@ export default function AgingBar({ max, current, color }) {
             <div
               style={{ display: "flex", alignItems: "baseline", gap: "5px" }}
             >
-              <MoneyDisplay value={current || 0} tag={'h2'}/>
+              <MoneyDisplay value={current || 0} tag={"h2"} />
               <h5>
                 {utilizationRate != null && isFinite(utilizationRate)
                   ? ` • ${utilizationRate.toFixed(0)}% Utilized`
@@ -95,8 +95,8 @@ export default function AgingBar({ max, current, color }) {
             }}
           >
             <h4 className={remainder < 0 ? "Over" : ""}>{remainderText}</h4>
-            <div style={{height: "2px"}}> </div> 
-              <MoneyDisplay value={Math.abs(remainder) || 0} size={18}/>
+            <div style={{ height: "2px" }}> </div>
+            <MoneyDisplay value={Math.abs(remainder) || 0} size={18} />
           </div>
         </div>
         {bar()}

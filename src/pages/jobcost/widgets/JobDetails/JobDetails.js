@@ -147,7 +147,7 @@ function JobDetails() {
             <div
               style={{ display: "flex", flexDirection: "column", gap: "2px" }}
             >
-              <MoneyDisplay size={20} value={details.ContractAmount}/>
+              <MoneyDisplay size={20} value={details.ContractAmount} />
               <div className="jobcost-hl" />
               <h5 style={{ opacity: isFinite(markup) ? 1 : 0 }}>
                 {percentFomatter(markup)} Markup
@@ -165,7 +165,7 @@ function JobDetails() {
         >
           <h4>Budget</h4>
           <div style={{ display: "flex", flexDirection: "column", gap: "2px" }}>
-              <MoneyDisplay size={20} value={jobDetails.budget}/>
+            <MoneyDisplay size={20} value={jobDetails.budget} />
             <div className="jobcost-hl" />
             <h5>
               {dollarFormatter(remaining)}{" "}
@@ -183,7 +183,7 @@ function JobDetails() {
         >
           <h4>Spent</h4>
           <div style={{ display: "flex", flexDirection: "column", gap: "2px" }}>
-              <MoneyDisplay size={20} value={jobDetails.cost}/>
+            <MoneyDisplay size={20} value={jobDetails.cost} />
             <div className="jobcost-hl" />
             <h5 style={{ opacity: isFinite(percentSpent) ? 1 : 0 }}>
               {percentFomatter(percentSpent)} spent

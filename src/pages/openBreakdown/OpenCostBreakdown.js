@@ -101,7 +101,7 @@ function OpenCostBreakdown(props) {
               }}
             >
               <h4>{type} Budget</h4>
-              <MoneyDisplay size={20} value={budget}/>
+              <MoneyDisplay size={20} value={budget} />
             </div>
           </div>
           <div
@@ -150,7 +150,7 @@ function OpenCostBreakdown(props) {
         >
           <h4>Total Spent</h4>
           <div style={{ display: "flex", flexDirection: "column", gap: "2px" }}>
-            <MoneyDisplay size={20} value={spent}/>
+            <MoneyDisplay size={20} value={spent} />
             <div className="jobcost-hl" />
             <h5 style={{ opacity: isFinite(utilizationRate) ? 1 : 0 }}>
               {percentFomatter(utilizationRate)} of budget
@@ -167,7 +167,7 @@ function OpenCostBreakdown(props) {
         >
           <h4>Posted</h4>
           <div style={{ display: "flex", flexDirection: "column", gap: "2px" }}>
-            <MoneyDisplay size={20} value={postedSum}/>
+            <MoneyDisplay size={20} value={postedSum} />
             <div className="jobcost-hl" />
             <h5 style={{ opacity: isFinite(utilizationRate) ? 1 : 0 }}>
               {percentFomatter(postedPercent)} of total spent
@@ -184,7 +184,7 @@ function OpenCostBreakdown(props) {
         >
           <h4>Committed</h4>
           <div style={{ display: "flex", flexDirection: "column", gap: "2px" }}>
-            <MoneyDisplay size={20} value={actualCommittedAmount}/>
+            <MoneyDisplay size={20} value={actualCommittedAmount} />
             <div className="jobcost-hl" />
             <h5 style={{ opacity: isFinite(actualCommittedPercent) ? 1 : 0 }}>
               {percentFomatter(actualCommittedPercent)} of total spent
@@ -201,7 +201,11 @@ function OpenCostBreakdown(props) {
         >
           <h4>{remainderText}</h4>
           <div style={{ display: "flex", flexDirection: "column", gap: "2px" }}>
-            <MoneyDisplay size={20} value={remainder} className={remainder > 0 ? "green" : "red"}/>
+            <MoneyDisplay
+              size={20}
+              value={remainder}
+              className={remainder > 0 ? "green" : "red"}
+            />
             <h5
               style={{
                 opacity: isFinite(remainingPercent) ? 1 : 0,
