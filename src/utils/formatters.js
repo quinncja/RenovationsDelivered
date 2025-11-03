@@ -540,8 +540,8 @@ export const getBaseJobName = (jobName) => {
   const substrings = ["\\.", "ave", "tr", "pl", "st", "dr", "ct", "rd", "dt"];
   const substringsPattern = substrings.join("|");
   return jobName
-    .replace(/\s[NSWE]\s/g, " ")
-    .replace(/P\d{1,2}\s?|20\d{2}/g, "")
+    .replace(/P\d{1,2}\s?/g, "") 
+    .replace(/\s20\d{2}(?:\s|$)/g, " ")
     .replace(/[.-]+$/g, "")
     .replace(
       new RegExp(

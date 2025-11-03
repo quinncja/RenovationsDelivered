@@ -72,7 +72,7 @@ export async function fetchUserList() {
 
 export async function loadProjectList(signal) {
   try {
-    const response = await axios.get(`${apiUrl}job-list-new`, {
+    const response = await axios.get(`${apiUrl}project-list`, {
       ...ngrokHeaders,
       signal: signal,
     });
