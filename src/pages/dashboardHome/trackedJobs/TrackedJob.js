@@ -4,7 +4,7 @@ import { useRef, useState } from "react";
 import { dollarFormatter, getBaseJobName, strToMods } from "utils/formatters";
 import { useNavigate } from "react-router-dom";
 import { calculateMargin, displayMargin, getMarginClass } from "utils/funcs";
-import { fetchChartData } from "utils/api";
+import { fetchProjectPhaseData } from "utils/api";
 import PhaseEntry from "./PhaseEntry";
 import useIsAdmin from "utils/hooks/useIsAdmin";
 import { useJobCostContext } from "context/JobCostContext";
@@ -36,11 +36,8 @@ function TrackedJob(props) {
       }
       const controller = new AbortController();
       abortControllerRef.current = controller;
-      const modsToUse = {
-        job: job,
-        type: "phase-details",
-      };
-      const newPhaseData = await fetchChartData(modsToUse, controller.signal);
+
+      const newPhaseData = await fetchProjectPhaseData(job, controller.signal);
       setPhaseData(newPhaseData);
     } catch (error) {
       if (error.name === "AbortError") {
