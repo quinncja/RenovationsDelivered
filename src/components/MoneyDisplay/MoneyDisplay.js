@@ -29,12 +29,13 @@ const MoneyDisplay = ({
 
   const displayValue =
     shorten && !showFull ? shortenNumber(value) : formatNumber(value);
-
-  const parts = displayValue.match(/^([\d,]+)(\.?)(\d*)([KMB]?)$/);
-  const wholePart = parts[1];
-  const decimalPoint = parts[2];
-  const decimalPart = parts[3];
-  const suffix = parts[4];
+  console.log(displayValue)
+  const parts = displayValue.match(/^(-?)([\d,]+)(\.?)(\d*)([KMB]?)$/); 
+  const sign = parts[1];
+  const wholePart = parts[2];
+  const decimalPoint = parts[3];
+  const decimalPart = parts[4];
+  const suffix = parts[5];
 
   const Tag = tag;
 
@@ -72,7 +73,7 @@ const MoneyDisplay = ({
           marginRight: "0.125em",
         }}
       >
-        $
+        {sign}$
       </span>
       <span>{wholePart}</span>
       {(decimalPoint || decimalPart) && (

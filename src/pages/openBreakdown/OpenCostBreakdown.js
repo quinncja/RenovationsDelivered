@@ -18,6 +18,7 @@ function OpenCostBreakdown(props) {
   });
 
   if (!data) return <div className="open-breakdown-cost loading-widget" />;
+  
   const { budget, costItems } = data;
   const { posted, committed } = costItems;
 
