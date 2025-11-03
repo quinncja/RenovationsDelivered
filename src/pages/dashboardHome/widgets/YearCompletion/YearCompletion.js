@@ -162,7 +162,7 @@ function YearCompletion() {
           <div style={{ display: "flex", gap: "5px", alignItems: "center" }}>
             <h4> Percent Completed</h4>
           </div>
-          <h2 style={{ fontSize: "38px" }}>
+          <h2 style={{ fontSize: "26px" }}>
             {" "}
             {percentFomatter(completionPercentage)}{" "}
           </h2>

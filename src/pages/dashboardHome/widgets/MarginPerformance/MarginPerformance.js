@@ -47,7 +47,7 @@ function MarginPerformance() {
           {" "}
           Completed Job Margin{" "}
         </h4>
-        <h2 style={{ fontSize: "38px", color: marginColor }}>
+        <h2 style={{ fontSize: "26px", color: marginColor }}>
           {" "}
           {displayMargin(total.value)}{" "}
         </h2>
