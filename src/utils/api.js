@@ -190,9 +190,8 @@ export async function fetchFileFromSMB(filePath, signal) {
 
 export async function fetchJobListData(joblist, signal) {
   try {
-    const url = new URL(`${apiUrl}joblist-data`);
+    const url = new URL(`${apiUrl}project-list-data`);
 
-    // Ensure joblist is an array
     const jobsArray = Array.isArray(joblist) ? joblist : [joblist];
 
     jobsArray.forEach((job) => {
