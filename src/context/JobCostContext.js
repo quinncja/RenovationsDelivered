@@ -273,10 +273,10 @@ export const JobCostProvider = ({ children }) => {
 
   const getBudget = (type) => {
     const finances = jobData.finances;
-    if (type === 1) return Number(finances.Material) || 0;
-    if (type === 2) return Number(finances.Labor) || 0;
-    if (type === 4) return Number(finances.Subcontracts) || 0;
-    if (type === 5) return Number(finances.WTPM) || 0;
+    if (type === 1) return Number(finances.find((item) => item.Label === "Material").Value)
+    if (type === 2) return Number(finances.find((item) => item.Label === "Labor").Value)
+    if (type === 4) return Number(finances.find((item) => item.Label === "Subcontracts").Value)
+    if (type === 5) return Number(finances.find((item) => item.Label === "WTPM").Value)
   };
 
   const getCommittedCosts = (type) => {

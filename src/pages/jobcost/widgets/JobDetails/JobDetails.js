@@ -18,13 +18,11 @@ function JobDetails() {
   const { getJobDetails } = useJobCostContext();
   const jobDetails = getJobDetails();
 
-  // Initialize state from localStorage
   const [showJobList, setShowJobList] = useState(() => {
     const saved = localStorage.getItem("showJobList");
     return saved !== null ? JSON.parse(saved) : false;
   });
 
-  // Save to localStorage whenever showJobList changes
   useEffect(() => {
     localStorage.setItem("showJobList", JSON.stringify(showJobList));
   }, [showJobList]);
