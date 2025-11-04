@@ -279,11 +279,12 @@ export async function fetchChartData(modifiers, signal) {
 
 export async function fetchBreakdownItems(modifiers, costType, signal) {
   try {
-    const response = await axios.get(`${apiUrl}breakdown-items`, {
+    const response = await axios.get(`${apiUrl}jobcost-items`, {
       params: { ...modifiers, costType },
       ...ngrokHeaders,
       signal,
     });
+    console.log(response.data)
     return response.data;
   } catch (error) {
     if (axios.isCancel(error)) {
