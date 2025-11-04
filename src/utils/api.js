@@ -301,7 +301,7 @@ export async function fetchBreakdownItems(modifiers, costType, signal) {
 
 export async function fetchAggrJobData(modifiers, signal) {
   try {
-    const response = await axios.get(`${apiUrl}aggr-job-data`, {
+    const response = await axios.get(`${apiUrl}jobcost-data`, {
       params: { ...modifiers },
       ...ngrokHeaders,
       signal,
