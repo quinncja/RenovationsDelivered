@@ -5,7 +5,7 @@ import { dollarFormatter, percentFomatter } from "utils/formatters";
 import { getMarginClass } from "utils/funcs";
 
 function EmployeePerformance() {
-  const id = "employee-performance";
+  const id = "employeePerformance";
   const { getWidgetDataById } = useHome();
   const data = getWidgetDataById(id);
   const { updatePageModifiers } = useJobCostContext();

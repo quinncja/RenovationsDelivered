@@ -31,6 +31,7 @@ const MoneyDisplay = ({
     shorten && !showFull ? shortenNumber(value) : formatNumber(value);
 
   const parts = displayValue.match(/^(-?)([\d,]+)(\.?)(\d*)([KMB]?)$/); 
+  if(!parts) return;
   const sign = parts[1];
   const wholePart = parts[2];
   const decimalPoint = parts[3];

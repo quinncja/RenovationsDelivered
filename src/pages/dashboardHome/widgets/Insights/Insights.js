@@ -3,10 +3,10 @@ import Insight from "./Insight";
 
 function Insights() {
   const { getWidgetDataById } = useHome();
-  const client = getWidgetDataById("client-insight");
-  const job = getWidgetDataById("project-insight");
-  const sub = getWidgetDataById("subcontractor-insight");
-  const vender = getWidgetDataById("vendor-insight");
+  const client = getWidgetDataById("clientInsights");
+  const job = getWidgetDataById("projectInsights");
+  const sub = getWidgetDataById("subcontractorInsights");
+  const vender = getWidgetDataById("vendorInsights");
 
   const loading = !client || !job || !sub || !vender;
 
@@ -25,14 +25,14 @@ function Insights() {
   return (
     <div className="insight-widget">
       <div className="insights">
-        <Insight id={"client-insight"} data={client} type={"Client"} />
-        <Insight id={"project-insight"} data={job} type={"Project"} />
+        <Insight id={"clientInsights"} data={client} type={"Client"} />
+        <Insight id={"projectInsights"} data={job} type={"Project"} />
         <Insight
-          id={"subcontractor-insight"}
+          id={"subcontractorInsights"}
           data={sub}
           type={"Subcontractor"}
         />
-        <Insight id={"vendor-insight"} data={vender} type={"Vendor"} />
+        <Insight id={"vendorInsights"} data={vender} type={"Vendor"} />
       </div>
     </div>
   );

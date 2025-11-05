@@ -563,3 +563,14 @@ export function kebabToNormal(kebabCase) {
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
     .join(" ");
 }
+
+export function camelToTitleCase(camelCase) {
+  if (!camelCase || typeof camelCase !== "string") {
+    return "";
+  }
+  
+  return camelCase
+    .replace(/([A-Z])/g, " $1")
+    .replace(/^./, (str) => str.toUpperCase())
+    .trim();
+}

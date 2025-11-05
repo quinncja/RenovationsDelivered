@@ -4,10 +4,10 @@ import PhaseCount from "./PhaseCount";
 import MoneyDisplay from "components/MoneyDisplay/MoneyDisplay";
 
 function YearCompletion() {
-  const id = "margin";
+  const id = "marginPerformance";
   const { getWidgetDataById } = useHome();
   const data = getWidgetDataById(id);
-  const homeRevData = getWidgetDataById("homeRev");
+  const homeRevData = getWidgetDataById("annualRevenueTrend");
   if (!data || !homeRevData)
     return (
       <div

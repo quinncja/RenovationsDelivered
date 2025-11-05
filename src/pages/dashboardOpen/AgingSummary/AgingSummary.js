@@ -4,9 +4,11 @@ import WidgetDetails from "components/WidgetDetails/WidgetDetails";
 import MoneyDisplay from "components/MoneyDisplay/MoneyDisplay";
 
 function AgingSummary({ data, open = false }) {
-  const id = "aging-summary";
+  const id = "agingSummary";
   const { openData, updateFocusedId, getWidgetDataById, openPage } = useHome();
   const { focused } = openData;
+
+  const locData = getWidgetDataById("loc")
 
   let displayData;
   if (open) displayData = data;
@@ -282,15 +284,15 @@ function AgingSummary({ data, open = false }) {
             </h4>
 
             <div style={{ height: "5px" }}> </div>
-            <MoneyDisplay value={displayData[12].amount} size={32} />
+            <MoneyDisplay value={locData.loc} size={32} />
             <div className="jobcost-hl" />
-            <h5> Based on period {displayData[12].period} AR data </h5>
+            <h5> Based on period {locData.period} AR data </h5>
           </div>
 
           <div style={{ display: "flex", flexDirection: "column", gap: "5px" }}>
             <AgingBar
               color={"#9f3dac"}
-              max={displayData[12].amount}
+              max={locData.loc}
               current={displayData[11].amount}
             />
           </div>

@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { dataValidationObjectList } from "./dataValidationObjectList";
 
 function DataValidation() {
-  const id = "data-validation";
+  const id = "dataValidation";
   const { getWidgetDataById } = useHome();
   const data = getWidgetDataById(id);
   const navigate = useNavigate();

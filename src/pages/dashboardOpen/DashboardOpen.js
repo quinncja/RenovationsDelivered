@@ -1,5 +1,5 @@
 import { useHome } from "context/HomeContext";
-import { kebabToNormal } from "utils/formatters";
+import { camelToTitleCase } from "utils/formatters";
 import PhaseCountPage from "./phaseCount/PhaseCountPage";
 import InsightPage from "./insights/InsightPage";
 import DataValidationPage from "./dataValidation/DataValidationPage";
@@ -10,7 +10,8 @@ import DetailPage from "./insights/DetailPage";
 function DashboardOpen() {
   const { openData, openPage } = useHome();
   const { type, detail } = openData;
-  const normal = kebabToNormal(type);
+  console.log(type)
+  const normal = camelToTitleCase(type);
   const { "*": remainingPath } = useParams();
   const navigate = useNavigate();
 
@@ -49,7 +50,7 @@ function DashboardOpen() {
         .filter((type) => type !== currentType)
         .map((item) => {
           return {
-            id: kebabToNormal(item),
+            id: camelToTitleCase(item),
             open: () => navigate(`data-validation/${item}`),
           };
         });
@@ -64,7 +65,7 @@ function DashboardOpen() {
       >
         <h2>
           {" "}
-          {normal} {currentType ? `• ${kebabToNormal(currentType)}` : ""}
+          {normal} {currentType ? `• ${camelToTitleCase(currentType)}` : ""}
         </h2>
         <div style={{ display: "flex", gap: "20px", paddingRight: "0px" }}>
           {getOtherTypes(type).map((type) => (

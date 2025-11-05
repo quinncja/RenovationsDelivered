@@ -3,7 +3,7 @@ import RevenueLineChart from "./RevenueLineChart";
 import MoneyDisplay from "components/MoneyDisplay/MoneyDisplay";
 
 function Revenue() {
-  const id = "homeRev";
+  const id = "annualRevenueTrend";
   const { getWidgetDataById } = useHome();
   const data = getWidgetDataById(id);
 

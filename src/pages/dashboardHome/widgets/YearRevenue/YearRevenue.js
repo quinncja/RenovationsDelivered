@@ -2,7 +2,7 @@ import { useHome } from "context/HomeContext";
 import YearRevenueLineChart from "./YearRevenueLineChart";
 
 function YearRevenue() {
-  const id = "year-revenue";
+  const id = "cumulativeRevenueGrowth";
   const { getWidgetDataById } = useHome();
   const data = getWidgetDataById(id);
 

@@ -2,7 +2,7 @@ import { useHome } from "context/HomeContext";
 import PhaseCountChart from "./PhaseCountChart";
 
 function PhaseCount() {
-  const id = "phase-overview";
+  const id = "phaseCompletion";
   const { getWidgetDataById, openPage } = useHome();
   const data = getWidgetDataById(id);
 

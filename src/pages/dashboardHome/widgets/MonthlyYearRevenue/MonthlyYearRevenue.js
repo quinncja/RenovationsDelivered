@@ -2,7 +2,7 @@ import { useHome } from "context/HomeContext";
 import MonthlyYearRevenueLineChart from "./MonthlyYearRevenueLineChart";
 
 function MonthlyYearRevenue() {
-  const id = "monthly-year-revenue";
+  const id = "monthlyRevenueComparison";
   const { getWidgetDataById } = useHome();
   const data = getWidgetDataById(id);
 

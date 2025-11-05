@@ -9,7 +9,7 @@ import MarginBarChart from "./MarginBarChart";
 import MoneyDisplay from "components/MoneyDisplay/MoneyDisplay";
 
 function MarginPerformance() {
-  const id = "margin";
+  const id = "marginPerformance";
   const { getWidgetDataById } = useHome();
   const data = getWidgetDataById(id);
 
@@ -24,7 +24,7 @@ function MarginPerformance() {
   const total = data.find((item) => item.id === "total");
   const marginColor = getMarginColor(total.value);
   const marginBackground = getMarginBackground(total.value);
-  const homeRevData = getWidgetDataById("homeRev");
+  const homeRevData = getWidgetDataById("annualRevenueTrend");
   const year = new Date().getFullYear();
   const yearSum =
     homeRevData && homeRevData.find((item) => item.year === year)?.revenue;
