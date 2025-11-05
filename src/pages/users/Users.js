@@ -70,7 +70,7 @@ export function Users() {
   }
 
   const hasAdmin = (user) => {
-    return user.authorization.xbpwwqmn.roles.includes("admin");
+    return user.authorization.xbpwwqmn.roles ? user.authorization.xbpwwqmn.roles.includes("admin") : false;
   };
 
   function findContainer(id) {
@@ -123,7 +123,7 @@ export function Users() {
       if (!activeUser) return;
 
       const originalContainer = activeContainer;
-      const originalRoles = [...activeUser.authorization.xbpwwqmn.roles];
+      const originalRoles = [...activeUser.authorization.xbpwwqmn.roles || []];
       const newRole = overContainer === "adminUsers" ? "admin" : "member";
 
       setItems((prevItems) => {

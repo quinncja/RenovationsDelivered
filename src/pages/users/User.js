@@ -17,7 +17,7 @@ function User(props) {
   };
 
   const hasAdmin = (user) => {
-    return user.authorization.xbpwwqmn.roles.includes("admin");
+    return user.authorization.xbpwwqmn.roles ? user.authorization.xbpwwqmn.roles.includes("admin") : false;
   };
 
   return (

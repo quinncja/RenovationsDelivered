@@ -347,7 +347,7 @@ export async function fetchJobData(modifiers, signal) {
 export async function changeUserRole(userId, newRole) {
   try {
     const response = await axios.post(
-      `${apiUrl}change-user-role`,
+      `${apiUrl}user-role`,
       { userId, newRole },
       {
         ...ngrokHeaders,
