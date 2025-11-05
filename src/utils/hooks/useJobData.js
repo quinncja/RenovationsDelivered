@@ -11,6 +11,7 @@ export const useJobData = () => {
         job: id,
         type: "job-details",
       };
+      console.log("AM I EVER USING THIS??????")
       const newData = await fetchChartData(modsToUse, signal);
       updateDataMap(id, newData);
     },

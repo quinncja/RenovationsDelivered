@@ -148,7 +148,7 @@ export async function fetchOpenHomeData(modifiers, signal) {
 export async function fetchFileFromSMB(filePath, signal) {
   try {
     const encodedPath = encodeURIComponent(filePath);
-    const url = `${apiUrl}api/file/${encodedPath}`;
+    const url = `${apiUrl}file/${encodedPath}`;
 
     const isImage = /\.(jpg|jpeg|png|gif)$/i.test(filePath);
     const isPDF = /\.pdf$/i.test(filePath);
@@ -284,7 +284,6 @@ export async function fetchBreakdownItems(modifiers, costType, signal) {
       ...ngrokHeaders,
       signal,
     });
-    console.log(response.data)
     return response.data;
   } catch (error) {
     if (axios.isCancel(error)) {

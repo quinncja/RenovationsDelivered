@@ -10,7 +10,6 @@ import DetailPage from "./insights/DetailPage";
 function DashboardOpen() {
   const { openData, openPage } = useHome();
   const { type, detail } = openData;
-  console.log(type)
   const normal = camelToTitleCase(type);
   const { "*": remainingPath } = useParams();
   const navigate = useNavigate();
@@ -18,20 +17,21 @@ function DashboardOpen() {
   let currentType = !detail ? remainingPath.split("/")[1] : null;
 
   const renderBody = () => {
-    if (type === "data-validation")
+    console.log(type)
+    if (type === "dataValidation")
       return <DataValidationPage {...openData} id={currentType} />;
-    if (type === "aging-summary") return <AgingSummaryPage {...openData} />;
-    else if (type === "phase-overview") return <PhaseCountPage {...openData} />;
-    else if (type && type.includes("insight"))
+    if (type === "agingSummary") return <AgingSummaryPage {...openData} />;
+    else if (type === "phaseCompletion") return <PhaseCountPage {...openData} />;
+    else if (type && type.includes("Insight"))
       if (detail && detail.id) return <DetailPage {...openData} />;
       else return <InsightPage {...openData} />;
     else return "";
   };
   const insightTypes = ["client", "project", "vendor", "subcontractor"];
   const dataValidationTypes = [
-    "critical-issues",
-    "data-quality",
-    "data-integrity",
+    "criticalIssues",
+    "dataQuality",
+    "dataIntegrity",
   ];
 
   const getOtherTypes = (type) => {
@@ -41,17 +41,17 @@ function DashboardOpen() {
         .map((item) => {
           return {
             id: item.charAt(0).toUpperCase() + item.slice(1),
-            open: () => openPage(`${item}-insight`),
+            open: () => openPage(`${item}Insight`),
           };
         });
     }
-    if (type === "data-validation") {
+    if (type === "dataValidation") {
       return dataValidationTypes
         .filter((type) => type !== currentType)
         .map((item) => {
           return {
             id: camelToTitleCase(item),
-            open: () => navigate(`data-validation/${item}`),
+            open: () => navigate(`dataValidation/${item}`),
           };
         });
     } else return [];

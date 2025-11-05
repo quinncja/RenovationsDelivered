@@ -77,7 +77,6 @@ export const HomeProvider = ({ children }) => {
           const controller = new AbortController();
           abortControllerRef.current = controller;
           const homeData = await fetchHomeData(controller.signal);
-          console.log(homeData);
           setDataMap((prev) => {
             const currentData = prev || {};
             const result = { ...currentData };
@@ -152,7 +151,7 @@ export const HomeProvider = ({ children }) => {
           };
 
           const items = await fetchOpenHomeData(mods, controller.signal);
-
+          console.log("items", items)
           if (open?.detail?.id) {
             if (items) {
               setDetailMap((prev) => ({
@@ -268,12 +267,12 @@ export const HomeProvider = ({ children }) => {
 
   const openPage = (type, focused = null) => {
     setOpen({ type, focused, detail: null });
-    navigate(`/dashboard/item/${type.toLowerCase()}`);
+    navigate(`/dashboard/item/${type}`);
   };
 
   const openDetailPage = (type, detail) => {
     setOpen({ type, focused: null, detail });
-    navigate(`/dashboard/item/${type.toLowerCase()}/id/${detail.id}`);
+    navigate(`/dashboard/item/${type}/id/${detail.id}`);
   };
 
   const openData = {

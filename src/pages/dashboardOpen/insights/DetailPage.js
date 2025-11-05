@@ -262,7 +262,7 @@ function DetailPage({ type, detail, detailData }) {
 
   return (
     <>
-      {renderHeader(detailData.details[0])}
+      {renderHeader(detailData.details)}
       {renderBody(detailData.trend)}
       <div style={{ width: "100%", boxSizing: "border-box" }}>
         {detailData.items &&
