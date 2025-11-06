@@ -125,10 +125,11 @@ function EmployeePerformance() {
       {data ? (
         data.map((employee) => employeeCard(employee))
       ) : (
-        <div className="loading-widget"> </div>
-      )}
+      [...Array(5)].map((_, index) => (
+        <div className="widget loading-widget" style={{ width: "320px", height: "135px", boxSizing: "border-box"}} key={index}></div>
+      )))}
     </div>
-  );
+  )
 }
 
 export default EmployeePerformance;

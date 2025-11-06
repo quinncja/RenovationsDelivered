@@ -18,6 +18,7 @@ function YearCompletion() {
           gap: "15px",
           boxSizing: "border-box",
           paddingBlock: "25px",
+          height: "611px"
         }}
       ></div>
     );

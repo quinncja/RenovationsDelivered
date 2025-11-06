@@ -15,7 +15,7 @@ function MarginPerformance() {
 
   if (!data) {
     return (
-      <div className="home-yearrevenue-widget loading-widget">
+      <div className="home-yearrevenue-widget loading-widget" style={{width: '100%', height: "596px"}}>
         <span className="home-widget-title"> </span>
       </div>
     );
