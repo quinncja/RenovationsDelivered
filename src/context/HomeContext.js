@@ -124,7 +124,7 @@ export const HomeProvider = ({ children }) => {
     };
 
     if (shouldLoadData()) {
-      //loadJobData();
+      loadJobData();
     }
 
     // eslint-disable-next-line

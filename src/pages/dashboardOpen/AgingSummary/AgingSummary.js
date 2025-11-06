@@ -16,8 +16,10 @@ function AgingSummary({ data, open = false }) {
 
   if (!displayData)
     return (
-      <div className="home-agingsummary-widget">
-        <div className="loading-widget" />
+      <div style={{ display: "flex", flexDirection: "column", gap: '10px'}}>
+        <div className="widget loading-widget" style={{height: "224px", boxSizing: "border-box"}}/>
+        <div className="widget loading-widget" style={{height: "165px", boxSizing: "border-box"}}/>
+        <div className="widget loading-widget" style={{height: "165px", boxSizing: "border-box"}}/>
       </div>
     );
 
