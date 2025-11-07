@@ -1,0 +1,44 @@
+import { useDashboard } from "@features/dashboard/context/DashboardContext";
+import BarChart from "./BarChart";
+
+function PhaseCompletion() {
+  const id = "phaseCompletion";
+  const { getWidgetDataById, openPage } = useDashboard();
+  const data = getWidgetDataById(id);
+
+  if (!data) return <div className="home-yearrevenue-widget loading-widget" />;
+
+  const total = data.find((datum) => datum.phase === "total");
+
+  return (
+    <div
+      className="home-phasecount-widget sub-widget"
+      onClick={() => openPage(id)}
+    >
+      <div
+        style={{
+          display: "flex",
+          paddingTop: "15px",
+          alignItems: "flex-start",
+        }}
+      >
+        <h4 style={{ fontWeight: 500, fontSize: "14px" }}>
+          Phase Status Distribution
+        </h4>
+      </div>
+      <div
+        className="phase-chart"
+        style={{
+          flex: 1,
+          minHeight: 0,
+          position: "relative",
+        }}
+        onClick={(e) => e.stopPropagation()}
+      >
+        <BarChart id={id} data={data} />
+      </div>
+    </div>
+  );
+}
+
+export default PhaseCompletion;

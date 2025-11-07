@@ -1,16 +1,14 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import "./index.css";
-import Router from "./app/Router";
-import { SystemMessageProvider } from "context/SystemMessageContext";
-import { ProjectProvider } from "context/ProjectContext";
-import { ModalProvider } from "context/ModalContext";
-import { HistoryProvider } from "context/HistoryContext";
-import { ItemsProvider } from "context/ItemsContext";
-import { TrackedJobProvider } from "context/TrackedJobContext";
-import { HomeProvider } from "context/HomeContext";
-import { JobCostProvider } from "context/JobCostContext";
-import { LoadingProvider } from "app/LoadingContext";
+import Router from "./@core/router/Router";
+import { SystemMessageProvider } from "@shared/context/SystemMessageContext";
+import { ProjectProvider } from "@features/projects/context/ProjectContext";
+import { ModalProvider } from "@shared/context/ModalContext";
+import { HistoryProvider } from "@shared/context/HistoryContext";
+import { TrackedJobProvider } from "@features/projects/context/TrackedProjectContext";
+import { DashboardProvider } from "@features/dashboard/context/DashboardContext";
+import { JobcostProvider } from "@features/jobcost/context/JobcostContext";
+import { LoadingProvider } from "@core/context/InitializingContext";
 import { BrowserRouter } from "react-router-dom";
 import { UserfrontProvider } from "@userfront/react";
 
@@ -24,13 +22,11 @@ root.render(
             <HistoryProvider>
               <ProjectProvider>
                 <TrackedJobProvider>
-                  <ItemsProvider>
-                    <JobCostProvider>
-                      <HomeProvider>
-                        <Router />
-                      </HomeProvider>
-                    </JobCostProvider>
-                  </ItemsProvider>
+                  <JobcostProvider>
+                    <DashboardProvider>
+                      <Router />
+                    </DashboardProvider>
+                  </JobcostProvider>
                 </TrackedJobProvider>
               </ProjectProvider>
             </HistoryProvider>
