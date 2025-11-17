@@ -45,7 +45,7 @@ The home page provides a comprehensive snapshot of business performance through 
 
 <br/>
 
-The screenshot below displays the complete homepage dashboard. All values shown have been randomized for demonstration purposes.
+###### The screenshot below displays the complete homepage dashboard. All values shown have been randomized for demonstration purposes.
 
 <img width="100%" height="100%" alt="HomePage" src="https://github.com/user-attachments/assets/5f6d4be4-ef34-498f-9c65-bf8184874f51" />
 
@@ -62,7 +62,7 @@ The job costing section provides cost tracking and analysis for individual proje
 
 <br/>
 
-The screenshot below displays the complete job costing page. All values shown have been randomized for demonstration purposes.
+###### The screenshot below displays the complete job costing page. All values shown have been randomized for demonstration purposes.
 
 <img width="100%" height="100%" alt="Jobcost" src="https://github.com/user-attachments/assets/af54aa36-778a-4a86-be19-d989e0654cbb" />
 
