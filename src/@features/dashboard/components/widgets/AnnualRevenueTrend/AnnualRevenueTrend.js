@@ -1,6 +1,7 @@
 import { useDashboard } from "@features/dashboard/context/DashboardContext";
 import LineGraph from "./LineGraph";
 import MoneyDisplay from "@shared/components/MoneyDisplay/MoneyDisplay";
+import WidgetDetails from "@shared/components/WidgetDetails/WidgetDetails";
 
 function AnnualRevenueTrend() {
   const id = "annualRevenueTrend";
@@ -57,18 +58,6 @@ function AnnualRevenueTrend() {
     {
       year: 2019,
       revenue: 7786213.64,
-    },
-    {
-      year: 2020,
-      revenue: 3809706.81,
-    },
-    {
-      year: 2021,
-      revenue: 5697187.62,
-    },
-    {
-      year: 2022,
-      revenue: 10112575.28,
     },
   ];
 
@@ -159,6 +148,7 @@ function AnnualRevenueTrend() {
         </div>
       </div>
       <LineGraph data={combinedChartData} />
+      <WidgetDetails type={id}/>
     </div>
   );
 }

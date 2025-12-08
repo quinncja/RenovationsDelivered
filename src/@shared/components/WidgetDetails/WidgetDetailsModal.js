@@ -87,7 +87,7 @@ function WidgetDetailsModal({ type }) {
       </div>
     );
   };
-  const renderLOCTests = (tests) => {
+  const renderTests = (tests) => {
     return tests.map((test, index) => {
       return (
         <div
@@ -102,7 +102,7 @@ function WidgetDetailsModal({ type }) {
           <h5
             style={{ fontWeight: "600", fontSize: "12px", marginBlock: "auto" }}
           >
-            {test.period}
+            {test.identifier}
           </h5>
           <div
             style={{ display: "flex", flexDirection: "column", gap: "15px" }}
@@ -140,15 +140,6 @@ function WidgetDetailsModal({ type }) {
         </div>
       );
     });
-  };
-
-  const renderTests = (type, tests) => {
-    switch (type) {
-      case "loc":
-        return renderLOCTests(tests);
-      default:
-        return "";
-    }
   };
 
   const testResultBackground = getMarginBackground(result ? 100 : 0);
@@ -264,7 +255,7 @@ function WidgetDetailsModal({ type }) {
                 width: "53%",
               }}
             >
-              {renderTests(type, testResults)}
+              {renderTests(testResults)}
             </div>
           </div>
         </div>

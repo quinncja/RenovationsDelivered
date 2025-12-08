@@ -4,7 +4,7 @@ import { toast } from "sonner";
 
 export async function fetchWidgetDetails(type, signal) {
   try {
-    const response = await axios.get(`${apiUrl}${type}-test`, {
+    const response = await axios.get(`${apiUrl}widget-test/${type}`, {
       ...ngrokHeaders,
       signal,
     });
