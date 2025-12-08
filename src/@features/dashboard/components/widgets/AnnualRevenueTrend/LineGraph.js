@@ -7,7 +7,7 @@ function LineGraph({ data }) {
       id: "Revenue",
       data: data.map((item) => ({
         x: item.year,
-        y: item.year === 2023 ? item.revenue + 3954081.79 : item.revenue,
+        y: item.revenue,
       })),
     },
   ];
@@ -106,13 +106,17 @@ function LineGraph({ data }) {
         legendPosition: "middle",
         format: (value) => `$${formatNumberShort(value)}`,
       }}
-      tooltip={customTooltip}
       pointSize={6}
       pointColor="#ffffff"
       pointBorderWidth={2}
       pointBorderColor="#28a745"
       pointLabelYOffset={-12}
-      useMesh={true}
+      useMesh={false}
+      enableSlices="x"
+      sliceTooltip={({ slice }) => {
+        const point = slice.points[0];
+        return customTooltip({ point });
+      }}
       colors={["#28a745"]}
       lineWidth={3}
       enableArea={true}
