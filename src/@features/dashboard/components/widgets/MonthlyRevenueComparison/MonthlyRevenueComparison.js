@@ -21,7 +21,7 @@ function MonthlyRevenueComparison() {
           alignItems: "flex-start",
         }}
       >
-      <div className="widget-title">          
+      <div className="widget-title" style={{color: '#cbd5e1d1'}}>          
         Monthly Revenue Comparison
       </div>
         <div style={{ display: "flex", flexDirection: "row", gap: "20px" }}>
