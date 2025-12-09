@@ -2,12 +2,13 @@ import { useDashboard } from "@features/dashboard/context/DashboardContext";
 import LineGraph from "./LineGraph";
 import MoneyDisplay from "@shared/components/MoneyDisplay/MoneyDisplay";
 import WidgetDetails from "@shared/components/WidgetDetails/WidgetDetails";
+import { phaseToFullMonth, phaseToMonth, phaseToShortMonth } from "@shared/utils/functions";
 
 function AnnualRevenueTrend() {
   const id = "annualRevenueTrend";
-  const { getWidgetDataById } = useDashboard();
+  const { getWidgetDataById, getOverUnder } = useDashboard();
   const data = getWidgetDataById(id);
-
+  
   if (!data) {
     return (
       <div className="home-revenue-widget">
@@ -16,8 +17,10 @@ function AnnualRevenueTrend() {
       </div>
     );
   }
-  const year = new Date().getFullYear();
 
+  const { overUnder, overUnderPeriod} = getOverUnder();
+  const year = new Date().getFullYear();
+    console.log(data)
   const yearSum = data.find((item) => item.year === year)?.revenue;
   const totalSum =
     data.find((item) => item.year === 0)?.revenue + 20287424.35 ?? null;
@@ -50,15 +53,7 @@ function AnnualRevenueTrend() {
     {
       year: 2017,
       revenue: 6999028.12,
-    },
-    {
-      year: 2018,
-      revenue: 8662978.92,
-    },
-    {
-      year: 2019,
-      revenue: 7786213.64,
-    },
+    }
   ];
 
   const databaseData = data.filter((item) => item.year !== 0);
@@ -66,29 +61,10 @@ function AnnualRevenueTrend() {
     (a, b) => a.year - b.year,
   );
 
-  const calculateYoyGrowth = () => {
-    const currentYearData = combinedChartData.find(
-      (item) => item.year === year,
-    );
-    const previousYearData = combinedChartData.find(
-      (item) => item.year === year - 1,
-    );
-
-    if (!currentYearData || !previousYearData) {
-      return null;
-    }
-
-    const growth =
-      ((currentYearData.revenue - previousYearData.revenue) /
-        previousYearData.revenue) *
-      100;
-    return growth;
-  };
-
-  const yoyGrowth = calculateYoyGrowth();
+  const className = overUnder > 0 ? "green" : "red"
 
   return (
-    <div className="home-revenue-widget">
+    <div className="home-revenue-widget" style={{paddingBlock: "5px"}}>
       <div
         style={{
           display: "flex",
@@ -107,24 +83,14 @@ function AnnualRevenueTrend() {
         >
           <h4> {year} Revenue</h4>
           <MoneyDisplay value={yearSum} size={32} />
-          {yoyGrowth !== null ? (
-            <span
-              className="thisyear"
-              style={{
-                paddingTop: "5px",
-                color: yoyGrowth >= 0 ? "#28a745" : "#dc3545",
-              }}
-            >
-              <strong>
-                {yoyGrowth >= 0 ? "+" : ""}
-                {yoyGrowth.toFixed(1)}%
-              </strong>{" "}
-              from last year
-            </span>
+          {overUnder !== null ? (
+              <div style={{color: 'white', display: "flex", gap: "5px", alignItems: "baseline"}}>
+                <span style={{color: className}}> {overUnder > 0 ? "+" : "-"} 
+                {<MoneyDisplay value={overUnder} tag={"h3"} className={className}/>} </span>
+                <h4> {`${phaseToFullMonth(overUnderPeriod)} Under Over`} </h4>
+              </div>
           ) : (
-            <span className="thisyear" style={{ color: "#6a737d" }}>
-              <strong>—</strong> No prior year data
-            </span>
+            ""
           )}
         </div>
         <div

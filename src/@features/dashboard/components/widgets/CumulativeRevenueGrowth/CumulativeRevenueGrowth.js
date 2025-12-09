@@ -21,9 +21,9 @@ function CumulativeRevenueGrowth() {
           alignItems: "flex-start",
         }}
       >
-        <h3 style={{ fontWeight: 500, fontSize: "16px" }}>
+        <div className="widget-title">
           Cumulative Revenue Growth
-        </h3>
+        </div>
         <div style={{ display: "flex", flexDirection: "row", gap: "20px" }}>
           <div
             style={{

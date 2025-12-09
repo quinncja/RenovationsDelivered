@@ -21,9 +21,9 @@ function MonthlyRevenueComparison() {
           alignItems: "flex-start",
         }}
       >
-        <h3 style={{ fontWeight: 500, fontSize: "16px" }}>
-          Monthly Revenue Comparison
-        </h3>
+      <div className="widget-title">          
+        Monthly Revenue Comparison
+      </div>
         <div style={{ display: "flex", flexDirection: "row", gap: "20px" }}>
           <div
             style={{

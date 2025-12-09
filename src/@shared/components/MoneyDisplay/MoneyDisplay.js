@@ -10,6 +10,7 @@ const MoneyDisplay = ({
   const [showFull, setShowFull] = useState(false);
 
   const formatNumber = (num) => {
+    if(!num && num !== 0) return "0.00"
     return num.toLocaleString("en-US", {
       minimumFractionDigits: 2,
       maximumFractionDigits: 2,
@@ -60,7 +61,7 @@ const MoneyDisplay = ({
 
   return (
     <Tag
-      className={`${className}`}
+      className={`${className} money-display`}
       style={baseStyles}
       onClick={handleClick}
       title={

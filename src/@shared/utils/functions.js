@@ -1,21 +1,28 @@
+const RANDOMIZE_VALUES = false;
+
+const randomizeValue = (value) => {
+  if (!RANDOMIZE_VALUES) return value;
+  const randomMultiplier = 0.05 + Math.random() * 7.7;
+  return value * randomMultiplier;
+};
+
 export function dollarFormatter(input) {
   const number = parseFloat(input);
-
   if (isNaN(number)) {
     return null;
   }
-
+  const displayValue = RANDOMIZE_VALUES ? randomizeValue(number) : number;
   const formattedNumber = new Intl.NumberFormat("en-US", {
     style: "currency",
     currency: "USD",
-  }).format(number);
-
+  }).format(displayValue);
   return formattedNumber;
 }
 
 export function percentFomatter(input) {
-  if (!input) return "$0.00";
-  return `${input.toFixed(2)}%`;
+  if (!input || isNaN(input)) return "-";
+  const displayValue = RANDOMIZE_VALUES ? randomizeValue(input) : input;
+  return `${displayValue.toFixed(2)}%`;
 }
 
 function strToPhase(phaseStr) {
@@ -44,90 +51,66 @@ export function strToMods(job, year, phase) {
 }
 
 export function formatNumberShort(number) {
-  if (Math.abs(number) >= 1_000 && Math.abs(number) < 1_000_000) {
-    return (number / 1_000).toFixed(1).replace(/\.0$/, "") + "K";
+  const displayValue = RANDOMIZE_VALUES ? randomizeValue(number) : number;
+
+  if (Math.abs(displayValue) >= 1_000 && Math.abs(displayValue) < 1_000_000) {
+    return (displayValue / 1_000).toFixed(1).replace(/\.0$/, "") + "K";
   }
-  if (Math.abs(number) >= 1_000_000 && Math.abs(number) < 1_000_000_000) {
-    return (number / 1_000_000).toFixed(1).replace(/\.0$/, "") + "M";
+  if (
+    Math.abs(displayValue) >= 1_000_000 &&
+    Math.abs(displayValue) < 1_000_000_000
+  ) {
+    return (displayValue / 1_000_000).toFixed(1).replace(/\.0$/, "") + "M";
   }
-  return number.toString();
+  return displayValue.toString();
 }
+
+const phaseMap = {
+  "00": "Ex.",
+  1: "Jan",
+  "01": "Jan",
+  2: "Feb",
+  "02": "Feb",
+  3: "Mar",
+  "03": "Mar",
+  "04": "Apr",
+  4: "Apr",
+  "05": "May",
+  5: "May",
+  "06": "June",
+  6: "June",
+  "07": "July",
+  7: "July",
+  "08": "Aug",
+  8: "Aug",
+  "09": "Sept",
+  9: "Sept",
+  10: "Oct",
+  11: "Nov",
+  12: "Dec",
+  13: "Ex.",
+  14: "Ex.",
+  15: "Ex.",
+  16: "Ex.",
+};
+
+export const fullYearAndPhaseToStr = (year, phase) => {
+  return `${phaseMap[phase]} '${year.toString().slice(2, 4)}`;
+};
 
 export const yearPhaseToStr = (yearPhase) => {
   const year = yearPhase.slice(1, 3);
   const phase = yearPhase.slice(3, 5);
 
-  const phaseMap = {
-    "00": "Ex.",
-    "01": "Jan",
-    "02": "Feb",
-    "03": "Mar",
-    "04": "Apr",
-    "05": "May",
-    "06": "June",
-    "07": "July",
-    "08": "Aug",
-    "09": "Sept",
-    10: "Oct",
-    11: "Nov",
-    12: "Dec",
-    13: "Ex.",
-    14: "Ex.",
-    15: "Ex.",
-    16: "Ex.",
-  };
-
-  return `${phaseMap[String(phase)]} ${year}`;
+  return `${phaseMap[String(phase)]} '${year}`;
 };
 
 export const phaseNumToMonth = (phase) => {
-  const phaseMap = {
-    0: "Extra Work",
-    "00": "Extra Work",
-    "01": "January",
-    "02": "February",
-    "03": "March",
-    "04": "April",
-    "05": "May",
-    "06": "June",
-    "07": "July",
-    "08": "August",
-    "09": "September",
-    10: "October",
-    11: "November",
-    12: "December",
-    13: "Extra Work",
-    14: "Extra Work",
-    15: "Extra Work",
-    16: "Extra Work",
-  };
-
   const key = String(phase).padStart(2, "0");
   return phaseMap[key];
 };
 
 export const phaseToMonth = (phase, optional) => {
-  let phaseMap = {
-    0: "Extra Work",
-    "00": "Extra Work",
-    "01": "January",
-    "02": "February",
-    "03": "March",
-    "04": "April",
-    "05": "May",
-    "06": "June",
-    "07": "July",
-    "08": "August",
-    "09": "September",
-    10: "October",
-    11: "November",
-    12: "December",
-    13: "Extra Work",
-    14: "Extra Work",
-    15: "Extra Work",
-    16: "Extra Work",
-  };
-
   if (typeof phase !== "string" || phase.length < 5) {
     return phaseMap[phase];
   }
@@ -251,6 +234,28 @@ export const phaseToShortMonth = (month) => {
   return monthNames[month - 1];
 };
 
+export const phaseToFullMonth = (month) => {
+  if (month === 0 || month === "0") return "Extra";
+  if (month === 13 || month === "13") return "Extra";
+  
+  const monthNames = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
+  
+  return monthNames[month - 1];
+};
+
 export const getBaseJobName = (jobName) => {
   if (!jobName) return "";
   const substrings = ["\\.", "ave", "tr", "pl", "st", "dr", "ct", "rd", "dt"];
@@ -280,10 +285,6 @@ export function camelToTitleCase(camelCase) {
     .trim();
 }
 
-export function capitalizeFirstLetter(val) {
-  return String(val).charAt(0).toUpperCase() + String(val).slice(1);
-}
-
 export const calculateTotalSum = (data) => {
   return data.reduce((acc, datum) => acc + datum.value, 0);
 };
@@ -295,29 +296,139 @@ export const calculateMargin = (contract, cogs) => {
 
 export const getMarginClass = (margin) => {
   if (margin === "-- %") return "";
-  else if (margin < 0) return "over";
-  else if (margin > 25) return "under";
-  else if (margin > 20) return "semi-good";
-  else return "semi-bad";
+  else if (margin >= 20) return "under";
+  else if (margin >= 17) return "semi-good"
+  else return "over";
 };
 
 export const getMarginColor = (margin) => {
   if (margin === "-- %") return "";
-  else if (margin < 0) return "var(--red)";
-  else if (margin > 25) return "var(--green)";
-  else if (margin > 20) return "var(--yellow)";
-  else return "var(--orange)";
+  else if (margin >= 20) return "var(--green)";
+  else if (margin >= 17) return "var(--yellow)"
+  else return "var(--red)";
 };
 
 export const getMarginBackground = (margin) => {
   if (margin === "-- %") return "";
-  else if (margin < 0) return "red-background";
-  else if (margin > 25) return "green-background";
-  else if (margin > 20) return "yellow-background";
-  else return "orange-background";
+  else if (margin >= 20) return "green-background";
+  else if (margin >= 17) return "yellow-background"
+  else return "red-background";
 };
 
 export const displayMargin = (margin) => {
   if (margin === "-- %") return margin;
-  return `${margin.toFixed(2)}%`;
+  const displayValue = RANDOMIZE_VALUES ? randomizeValue(margin) : margin;
+  return `${displayValue.toFixed(2)}%`;
 };
+
+export function capitalizeFirstLetter(str) {
+  if (!str) return str;
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
+export function displayString(input) {
+  if (!RANDOMIZE_VALUES || !input) return input;
+
+  const prefixes = [
+    "Premier",
+    "Elite",
+    "Superior",
+    "Diamond",
+    "Crown",
+    "Royal",
+    "Metro",
+    "Universal",
+    "Pacific",
+    "Atlantic",
+    "Summit",
+    "Pinnacle",
+    "Apex",
+    "Vista",
+  ];
+
+  const companies = [
+    "Construction",
+    "Builders",
+    "Contractors",
+    "Development",
+    "Properties",
+    "Renovations",
+    "Remodeling",
+    "Solutions",
+    "Services",
+    "Enterprises",
+    "Group",
+    "Associates",
+    "Partners",
+    "Industries",
+    "Corporation",
+  ];
+
+  const names = [
+    "Anderson",
+    "Johnson",
+    "Williams",
+    "Martinez",
+    "Thompson",
+    "Garcia",
+    "Miller",
+    "Davis",
+    "Rodriguez",
+    "Wilson",
+    "Moore",
+    "Taylor",
+    "Jackson",
+    "White",
+    "Harris",
+    "Martin",
+    "Brown",
+    "Lee",
+    "Walker",
+    "Hall",
+  ];
+
+  const projectTypes = [
+    "Residential",
+    "Commercial",
+    "Industrial",
+    "Mixed-Use",
+    "Retail",
+    "Office",
+    "Healthcare",
+    "Educational",
+    "Hospitality",
+    "Municipal",
+  ];
+
+  const locations = [
+    "Downtown",
+    "Midtown",
+    "Uptown",
+    "Lakeside",
+    "Riverside",
+    "Hillside",
+    "North Side",
+    "South Side",
+    "East Side",
+    "West Side",
+    "Central",
+    "Plaza",
+  ];
+
+  const hasNumbers = /\d/.test(input);
+  const hasCompany = /llc|inc|corp|company|contractor|builder/i.test(input);
+
+  if (hasNumbers) {
+    const type = projectTypes[Math.floor(Math.random() * projectTypes.length)];
+    const location = locations[Math.floor(Math.random() * locations.length)];
+    return `${location} ${type} Project`;
+  } else if (hasCompany) {
+    const prefix = prefixes[Math.floor(Math.random() * prefixes.length)];
+    const company = companies[Math.floor(Math.random() * companies.length)];
+    return `${prefix} ${company}`;
+  } else {
+    const name = names[Math.floor(Math.random() * names.length)];
+    const company = companies[Math.floor(Math.random() * companies.length)];
+    return `${name} ${company}`;
+  }
+}

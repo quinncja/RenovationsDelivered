@@ -6,10 +6,14 @@ import {
   phaseNumToMonth,
   phaseToShortMonth,
 } from "@shared/utils/functions";
+import { useDashboard } from "@features/dashboard/context/DashboardContext";
 
 function LineGraph({ data }) {
+  const { getOverUnder } = useDashboard();
   const currentYear = new Date().getFullYear();
   const lastYear = currentYear - 1;
+
+  const { overUnder, overUnderPeriod, overUnderYear } = getOverUnder();
 
   const currentYearData = data.filter((item) => item.year === currentYear);
   const lastYearData = data.filter((item) => item.year === lastYear);
@@ -31,47 +35,115 @@ function LineGraph({ data }) {
       id: `${currentYear}`,
       data: currentYearData
         .sort((a, b) => a.month - b.month)
-        .map((item) => ({
-          x: phaseToShortMonth(item.month),
-          y: item.revenue,
-          year: item.year,
-          month: item.month,
-          monthlyRevenue: item.monthly_revenue,
-        })),
+        .map((item) => {
+          const isOverUnderMonth = 
+            item.year === overUnderYear && 
+            item.month === overUnderPeriod;
+          
+          return {
+            x: phaseToShortMonth(item.month),
+            y: isOverUnderMonth ? item.revenue + overUnder : item.revenue,
+            year: item.year,
+            month: item.month,
+            monthlyRevenue: item.monthly_revenue,
+            invoicedRevenue: item.revenue,
+            hasOverUnder: isOverUnderMonth,
+            overUnderAmount: isOverUnderMonth ? overUnder : 0,
+          };
+        }),
     },
   ].filter((series) => series.data.length > 0);
 
-  const CustomSliceTooltip = ({ slice }) => {
-    const points = slice.points;
-    const currentYearPoint = points.find((p) => p.data.year === currentYear);
-    const lastYearPoint = points.find((p) => p.data.year === lastYear);
+const CustomSliceTooltip = ({ slice }) => {
+  const points = slice.points;
+  const currentYearPoint = points.find((p) => p.data.year === currentYear);
+  const lastYearPoint = points.find((p) => p.data.year === lastYear);
 
-    let cumulativeGrowth = null;
-    let monthlyGrowth = null;
-    let growthColor = "#8b949e";
+  let cumulativeGrowth = null;
+  let monthlyGrowth = null;
+  let growthColor = "#8b949e";
 
-    if (currentYearPoint && lastYearPoint) {
-      const currentCumulative = currentYearPoint.data.y;
-      const previousCumulative = lastYearPoint.data.y;
-      const cumulativeGrowthPercent =
-        ((currentCumulative - previousCumulative) / previousCumulative) * 100;
+  if (currentYearPoint && lastYearPoint) {
+    const currentCumulative = currentYearPoint.data.y;
+    const previousCumulative = lastYearPoint.data.y;
+    const cumulativeGrowthPercent =
+      ((currentCumulative - previousCumulative) / previousCumulative) * 100;
 
-      const currentMonthly = currentYearPoint.data.monthlyRevenue;
-      const previousMonthly = lastYearPoint.data.monthlyRevenue;
-      const monthlyGrowthPercent =
-        ((currentMonthly - previousMonthly) / previousMonthly) * 100;
-
-      cumulativeGrowth = cumulativeGrowthPercent;
-      monthlyGrowth = monthlyGrowthPercent;
-      growthColor =
-        cumulativeGrowthPercent >= 0 ? "var(--green)" : "var(--red)";
+    let currentMonthly = currentYearPoint.data.monthlyRevenue;
+    const previousMonthly = lastYearPoint.data.monthlyRevenue;
+    
+    if (currentYearPoint.data.hasOverUnder) {
+      currentMonthly = currentMonthly + currentYearPoint.data.overUnderAmount;
     }
+    
+    const monthlyGrowthPercent =
+      ((currentMonthly - previousMonthly) / previousMonthly) * 100;
 
-    return (
-      <div className="tooltip" style={{ minWidth: "220px" }}>
-        <h4>{phaseNumToMonth(points[0].data.month)}</h4>
+    cumulativeGrowth = cumulativeGrowthPercent;
+    monthlyGrowth = monthlyGrowthPercent;
+    growthColor =
+      cumulativeGrowthPercent >= 0 ? "var(--green)" : "var(--red)";
+  }
 
-        {currentYearPoint && (
+  return (
+    <div className="tooltip" style={{ minWidth: "220px" }}>
+      <h4>{phaseNumToMonth(points[0].data.month)} 
+        {currentYearPoint && currentYearPoint.data.hasOverUnder &&             
+        <span style={{ 
+            fontSize: "10px", 
+            color: "#8b949e", 
+            marginLeft: "4px",
+            fontWeight: 500 
+          }}>
+            (In Progress)
+          </span>
+          }</h4>
+          {currentYearPoint && currentYearPoint.data.hasOverUnder && (
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                gap: "4px",
+                paddingBottom: "8px",
+                marginBottom: "8px",
+                borderBottom: "1px solid var(--fancy-border)",
+                width: "100%"
+              }}
+            >
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "baseline",
+                  width: '100%'
+                }}
+              >
+                <h4 style={{ fontSize: "12px", color: "#8b949e" }}>
+                  Invoiced
+                </h4>
+                <h4 style={{ fontWeight: 600, color: "#ffffff", justifySelf: "flex-end" }}>
+                  {dollarFormatter(currentYearPoint.data.invoicedRevenue)}
+                </h4>
+              </div>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "baseline",
+                  width: '100%'
+                }}
+              >
+                <h4 style={{ fontSize: "12px", color: "#8b949e" }}>
+                  + Under Over
+                </h4>
+                <h4 style={{ fontWeight: 600, color: "var(--green)", justifySelf: "flex-end" }}>
+                   {dollarFormatter(currentYearPoint.data.overUnderAmount)}
+                </h4>
+              </div>
+            </div>
+          )}
+      {currentYearPoint && (
+        <>
           <div
             style={{
               display: "flex",
@@ -85,52 +157,84 @@ function LineGraph({ data }) {
               {dollarFormatter(currentYearPoint.data.y)}
             </h3>
           </div>
+        </>
+      )}
+
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          gap: "8px",
+          width: "100%",
+        }}
+      >
+        {lastYearPoint && (
+          <div
+            style={{
+              display: "flex",
+              width: "100%",
+              justifyContent: "space-between",
+              alignItems: "baseline",
+              paddingBottom: "4px",
+            }}
+          >
+            <h4 style={{ color: "#ffffff" }}>{lastYear}</h4>
+            <h3 style={{ fontWeight: 600, color: "#ffffff" }}>
+              {dollarFormatter(lastYearPoint.data.y)}
+            </h3>
+          </div>
         )}
 
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            gap: "8px",
-            width: "100%",
-          }}
-        >
-          {lastYearPoint && (
+        {cumulativeGrowth !== null && (
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              gap: "4px",
+              width: "100%",
+              paddingTop: "4px",
+            }}
+          >
             <div
               style={{
                 display: "flex",
                 width: "100%",
                 justifyContent: "space-between",
-                alignItems: "baseline",
-                paddingBottom: "4px",
+                alignItems: "center",
               }}
             >
-              <h4 style={{ color: "#ffffff" }}>{lastYear}</h4>
-              <h3 style={{ fontWeight: 600, color: "#ffffff" }}>
-                {dollarFormatter(lastYearPoint.data.y)}
-              </h3>
-            </div>
-          )}
-
-          {cumulativeGrowth !== null && (
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                gap: "4px",
-                width: "100%",
-                paddingTop: "4px",
-              }}
-            >
+              <h4>Cumulative Growth:</h4>
               <div
                 style={{
                   display: "flex",
-                  width: "100%",
+                  alignItems: "center",
+                  gap: "4px",
+                }}
+              >
+                <h4 style={{ color: growthColor }}>
+                  {cumulativeGrowth >= 0 ? "↗" : "↘"}
+                </h4>
+                <h4
+                  style={{
+                    color: growthColor,
+                  }}
+                >
+                  {cumulativeGrowth > 0 ? "+" : ""}
+                  {cumulativeGrowth.toFixed(1)}%
+                </h4>
+              </div>
+            </div>
+
+            {monthlyGrowth !== null && (
+              <div
+                style={{
+                  display: "flex",
                   justifyContent: "space-between",
+                  width: "100%",
                   alignItems: "center",
                 }}
               >
-                <h4>Cumulative Growth:</h4>
+                <h4>Monthly Growth:</h4>
                 <div
                   style={{
                     display: "flex",
@@ -138,77 +242,46 @@ function LineGraph({ data }) {
                     gap: "4px",
                   }}
                 >
-                  <h4 style={{ color: growthColor }}>
-                    {cumulativeGrowth >= 0 ? "↗" : "↘"}
+                  <h4
+                    style={{
+                      color:
+                        monthlyGrowth >= 0 ? "var(--green)" : "var(--red)",
+                    }}
+                  >
+                    {monthlyGrowth >= 0 ? "↗" : "↘"}
                   </h4>
                   <h4
                     style={{
-                      color: growthColor,
+                      color:
+                        monthlyGrowth >= 0 ? "var(--green)" : "var(--red)",
                     }}
                   >
-                    {cumulativeGrowth > 0 ? "+" : ""}
-                    {cumulativeGrowth.toFixed(1)}%
+                    {monthlyGrowth > 0 ? "+" : ""}
+                    {monthlyGrowth.toFixed(1)}%
                   </h4>
                 </div>
               </div>
+            )}
+          </div>
+        )}
 
-              {monthlyGrowth !== null && (
-                <div
-                  style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    width: "100%",
-                    alignItems: "center",
-                  }}
-                >
-                  <h4>Monthly Growth:</h4>
-                  <div
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      gap: "4px",
-                    }}
-                  >
-                    <h4
-                      style={{
-                        color:
-                          monthlyGrowth >= 0 ? "var(--green)" : "var(--red)",
-                      }}
-                    >
-                      {monthlyGrowth >= 0 ? "↗" : "↘"}
-                    </h4>
-                    <h4
-                      style={{
-                        color:
-                          monthlyGrowth >= 0 ? "var(--green)" : "var(--red)",
-                      }}
-                    >
-                      {monthlyGrowth > 0 ? "+" : ""}
-                      {monthlyGrowth.toFixed(1)}%
-                    </h4>
-                  </div>
-                </div>
-              )}
-            </div>
-          )}
-
-          {cumulativeGrowth === null && currentYearPoint && !lastYearPoint && (
-            <div
-              style={{
-                color: "#8b949e",
-                fontWeight: 500,
-                fontSize: "12px",
-                textAlign: "center",
-                paddingTop: "4px",
-              }}
-            >
-              No comparison data available
-            </div>
-          )}
-        </div>
+        {cumulativeGrowth === null && currentYearPoint && !lastYearPoint && (
+          <div
+            style={{
+              color: "#8b949e",
+              fontWeight: 500,
+              fontSize: "12px",
+              textAlign: "center",
+              paddingTop: "4px",
+            }}
+          >
+            No comparison data available
+          </div>
+        )}
       </div>
-    );
-  };
+    </div>
+  );
+};
 
   return (
     <>
@@ -218,7 +291,7 @@ function LineGraph({ data }) {
         xScale={{ type: "point" }}
         yScale={{
           type: "linear",
-          min: "auto",
+          min: 0,
           max: "auto",
           stacked: false,
         }}
@@ -246,11 +319,10 @@ function LineGraph({ data }) {
         enableSlices="x"
         tooltip={() => null}
         sliceTooltip={CustomSliceTooltip}
-        pointSize={6}
+        pointSize={4}
         pointColor="#ffffff"
         pointBorderWidth={2}
         pointBorderColor={(point) => {
-          // Explicitly match border color to line color
           const colors = ["#475569", "#28a745"];
           const index = chartData.findIndex(
             (series) => series.id === point.serieId,
@@ -260,7 +332,7 @@ function LineGraph({ data }) {
         pointLabelYOffset={-12}
         useMesh={true}
         colors={["#475569", "#28a745"]}
-        lineWidth={3}
+        lineWidth={2}
         enableArea={true}
         areaOpacity={0.2}
         areaBaselineValue={0}
@@ -331,6 +403,61 @@ function LineGraph({ data }) {
         }}
         enableCrosshair={true}
         crosshairType="x"
+        pointSymbol={({ datum, size, color, borderWidth, borderColor }) => {
+          const isOverUnderPoint = datum.hasOverUnder;
+          
+          if (isOverUnderPoint) {
+            return (
+            <g>
+              <circle
+                className="pulse-ring-outer"
+                r={8}
+                fill="none"
+                stroke="#28a745"
+                strokeWidth={1}
+                strokeOpacity={0.25}
+                style={{
+                  animation: 'pulseOuter 3s cubic-bezier(0.4, 0, 0.2, 1) infinite'
+                }}
+              />
+              
+              <circle
+                className="pulse-ring-inner"
+                r={6}
+                fill="#28a745"
+                fillOpacity={0.08}
+                style={{
+                  animation: 'pulseInner 3s cubic-bezier(0.4, 0, 0.2, 1) infinite'
+                }}
+              />
+              
+              <circle
+                r={size / 2}
+                fill="#ffffff"
+                style={{
+                  animation: 'pulseCore 3s ease-in-out infinite'
+                }}
+              />
+              
+              <circle
+                r={size / 2}
+                fill="none"
+                stroke="#ffffff"
+                strokeWidth={borderWidth}
+              />
+            </g>
+          );
+          }
+          
+          return (
+            <circle
+              r={size / 2}
+              fill={borderColor}
+              stroke={borderColor}
+              strokeWidth={borderWidth}
+            />
+          );
+        }}
       />
     </>
   );

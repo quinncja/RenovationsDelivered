@@ -1,14 +1,26 @@
+import { useDashboard } from "@features/dashboard/context/DashboardContext";
 import { ResponsiveLine } from "@nivo/line";
 import { dollarFormatter, formatNumberShort } from "@shared/utils/functions";
 
 function LineGraph({ data }) {
+  const {getOverUnder } = useDashboard();
+  const { overUnder, overUnderPeriod, overUnderYear } = getOverUnder();
+
   const chartData = [
     {
       id: "Revenue",
-      data: data.map((item) => ({
-        x: item.year,
-        y: item.revenue,
-      })),
+      data: data.map((item) => {
+        const isOverUnderYear = item.year === overUnderYear;
+        
+        return {
+          x: isOverUnderYear ? `${item.year}*` : item.year,
+          y: isOverUnderYear ? item.revenue + overUnder : item.revenue,
+          invoicedRevenue: item.revenue, 
+          hasOverUnder: isOverUnderYear,
+          overUnderAmount: isOverUnderYear ? overUnder : 0,
+          overUnderPeriod: isOverUnderYear ? overUnderPeriod : null,
+        };
+      }),
     },
   ];
 
@@ -32,14 +44,53 @@ function LineGraph({ data }) {
 
     return (
       <div className="tooltip" style={{ zIndex: "100", position: "relative" }}>
-        <h4>{point.data.x}</h4>
-        <div
-          style={{
-            fontWeight: 700,
-          }}
-        >
-          {dollarFormatter(point.data.y)}
+        <h4>
+          {typeof point.data.x === 'string' ? point.data.x.replace('*', '') : point.data.x}
+          {point.data.hasOverUnder && (
+            <span style={{ 
+              fontSize: "10px", 
+              color: "#8b949e", 
+              marginLeft: "4px",
+              fontWeight: 500 
+            }}>
+              (In Progress)
+            </span>
+          )}
+        </h4>
+        
+        {point.data.hasOverUnder && (
+          <>
+              <div style={{ fontWeight: 700, textAlign: "right", width: "100%" }}>
+                {dollarFormatter(point.data.invoicedRevenue)}
+              </div>
+            
+            <div style={{display: "flex", flexDirection: "column", gap: '2px', alignContent: "flex-end", width: '100%'}}>
+                <div style={{ 
+                  fontWeight: 700, 
+                  color: "#28a745", 
+                  textAlign: "right",
+                  width: "100%" 
+                }}>
+                  + {dollarFormatter(point.data.overUnderAmount)}
+                </div>
+                <div style={{ 
+                  fontSize: "11px", 
+                  color: "#8b949e",
+                  paddingBottom: "15px", 
+                  marginBottom: "10px",
+                  textAlign: "right",
+                  width: "100%",
+                  borderBottom: "1px solid var(--fancy-border)"
+                }}>
+                  Under Over
+                </div>
+              </div>
+              </>
+        )}
+        <div div style={{ fontWeight: 700 }}>
+            {dollarFormatter(point.data.y)}
         </div>
+        
         {yoyGrowth !== null && (
           <div
             style={{
@@ -49,6 +100,7 @@ function LineGraph({ data }) {
               display: "flex",
               alignItems: "center",
               gap: "6px",
+              marginTop: "8px",
             }}
           >
             <span>{yoyGrowth >= 0 ? "↗" : "↘"}</span>
@@ -64,6 +116,7 @@ function LineGraph({ data }) {
               color: "#8b949e",
               fontWeight: 500,
               fontSize: "12px",
+              marginTop: "8px",
             }}
           >
             Base year
@@ -76,11 +129,11 @@ function LineGraph({ data }) {
   return (
     <ResponsiveLine
       data={chartData}
-      margin={{ top: 40, right: 15, bottom: 50, left: 40 }}
+      margin={{ top: 40, right: 15, bottom: 50, left: 45 }}
       xScale={{ type: "point" }}
       yScale={{
         type: "linear",
-        min: "auto",
+        min: 0,
         max: "auto",
         stacked: false,
       }}
@@ -106,7 +159,7 @@ function LineGraph({ data }) {
         legendPosition: "middle",
         format: (value) => `$${formatNumberShort(value)}`,
       }}
-      pointSize={6}
+      pointSize={4}
       pointColor="#ffffff"
       pointBorderWidth={2}
       pointBorderColor="#28a745"
@@ -118,7 +171,7 @@ function LineGraph({ data }) {
         return customTooltip({ point });
       }}
       colors={["#28a745"]}
-      lineWidth={3}
+      lineWidth={2}
       enableArea={true}
       areaOpacity={0.2}
       areaBaselineValue={0}
@@ -190,6 +243,61 @@ function LineGraph({ data }) {
       }}
       enableCrosshair={true}
       crosshairType="bottom-left"
+      pointSymbol={({ datum, size, color, borderWidth, borderColor }) => {
+        const isOverUnderPoint = datum.hasOverUnder;
+        
+        if (isOverUnderPoint) {
+          return (
+            <g>
+              <circle
+                className="pulse-ring-outer"
+                r={8}
+                fill="none"
+                stroke="#28a745"
+                strokeWidth={1}
+                strokeOpacity={0.25}
+                style={{
+                  animation: 'pulseOuter 3s cubic-bezier(0.4, 0, 0.2, 1) infinite'
+                }}
+              />
+              
+              <circle
+                className="pulse-ring-inner"
+                r={6}
+                fill="#28a745"
+                fillOpacity={0.08}
+                style={{
+                  animation: 'pulseInner 3s cubic-bezier(0.4, 0, 0.2, 1) infinite'
+                }}
+              />
+              
+              <circle
+                r={size / 2}
+                fill="#ffffff"
+                style={{
+                  animation: 'pulseCore 3s ease-in-out infinite'
+                }}
+              />
+              
+              <circle
+                r={size / 2}
+                fill="none"
+                stroke="#ffffff"
+                strokeWidth={borderWidth}
+              />
+            </g>
+          );
+        }
+        
+        return (
+          <circle
+            r={size / 2}
+            fill={borderColor}
+            stroke={borderColor}
+            strokeWidth={borderWidth}
+          />
+        );
+      }}
     />
   );
 }

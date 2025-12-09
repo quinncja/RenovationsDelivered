@@ -6,10 +6,14 @@ import {
   phaseNumToMonth,
   phaseToShortMonth,
 } from "@shared/utils/functions";
+import { useDashboard } from "@features/dashboard/context/DashboardContext";
 
 function LineGraph({ data }) {
+  const { getOverUnder } = useDashboard();
   const currentYear = new Date().getFullYear();
   const lastYear = currentYear - 1;
+
+  const { overUnder, overUnderPeriod, overUnderYear } = getOverUnder();
 
   const currentYearData = data.filter((item) => item.year === currentYear);
   const lastYearData = data.filter((item) => item.year === lastYear);
@@ -31,13 +35,22 @@ function LineGraph({ data }) {
       id: `${currentYear}`,
       data: currentYearData
         .sort((a, b) => a.month - b.month)
-        .map((item) => ({
-          x: phaseToShortMonth(item.month),
-          y: item.revenue,
-          year: item.year,
-          month: item.month,
-          monthlyRevenue: item.monthly_revenue,
-        })),
+        .map((item) => {
+          const isOverUnderMonth = 
+            item.year === overUnderYear && 
+            item.month === overUnderPeriod;
+          
+          return {
+            x: phaseToShortMonth(item.month),
+            y: isOverUnderMonth ? item.revenue + overUnder : item.revenue,
+            year: item.year,
+            month: item.month,
+            monthlyRevenue: item.monthly_revenue,
+            invoicedRevenue: item.revenue,
+            hasOverUnder: isOverUnderMonth,
+            overUnderAmount: isOverUnderMonth ? overUnder : 0,
+          };
+        }),
     },
   ].filter((series) => series.data.length > 0);
 
@@ -61,7 +74,63 @@ function LineGraph({ data }) {
 
     return (
       <div className="tooltip" style={{ minWidth: "220px" }}>
-        <h4>{phaseNumToMonth(points[0].data.month)}</h4>
+        <h4>{phaseNumToMonth(points[0].data.month)}
+          {currentYearPoint && currentYearPoint.data.hasOverUnder &&             
+          <span style={{ 
+              fontSize: "10px", 
+              color: "#8b949e", 
+              marginLeft: "4px",
+              fontWeight: 500 
+            }}>
+              (In Progress)
+            </span>
+          }
+        </h4>
+
+        {currentYearPoint && currentYearPoint.data.hasOverUnder && (
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              gap: "4px",
+              paddingBottom: "8px",
+              marginBottom: "8px",
+              borderBottom: "1px solid var(--fancy-border)",
+              width: "100%"
+            }}
+          >
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "baseline",
+                width: '100%'
+              }}
+            >
+              <h4 style={{ fontSize: "12px", color: "#8b949e" }}>
+                Invoiced
+              </h4>
+              <h4 style={{ fontWeight: 600, color: "#ffffff", justifySelf: "flex-end" }}>
+                {dollarFormatter(currentYearPoint.data.invoicedRevenue)}
+              </h4>
+            </div>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "baseline",
+                width: '100%'
+              }}
+            >
+              <h4 style={{ fontSize: "12px", color: "#8b949e" }}>
+                + Under Over
+              </h4>
+              <h4 style={{ fontWeight: 600, color: "var(--green)", justifySelf: "flex-end" }}>
+                 {dollarFormatter(currentYearPoint.data.overUnderAmount)}
+              </h4>
+            </div>
+          </div>
+        )}
 
         {currentYearPoint && (
           <div
@@ -159,7 +228,7 @@ function LineGraph({ data }) {
         xScale={{ type: "point" }}
         yScale={{
           type: "linear",
-          min: "auto",
+          min: 0,
           max: "auto",
           stacked: false,
         }}
@@ -187,7 +256,7 @@ function LineGraph({ data }) {
         enableSlices="x"
         tooltip={() => null}
         sliceTooltip={CustomSliceTooltip}
-        pointSize={6}
+        pointSize={4}
         pointColor="#ffffff"
         pointBorderWidth={2}
         pointBorderColor={(point) => {
@@ -200,7 +269,7 @@ function LineGraph({ data }) {
         pointLabelYOffset={-12}
         useMesh={true}
         colors={["#475569", "#28a745"]}
-        lineWidth={3}
+        lineWidth={2}
         enableArea={true}
         areaOpacity={0.2}
         areaBaselineValue={0}
@@ -271,6 +340,61 @@ function LineGraph({ data }) {
         }}
         enableCrosshair={true}
         crosshairType="x"
+        pointSymbol={({ datum, size, color, borderWidth, borderColor }) => {
+          const isOverUnderPoint = datum.hasOverUnder;
+          
+          if (isOverUnderPoint) {
+            return (
+            <g>
+              <circle
+                className="pulse-ring-outer"
+                r={8}
+                fill="none"
+                stroke="#28a745"
+                strokeWidth={1}
+                strokeOpacity={0.25}
+                style={{
+                  animation: 'pulseOuter 2.5s cubic-bezier(0.4, 0, 0.2, 1) infinite'
+                }}
+              />
+              
+              <circle
+                className="pulse-ring-inner"
+                r={6}
+                fill="#28a745"
+                fillOpacity={0.08}
+                style={{
+                  animation: 'pulseInner 2.5s cubic-bezier(0.4, 0, 0.2, 1) infinite'
+                }}
+              />
+              
+              <circle
+                r={size / 2}
+                fill="#ffffff"
+                style={{
+                  animation: 'pulseCore 2.5s ease-in-out infinite'
+                }}
+              />
+              
+              <circle
+                r={size / 2}
+                fill="none"
+                stroke="#ffffff"
+                strokeWidth={borderWidth}
+              />
+            </g>
+          );
+          }
+          
+          return (
+            <circle
+              r={size / 2}
+              fill={borderColor}
+              stroke={borderColor}
+              strokeWidth={borderWidth}
+            />
+          );
+        }}
       />
     </>
   );

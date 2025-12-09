@@ -12,7 +12,7 @@ function WidgetDetails({ type }) {
   return (
     <>
       <div
-        style={{ position: "absolute", top: "0", right: "0" }}
+        style={{ position: "absolute", top: "-5px", right: "-5px" }}
         onClick={(e) => {
           handleOpen(e);
         }}

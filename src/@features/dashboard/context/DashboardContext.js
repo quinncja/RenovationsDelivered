@@ -254,6 +254,10 @@ export const DashboardProvider = ({ children }) => {
     if (dataMap[id]) return dataMap[id].widgetData;
   };
 
+  const getOverUnder = () => {
+    return getWidgetDataById("overUnder")
+  }
+
   const updateFocusedId = (newId) => {
     if (newId === open.focused) setOpen((prev) => ({ ...prev, focused: null }));
     else setOpen((prev) => ({ ...prev, focused: newId }));
@@ -295,6 +299,7 @@ export const DashboardProvider = ({ children }) => {
         openPage,
         openDetailPage,
         openData,
+        getOverUnder
       }}
     >
       {children}
