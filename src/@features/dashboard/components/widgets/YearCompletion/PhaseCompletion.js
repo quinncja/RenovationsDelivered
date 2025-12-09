@@ -22,9 +22,9 @@ function PhaseCompletion() {
           alignItems: "flex-start",
         }}
       >
-        <h4 style={{ fontWeight: 500, fontSize: "14px" }}>
+        <div className="widget-title">
           Phase Status Distribution
-        </h4>
+        </div>
       </div>
       <div
         className="phase-chart"

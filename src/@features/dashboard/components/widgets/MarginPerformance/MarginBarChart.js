@@ -100,10 +100,9 @@ function MarginBarChart({ data, marginColor }) {
   const chartRange = chartMax - chartMin;
 
   const getBarColor = (margin) => {
-    if (margin < 0) return "#e6204a";
-    else if (margin > 25) return "#28a745";
-    else if (margin > 20) return "#e6c935";
-    else return "#ff7d35";
+    if (margin >= 20) return "#28a745";
+    if (margin >= 17) return "#e6c935";
+    else return "#e6204a";
   };
 
   const CustomBarLayer = ({ bars }) => {

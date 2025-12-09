@@ -26,7 +26,7 @@ function DataValidation() {
       >
         <div className="dv-card-header">
           <div className={`status-indicator ${obj.className}`}></div>
-          <div className="dv-card-title"> {obj.title} </div>
+          <div className="dv-card-title widget-title"> {obj.title} </div>
         </div>
         <div className="dv-card-value">{data[0][obj.accessor]}</div>
         <h4> {obj.subtitle} </h4>

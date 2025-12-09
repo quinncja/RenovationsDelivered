@@ -103,13 +103,11 @@ export const TrackedJobProvider = ({ children }) => {
 
       switch (marginFilter) {
         case "high":
-          return marginPercent > 25;
+          return marginPercent >= 20;
         case "target":
-          return marginPercent <= 25 && marginPercent > 20;
-        case "under":
-          return marginPercent <= 20 && marginPercent > 0;
+          return marginPercent < 20 && marginPercent >= 17;
         case "critical":
-          return marginPercent <= 0;
+          return marginPercent < 17;
         default:
           return true;
       }

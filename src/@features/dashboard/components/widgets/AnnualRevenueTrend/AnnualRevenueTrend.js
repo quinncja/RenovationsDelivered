@@ -3,6 +3,7 @@ import LineGraph from "./LineGraph";
 import MoneyDisplay from "@shared/components/MoneyDisplay/MoneyDisplay";
 import WidgetDetails from "@shared/components/WidgetDetails/WidgetDetails";
 import { phaseToFullMonth, phaseToMonth, phaseToShortMonth } from "@shared/utils/functions";
+import { color } from "framer-motion";
 
 function AnnualRevenueTrend() {
   const id = "annualRevenueTrend";

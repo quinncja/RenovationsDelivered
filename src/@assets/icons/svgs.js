@@ -904,3 +904,14 @@ export const infoSvg = () => {
     </svg>
   );
 };
+
+export const barChartSvg = () => {
+  return(
+    <svg width="80px" height="80px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M10 4H14V20H10V4Z" stroke="var(--less-white)" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round"/>
+    <path d="M14 9H18V20H14V9Z" stroke="var(--less-white)" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round"/>
+    <path d="M6 13H10V20H6V13Z" stroke="var(--less-white)" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round"/>
+    <path d="M3 20H21" stroke="var(--less-white)" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round"/>
+    </svg>
+  )
+}

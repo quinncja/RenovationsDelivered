@@ -61,7 +61,7 @@ function YearCompletion() {
               }}
             ></div>
 
-            <h4> Completed </h4>
+            <div className="widget-title">  Completed </div>
           </div>
           <MoneyDisplay value={total.TotalContract} size={26} />
         </div>
@@ -100,7 +100,7 @@ function YearCompletion() {
                 background: "var(--open)",
               }}
             ></div>
-            <h4> Remaining </h4>
+            <div className="widget-title"> Remaining </div>
           </div>
           <MoneyDisplay value={yearSum - total.TotalContract} size={26} />
         </div>
@@ -131,7 +131,7 @@ function YearCompletion() {
           }}
         >
           <div style={{ display: "flex", gap: "5px", alignItems: "center" }}>
-            <h4> Total Contracted </h4>
+            <div className="widget-title"> Total Contracted </div>
           </div>
           <MoneyDisplay value={yearSum} size={26} />
         </div>
@@ -161,7 +161,7 @@ function YearCompletion() {
           }}
         >
           <div style={{ display: "flex", gap: "5px", alignItems: "center" }}>
-            <h4> Percent Completed</h4>
+            <div className="widget-title">  Percent Completed </div>
           </div>
           <h2 style={{ fontSize: "26px" }}>
             {" "}
@@ -183,12 +183,10 @@ function YearCompletion() {
         paddingBlock: "25px",
       }}
     >
-      <h3
-        style={{ textAlign: "left", paddingBottom: "10px", fontWeight: "500" }}
-      >
+      <div className="widget-title">
         {" "}
         Contract Completion{" "}
-      </h3>
+      </div>
 
       <div style={{ display: "flex", flexDirection: "row", gap: "15px" }}>
         {completed()}

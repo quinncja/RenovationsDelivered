@@ -59,91 +59,101 @@ function Navbar() {
       : []),
   ];
 
-  function NavButton({ obj, sub = false, height, last = false }) {
-    const active = currentPath.startsWith(obj.path);
+function NavButton({ obj, sub = false, height, last = false }) {
+  const active = currentPath.startsWith(obj.path);
+  
+  const isOnSubItem = obj.subItems && obj.subItems.some(subItem => 
+    currentPath.startsWith(subItem.path)
+  );
+  
+  const shouldShowActiveButton = active && !isOnSubItem;
 
-    const handleClick = (obj) => {
-      if (active) {
-        if (obj.subItems) navigate(obj.path);
-        else return;
-      } else navigate(obj.path);
-    };
+  const handleClick = (obj) => {
+    if (active) {
+      if (obj.subItems) navigate(obj.path);
+      else return;
+    } else navigate(obj.path);
+  };
 
-    return (
-      <div
-        style={{
-          width: "43px",
-          position: "absolute",
-          display: "flex",
-          gap: "0px",
-          flexDirection: "column",
-          height: height ? `${height}px` : "auto",
-        }}
-      >
-        <div style={{ height: "43px", position: "relative", flexShrink: 0 }}>
+  return (
+    <div
+      style={{
+        width: "43px",
+        position: "absolute",
+        display: "flex",
+        gap: "0px",
+        flexDirection: "column",
+        height: height ? `${height}px` : "auto",
+      }}
+    >
+      <div style={{ height: "43px", position: "relative", flexShrink: 0 }}>
+        <div
+          className={`nav-grouping ${active ? "active-nav-grouping" : ""} ${obj.subItems ? `active-nav-w-subs-${active}` : ""}`}
+          onClick={() => handleClick(obj)}
+        >
           <div
-            className={`nav-grouping ${active ? "active-nav-grouping" : ""} ${obj.subItems ? `active-nav-w-subs-${active}` : ""}`}
-            onClick={() => handleClick(obj)}
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              alignItems: "center",
+            }}
           >
             <div
+              className={`nav-button ${
+                shouldShowActiveButton
+                  ? "active-nav-button"
+                  : ""
+              } ${active && obj.subItems ? "active-nav-w-subs faux-border" : ""} ${sub ? "sub-nav-button" : ""} ${last ? "last-sub-item" : ""}`}
+            >
+              {obj.svg}
+            </div>
+            <div
+              className="nav-extra"
               style={{
-                display: "flex",
-                flexDirection: "row",
-                alignItems: "center",
+                width: "max-content",
+                textAlign: "left",
+                paddingRight: "20px",
               }}
             >
-              <div
-                className={`nav-button ${active ? (obj.subItems ? "active-nav-w-subs active-nav-button" : "active-nav-button") : ""} ${sub ? "sub-nav-button" : ""} ${last ? "last-sub-item" : ""}`}
-              >
-                {obj.svg}
-              </div>
-              <div
-                className="nav-extra"
-                style={{
-                  width: "max-content",
-                  textAlign: "left",
-                  paddingRight: "20px",
-                }}
-              >
-                {obj.id}
-              </div>
+              {obj.id}
             </div>
           </div>
         </div>
-        {active && obj.subItems && (
-          <div
-            className="sub-items"
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              gap: "0px",
-              height: "100%",
-              width: "100%",
-            }}
-          >
-            {obj.subItems.map((item, index) => (
-              <div
-                key={index}
-                style={{
-                  position: "relative",
-                  height: "43px",
-                  width: "43px",
-                  transition: "min-height 0.3s ease-in-out",
-                }}
-              >
-                <NavButton
-                  key={index}
-                  obj={item}
-                  sub={true}
-                  last={index === obj.subItems.length - 1}
-                />
-              </div>
-            ))}
-          </div>
-        )}
       </div>
-    );
-  }
+      {active && obj.subItems && (
+        <div
+          className="sub-items"
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            gap: "0px",
+            height: "100%",
+            width: "100%",
+          }}
+        >
+          {obj.subItems.map((item, index) => (
+            <div
+              key={index}
+              style={{
+                position: "relative",
+                height: "43px",
+                width: "41px",
+                transition: "min-height 0.3s ease-in-out",
+              }}
+            >
+              <NavButton
+                key={index}
+                obj={item}
+                sub={true}
+                last={index === obj.subItems.length - 1}
+              />
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
 
   const calculateNavItemHeight = (option) => {
     const baseHeight = 43;

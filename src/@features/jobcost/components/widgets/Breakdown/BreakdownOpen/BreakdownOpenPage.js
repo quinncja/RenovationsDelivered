@@ -4,7 +4,8 @@ import Header from "@features/jobcost/components/header/Header";
 import { useState } from "react";
 import TableWrapper from "./Table/TableWrapper";
 import BarChart from "./BarChart";
-import Details from "./Details";
+import BudgetBar from "../BudgetBar";
+import Budget from "../Budget";
 
 function BreakdownOpen() {
   const { breakdownData, pageModifiers, openBreakdownPage } =
@@ -21,9 +22,9 @@ function BreakdownOpen() {
   };
 
   return (
-    <div className="job-cost-dashboard">
-      <div
-        className="jobs-header jobs-header-old"
+    <>
+    <div
+        className="jobs-header jobs-header-old open-page-header"
         style={{ justifyContent: "space-between" }}
       >
         <h2>
@@ -34,21 +35,23 @@ function BreakdownOpen() {
         <div style={{ display: "flex", gap: "20px", paddingRight: "0px" }}>
           {getOtherTypes(type).map((type) => (
             <button
-              className="jobs-header-btn"
+              className="jobs-header-btn widget-title"
               onClick={() => openBreakdownPage(type)}
             >
               <h4 style={{ color: "white" }}> {type} </h4>
             </button>
           ))}
         </div>
-      </div>
-      <div className="job-cost-widgets">
-        <Header setIsVisible={setIsVisible} />
-        <Details data={data} type={type} />
+    </div>
+    <Header setIsVisible={setIsVisible} />
+    <div className="job-cost-dashboard">
+      <div className="job-cost-widgets" style={{gap: "10px", paddingTop: "40px"}}>
+        <Budget type={type} open={true}/> 
         <BarChart data={data} />
         <TableWrapper setIsVisible={setIsVisible2} type={type} />
       </div>
     </div>
+  </>
   );
 }
 

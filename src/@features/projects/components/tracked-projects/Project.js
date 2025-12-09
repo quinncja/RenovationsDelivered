@@ -2,6 +2,7 @@ import { chevronRight, gridSvg } from "@assets/icons/svgs";
 import { useTrackedProjects } from "@features/projects/context/TrackedProjectContext";
 import { useRef, useState } from "react";
 import {
+  displayString,
   dollarFormatter,
   getBaseJobName,
   strToMods,
@@ -87,8 +88,8 @@ function Project(props) {
     return (
       <div className="job-body">
         <div className="job-left">
-          <h2> {getBaseJobName(data.JobName)} </h2>
-          <h4> {data.ClientName} </h4>
+          <h3> {displayString(getBaseJobName(data.JobName))} </h3>
+          <h4> {displayString(data.ClientName)} </h4>
         </div>
         <div className="job-right">
           <div
@@ -331,7 +332,7 @@ function Project(props) {
         <div style={{ display: "flex", flexDirection: "row", gap: "50px" }}>
           <div style={{ display: "flex", flexDirection: "column", gap: "3px" }}>
             <h4> Project Manager</h4>
-            <h3> {data.ProjectManager} </h3>
+            <h3> {displayString(data.ProjectManager)} </h3>
           </div>
           {isAdmin && (
             <div

@@ -1,5 +1,5 @@
 import { getColor } from "@shared/utils/color";
-import { dollarFormatter } from "@shared/utils/functions";
+import { displayString, dollarFormatter } from "@shared/utils/functions";
 
 export default function PieChartTooltips(props) {
   const { datum, sum, color } = props;
@@ -27,7 +27,7 @@ export default function PieChartTooltips(props) {
           }}
         />
         <h3 style={{ textAlign: "left", display: "inline-block" }}>
-          {datum.id}
+          {displayString(datum.id)}
         </h3>
       </div>
       <div className="single-slice">{dollarFormatter(datum.value)}</div>

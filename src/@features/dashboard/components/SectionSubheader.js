@@ -1,6 +1,7 @@
 const SectionSubheading = ({ children, style = {} }) => {
   return (
     <h3
+      className="widget-title"
       style={{
         textAlign: "left",
         paddingTop: "20px",
