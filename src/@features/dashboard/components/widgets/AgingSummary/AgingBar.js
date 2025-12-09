@@ -19,6 +19,7 @@ export default function AgingBar({ max, current, color }) {
               position: "absolute",
               top: 0,
               left: 0,
+              maxWidth: "100%",
               cursor: "pointer",
               zIndex: 1,
             }}
