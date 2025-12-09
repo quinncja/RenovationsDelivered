@@ -2,50 +2,57 @@ import Select from "react-dropdown-select";
 import { useJobcostContext } from "@features/jobcost/context/JobcostContext";
 import { useProjectContext } from "@features/projects/context/ProjectContext";
 import useIsAdmin from "@shared/hooks/useIsAdmin";
+import { close } from "@assets/icons/svgs";
+import { useState } from "react";
 
 function ClientSelector() {
   const { modTimeout, pageModifiers, updatePageModifiers } =
     useJobcostContext();
   const { getAllClients, getClientByJob } = useProjectContext();
   const isAdmin = useIsAdmin();
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
-  const selectedClient =
-    pageModifiers.client || getClientByJob(pageModifiers?.jobNum)?.id;
+  const selectedClient = pageModifiers.client;
   const clientList = getAllClients();
-
   const active = pageModifiers.client;
 
   const handlePMChange = (value) => {
     if (modTimeout) return;
     const client = value.length > 0 ? value[0].id : null;
-
     const newMods = {
       client: client,
     };
-
     updatePageModifiers(newMods);
   };
 
   const handleWrapperClick = (e) => {
     if (e.target.closest(".react-dropdown-select")) return;
-
     const control = e.currentTarget.querySelector(".react-dropdown-select");
-
     if (control) {
       control.click();
     }
   };
 
+  const handleClear = (e) => {
+    e.stopPropagation();
+    const newMods = {
+      client: null,
+    };
+    updatePageModifiers(newMods);
+  };
+
   return (
     <div
-      className={`project-select-wrapper  ${active && "project-select-wrapper-active"} ${!isAdmin && "inactive-project-select-wrapper"} psd-left`}
+      className={`project-select-wrapper ${active ? "project-select-wrapper-active" : ""} ${isDropdownOpen ? "project-select-wrapper-open" : ""} ${!isAdmin ? "inactive-project-select-wrapper" : ""}`}
       title="Change Client"
       style={{
         display: "flex",
         flexDirection: "column",
-        width: "fit-content",
         alignItems: "flex-start",
         borderRadius: "0px",
+        paddingLeft: "22px",
+        paddingRight: "40px",
+        minWidth: "200px",
       }}
       onClick={handleWrapperClick}
     >
@@ -64,13 +71,26 @@ function ClientSelector() {
                 : []
             }
             placeholder={"-"}
-            className="project-select-dropdown"
-            dropdownGap={-3}
+            className="project-select-dropdown "
+            dropdownGap={15}
             dropdownHandle={false}
             searchBy="name"
             sortBy="name"
             onChange={handlePMChange}
+            portal={document.body}
+            dropdownPosition="bottom"
+            onDropdownOpen={() => setIsDropdownOpen(true)}
+            onDropdownClose={() => setIsDropdownOpen(false)}
           />
+          {active && (
+            <div
+              className="select-clear"
+              title="Clear client"
+              onClick={(e) => handleClear(e)}
+            >
+              {close()}
+            </div>
+          )}
         </>
       ) : (
         <div

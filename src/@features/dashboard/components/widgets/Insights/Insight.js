@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { formatNumberShort } from "@shared/utils/functions";
+import { displayString, formatNumberShort } from "@shared/utils/functions";
 import PieChart from "./PieChart";
 import { listSvg, pieSvg } from "@assets/icons/svgs";
 import { useProjectContext } from "@features/projects/context/ProjectContext";
@@ -84,7 +84,7 @@ function Insight(props) {
                 style={{ color: "var(--white)", textAlign: "left" }}
               >
                 {" "}
-                {name}{" "}
+                {displayString(name)}{" "}
               </h4>
               <h4> {getPercentage(data.value)} </h4>
             </div>
@@ -114,6 +114,7 @@ function Insight(props) {
         }}
       >
         <h3
+        className="widget-title"
           style={{
             textAlign: "left",
             padding: "15px",

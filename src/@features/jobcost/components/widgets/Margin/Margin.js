@@ -24,6 +24,19 @@ function Margin() {
   return (
     <div className="home-margin-widget">
       <div
+        className="widget-title"
+        style={{
+          textAlign: "left",
+          paddingBottom: "10px",
+          fontWeight: "500",
+          position: "absolute",
+          top: "20px",
+          left: "25px",
+        }}
+      >
+        Margin Performance
+      </div>
+      <div
         style={{
           display: "flex",
           flexDirection: "column",

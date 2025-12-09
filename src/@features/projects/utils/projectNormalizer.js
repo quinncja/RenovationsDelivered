@@ -128,6 +128,9 @@ export function normalizeProjects(cleanedData) {
   const states = createStateLookup(entities);
   const statuses = createStatusLookup(entities);
 
+  console.log(normalizedClients)
+  console.log(normalizedSupervisors)
+  
   return {
     ...entities,
     states,

@@ -138,7 +138,7 @@ function TrackedProjectsSection({ jobs }) {
         abortControllerRef.current.abort();
       }
     };
-  // eslint-disable-next-line
+    // eslint-disable-next-line
   }, [jobsToShow, isAppReady]);
 
   const filteredJobsToShow = filterJobs(jobsToShow);

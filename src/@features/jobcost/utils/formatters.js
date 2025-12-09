@@ -9,8 +9,9 @@ export const modifierFormatter = (mods, prevPhase) => {
     client: mods.client || "",
   };
 
-  if (mods.jobNum && mods.jobNum.length === 6) {
-    formatted.job = mods.jobNum.slice(0, 4);
+  if (mods.jobNum && mods.jobNum.length === 8) {
+    formatted.year = mods.jobNum.slice(0, 2);
+    formatted.job = mods.jobNum.slice(2, 6);
     formatted.phase = mods.jobNum.slice(-2);
   } else {
     if (mods.jobNum) formatted.job = mods.jobNum;

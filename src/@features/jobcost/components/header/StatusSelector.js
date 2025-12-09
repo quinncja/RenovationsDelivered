@@ -1,39 +1,30 @@
-import Select from "react-dropdown-select";
-import { useProjectContext } from "@features/projects/context/ProjectContext";
 import { useJobcostContext } from "@features/jobcost/context/JobcostContext";
+import Select from "react-dropdown-select";
 import { close } from "@assets/icons/svgs";
 import { useState } from "react";
 
-function PhaseSelector() {
-  const { getProjectByNum, getYearById, getYearsByJob, getPhasesByYear } =
-    useProjectContext();
-  const { pageModifiers, updatePageModifiers } = useJobcostContext();
+function StatusSelector() {
+  const { pageModifiers, modTimeout, updatePageModifiers } =
+    useJobcostContext();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
-  const selectedJobNum = pageModifiers.jobNum;
-  let selectedYearId = pageModifiers.yearId;
-  let selectedPhaseId = pageModifiers.phaseId;
-  const selectedJob = getProjectByNum(selectedJobNum);
-  const selectedJobYears = getYearsByJob(selectedJob);
+  const status = pageModifiers.status;
+  const active = pageModifiers.status;
+  const statusList = [
+    { id: 4, value: "Open" },
+    { id: 5, value: "Closed" },
+    { id: -1, value: "Mixed" },
+  ];
 
-  if (selectedJobYears.length === 1) {
-    selectedYearId = selectedJobYears[0].id;
-  }
-
-  let selectedYearPhases;
-  if (selectedJobNum === "none") {
-    selectedYearPhases = [];
-  } else {
-    const selectedYear = getYearById(selectedYearId);
-    selectedYearPhases = getPhasesByYear(selectedYear, selectedJob);
-  }
-
-  const active = pageModifiers.phaseId;
+  const getStatusObject = (statusId) => {
+    return statusList.find((s) => s.id === statusId) || [];
+  };
 
   const handlePhaseChange = (value) => {
-    const phaseId = value.length > 0 ? value[0].id : null;
+    if (modTimeout) return;
+    const status = value.length > 0 ? value[0].id : null;
     const newMods = {
-      phaseId: phaseId,
+      status: status,
     };
     updatePageModifiers(newMods);
   };
@@ -49,7 +40,7 @@ function PhaseSelector() {
   const handleClear = (e) => {
     e.stopPropagation();
     const newMods = {
-      phaseId: null,
+      status: null,
     };
     updatePageModifiers(newMods);
   };
@@ -57,7 +48,7 @@ function PhaseSelector() {
   return (
     <div
       className={`project-select-wrapper ${active ? "project-select-wrapper-active" : ""} ${isDropdownOpen ? "project-select-wrapper-open" : ""}`}
-      title="Change year"
+      title="Change status"
       style={{
         display: "flex",
         flexDirection: "column",
@@ -68,34 +59,26 @@ function PhaseSelector() {
       }}
       onClick={handleWrapperClick}
     >
-      <h4> Phase </h4>
+      <h4> Status </h4>
       <Select
-        labelField="name"
+        labelField="value"
         valueField="id"
-        options={selectedYearPhases}
-        values={
-          selectedPhaseId
-            ? [
-                selectedYearPhases.find(
-                  (phase) => phase.id === selectedPhaseId,
-                ),
-              ].filter(Boolean)
-            : []
-        }
+        options={statusList}
+        values={status ? [getStatusObject(status)] : []}
         placeholder="-"
         className="project-select-dropdown project-select-dropdown-smaller"
         dropdownGap={15}
         dropdownHandle={false}
+        onChange={handlePhaseChange}
         portal={document.body}
         dropdownPosition="bottom"
-        onChange={handlePhaseChange}
         onDropdownOpen={() => setIsDropdownOpen(true)}
         onDropdownClose={() => setIsDropdownOpen(false)}
       />
       {active && (
         <div
           className="select-clear"
-          title="Clear phase"
+          title="Clear status"
           onClick={(e) => handleClear(e)}
         >
           {close()}
@@ -105,4 +88,4 @@ function PhaseSelector() {
   );
 }
 
-export default PhaseSelector;
+export default StatusSelector;

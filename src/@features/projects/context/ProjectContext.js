@@ -606,30 +606,47 @@ export const ProjectProvider = ({ children }) => {
   };
 
   const getJobListByPageModifiers = (pageModifiers) => {
-    const jobList = Object.values(projects?.phases || {}).filter((phase) => {
+    const jobsByNum = new Map();
+    const phases = projects?.phases;
+    
+    if (!phases) return [];
+
+    for (const phase of Object.values(phases)) {
       const statusMatch =
         pageModifiers.status === null ||
         (pageModifiers.status === 5
           ? phase.status === 5 || phase.status === 6
           : phase.status === pageModifiers.status);
 
-      return (
-        (pageModifiers.jobNum === null ||
-          phase.jobNum === pageModifiers.jobNum) &&
-        (pageModifiers.yearId === null ||
-          phase.yearNum === pageModifiers.yearId.slice(-2)) &&
-        (pageModifiers.phaseId === null ||
-          phase.num === pageModifiers.phaseId.slice(-2)) &&
-        (pageModifiers.state === null || phase.state === pageModifiers.state) &&
-        statusMatch &&
-        (pageModifiers.pm === null || phase.pmId === pageModifiers.pm) &&
-        (pageModifiers.client === null ||
-          phase.clientId === pageModifiers.client)
-      );
-    });
+      if (
+        (pageModifiers.jobNum !== null && phase.jobNum !== pageModifiers.jobNum) ||
+        (pageModifiers.yearId !== null && phase.yearNum !== pageModifiers.yearId.slice(-2)) ||
+        (pageModifiers.phaseId !== null && phase.num !== pageModifiers.phaseId.slice(-2)) ||
+        (pageModifiers.state !== null && phase.state !== pageModifiers.state) ||
+        !statusMatch ||
+        (pageModifiers.pm !== null && phase.pmId !== pageModifiers.pm) ||
+        (pageModifiers.client !== null && phase.clientId !== pageModifiers.client)
+      ) {
+        continue;
+      }
 
-    return jobList;
+      const existing = jobsByNum.get(phase.jobNum);
+      if (existing) {
+        if (phase.status === 4) {
+          existing.status = 4;
+        }
+      } else {
+        jobsByNum.set(phase.jobNum, {
+          jobNum: phase.jobNum,
+          name: getJobStr(phase.jobNum),
+          status: phase.status
+        });
+      }
+    }
+
+    return Array.from(jobsByNum.values());
   };
+
   function getUniformStatus(list) {
     if (!list || list.length === 0) return null;
 
@@ -656,12 +673,42 @@ export const ProjectProvider = ({ children }) => {
     return getUniformStatus(jobList);
   };
 
+  const getSupervisorIdByName = (name) => {
+    if (!projects?.supervisors || !name) return null;
+    
+    const supervisor = Object.values(projects.supervisors).find(
+      (sup) => sup.name.toLowerCase() === name.toLowerCase()
+    );
+    
+    return supervisor ? supervisor.id : null;
+  };
+
+  const getClientIdByName = (name) => {
+    if (!projects?.clients || !name) return null;
+    
+    const normalizeClientName = (str) => {
+      return str
+        .toLowerCase()
+        .replace(/\s+(llc|inc|corp|corporation|ltd|limited|co|company|associates|management|group|property|properties|capital|investments?|partners|lp|pllc)\.?\s*$/gi, '')
+        .trim();
+    };
+    
+    const normalizedSearchName = normalizeClientName(name);
+    
+    const client = Object.values(projects.clients).find(
+      (client) => normalizeClientName(client.name) === normalizedSearchName
+    );
+    
+    return client ? client.id : null;
+  };
+  
   return (
     <ProjectContext.Provider
       value={{
         projects,
         setProjects,
         getAllProjects,
+
         getPhasesForJob,
         recnumToPageModifiers,
         pageModifierToString,
@@ -698,6 +745,7 @@ export const ProjectProvider = ({ children }) => {
         getSupervisorName,
         getJobCountBySupervisor,
         getPhaseCountBySupervisor,
+        getSupervisorIdByName,
 
         getAllStatuses,
         getStatusInfo,
@@ -712,6 +760,7 @@ export const ProjectProvider = ({ children }) => {
         getJobsByClient,
         getClientByPhase,
         getClientByJob,
+        getClientIdByName,
 
         getJobPhasesByStatus,
         getJobsBySupervisorAndState,

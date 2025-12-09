@@ -150,12 +150,12 @@ function AgingSummary({ data, open = false }) {
           textAlign: "left",
           background: "var(--dark)",
           boxSizing: "border-box",
+          gap: "3px",
           flexGrow: 1,
         }}
         onClick={() => handleParentClick()}
       >
-        <div>
-          <h4>
+          <h4 className="widget-title">
             {" "}
             <span style={{ fontWeight: "600", color: "#9f3dac" }}>
               {" "}
@@ -164,11 +164,12 @@ function AgingSummary({ data, open = false }) {
             Credit Union{" "}
           </h4>
           <div style={{ height: "5px" }}> </div>
+          <div> 
           <MoneyDisplay value={displayData[10].amount} size={32} />
           <div className="jobcost-hl" />
           <h5>Available Liquidity</h5>
+          </div>
         </div>
-      </div>
     );
   };
 
@@ -182,10 +183,11 @@ function AgingSummary({ data, open = false }) {
           textAlign: "left",
           background: "var(--dark)",
           boxSizing: "border-box",
+          gap: "3px",
         }}
         onClick={() => handleParentClick()}
       >
-        <h4>
+        <h4 className="widget-title">
           {" "}
           <span className="green" style={{ fontWeight: "600" }}>
             {" "}
@@ -193,10 +195,12 @@ function AgingSummary({ data, open = false }) {
           </span>{" "}
           Total Accounts Receivable{" "}
         </h4>
+        <div>
         <div style={{ height: "5px" }}> </div>
         <MoneyDisplay value={agingTotals.arTotal} size={32} />
         <div className="jobcost-hl" />
         <h5>{agingTotals.arCount} items</h5>
+        </div>
       </div>
     );
   };
@@ -211,10 +215,11 @@ function AgingSummary({ data, open = false }) {
           textAlign: "left",
           background: "var(--dark)",
           boxSizing: "border-box",
+          gap: "3px",
         }}
         onClick={() => handleParentClick()}
       >
-        <h4>
+        <h4 className="widget-title">
           {" "}
           <span className="red" style={{ fontWeight: "600" }}>
             {" "}
@@ -222,10 +227,12 @@ function AgingSummary({ data, open = false }) {
           </span>{" "}
           Total Accounts Payable{" "}
         </h4>
+        <div>
         <div style={{ height: "5px" }}> </div>
         <MoneyDisplay value={agingTotals.apTotal} size={32} />
         <div className="jobcost-hl" />
         <h5>{agingTotals.apCount} items</h5>
+        </div>
       </div>
     );
   };
@@ -242,11 +249,13 @@ function AgingSummary({ data, open = false }) {
           background: "var(--dark)",
           height: "fit-content",
           boxSizing: "border-box",
+          gap: "3px",
         }}
         onClick={() => handleParentClick()}
       >
-        <h4 style={{ color: "white" }}> Cash Position </h4>
+        <h4 className="widget-title" style={{ color: "white" }}> Cash Position </h4>
         <div style={{ height: "5px" }}> </div>
+        <div> 
         <MoneyDisplay
           className={agingTotals.cashFlow > 0 ? "green" : "red"}
           value={agingTotals.cashFlow}
@@ -258,6 +267,7 @@ function AgingSummary({ data, open = false }) {
             ? "Positive Cash Flow"
             : "Negative Cash Flow"}
         </h5>
+        </div>
       </div>
     );
   };
@@ -281,12 +291,12 @@ function AgingSummary({ data, open = false }) {
             flexDirection: "column",
             justifyContent: "space-between",
             height: "100%",
-            gap: "10px",
+           gap: '3px',
           }}
         >
           <div>
             <WidgetDetails type={"loc"} />
-            <h4>
+            <h4 className="widget-title">
               {" "}
               <span style={{ fontWeight: "600", color: "#9f3dac" }}>
                 {" "}
@@ -295,7 +305,7 @@ function AgingSummary({ data, open = false }) {
               Line of Credit{" "}
             </h4>
 
-            <div style={{ height: "5px" }}> </div>
+            <div style={{ height: "12px" }}> </div>
             <MoneyDisplay value={locData.loc} size={32} />
             <div className="jobcost-hl" />
             <h5> Based on period {locData.period} AR data </h5>
@@ -364,7 +374,7 @@ function AgingSummary({ data, open = false }) {
             >
               <h3 style={{ fontSize: "12px" }}> AR </h3>
             </div>
-            <h3 style={{ fontSize: "16px" }}> Recievables Aging </h3>
+            <h3 className="widget-title" style={{ fontSize: "16px" }}> Recievables Aging </h3>
           </div>
           <div
             style={{
@@ -407,7 +417,7 @@ function AgingSummary({ data, open = false }) {
             >
               <h3 style={{ fontSize: "12px" }}> AP </h3>
             </div>
-            <h3 style={{ fontSize: "16px" }}> Payables Aging </h3>
+            <h3 className="widget-title" style={{ fontSize: "16px" }}> Payables Aging </h3>
           </div>
           <div
             style={{

@@ -3,6 +3,8 @@ import { useProjectContext } from "@features/projects/context/ProjectContext";
 import { useTrackedProjects } from "@features/projects/context/TrackedProjectContext";
 import useIsAdmin from "@shared/hooks/useIsAdmin";
 import { useJobcostContext } from "@features/jobcost/context/JobcostContext";
+import { close } from "@assets/icons/svgs";
+import { useState } from "react";
 
 function ProjectSelector() {
   const {
@@ -17,15 +19,14 @@ function ProjectSelector() {
   const isAdmin = useIsAdmin();
   const { pageModifiers, modTimeout, updatePageModifiers } =
     useJobcostContext();
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   const allProjects = getAllProjects() || [];
   const { jobs = {} } = projects || {};
-
   const trackedProjects = allProjects.filter((proj) =>
     trackedJobs.includes(proj.num),
   );
   const selectedJobNum = pageModifiers.jobNum;
-
   const active = pageModifiers.jobNum;
 
   const getJobMods = (jobNum) => {
@@ -54,33 +55,39 @@ function ProjectSelector() {
     let jobNum;
     if (!isAdmin && value.length === 0) jobNum = "none";
     else jobNum = value.length > 0 ? value[0].num : null;
-
     const newMods = getJobMods(jobNum);
+    console.log(newMods, "NEW MODS");
     updatePageModifiers(newMods);
   };
 
   const handleWrapperClick = (e) => {
     if (e.target.closest(".react-dropdown-select")) return;
-
     const control = e.currentTarget.querySelector(".react-dropdown-select");
-
     if (control) {
       control.click();
     }
   };
 
+  const handleClear = (e) => {
+    e.stopPropagation();
+    const newMods = {
+      jobNum: null,
+    };
+    updatePageModifiers(newMods);
+  };
+
   return (
     <div
-      className={`project-select-wrapper ${active && "project-select-wrapper-active"} psd-left`}
+      className={`project-select-wrapper ${active ? "project-select-wrapper-active" : ""} ${isDropdownOpen ? "project-select-wrapper-open" : ""}`}
       title="Change project"
       style={{
         display: "flex",
         flexDirection: "column",
-        width: "fit-content",
         alignItems: "flex-start",
-        paddingRight: "25px",
+        paddingRight: "40px",
         borderRadius: "0px",
         paddingLeft: "22px",
+        minWidth: "200px",
       }}
       onClick={handleWrapperClick}
     >
@@ -92,14 +99,27 @@ function ProjectSelector() {
         values={
           selectedJobNum && jobs[selectedJobNum] ? [jobs[selectedJobNum]] : []
         }
-        placeholder={isAdmin ? "All Projects" : "Select a project"}
+        placeholder={isAdmin ? "-" : "-"}
         className="project-select-dropdown"
-        dropdownGap={-3}
+        dropdownGap={15}
         dropdownHandle={false}
         searchBy="name"
         sortBy="name"
         onChange={handleJobChange}
+        portal={document.body}
+        dropdownPosition="bottom"
+        onDropdownOpen={() => setIsDropdownOpen(true)}
+        onDropdownClose={() => setIsDropdownOpen(false)}
       />
+      {active && (
+        <div
+          className="select-clear"
+          title="Clear project"
+          onClick={(e) => handleClear(e)}
+        >
+          {close()}
+        </div>
+      )}
     </div>
   );
 }

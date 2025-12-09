@@ -44,12 +44,14 @@ function MarginPerformance() {
           justifyContent: "center",
           width: "25%",
           gap: "5px",
+          position: "relative",
+          isolation: "isolate",
         }}
       >
-        <h4 style={{ color: "white", opacity: ".9" }}>
+        <div className="widget-title">
           {" "}
           Completed Job Margin{" "}
-        </h4>
+        </div>
         <h2 style={{ fontSize: "26px", color: marginColor }}>
           {" "}
           {displayMargin(total.value)}{" "}
@@ -77,7 +79,7 @@ function MarginPerformance() {
             textAlign: "left",
           }}
         >
-          <h4> Completed Gross </h4>
+          <div className="widget-title"> Completed Gross </div> 
           <MoneyDisplay
             value={total.TotalContract - total.TotalCost}
             size={26}
@@ -112,7 +114,7 @@ function MarginPerformance() {
             height: "100%",
           }}
         >
-          <h4> Projected Gross @ {percentFomatter(total.value)} </h4>
+          <div className="widget-title"> Projected Gross @ {percentFomatter(total.value)} </div>
           <MoneyDisplay
             value={closedGross + projectedGrossFromRemaining}
             size={26}
@@ -132,13 +134,18 @@ function MarginPerformance() {
             alignItems: "flex-start",
           }}
         >
-          <h4 style={{ fontWeight: 500, fontSize: "14px" }}>
+          <div className="widget-title">
             Monthly Margin Performance
-          </h4>
+          </div>
         </div>
         <div
           className="phase-chart"
-          style={{ flex: 1, minHeight: 0 }}
+          style={{
+            flex: 1,
+            minHeight: 0,
+            position: "relative",
+            isolation: "is",
+          }}
           onClick={(e) => e.stopPropagation()}
         >
           <MarginBarChart data={data} marginColor={"#acadae"} />
@@ -158,12 +165,10 @@ function MarginPerformance() {
         paddingBlock: "25px",
       }}
     >
-      <h3
-        style={{ textAlign: "left", paddingBottom: "10px", fontWeight: "500" }}
-      >
+      <div className="widget-title">
         {" "}
         Margin Performance{" "}
-      </h3>
+      </div>
 
       <div style={{ display: "flex", flexDirection: "row", gap: "15px" }}>
         {margin()}

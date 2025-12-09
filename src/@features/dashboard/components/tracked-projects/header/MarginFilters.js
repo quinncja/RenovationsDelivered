@@ -28,17 +28,9 @@ function MarginFilters() {
         className={`margin-filter ${marginFilter === "target" ? "margin-filter-active" : ""}`}
         onClick={() => toggleFilter("target")}
       >
-        {/* 25% > margin > 20% */}
+        {/* 20% > margin > 17% */}
         <span className="phase-dot-small semi-good-dot"></span>
         <h4>Target Performing</h4>
-      </div>
-      <div
-        className={`margin-filter ${marginFilter === "under" ? "margin-filter-active" : ""}`}
-        onClick={() => toggleFilter("under")}
-      >
-        {/* 20% > margin > 0% */}
-        <span className="phase-dot-small semi-bad-dot"></span>
-        <h4>Under Performing</h4>
       </div>
       <div
         className={`margin-filter ${marginFilter === "critical" ? "margin-filter-active" : ""}`}

@@ -4,6 +4,7 @@ function WidgetSection({
   title,
   color = "green",
   gap = "10px",
+  noPin = false,
   children,
   className = "",
   style = {},
@@ -12,6 +13,8 @@ function WidgetSection({
   const sentinelRef = useRef(null);
 
   useEffect(() => {
+    if (noPin) return; 
+    
     const header = headerRef.current;
     const sentinel = sentinelRef.current;
     if (!header || !sentinel) return;
@@ -22,9 +25,8 @@ function WidgetSection({
     );
 
     observer.observe(sentinel);
-
     return () => observer.disconnect();
-  }, []);
+  }, [noPin]);
 
   return (
     <div
@@ -38,28 +40,31 @@ function WidgetSection({
         ...style,
       }}
     >
-      <div
-        ref={sentinelRef}
-        style={{
-          height: "1px",
-          position: "absolute",
-          top: "-1px",
-          left: 0,
-          right: 0,
-        }}
-      />
-      <div
-        ref={headerRef}
-        className="jobs-header"
-        style={{
-          background: "none",
-          position: "sticky",
-          top: 0,
-          zIndex: 10,
-        }}
-      >
-        <h2 style={{ paddingLeft: "2px" }}>{title}</h2>
-      </div>
+      {!noPin && (
+        <div
+          ref={sentinelRef}
+          style={{
+            height: "1px",
+            position: "absolute",
+            top: "19px",
+            left: 0,
+            right: 0,
+          }}
+        />
+      )}
+      {title && (
+        <div
+          ref={headerRef}
+          className="jobs-header"
+          style={{
+            position: noPin ? "relative" : "sticky",
+            top: noPin ? "auto" : 0,
+            zIndex: noPin ? "auto" : 10,
+          }}
+        >
+          <h2 style={{ paddingLeft: "2px" }}>{title}</h2>
+        </div>
+      )}
       {children}
     </div>
   );

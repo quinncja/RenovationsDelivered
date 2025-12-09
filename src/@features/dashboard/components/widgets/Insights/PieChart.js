@@ -6,6 +6,7 @@ import PieChartTooltips from "./PieChartTooltips";
 import { useProjectContext } from "@features/projects/context/ProjectContext";
 import getVenderLabel from "./Label";
 import { useDashboard } from "@features/dashboard/context/DashboardContext";
+import { displayString } from "@shared/utils/functions";
 
 function PieChart({ data, type, pageId }) {
   const { getJobStr } = useProjectContext();
@@ -96,7 +97,7 @@ function PieChart({ data, type, pageId }) {
           modifiers: [["darker", "0.3"]],
         }}
         onClick={(datum, e) => handleDetailClick(e, datum)}
-        arcLabel={(datum) => label(datum)}
+        arcLabel={(datum) => displayString(label(datum))}
         arcLabelsSkipAngle={8}
         arcLabelsTextColor="#ffffff"
         enableArcLinkLabels={false}

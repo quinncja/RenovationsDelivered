@@ -1,7 +1,11 @@
 import { useDashboard } from "@features/dashboard/context/DashboardContext";
 import { useJobcostContext } from "@features/jobcost/context/JobcostContext";
 import { useNavigate } from "react-router-dom";
-import { dollarFormatter, percentFomatter } from "@shared/utils/functions";
+import {
+  displayString,
+  dollarFormatter,
+  percentFomatter,
+} from "@shared/utils/functions";
 import { getMarginClass } from "@shared/utils/functions";
 
 function EmployeePerformance() {
@@ -66,10 +70,7 @@ function EmployeePerformance() {
             {firstName.slice(0, 1)}
             {lastName.slice(0, 1)}
           </div>
-          <h3>
-            {" "}
-            {firstName} {lastName}{" "}
-          </h3>
+          <h3> {displayString(`${firstName} ${lastName}`)} </h3>
         </div>
         <div
           style={{

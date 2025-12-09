@@ -104,6 +104,7 @@ export const JobcostProvider = ({ children }) => {
   };
 
   const updatePageModifiers = (newMods, flag = false) => {
+    console.log(newMods)
     setModTimeout(true);
     setBreakdownItems({
       Material: null,
@@ -166,7 +167,6 @@ export const JobcostProvider = ({ children }) => {
           }
           controller = new AbortController();
           abortControllerRef.current = controller;
-
           const mods = {
             ...formattedModifiers,
             type: "job-data",
@@ -174,6 +174,7 @@ export const JobcostProvider = ({ children }) => {
 
           const aggrJobData = await fetchJobcostData(mods, controller.signal);
           setJobData(aggrJobData);
+          console.log(aggrJobData);
           lastLoadedModifiersRef.current = JSON.stringify(formattedModifiers);
         } catch (error) {
           console.log("Error details:", {
@@ -299,8 +300,10 @@ export const JobcostProvider = ({ children }) => {
   const getDataByType = useCallback(
     (widgetType) => {
       if (!jobData) return null;
+      if (widgetType === "contractTrend") return jobData.contractTrend;
       if (widgetType === "margin") return jobData.margin || undefined;
       if (widgetType === "details") return jobData.details || undefined;
+      if (widgetType === "projectInfo") return jobData.projectInfo || undefined;
       let data = {
         costItems: {},
         budget: "",
