@@ -87,7 +87,7 @@ function MarginBarChart() {
           }
 
           const zeroLinePercent = (0 - chartMin) / chartRange;
-          const zeroLineY = (bar.y + bar.height * (1 - zeroLinePercent)) + (monthData.margin > 0 ? .5 : 1.5);          const marginFromZero = monthData.margin;
+          const zeroLineY = (bar.y + bar.height * (1 - zeroLinePercent)) + (monthData.margin > 0 ? 0 : 1);          const marginFromZero = monthData.margin;
           const barHeightPercent = Math.abs(marginFromZero) / chartRange;
           const actualBarHeight = bar.height * barHeightPercent;
           const actualBarY =

@@ -23,12 +23,21 @@ function LineGraph({ data }) {
   );
 
   let processedCurrentYearData = [...currentYearData];
-  if (!hasOpenMonthInData && openMonthYear === currentYear) {
+  if (!hasOpenMonthInData && openMonthYear === currentYear && openMonthIncome) {
+    const previousMonthData = currentYearData
+      .filter(item => item.month < openMonthPeriod)
+      .sort((a, b) => b.month - a.month)[0]; 
+    
+    const cumulativeRevenueBefore = previousMonthData?.revenue || 0;
+    
+    const openMonthTotal = openMonthIncome + openMonthOverUnder;
+    const newCumulativeRevenue = cumulativeRevenueBefore + openMonthTotal;
+
     processedCurrentYearData.push({
       month: openMonthPeriod,
       year: openMonthYear,
-      revenue: openMonthIncome + openMonthOverUnder,
-      monthly_revenue: openMonthIncome,
+      revenue: newCumulativeRevenue,
+      monthly_revenue: openMonthTotal,
     });
   }
 
@@ -56,10 +65,10 @@ function LineGraph({ data }) {
           
           return {
             x: phaseToShortMonth(item.month),
-            y: isOverUnderMonth ? openMonthIncome + openMonthOverUnder : item.revenue,
+            y: item.revenue,
             year: item.year,
             month: item.month,
-            monthlyRevenue: isOverUnderMonth ? openMonthIncome : item.monthly_revenue,
+            monthlyRevenue: item.monthly_revenue,
             invoicedRevenue: isOverUnderMonth ? openMonthIncome : item.revenue,
             hasOverUnder: isOverUnderMonth,
             openMonthOverUnderAmount: isOverUnderMonth ? openMonthOverUnder : 0,
@@ -87,7 +96,7 @@ function LineGraph({ data }) {
       const previousMonthly = lastYearPoint.data.monthlyRevenue;
       
       if (currentYearPoint.data.hasOverUnder) {
-        currentMonthly = currentMonthly + currentYearPoint.data.openMonthOverUnderAmount;
+        currentMonthly = currentMonthly; 
       }
       
       const monthlyGrowthPercent =

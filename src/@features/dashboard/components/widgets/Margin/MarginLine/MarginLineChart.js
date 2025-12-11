@@ -370,12 +370,12 @@ const CustomSliceTooltip = ({ slice }) => {
                 alignItems: "center",
               }}
             >
-              <h4>Change from Previous:</h4>
               <div
                 style={{
                   display: "flex",
                   alignItems: "center",
                   gap: "4px",
+                  fontSize: '12px'
                 }}
               >
                 <h4 style={{ color: marginChangeColor }}>
@@ -383,7 +383,8 @@ const CustomSliceTooltip = ({ slice }) => {
                 </h4>
                 <h4 style={{ color: marginChangeColor }}>
                   {marginChange > 0 ? "+" : ""}
-                  {marginChange.toFixed(1)}pp
+                  {marginChange.toFixed(1)}%
+                  from previous
                 </h4>
               </div>
             </div>
