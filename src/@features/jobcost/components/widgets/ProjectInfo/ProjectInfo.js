@@ -45,7 +45,7 @@ function ProjectInfo() {
         Showing results for...
       </h4>
 
-      <div style={{height: '117.5px'}}>
+      <div style={{height: '134.5px'}}>
 
       </div>
       </div>

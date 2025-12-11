@@ -51,7 +51,6 @@ export const useAppInitializer = (isAuthenticated) => {
           const normalizedProjects = normalizeProjects(
             projectsResult.value.data,
           );
-          console.log(normalizedProjects)
           setProjects(normalizedProjects);
           setCriticalDataLoaded("projects");
         } else {

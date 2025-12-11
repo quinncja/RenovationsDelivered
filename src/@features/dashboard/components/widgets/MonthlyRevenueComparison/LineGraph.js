@@ -9,14 +9,30 @@ import {
 import { useDashboard } from "@features/dashboard/context/DashboardContext";
 
 function LineGraph({ data }) {
-  const { getOverUnder } = useDashboard();
+  const { getOpenMonthIncome } = useDashboard();
   const currentYear = new Date().getFullYear();
   const lastYear = currentYear - 1;
 
-  const { overUnder, overUnderPeriod, overUnderYear } = getOverUnder();
+  const { openMonthIncome, openMonthOverUnder, openMonthPeriod, openMonthYear } = getOpenMonthIncome();
 
   const currentYearData = data.filter((item) => item.year === currentYear);
   const lastYearData = data.filter((item) => item.year === lastYear);
+
+  // Check if we need to add the open month data point
+  const hasOpenMonthInData = currentYearData.some(
+    item => item.month === openMonthPeriod && item.year === openMonthYear
+  );
+
+  // If the open month isn't in the data, we need to add it
+  let processedCurrentYearData = [...currentYearData];
+  if (!hasOpenMonthInData && openMonthYear === currentYear) {
+    processedCurrentYearData.push({
+      month: openMonthPeriod,
+      year: openMonthYear,
+      revenue: openMonthIncome + openMonthOverUnder,
+      monthly_revenue: openMonthIncome,
+    });
+  }
 
   const chartData = [
     {
@@ -33,22 +49,22 @@ function LineGraph({ data }) {
     },
     {
       id: `${currentYear}`,
-      data: currentYearData
+      data: processedCurrentYearData
         .sort((a, b) => a.month - b.month)
         .map((item) => {
           const isOverUnderMonth = 
-            item.year === overUnderYear && 
-            item.month === overUnderPeriod;
+            item.year === openMonthYear && 
+            item.month === openMonthPeriod;
           
           return {
             x: phaseToShortMonth(item.month),
-            y: isOverUnderMonth ? item.revenue + overUnder : item.revenue,
+            y: isOverUnderMonth ? openMonthIncome + openMonthOverUnder : item.revenue,
             year: item.year,
             month: item.month,
-            monthlyRevenue: item.monthly_revenue,
-            invoicedRevenue: item.revenue,
+            monthlyRevenue: isOverUnderMonth ? openMonthIncome : item.monthly_revenue,
+            invoicedRevenue: isOverUnderMonth ? openMonthIncome : item.revenue,
             hasOverUnder: isOverUnderMonth,
-            overUnderAmount: isOverUnderMonth ? overUnder : 0,
+            overUnderAmount: isOverUnderMonth ? openMonthOverUnder : 0,
           };
         }),
     },
@@ -123,7 +139,7 @@ function LineGraph({ data }) {
               }}
             >
               <h4 style={{ fontSize: "12px", color: "#8b949e" }}>
-                + Under Over
+                + Over Under
               </h4>
               <h4 style={{ fontWeight: 600, color: "var(--green)", justifySelf: "flex-end" }}>
                  {dollarFormatter(currentYearPoint.data.overUnderAmount)}

@@ -2,12 +2,11 @@ import { useDashboard } from "@features/dashboard/context/DashboardContext";
 import LineGraph from "./LineGraph";
 import MoneyDisplay from "@shared/components/MoneyDisplay/MoneyDisplay";
 import WidgetDetails from "@shared/components/WidgetDetails/WidgetDetails";
-import { phaseToFullMonth, phaseToMonth, phaseToShortMonth } from "@shared/utils/functions";
-import { color } from "framer-motion";
+import { phaseToFullMonth } from "@shared/utils/functions";
 
 function AnnualRevenueTrend() {
   const id = "annualRevenueTrend";
-  const { getWidgetDataById, getOverUnder } = useDashboard();
+  const { getWidgetDataById, getOpenMonthIncome } = useDashboard();
   const data = getWidgetDataById(id);
   
   if (!data) {
@@ -19,7 +18,8 @@ function AnnualRevenueTrend() {
     );
   }
 
-  const { overUnder, overUnderPeriod} = getOverUnder();
+  const { openMonthOverUnder, openMonthIncome, openMonthPeriod} = getOpenMonthIncome();
+
   const year = new Date().getFullYear();
     console.log(data)
   const yearSum = data.find((item) => item.year === year)?.revenue;
@@ -62,7 +62,7 @@ function AnnualRevenueTrend() {
     (a, b) => a.year - b.year,
   );
 
-  const className = overUnder > 0 ? "green" : "red"
+  const className = openMonthOverUnder > 0 ? "green" : "red"
 
   return (
     <div className="home-revenue-widget" style={{paddingBlock: "5px"}}>
@@ -82,13 +82,13 @@ function AnnualRevenueTrend() {
             textAlign: "left",
           }}
         >
-          <h4> {year} Revenue</h4>
+          <h4> {year} Closed Revenue</h4>
           <MoneyDisplay value={yearSum} size={32} />
-          {overUnder !== null ? (
+          {openMonthOverUnder !== null ? (
               <div style={{color: 'white', display: "flex", gap: "5px", alignItems: "baseline"}}>
-                <span style={{color: className}}> {overUnder > 0 ? "+" : "-"} 
-                {<MoneyDisplay value={overUnder} tag={"h3"} className={className}/>} </span>
-                <h4> {`${phaseToFullMonth(overUnderPeriod)} Under Over`} </h4>
+                <span style={{color: className}}> {openMonthOverUnder > 0 ? "+" : "-"} 
+                {<MoneyDisplay value={openMonthOverUnder + openMonthIncome} tag={"h3"} className={className}/>} </span>
+                <h4> {`${phaseToFullMonth(openMonthPeriod)} Income`} </h4>
               </div>
           ) : (
             ""

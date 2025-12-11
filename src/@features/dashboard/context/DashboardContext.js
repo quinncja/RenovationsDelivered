@@ -250,12 +250,13 @@ export const DashboardProvider = ({ children }) => {
   }, [isAppReady, currentPath, open.type, open.detail?.id]);
 
   const getWidgetDataById = (id) => {
+    console.log(dataMap)
     if (!dataMap) return null;
     if (dataMap[id]) return dataMap[id].widgetData;
   };
 
-  const getOverUnder = () => {
-    return getWidgetDataById("overUnder")
+  const getOpenMonthIncome = () => {
+    return getWidgetDataById("openMonthIncome")
   }
 
   const updateFocusedId = (newId) => {
@@ -299,7 +300,7 @@ export const DashboardProvider = ({ children }) => {
         openPage,
         openDetailPage,
         openData,
-        getOverUnder
+        getOpenMonthIncome
       }}
     >
       {children}

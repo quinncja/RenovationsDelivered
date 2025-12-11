@@ -9,14 +9,30 @@ import {
 import { useDashboard } from "@features/dashboard/context/DashboardContext";
 
 function LineGraph({ data }) {
-  const { getOverUnder } = useDashboard();
+  const { getOpenMonthIncome } = useDashboard();
   const currentYear = new Date().getFullYear();
   const lastYear = currentYear - 1;
 
-  const { overUnder, overUnderPeriod, overUnderYear } = getOverUnder();
+  const { openMonthIncome, openMonthOverUnder, openMonthPeriod, openMonthYear } = getOpenMonthIncome();
 
   const currentYearData = data.filter((item) => item.year === currentYear);
   const lastYearData = data.filter((item) => item.year === lastYear);
+
+  // Check if we need to add the open month data point
+  const hasOpenMonthInData = currentYearData.some(
+    item => item.month === openMonthPeriod && item.year === openMonthYear
+  );
+
+  // If the open month isn't in the data, we need to add it
+  let processedCurrentYearData = [...currentYearData];
+  if (!hasOpenMonthInData && openMonthYear === currentYear) {
+    processedCurrentYearData.push({
+      month: openMonthPeriod,
+      year: openMonthYear,
+      revenue: openMonthIncome + openMonthOverUnder,
+      monthly_revenue: openMonthIncome,
+    });
+  }
 
   const chartData = [
     {
@@ -33,208 +49,177 @@ function LineGraph({ data }) {
     },
     {
       id: `${currentYear}`,
-      data: currentYearData
+      data: processedCurrentYearData
         .sort((a, b) => a.month - b.month)
         .map((item) => {
           const isOverUnderMonth = 
-            item.year === overUnderYear && 
-            item.month === overUnderPeriod;
+            item.year === openMonthYear && 
+            item.month === openMonthPeriod;
           
           return {
             x: phaseToShortMonth(item.month),
-            y: isOverUnderMonth ? item.revenue + overUnder : item.revenue,
+            y: isOverUnderMonth ? openMonthIncome + openMonthOverUnder : item.revenue,
             year: item.year,
             month: item.month,
-            monthlyRevenue: item.monthly_revenue,
-            invoicedRevenue: item.revenue,
+            monthlyRevenue: isOverUnderMonth ? openMonthIncome : item.monthly_revenue,
+            invoicedRevenue: isOverUnderMonth ? openMonthIncome : item.revenue,
             hasOverUnder: isOverUnderMonth,
-            overUnderAmount: isOverUnderMonth ? overUnder : 0,
+            openMonthOverUnderAmount: isOverUnderMonth ? openMonthOverUnder : 0,
           };
         }),
     },
   ].filter((series) => series.data.length > 0);
 
-const CustomSliceTooltip = ({ slice }) => {
-  const points = slice.points;
-  const currentYearPoint = points.find((p) => p.data.year === currentYear);
-  const lastYearPoint = points.find((p) => p.data.year === lastYear);
+  const CustomSliceTooltip = ({ slice }) => {
+    const points = slice.points;
+    const currentYearPoint = points.find((p) => p.data.year === currentYear);
+    const lastYearPoint = points.find((p) => p.data.year === lastYear);
 
-  let cumulativeGrowth = null;
-  let monthlyGrowth = null;
-  let growthColor = "#8b949e";
+    let cumulativeGrowth = null;
+    let monthlyGrowth = null;
+    let growthColor = "#8b949e";
 
-  if (currentYearPoint && lastYearPoint) {
-    const currentCumulative = currentYearPoint.data.y;
-    const previousCumulative = lastYearPoint.data.y;
-    const cumulativeGrowthPercent =
-      ((currentCumulative - previousCumulative) / previousCumulative) * 100;
+    if (currentYearPoint && lastYearPoint) {
+      const currentCumulative = currentYearPoint.data.y;
+      const previousCumulative = lastYearPoint.data.y;
+      const cumulativeGrowthPercent =
+        ((currentCumulative - previousCumulative) / previousCumulative) * 100;
 
-    let currentMonthly = currentYearPoint.data.monthlyRevenue;
-    const previousMonthly = lastYearPoint.data.monthlyRevenue;
-    
-    if (currentYearPoint.data.hasOverUnder) {
-      currentMonthly = currentMonthly + currentYearPoint.data.overUnderAmount;
+      let currentMonthly = currentYearPoint.data.monthlyRevenue;
+      const previousMonthly = lastYearPoint.data.monthlyRevenue;
+      
+      if (currentYearPoint.data.hasOverUnder) {
+        currentMonthly = currentMonthly + currentYearPoint.data.openMonthOverUnderAmount;
+      }
+      
+      const monthlyGrowthPercent =
+        ((currentMonthly - previousMonthly) / previousMonthly) * 100;
+
+      cumulativeGrowth = cumulativeGrowthPercent;
+      monthlyGrowth = monthlyGrowthPercent;
+      growthColor =
+        cumulativeGrowthPercent >= 0 ? "var(--green)" : "var(--red)";
     }
-    
-    const monthlyGrowthPercent =
-      ((currentMonthly - previousMonthly) / previousMonthly) * 100;
 
-    cumulativeGrowth = cumulativeGrowthPercent;
-    monthlyGrowth = monthlyGrowthPercent;
-    growthColor =
-      cumulativeGrowthPercent >= 0 ? "var(--green)" : "var(--red)";
-  }
-
-  return (
-    <div className="tooltip" style={{ minWidth: "220px" }}>
-      <h4>{phaseNumToMonth(points[0].data.month)} 
-        {currentYearPoint && currentYearPoint.data.hasOverUnder &&             
-        <span style={{ 
-            fontSize: "10px", 
-            color: "#8b949e", 
-            marginLeft: "4px",
-            fontWeight: 500 
-          }}>
-            (In Progress)
-          </span>
-          }</h4>
-          {currentYearPoint && currentYearPoint.data.hasOverUnder && (
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                gap: "4px",
-                paddingBottom: "8px",
-                marginBottom: "8px",
-                borderBottom: "1px solid var(--fancy-border)",
-                width: "100%"
-              }}
-            >
+    return (
+      <div className="tooltip" style={{ minWidth: "220px" }}>
+        <h4>{phaseNumToMonth(points[0].data.month)} 
+          {currentYearPoint && currentYearPoint.data.hasOverUnder &&             
+          <span style={{ 
+              fontSize: "10px", 
+              color: "#8b949e", 
+              marginLeft: "4px",
+              fontWeight: 500 
+            }}>
+              (In Progress)
+            </span>
+            }</h4>
+            {currentYearPoint && currentYearPoint.data.hasOverUnder && (
               <div
                 style={{
                   display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "baseline",
-                  width: '100%'
+                  flexDirection: "column",
+                  gap: "4px",
+                  paddingBottom: "8px",
+                  marginBottom: "8px",
+                  borderBottom: "1px solid var(--fancy-border)",
+                  width: "100%"
                 }}
               >
-                <h4 style={{ fontSize: "12px", color: "#8b949e" }}>
-                  Invoiced
-                </h4>
-                <h4 style={{ fontWeight: 600, color: "#ffffff", justifySelf: "flex-end" }}>
-                  {dollarFormatter(currentYearPoint.data.invoicedRevenue)}
-                </h4>
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "baseline",
+                    width: '100%'
+                  }}
+                >
+                  <h4 style={{ fontSize: "12px", color: "#8b949e" }}>
+                    Invoiced
+                  </h4>
+                  <h4 style={{ fontWeight: 600, color: "#ffffff", justifySelf: "flex-end" }}>
+                    {dollarFormatter(currentYearPoint.data.invoicedRevenue)}
+                  </h4>
+                </div>
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "baseline",
+                    width: '100%'
+                  }}
+                >
+                  <h4 style={{ fontSize: "12px", color: "#8b949e" }}>
+                    + Over Under
+                  </h4>
+                  <h4 style={{ fontWeight: 600, color: "var(--green)", justifySelf: "flex-end" }}>
+                     {dollarFormatter(currentYearPoint.data.openMonthOverUnderAmount)}
+                  </h4>
+                </div>
               </div>
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "baseline",
-                  width: '100%'
-                }}
-              >
-                <h4 style={{ fontSize: "12px", color: "#8b949e" }}>
-                  + Under Over
-                </h4>
-                <h4 style={{ fontWeight: 600, color: "var(--green)", justifySelf: "flex-end" }}>
-                   {dollarFormatter(currentYearPoint.data.overUnderAmount)}
-                </h4>
-              </div>
-            </div>
-          )}
-      {currentYearPoint && (
-        <>
-          <div
-            style={{
-              display: "flex",
-              width: "100%",
-              justifyContent: "space-between",
-              alignItems: "baseline",
-            }}
-          >
-            <h4 style={{ color: "#ffffff" }}>{currentYear}</h4>
-            <h3 style={{ fontWeight: 600, color: "var(--green)" }}>
-              {dollarFormatter(currentYearPoint.data.y)}
-            </h3>
-          </div>
-        </>
-      )}
-
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          gap: "8px",
-          width: "100%",
-        }}
-      >
-        {lastYearPoint && (
-          <div
-            style={{
-              display: "flex",
-              width: "100%",
-              justifyContent: "space-between",
-              alignItems: "baseline",
-              paddingBottom: "4px",
-            }}
-          >
-            <h4 style={{ color: "#ffffff" }}>{lastYear}</h4>
-            <h3 style={{ fontWeight: 600, color: "#ffffff" }}>
-              {dollarFormatter(lastYearPoint.data.y)}
-            </h3>
-          </div>
-        )}
-
-        {cumulativeGrowth !== null && (
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              gap: "4px",
-              width: "100%",
-              paddingTop: "4px",
-            }}
-          >
+            )}
+        {currentYearPoint && (
+          <>
             <div
               style={{
                 display: "flex",
                 width: "100%",
                 justifyContent: "space-between",
-                alignItems: "center",
+                alignItems: "baseline",
               }}
             >
-              <h4>Cumulative Growth:</h4>
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "4px",
-                }}
-              >
-                <h4 style={{ color: growthColor }}>
-                  {cumulativeGrowth >= 0 ? "↗" : "↘"}
-                </h4>
-                <h4
-                  style={{
-                    color: growthColor,
-                  }}
-                >
-                  {cumulativeGrowth > 0 ? "+" : ""}
-                  {cumulativeGrowth.toFixed(1)}%
-                </h4>
-              </div>
+              <h4 style={{ color: "#ffffff" }}>{currentYear}</h4>
+              <h3 style={{ fontWeight: 600, color: "var(--green)" }}>
+                {dollarFormatter(currentYearPoint.data.y)}
+              </h3>
             </div>
+          </>
+        )}
 
-            {monthlyGrowth !== null && (
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            gap: "8px",
+            width: "100%",
+          }}
+        >
+          {lastYearPoint && (
+            <div
+              style={{
+                display: "flex",
+                width: "100%",
+                justifyContent: "space-between",
+                alignItems: "baseline",
+                paddingBottom: "4px",
+              }}
+            >
+              <h4 style={{ color: "#ffffff" }}>{lastYear}</h4>
+              <h3 style={{ fontWeight: 600, color: "#ffffff" }}>
+                {dollarFormatter(lastYearPoint.data.y)}
+              </h3>
+            </div>
+          )}
+
+          {cumulativeGrowth !== null && (
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                gap: "4px",
+                width: "100%",
+                paddingTop: "4px",
+              }}
+            >
               <div
                 style={{
                   display: "flex",
-                  justifyContent: "space-between",
                   width: "100%",
+                  justifyContent: "space-between",
                   alignItems: "center",
                 }}
               >
-                <h4>Monthly Growth:</h4>
+                <h4>Cumulative Growth:</h4>
                 <div
                   style={{
                     display: "flex",
@@ -242,46 +227,77 @@ const CustomSliceTooltip = ({ slice }) => {
                     gap: "4px",
                   }}
                 >
-                  <h4
-                    style={{
-                      color:
-                        monthlyGrowth >= 0 ? "var(--green)" : "var(--red)",
-                    }}
-                  >
-                    {monthlyGrowth >= 0 ? "↗" : "↘"}
+                  <h4 style={{ color: growthColor }}>
+                    {cumulativeGrowth >= 0 ? "↗" : "↘"}
                   </h4>
                   <h4
                     style={{
-                      color:
-                        monthlyGrowth >= 0 ? "var(--green)" : "var(--red)",
+                      color: growthColor,
                     }}
                   >
-                    {monthlyGrowth > 0 ? "+" : ""}
-                    {monthlyGrowth.toFixed(1)}%
+                    {cumulativeGrowth > 0 ? "+" : ""}
+                    {cumulativeGrowth.toFixed(1)}%
                   </h4>
                 </div>
               </div>
-            )}
-          </div>
-        )}
 
-        {cumulativeGrowth === null && currentYearPoint && !lastYearPoint && (
-          <div
-            style={{
-              color: "#8b949e",
-              fontWeight: 500,
-              fontSize: "12px",
-              textAlign: "center",
-              paddingTop: "4px",
-            }}
-          >
-            No comparison data available
-          </div>
-        )}
+              {monthlyGrowth !== null && (
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    width: "100%",
+                    alignItems: "center",
+                  }}
+                >
+                  <h4>Monthly Growth:</h4>
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "4px",
+                    }}
+                  >
+                    <h4
+                      style={{
+                        color:
+                          monthlyGrowth >= 0 ? "var(--green)" : "var(--red)",
+                      }}
+                    >
+                      {monthlyGrowth >= 0 ? "↗" : "↘"}
+                    </h4>
+                    <h4
+                      style={{
+                        color:
+                          monthlyGrowth >= 0 ? "var(--green)" : "var(--red)",
+                      }}
+                    >
+                      {monthlyGrowth > 0 ? "+" : ""}
+                      {monthlyGrowth.toFixed(1)}%
+                    </h4>
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
+
+          {cumulativeGrowth === null && currentYearPoint && !lastYearPoint && (
+            <div
+              style={{
+                color: "#8b949e",
+                fontWeight: 500,
+                fontSize: "12px",
+                textAlign: "center",
+                paddingTop: "4px",
+              }}
+            >
+              No comparison data available
+            </div>
+          )}
+        </div>
       </div>
-    </div>
-  );
-};
+    );
+  };
 
   return (
     <>

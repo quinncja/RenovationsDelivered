@@ -1,24 +1,24 @@
 import { useDashboard } from "@features/dashboard/context/DashboardContext";
 import { ResponsiveLine } from "@nivo/line";
-import { dollarFormatter, formatNumberShort } from "@shared/utils/functions";
+import { dollarFormatter, formatNumberShort, phaseToFullMonth } from "@shared/utils/functions";
 
 function LineGraph({ data }) {
-  const {getOverUnder } = useDashboard();
-  const { overUnder, overUnderPeriod, overUnderYear } = getOverUnder();
+  const {getOpenMonthIncome } = useDashboard();
+  const { openMonthOverUnder, openMonthIncome, openMonthPeriod, openMonthYear } = getOpenMonthIncome();
 
   const chartData = [
     {
       id: "Revenue",
       data: data.map((item) => {
-        const isOverUnderYear = item.year === overUnderYear;
+        const isOverUnderYear = item.year === openMonthYear;
         
         return {
           x: isOverUnderYear ? `${item.year}*` : item.year,
-          y: isOverUnderYear ? item.revenue + overUnder : item.revenue,
+          y: isOverUnderYear ? item.revenue + openMonthOverUnder + openMonthIncome : item.revenue,
           invoicedRevenue: item.revenue, 
           hasOverUnder: isOverUnderYear,
-          overUnderAmount: isOverUnderYear ? overUnder : 0,
-          overUnderPeriod: isOverUnderYear ? overUnderPeriod : null,
+          openMonthAmount: isOverUnderYear ? openMonthOverUnder + openMonthIncome : 0,
+          openMonthPeriod: isOverUnderYear ? openMonthPeriod : null,
         };
       }),
     },
@@ -71,7 +71,7 @@ function LineGraph({ data }) {
                   textAlign: "right",
                   width: "100%" 
                 }}>
-                  + {dollarFormatter(point.data.overUnderAmount)}
+                  + {dollarFormatter(point.data.openMonthAmount)}
                 </div>
                 <div style={{ 
                   fontSize: "11px", 
@@ -82,7 +82,7 @@ function LineGraph({ data }) {
                   width: "100%",
                   borderBottom: "1px solid var(--fancy-border)"
                 }}>
-                  Under Over
+                  {phaseToFullMonth(openMonthPeriod)} Income
                 </div>
               </div>
               </>
@@ -100,7 +100,7 @@ function LineGraph({ data }) {
               display: "flex",
               alignItems: "center",
               gap: "6px",
-              marginTop: "8px",
+              marginTop: "3px",
             }}
           >
             <span>{yoyGrowth >= 0 ? "↗" : "↘"}</span>
@@ -116,7 +116,7 @@ function LineGraph({ data }) {
               color: "#8b949e",
               fontWeight: 500,
               fontSize: "12px",
-              marginTop: "8px",
+              marginTop: "3px",
             }}
           >
             Base year
