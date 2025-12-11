@@ -105,7 +105,6 @@ function BarChart({ id, data }) {
   const displayCounter = phaseData.length > itemsPerPage;
 
   const CustomTooltip = ({ id, value, color, data }) => {
-    // Check if this phase has data
     if (!data.hasData) {
       const phaseLabel =
         data.phase === "extra" ? "Extra" : phaseToMonth(data.phase);
@@ -147,7 +146,6 @@ function BarChart({ id, data }) {
   };
 
   const handleClick = (e) => {
-    // Only handle clicks for phases with data
     if (!e.data.hasData) return;
 
     const textStatus = e.id.split("_")[2];
@@ -237,7 +235,7 @@ function BarChart({ id, data }) {
         data={currentPageData}
         keys={["current_year_open", "current_year_closed"]}
         indexBy="phase"
-        margin={{ top: 15, right: 35, bottom: 35, left: 33 }}
+        margin={{ top: 15, right: 35, bottom: 35, left: 48 }}
         padding={0.25}
         valueScale={{ type: "linear" }}
         indexScale={{ type: "band", round: true }}

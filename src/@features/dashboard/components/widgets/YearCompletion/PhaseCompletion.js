@@ -10,13 +10,14 @@ function PhaseCompletion() {
 
   return (
     <div
-      className="home-phasecount-widget sub-widget"
+      className="home-yearrevenue-widget"
       onClick={() => openPage(id)}
     >
       <div
         style={{
           display: "flex",
-          paddingTop: "15px",
+          paddingTop: "25px",
+          paddingLeft: "25px",
           alignItems: "flex-start",
         }}
       >

@@ -26,6 +26,8 @@ function MarginPerformance() {
   const yearSpent = data.total
   const period = data.period
   const homeRevData = getWidgetDataById("annualRevenueTrend");
+  const overheadArray = getWidgetDataById("overHeadExpenses");
+  const overhead = overheadArray.find((item) => item.is_total === 1).expense_amount
   const year = new Date().getFullYear();
   const yearSum =
     homeRevData && homeRevData.find((item) => item.year === year)?.revenue;
@@ -89,7 +91,65 @@ function MarginPerformance() {
       </div>
     );
   };
+  const overHead = () => {
+    return (
+      <div
+        className="widget sub-widget"
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          boxSizing: "border-box",
+          width: "calc(25% - 8px)",
+        }}
+      >
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "space-evenly",
+            height: "100%",
+            textAlign: "left",
+          }}
+        >
+          <div className="widget-title"> Overhead </div> 
+          <MoneyDisplay
+            value={overhead}
+            size={26}
+          />
+        </div>
+      </div>
+    );
+  };
 
+  const netProfit = () => {
+        return (
+      <div
+        className="widget sub-widget"
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          boxSizing: "border-box",
+          width: "calc(25% - 8px)",
+        }}
+      >
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "space-evenly",
+            height: "100%",
+            textAlign: "left",
+          }}
+        >
+          <div className="widget-title"> Net profit </div> 
+          <MoneyDisplay
+            value={yearSum - yearSpent - overhead}
+            size={26}
+          />
+        </div>
+      </div>
+    );
+  }
   const projectedGross = () => {
     const closedGross = yearSum - yearSum;
     const remainingAmount = yearSum - 1000000 // fill with total contracted for the year
@@ -129,6 +189,8 @@ function MarginPerformance() {
     <div style={{ display: "flex", flexDirection: "row", gap: "10px" }}>
       {margin()}
       {gross()}
+      {overHead()}
+      {netProfit()}
       {/* projectedGross() */}
      </div>
   );

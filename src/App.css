@@ -4208,7 +4208,6 @@ h1 {
 .tracked-jobs-header {
   display: flex;
   gap: 10px;
-  padding-bottom: 10px;
   width: 100%;
 }
 

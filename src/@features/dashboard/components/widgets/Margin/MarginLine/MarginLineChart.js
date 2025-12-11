@@ -1,8 +1,7 @@
 import React from "react";
 import { ResponsiveLine } from "@nivo/line";
 import {
-  formatNumberShort,
-  phaseNumToMonth,
+  phaseToFullMonth,
   phaseToShortMonth,
   displayMargin,
   getMarginClass,
@@ -312,7 +311,7 @@ const CustomSliceTooltip = ({ slice }) => {
   return (
     <div className="tooltip" style={{ minWidth: "220px" }}>
       <h4>
-        {phaseNumToMonth(point.data.month)}
+        {phaseToFullMonth(point.data.month)}
         {point.data.hasOverUnder && (
           <span
             style={{

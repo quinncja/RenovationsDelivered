@@ -11,6 +11,7 @@ import WidgetSection from "../WidgetSection";
 import SectionSubheading from "../SectionSubheader";
 import MarginBar from "./Margin/MarginBar/MarginBar";
 import MarginLine from "./Margin/MarginLine/MarginLine";
+import PhaseCompletion from "./YearCompletion/PhaseCompletion";
 
 function HomeWidgets() {
   const year = new Date().getFullYear();
@@ -32,8 +33,7 @@ function HomeWidgets() {
             <MarginBar />
             <MarginLine />
           </div>
-          <div style={{ height: "10px" }}> </div>
-          <YearCompletion />
+          <PhaseCompletion />
           <SectionSubheading>Business Insights</SectionSubheading>
           <Insights />
           <SectionSubheading>Project Manager Performance</SectionSubheading>

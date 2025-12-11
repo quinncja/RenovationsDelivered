@@ -3,7 +3,7 @@ import { ResponsiveLine } from "@nivo/line";
 import {
   dollarFormatter,
   formatNumberShort,
-  phaseNumToMonth,
+  phaseToFullMonth,
   phaseToShortMonth,
 } from "@shared/utils/functions";
 import { useDashboard } from "@features/dashboard/context/DashboardContext";
@@ -95,10 +95,6 @@ function LineGraph({ data }) {
       let currentMonthly = currentYearPoint.data.monthlyRevenue;
       const previousMonthly = lastYearPoint.data.monthlyRevenue;
       
-      if (currentYearPoint.data.hasOverUnder) {
-        currentMonthly = currentMonthly; 
-      }
-      
       const monthlyGrowthPercent =
         ((currentMonthly - previousMonthly) / previousMonthly) * 100;
 
@@ -110,7 +106,7 @@ function LineGraph({ data }) {
 
     return (
       <div className="tooltip" style={{ minWidth: "220px" }}>
-        <h4>{phaseNumToMonth(points[0].data.month)} 
+        <h4>{phaseToFullMonth(points[0].data.month)} 
           {currentYearPoint && currentYearPoint.data.hasOverUnder &&             
           <span style={{ 
               fontSize: "10px", 

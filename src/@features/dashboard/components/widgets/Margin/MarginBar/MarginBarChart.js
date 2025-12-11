@@ -253,9 +253,9 @@ function MarginBarChart() {
         if (!currentMonth?.hasData) {
           return (
             <div className="tooltip">
-              <div style={{ fontWeight: "bold", marginBottom: "4px" }}>
+              <h4 style={{marginBottom: "4px" }}>
                 {phaseNumToMonth(indexValue)}
-              </div>
+              </h4>
               <div
                 style={{ color: "#8b949e", fontWeight: 500, fontSize: "12px" }}
               >
@@ -284,9 +284,9 @@ function MarginBarChart() {
 
         return (
           <div className="tooltip">
-            <div style={{ fontWeight: "bold", marginBottom: "8px" }}>
+            <h4 style={{ marginBottom: "8px" }}>
               {phaseToFullMonth(indexValue)}
-            </div>
+            </h4>
 
             <div
               style={{
