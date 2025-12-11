@@ -6,7 +6,7 @@ import { phaseToFullMonth } from "@shared/utils/functions";
 
 function AnnualRevenueTrend() {
   const id = "annualRevenueTrend";
-  const { getWidgetDataById, getOpenMonthIncome } = useDashboard();
+  const { getWidgetDataById, getOpenMonthFinances } = useDashboard();
   const data = getWidgetDataById(id);
   
   if (!data) {
@@ -18,7 +18,7 @@ function AnnualRevenueTrend() {
     );
   }
 
-  const { openMonthOverUnder, openMonthIncome, openMonthPeriod} = getOpenMonthIncome();
+  const { openMonthOverUnder, openMonthIncome, openMonthPeriod} = getOpenMonthFinances();
 
   const year = new Date().getFullYear();
     console.log(data)

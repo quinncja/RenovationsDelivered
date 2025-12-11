@@ -8,8 +8,6 @@ function PhaseCompletion() {
 
   if (!data) return <div className="home-yearrevenue-widget loading-widget" />;
 
-  const total = data.find((datum) => datum.phase === "total");
-
   return (
     <div
       className="home-phasecount-widget sub-widget"

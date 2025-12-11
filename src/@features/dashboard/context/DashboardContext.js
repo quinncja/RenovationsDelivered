@@ -255,8 +255,8 @@ export const DashboardProvider = ({ children }) => {
     if (dataMap[id]) return dataMap[id].widgetData;
   };
 
-  const getOpenMonthIncome = () => {
-    return getWidgetDataById("openMonthIncome")
+  const getOpenMonthFinances = () => {
+    return getWidgetDataById("openMonthFinances")
   }
 
   const updateFocusedId = (newId) => {
@@ -300,7 +300,7 @@ export const DashboardProvider = ({ children }) => {
         openPage,
         openDetailPage,
         openData,
-        getOpenMonthIncome
+        getOpenMonthFinances
       }}
     >
       {children}

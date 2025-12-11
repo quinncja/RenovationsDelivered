@@ -9,21 +9,19 @@ import {
 import { useDashboard } from "@features/dashboard/context/DashboardContext";
 
 function LineGraph({ data }) {
-  const { getOpenMonthIncome } = useDashboard();
+  const { getOpenMonthFinances } = useDashboard();
   const currentYear = new Date().getFullYear();
   const lastYear = currentYear - 1;
 
-  const { openMonthIncome, openMonthOverUnder, openMonthPeriod, openMonthYear } = getOpenMonthIncome();
+  const { openMonthIncome, openMonthOverUnder, openMonthPeriod, openMonthYear } = getOpenMonthFinances();
 
   const currentYearData = data.filter((item) => item.year === currentYear);
   const lastYearData = data.filter((item) => item.year === lastYear);
 
-  // Check if we need to add the open month data point
   const hasOpenMonthInData = currentYearData.some(
     item => item.month === openMonthPeriod && item.year === openMonthYear
   );
 
-  // If the open month isn't in the data, we need to add it
   let processedCurrentYearData = [...currentYearData];
   if (!hasOpenMonthInData && openMonthYear === currentYear) {
     processedCurrentYearData.push({

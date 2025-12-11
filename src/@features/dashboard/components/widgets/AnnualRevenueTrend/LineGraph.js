@@ -3,8 +3,8 @@ import { ResponsiveLine } from "@nivo/line";
 import { dollarFormatter, formatNumberShort, phaseToFullMonth } from "@shared/utils/functions";
 
 function LineGraph({ data }) {
-  const {getOpenMonthIncome } = useDashboard();
-  const { openMonthOverUnder, openMonthIncome, openMonthPeriod, openMonthYear } = getOpenMonthIncome();
+  const {getOpenMonthFinances } = useDashboard();
+  const { openMonthOverUnder, openMonthIncome, openMonthPeriod, openMonthYear } = getOpenMonthFinances();
 
   const chartData = [
     {

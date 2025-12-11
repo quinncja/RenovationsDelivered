@@ -5,10 +5,12 @@ import DataValidation from "./DataValidation/DataValidation";
 import MonthlyYearRevenue from "./MonthlyRevenueComparison/MonthlyRevenueComparison";
 import AgingSummary from "@features/dashboard/components/widgets/AgingSummary/AgingSummary";
 import EmployeePerformance from "./EmployeePerformance/EmployeePerformance";
-import MarginPerformance from "./MarginPerformance/MarginPerformance";
+import MarginPerformance from "./Margin/MarginPerformance";
 import YearCompletion from "./YearCompletion/YearCompletion";
 import WidgetSection from "../WidgetSection";
 import SectionSubheading from "../SectionSubheader";
+import MarginBar from "./Margin/MarginBar/MarginBar";
+import MarginLine from "./Margin/MarginLine/MarginLine";
 
 function HomeWidgets() {
   const year = new Date().getFullYear();
@@ -26,6 +28,10 @@ function HomeWidgets() {
 
         <WidgetSection title={`${year} Overview`} color="blue">
           <MarginPerformance />
+          <div style={{ width: "100%", display: "flex", gap: "10px" }}>
+            <MarginBar />
+            <MarginLine />
+          </div>
           <div style={{ height: "10px" }}> </div>
           <YearCompletion />
           <SectionSubheading>Business Insights</SectionSubheading>

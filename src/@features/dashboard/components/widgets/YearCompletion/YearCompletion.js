@@ -4,7 +4,7 @@ import PhaseCount from "./PhaseCompletion";
 import MoneyDisplay from "@shared/components/MoneyDisplay/MoneyDisplay";
 
 function YearCompletion() {
-  const id = "marginPerformance";
+  const id = "annualDirectExpenses";
   const { getWidgetDataById } = useDashboard();
   const data = getWidgetDataById(id);
   const homeRevData = getWidgetDataById("annualRevenueTrend");
@@ -23,7 +23,7 @@ function YearCompletion() {
       ></div>
     );
 
-  const total = data.find((item) => item.id === "total");
+  const total = data.total;
   const year = new Date().getFullYear();
   const yearSum = homeRevData.find((item) => item.year === year)?.revenue;
 
